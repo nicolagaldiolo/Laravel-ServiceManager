@@ -8,7 +8,8 @@ $factory->define(App\Domains::class, function (Faker $faker) {
         'domain' => factory(App\Providers::class)->make(),
         'hosting' => factory(App\Providers::class)->make(),
         'deadline' => $faker->dateTimeThisYear(),
-        'payed' => $faker->randomFloat(2, 0, 200),
+        'amount' => $faker->randomFloat(2, 0, 200),
+        'payed' => $faker->boolean,
         'note' => $faker->sentence,
         'user_id' => factory(App\User::class)->make(),
     ];
