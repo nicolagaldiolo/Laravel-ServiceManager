@@ -26,4 +26,14 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    // ha molti domains
+    public function domains(){
+        return $this->hasMany(Domains::class);
+    }
+
+    // ha molti providers
+    public function providers(){
+        return $this->hasMany(Providers::class);
+    }
 }
