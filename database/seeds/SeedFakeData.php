@@ -23,7 +23,7 @@ class SeedFakeData extends Seeder
         $users->push($me);
 
         $users->each(function($user){
-            $providers = factory(App\Providers::class, 20)->create([
+            $providers = factory(App\Providers::class, 5)->create([
                 'user_id' => $user->id
             ]);
             factory(App\Domains::class, 20)->create([

@@ -14,7 +14,7 @@ class DomainsController extends Controller
      */
     public function index()
     {
-        $domains = Auth::user()->domains()->get();
+        $domains = Auth::user()->domains()->with('domain', 'hosting')->get();
         return $domains;
     }
 
