@@ -20,3 +20,6 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('domains', 'DomainsController');
+
+
+Route::resource('domains', 'DomainsController')->except('create', 'edit');

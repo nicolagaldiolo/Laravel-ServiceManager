@@ -20,4 +20,4 @@ use Illuminate\Http\Request;
 
 Route::post('login', 'LoginController@Login')->name('login');
 Route::get('me', 'MeController@Me')->name('me')->middleware('jwt.auth');
-Route::resource('domains', 'DomainsController')->middleware('jwt.auth');
+Route::resource('domains', 'DomainsController')->except('create', 'edit')->middleware('jwt.auth');

@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Domains;
+use App\Http\Requests\DomainRequest;
 use Illuminate\Support\Facades\Auth;
 
 class DomainsController extends Controller
@@ -19,24 +20,15 @@ class DomainsController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(DomainRequest $request)
     {
-        //
+        $domain = Auth::user()->domains()->create($request->validated());
+        return $domain;
     }
 
     /**
@@ -45,20 +37,11 @@ class DomainsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Domains $domain)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        $this->authorize('view', $domain);
+        $domain->load('domain', 'hosting');
+        return $domain;
     }
 
     /**
@@ -68,9 +51,12 @@ class DomainsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(DomainRequest $request, Domains $domain)
     {
-        //
+        $this->authorize('update', $domain);
+        $domain->update($request->validated());
+
+        return $domain;
     }
 
     /**
@@ -79,8 +65,12 @@ class DomainsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Domains $domain)
     {
-        //
+        $this->authorize('delete', $domain);
+
+        $domain->delete();
+
+        return $domain;
     }
 }

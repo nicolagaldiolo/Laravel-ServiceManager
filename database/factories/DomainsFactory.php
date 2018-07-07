@@ -10,7 +10,7 @@ $factory->define(App\Domains::class, function (Faker $faker) {
         'deadline' => $faker->dateTimeThisYear(),
         'amount' => $faker->randomFloat(2, 0, 200),
         'payed' => $faker->boolean,
-        'note' => $faker->sentence,
+        'note' => $faker->text(255),
         'user_id' => factory(App\User::class)->make(),
     ];
 });

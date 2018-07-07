@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Domains extends Model
 {
 
+    protected $guarded = [];
+
     // appartiene ad un User
     public function user(){
         return $this->belongsTo(User::class);
