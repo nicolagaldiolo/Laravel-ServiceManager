@@ -4,9 +4,9 @@ use Faker\Generator as Faker;
 
 $factory->define(App\Providers::class, function (Faker $faker) {
     return [
-        'name' => $faker->company,
+        'name' => $faker->unique()->company,
         'label' => $faker->hexColor,
-        'website' => $faker->domainName,
+        'website' => 'http://' . $faker->unique()->domainName,
         'user_id' => factory(App\User::class)->make()
     ];
 });

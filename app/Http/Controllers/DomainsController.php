@@ -15,8 +15,7 @@ class DomainsController extends Controller
      */
     public function index()
     {
-        $domains = Auth::user()->domains()->with('domain', 'hosting')->get();
-        return $domains;
+        return Auth::user()->domains()->with('domain', 'hosting')->get();
     }
 
     /**
@@ -53,6 +52,7 @@ class DomainsController extends Controller
      */
     public function update(DomainRequest $request, Domains $domain)
     {
+
         $this->authorize('update', $domain);
         $domain->update($request->validated());
 

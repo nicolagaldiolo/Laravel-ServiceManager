@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Providers extends Model
 {
+    protected $guarded = [];
 
     // appartiene ad un User
     public function user(){

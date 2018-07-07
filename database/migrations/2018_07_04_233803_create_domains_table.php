@@ -15,7 +15,7 @@ class CreateDomainsTable extends Migration
     {
         Schema::create('domains', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('url');
+            $table->string('url')->unique();
             $table->unsignedInteger('domain')->index()->nullable();
             $table->unsignedInteger('hosting')->index()->nullable();
             $table->dateTime('deadline');

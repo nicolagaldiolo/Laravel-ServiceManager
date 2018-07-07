@@ -4,7 +4,7 @@ use Faker\Generator as Faker;
 
 $factory->define(App\Domains::class, function (Faker $faker) {
     return [
-        'url' => $faker->domainName,
+        'url' => 'http://' . $faker->unique()->domainName,
         'domain' => factory(App\Providers::class)->make(),
         'hosting' => factory(App\Providers::class)->make(),
         'deadline' => $faker->dateTimeThisYear(),

@@ -23,8 +23,16 @@ class DomainRequest extends FormRequest
      */
     public function rules()
     {
+
+        if ($this->method() == 'PUT') {
+            $domain = $this->route('domain');
+            $url_rule = 'required|url|unique:domains,url,' . $domain->id;
+        } else {
+            $url_rule = 'required|url|unique:domains,url';
+        }
+
         return [
-            'url'       => 'required|url',
+            'url'       => $url_rule, // mi permette di ignorare i cambiamenti se l'url che stiamo passando appartiene al record corrent, se è cambiato allora scatta il controllo di validazione
             'domain'    => 'sometimes|exists:providers,id',
             'hosting'   => 'sometimes|exists:providers,id',
             'deadline'  => 'required|date',
