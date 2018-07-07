@@ -16,14 +16,19 @@ class CreateDomainsTable extends Migration
         Schema::create('domains', function (Blueprint $table) {
             $table->increments('id');
             $table->string('url');
-            $table->integer('domain');
-            $table->integer('hosting');
+            $table->unsignedInteger('domain')->index()->nullable();
+            $table->unsignedInteger('hosting')->index()->nullable();
             $table->dateTime('deadline');
             $table->decimal('amount', 10, 2);
             $table->boolean('payed');
-            $table->string('note');
+            $table->string('note')->nullable();
             $table->unsignedInteger('user_id')->index();
             $table->timestamps();
+
+            //foreignkey
+            $table->foreign('user_id')->on('users')->references('id')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('domain')->on('providers')->references('id')->onDelete('set null')->onUpdate('cascade');
+            $table->foreign('hosting')->on('providers')->references('id')->onDelete('set null')->onUpdate('cascade');
         });
     }
 

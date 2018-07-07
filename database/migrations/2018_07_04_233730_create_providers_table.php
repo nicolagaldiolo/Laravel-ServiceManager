@@ -20,6 +20,9 @@ class CreateProvidersTable extends Migration
             $table->string('website');
             $table->unsignedInteger('user_id')->index();
             $table->timestamps();
+
+            //foreignkey
+            $table->foreign('user_id')->on('users')->references('id')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
