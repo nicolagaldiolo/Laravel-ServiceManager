@@ -15,7 +15,7 @@ class UserObserver
      */
     public function created(User $user)
     {
-        event(new UserRegister($user));
+        //event(new UserRegister($user));
     }
 
     /**

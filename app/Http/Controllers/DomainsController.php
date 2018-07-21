@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Domains;
 use App\Http\Requests\DomainRequest;
+use App\Providers;
 use Illuminate\Support\Facades\Auth;
+use Yajra\DataTables\DataTables;
 
 class DomainsController extends Controller
 {
@@ -18,11 +20,26 @@ class DomainsController extends Controller
         $domains = Auth::user()->domains()->with('domain', 'hosting')->get();
 
         if(request()->wantsJson() || request()->expectsJson()) {
-            return $domains;
+            return DataTables::of($domains)->addColumn('actions', function($user){
+                    return implode("", [
+                        '<a href="' . route('domains.edit', $user) . '" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill"><i class="la la-edit"></i></a>',
+                        '<a href="' . route('domains.destroy', $user) . '" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill"><i class="la la-trash"></i></a>',
+                    ]);
+                })->rawColumns(['actions'])->make(true);
         }
 
         return view('domains.index', compact('domains'));
 
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
     }
 
     /**
@@ -48,6 +65,22 @@ class DomainsController extends Controller
         $this->authorize('view', $domain);
         $domain->load('domain', 'hosting');
         return $domain;
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Domains $domain)
+    {
+        $this->authorize('view', $domain);
+
+        $providers = Auth::user()->providers()->get();
+        $domain->load('domain', 'hosting');
+
+        return view('domains.edit', compact('providers', 'domain'));
     }
 
     /**
