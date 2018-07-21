@@ -15,7 +15,14 @@ class DomainsController extends Controller
      */
     public function index()
     {
-        return Auth::user()->domains()->with('domain', 'hosting')->get();
+        $domains = Auth::user()->domains()->with('domain', 'hosting')->get();
+
+        if(request()->wantsJson() || request()->expectsJson()) {
+            return $domains;
+        }
+
+        return view('domains.index', compact('domains'));
+
     }
 
     /**

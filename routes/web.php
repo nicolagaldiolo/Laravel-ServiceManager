@@ -19,5 +19,10 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-//Route::resource('domains', 'DomainsController');
+Route::resource('domains', 'DomainsController')->middleware('auth');
 //Route::resource('domains', 'DomainsController')->except('create', 'edit');
+
+
+//Route::get('user/verify/{verification_code}', 'AuthController@verifyUser')->name('user.verify');
+//Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.request');
+//Route::post('password/reset', 'Auth\ResetPasswordController@postReset')->name('password.reset');
