@@ -38,11 +38,7 @@
 
     <!--end::Page Vendors -->
     <link href="{{ asset('theme_assets/vendors/base/vendors.bundle.css')}}" rel="stylesheet" type="text/css"/>
-
-<!--RTL version:<link href="{{ asset('theme_assets/vendors/base/vendors.bundle.rtl.css')}}" rel="stylesheet" type="text/css" />-->
     <link href="{{ asset('theme_assets/demo/default/base/style.bundle.css')}}" rel="stylesheet" type="text/css"/>
-
-<!--RTL version:<link href="{{ asset('theme_assets/demo/default/base/style.bundle.rtl.css')}}" rel="stylesheet" type="text/css" />-->
 
     <!--end::Base Styles -->
 
@@ -3640,10 +3636,8 @@
     <!--end::Base Scripts -->
 
     <!--begin::Page Vendors -->
-    <script src="{{ asset('theme_assets/vendors/custom/fullcalendar/fullcalendar.bundle.js')}}"
-            type="text/javascript"></script>
-    <script src="{{ asset('theme_assets/vendors/custom/datatables/datatables.bundle.js')}}"
-            type="text/javascript"></script>
+    <script src="{{ asset('theme_assets/vendors/custom/fullcalendar/fullcalendar.bundle.js')}}" type="text/javascript"></script>
+    <script src="{{ asset('theme_assets/vendors/custom/datatables/datatables.bundle.js')}}" type="text/javascript"></script>
     <!--end::Page Vendors -->
 
     <!--begin::Page Snippets -->
@@ -3652,6 +3646,9 @@
     <!--end::Page Snippets -->
     <script src="{{ asset('theme_assets/demo/default/custom/crud/forms/validation/form-controls.js')}}" type="text/javascript"></script>
     <script src="{{ asset('theme_assets/demo/default/custom/crud/forms/widgets/select2.js')}}" type="text/javascript"></script>
+    <script src="{{ asset('theme_assets/demo/default/custom/crud/forms/widgets/bootstrap-datepicker.js')}}" type="text/javascript"></script>
+
+    <script src="{{ asset('theme_assets/demo/default/custom/crud/forms/widgets/input-mask.js')}}" type="text/javascript"></script>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
