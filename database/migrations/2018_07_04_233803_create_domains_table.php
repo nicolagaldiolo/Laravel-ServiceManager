@@ -27,8 +27,8 @@ class CreateDomainsTable extends Migration
 
             //foreignkey
             $table->foreign('user_id')->on('users')->references('id')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('domain')->on('providers')->references('id')->onDelete('set null')->onUpdate('cascade');
-            $table->foreign('hosting')->on('providers')->references('id')->onDelete('set null')->onUpdate('cascade');
+            //$table->foreign('domain')->on('providers')->references('id')->onDelete('set null')->onUpdate('cascade');
+            //$table->foreign('hosting')->on('providers')->references('id')->onDelete('set null')->onUpdate('cascade');
         });
     }
 

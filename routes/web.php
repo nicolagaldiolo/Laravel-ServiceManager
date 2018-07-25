@@ -11,12 +11,11 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-})->middleware('auth');
 
 Auth::routes();
 
-
-Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
-Route::resource('domains', 'DomainsController')->middleware('auth');
+Route::group(['middleware' => 'auth'], function() {
+    Route::get('/', 'DashboardController@index')->name('dashboard');
+    Route::resource('domains', 'DomainsController')->except('show');
+    Route::resource('providers', 'ProvidersController')->except('show');
+});

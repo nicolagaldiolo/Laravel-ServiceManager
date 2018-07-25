@@ -24,7 +24,7 @@ class DomainRequest extends FormRequest
     public function rules()
     {
 
-        if ($this->method() == 'PUT') {
+        if ($this->method() == 'PATCH') {
             $domain = $this->route('domain');
             $url_rule = 'required|url|unique:domains,url,' . $domain->id;
         } else {
@@ -36,9 +36,9 @@ class DomainRequest extends FormRequest
             'domain'    => 'sometimes|exists:providers,id',
             'hosting'   => 'sometimes|exists:providers,id',
             'deadline'  => 'required|date',
-            'amount'    => 'required|numeric',
-            'payed'     => 'required|boolean',
-            'note'      => 'sometimes|string|max:255'
+            'amount'    => 'required',
+            'payed'     => 'sometimes|boolean',
+            'note'      => 'sometimes|max:255'
         ];
     }
 }

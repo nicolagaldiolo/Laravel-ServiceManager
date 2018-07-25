@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ProviderRequest;
 use App\Providers;
+use App\Http\Requests\ProviderRequest;
+use Illuminate\Support\Facades\Auth;
+use Yajra\DataTables\DataTables;
 
 class ProvidersController extends Controller
 {
@@ -14,7 +16,21 @@ class ProvidersController extends Controller
      */
     public function index()
     {
-        return Auth()->user()->providers()->get();
+        //return Auth()->user()->providers()->get();
+
+        $providers = Auth::user()->providers()->get();
+
+        if(request()->wantsJson() || request()->expectsJson()) {
+            return DataTables::of($providers)->addColumn('actions', function($user){
+                return implode("", [
+                    '<a href="' . route('providers.edit', $user) . '" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill"><i class="la la-edit"></i></a>',
+                    '<a href="' . route('providers.destroy', $user) . '" class="delete btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill"><i class="la la-trash"></i></a>',
+                ]);
+            })->rawColumns(['actions'])->make(true);
+        }
+
+        return view('providers.index');
+
     }
 
     /**
@@ -24,7 +40,10 @@ class ProvidersController extends Controller
      */
     public function create()
     {
-        //
+
+        $provider = new Providers;
+
+        return view('providers.create', compact('provider'));
     }
 
     /**
@@ -35,8 +54,9 @@ class ProvidersController extends Controller
      */
     public function store(ProviderRequest $request)
     {
-        $provider = Auth()->user()->providers()->create($request->validated());
-        return $provider;
+        Auth()->user()->providers()->create($request->validated());
+
+        return redirect()->route('providers.index');
     }
 
     /**
@@ -47,8 +67,7 @@ class ProvidersController extends Controller
      */
     public function show(Providers $provider)
     {
-        $this->authorize('view', $provider);
-        return $provider;
+
     }
 
     /**
@@ -57,9 +76,11 @@ class ProvidersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Providers $provider)
     {
-        //
+        $this->authorize('view', $provider);
+
+        return view('providers.edit', compact('provider'));
     }
 
     /**
@@ -73,7 +94,9 @@ class ProvidersController extends Controller
     {
         $this->authorize('update', $provider);
         $provider->update($request->validated());
-        return $provider;
+
+        return redirect()->route('providers.index');
+
     }
 
     /**
@@ -85,7 +108,12 @@ class ProvidersController extends Controller
     public function destroy(Providers $provider)
     {
         $this->authorize('delete', $provider);
-        $provider->delete();
-        return $provider;
+
+        (bool) $res = $provider->delete();
+
+        return [
+            'message'   => $res ? 'Provider deleted' : 'Provider not deleted',
+            'status'    => $res
+        ];
     }
 }

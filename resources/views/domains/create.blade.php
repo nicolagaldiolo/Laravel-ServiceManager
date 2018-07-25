@@ -103,9 +103,8 @@
             </div>
 
             <!--begin::Form-->
-            <form method="POST" action="{{route('domains.update', $domain)}}" class="m-form m-form--fit m-form--label-align-right">
+            <form method="POST" action="{{route('domains.store')}}" class="m-form m-form--fit m-form--label-align-right">
                 @csrf
-                @method('PATCH')
                 <div class="m-portlet__body">
                     <div class="m-form__content">
                         <div class="m-alert m-alert--icon alert alert-danger m--hide" role="alert" id="m_form_1_msg">
@@ -151,7 +150,8 @@
                         <div class="col-lg-8 col-md-12">
                             <select class="form-control m-select2 m_select2_4" name="domain">
                                 @foreach($providers as $provider)
-                                    <option value="{{$provider->id}}" @if($provider->id == old('domain', $domain->domain)) selected @endif>{{$provider->name}}</option>
+                                    <option value="{{$provider->id}}">{{$provider->name}}</option>
+                                    {{--<option value="{{$provider->id}}" @if($provider->id == old('domain', $domain->domain)) selected @endif>{{$provider->name}}</option>--}}
                                 @endforeach
                             </select>
                             <span class="m-form__help">Please select a domain provider.</span>
@@ -172,7 +172,8 @@
                         <div class="col-lg-8 col-md-12">
                             <select class="form-control m-select2 m_select2_4" name="hosting">
                                 @foreach($providers as $provider)
-                                    <option value="{{$provider->id}}" @if($provider->id == old('hosting', $domain->hosting)) selected @endif>{{$provider->name}}</option>
+                                    <option value="{{$provider->id}}">{{$provider->name}}</option>
+                                    {{--<option value="{{$provider->id}}" @if($provider->id == old('hosting', $domain->hosting)) selected @endif>{{$provider->name}}</option>--}}
                                 @endforeach
                             </select>
                             <span class="m-form__help">Please select a hosting provider.</span>

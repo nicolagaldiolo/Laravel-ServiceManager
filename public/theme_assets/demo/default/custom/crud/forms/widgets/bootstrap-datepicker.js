@@ -14,7 +14,7 @@ var BootstrapDatepicker = function () {
             rightArrow: '<i class="la la-angle-right"></i>'
         }
     }
-    
+
     //== Private functions
     var demos = function () {
         // minimum setup
@@ -22,7 +22,8 @@ var BootstrapDatepicker = function () {
             rtl: mUtil.isRTL(),
             todayHighlight: true,
             orientation: "bottom left",
-            templates: arrows
+            templates: arrows,
+            //format: 'dd/mm/yyyy'
         });
 
         // minimum setup for modal demo
@@ -33,7 +34,7 @@ var BootstrapDatepicker = function () {
             templates: arrows
         });
 
-        // input group layout 
+        // input group layout
         $('#m_datepicker_2, #m_datepicker_2_validate').datepicker({
             rtl: mUtil.isRTL(),
             todayHighlight: true,
@@ -49,7 +50,7 @@ var BootstrapDatepicker = function () {
             templates: arrows
         });
 
-        // enable clear button 
+        // enable clear button
         $('#m_datepicker_3, #m_datepicker_3_validate').datepicker({
             rtl: mUtil.isRTL(),
             todayBtn: "linked",
@@ -67,7 +68,7 @@ var BootstrapDatepicker = function () {
             templates: arrows
         });
 
-        // orientation 
+        // orientation
         $('#m_datepicker_4_1').datepicker({
             rtl: mUtil.isRTL(),
             orientation: "top left",
@@ -114,11 +115,11 @@ var BootstrapDatepicker = function () {
     return {
         // public functions
         init: function() {
-            demos(); 
+            demos();
         }
     };
 }();
 
-jQuery(document).ready(function() {    
+jQuery(document).ready(function() {
     BootstrapDatepicker.init();
 });

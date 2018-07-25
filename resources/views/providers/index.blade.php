@@ -110,7 +110,7 @@
                 <div class="m-portlet__head-tools">
                     <ul class="m-portlet__nav">
                         <li class="m-portlet__nav-item">
-                            <a href="{{route('domains.create')}}" class="btn btn-primary m-btn m-btn--pill m-btn--custom m-btn--icon m-btn--air">
+                            <a href="{{route('providers.create')}}" class="btn btn-primary m-btn m-btn--pill m-btn--custom m-btn--icon m-btn--air">
 												<span>
 													<i class="la la-cart-plus"></i>
 													<span>New Record</span>
@@ -186,13 +186,9 @@
                 <table class="table table-striped- table-bordered table-hover table-checkable" id="m_table_1">
                     <thead>
                     <tr>
-                        <th>Url</th>
-                        <th>Domain</th>
-                        <th>Hosting</th>
-                        <th>Deadline</th>
-                        <th>Amount</th>
-                        <th>Payed</th>
-                        <th>Note</th>
+                        <th>Name</th>
+                        <th>Label</th>
+                        <th>Website</th>
                         <th>Actions</th>
                     </tr>
                     </thead>
@@ -218,15 +214,11 @@
             var dataTable = jQuery('#m_table_1').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: '{{route('domains.index')}}',
+                ajax: '{{route('providers.index')}}',
                 columns: [
-                    { data: "url" },
-                    { data: "domain" },
-                    { data: "hosting" },
-                    { data: "deadline" },
-                    { data: "amount" },
-                    { data: "payed" },
-                    { data: "note" },
+                    { data: "name" },
+                    { data: "label" },
+                    { data: "website" },
                     { data: "actions", name: 'action', orderable: false, searchable: false}
                     //{ data: "updated_at" },
                     //{ data: "deleted_at" },
@@ -234,11 +226,14 @@
                 ],
                 columnDefs: [
                     {
-                        targets: [ 1, 2 ],
+                        targets: [ 1],
                         //title: 'url222',
                         render: function(data, type, full, meta) {
-                            var color = (typeof data.label !== 'undefined') ? 'style="background:' + data.label + '"' : '';
-                            return '<span class="m-badge ' + data + ' m-badge--wide" ' + color + '>' + data.name + '</span>';
+
+                            console.log(data);
+
+                            var color = (typeof data !== 'undefined') ? 'style="background:' + data + '"' : '';
+                            return '<span class="m-badge m-badge--wide" ' + color + '>' + data + '</span>';
                         },
                     },
                     /*{
@@ -268,7 +263,7 @@
             $('#m_table_1').on('click', '.delete', function (el) {
                 el.preventDefault();
 
-                if(confirm('Are you sure to delete the service?')){
+                if(confirm('Are you sure to delete the provider?')){
                     var action = this.href;
                     $.ajax(action, {
 

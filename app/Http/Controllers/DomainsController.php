@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Domains;
 use App\Http\Requests\DomainRequest;
-use App\Providers;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\DataTables;
 
@@ -23,12 +22,12 @@ class DomainsController extends Controller
             return DataTables::of($domains)->addColumn('actions', function($user){
                     return implode("", [
                         '<a href="' . route('domains.edit', $user) . '" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill"><i class="la la-edit"></i></a>',
-                        '<a href="' . route('domains.destroy', $user) . '" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill"><i class="la la-trash"></i></a>',
+                        '<a href="' . route('domains.destroy', $user) . '" class="delete btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill"><i class="la la-trash"></i></a>',
                     ]);
                 })->rawColumns(['actions'])->make(true);
         }
 
-        return view('domains.index', compact('domains'));
+        return view('domains.index');
 
     }
 
@@ -39,7 +38,10 @@ class DomainsController extends Controller
      */
     public function create()
     {
-        //
+        $providers = Auth::user()->providers()->get();
+        $domain = new Domains;
+
+        return view('domains.create', compact('domain', 'providers'));
     }
 
     /**
@@ -50,8 +52,9 @@ class DomainsController extends Controller
      */
     public function store(DomainRequest $request)
     {
-        $domain = Auth::user()->domains()->create($request->validated());
-        return $domain;
+        Auth::user()->domains()->create($request->validated());
+
+        return redirect()->route('domains.index');
     }
 
     /**
@@ -62,9 +65,7 @@ class DomainsController extends Controller
      */
     public function show(Domains $domain)
     {
-        $this->authorize('view', $domain);
-        $domain->load('domain', 'hosting');
-        return $domain;
+
     }
 
     /**
@@ -96,7 +97,7 @@ class DomainsController extends Controller
         $this->authorize('update', $domain);
         $domain->update($request->validated());
 
-        return $domain;
+        return redirect()->route('domains.index');
     }
 
     /**
@@ -109,8 +110,11 @@ class DomainsController extends Controller
     {
         $this->authorize('delete', $domain);
 
-        $domain->delete();
+        (bool) $res = $domain->delete();
 
-        return $domain;
+        return [
+            'message'   => $res ? 'Domain deleted' : 'Domain not deleted',
+            'status'    => $res
+        ];
     }
 }

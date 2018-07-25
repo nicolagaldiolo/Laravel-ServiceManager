@@ -14,6 +14,8 @@
 
     <!--begin::Web font -->
     <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js"></script>
+
+
     <script>
         WebFont.load({
             google: {
@@ -41,6 +43,8 @@
     <link href="{{ asset('theme_assets/demo/default/base/style.bundle.css')}}" rel="stylesheet" type="text/css"/>
 
     <!--end::Base Styles -->
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/2.5.3/css/bootstrap-colorpicker.min.css" rel="stylesheet" type="text/css"/>
 
 
     <!-- Styles -->
@@ -3646,9 +3650,12 @@
     <!--end::Page Snippets -->
     <script src="{{ asset('theme_assets/demo/default/custom/crud/forms/validation/form-controls.js')}}" type="text/javascript"></script>
     <script src="{{ asset('theme_assets/demo/default/custom/crud/forms/widgets/select2.js')}}" type="text/javascript"></script>
-    <script src="{{ asset('theme_assets/demo/default/custom/crud/forms/widgets/bootstrap-datepicker.js')}}" type="text/javascript"></script>
+    <!--<script src="{{ asset('theme_assets/demo/default/custom/crud/forms/widgets/bootstrap-datepicker.js')}}" type="text/javascript"></script>-->
+    <script src="{{ asset('theme_assets/demo/default/custom/crud/forms/widgets/bootstrap-datetimepicker.js')}}" type="text/javascript"></script>
 
     <script src="{{ asset('theme_assets/demo/default/custom/crud/forms/widgets/input-mask.js')}}" type="text/javascript"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/2.5.3/js/bootstrap-colorpicker.min.js"></script>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>

@@ -75,6 +75,16 @@ module.exports = __webpack_require__(2);
 /* 1 */
 /***/ (function(module, exports) {
 
+
+/**
+ * First we will load all of this project's JavaScript dependencies which
+ * includes Vue and other libraries. It is a great starting point when
+ * building robust, powerful web applications using Vue and Laravel.
+ */
+
+//require('bootstrap-colorpicker');
+
+
 //== Class Definition
 var HostingManager = function ($) {
 
@@ -96,11 +106,16 @@ var HostingManager = function ($) {
         $('.formValidate').validate();
     };
 
+    var general = function general() {
+        $('#mycp').colorpicker();
+    };
+
     //== Public Functions
     return {
         // public functions
         init: function init() {
             handleForms();
+            general();
         }
     };
 }(jQuery);
