@@ -14,12 +14,12 @@ class Providers extends Model
     }
 
     // Ha molti Domini
-    public function domainsDomain(){
+    public function domains(){
         return $this->hasMany(Domains::class, 'domain', 'id', 'providers');
     }
 
     // Ha molti Hosting
-    public function domainshosting(){
+    public function hostings(){
         return $this->hasMany(Domains::class, 'hosting', 'id', 'providers');
     }
 }

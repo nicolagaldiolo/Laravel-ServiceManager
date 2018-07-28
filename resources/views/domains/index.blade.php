@@ -237,6 +237,7 @@
                         targets: [ 1, 2 ],
                         //title: 'url222',
                         render: function(data, type, full, meta) {
+                            if(data == null) return data;
                             var color = (typeof data.label !== 'undefined') ? 'style="background:' + data.label + '"' : '';
                             return '<span class="m-badge ' + data + ' m-badge--wide" ' + color + '>' + data.name + '</span>';
                         },

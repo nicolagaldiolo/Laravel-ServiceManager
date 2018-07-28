@@ -91,3 +91,14 @@
 
 
 </div>
+
+<div class="m-portlet__foot m-portlet__foot--fit">
+    <div class="m-form__actions m-form__actions">
+        <div class="row">
+            <div class="col-lg-9 ml-lg-auto">
+                <button type="submit" class="btn btn-success">Save</button>
+                <a href="{{route('providers.index')}}" class="btn btn-secondary">Cancel</a>
+            </div>
+        </div>
+    </div>
+</div>
