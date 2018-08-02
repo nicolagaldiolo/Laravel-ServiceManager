@@ -19,7 +19,8 @@ class SeedFakeData extends Seeder
                 'name' => env('TESTUSER'),
                 'email' => env('TESTEMAIL'),
                 'password' => bcrypt(env('TESTPASS')),
-                'is_verified' => 1
+                'is_verified' => 1,
+                'role' => env('USER_ADMIN_ROLE'),
             ]
         );
 

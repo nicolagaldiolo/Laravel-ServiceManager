@@ -62,10 +62,14 @@ class User extends Authenticatable implements JWTSubject
         return [];
     }
 
+    public function isAdmin(){
+        return $this->role == env('USER_ADMIN_ROLE');
+    }
+
 
     public function getAvatarAttribute($avatar)
     {
-        return ($avatar) ? 'storage/' . $avatar : Avatar::create($this->name)->toBase64();
+        return ($avatar) ? '/storage/' . $avatar : Avatar::create($this->name)->toBase64();
     }
 
     public function setAvatarAttribute($avatar)

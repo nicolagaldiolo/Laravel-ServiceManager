@@ -16,9 +16,15 @@ class UserPolicy
      * @param  \App\Domains  $domains
      * @return mixed
      */
+
+    public function index(User $currentUser)
+    {
+        return $currentUser->isAdmin();
+    }
+
     public function view(User $currentUser, User $user)
     {
-        return $currentUser->id === $user->id;
+        return $currentUser->id === $user->id || $currentUser->isAdmin();
     }
 
     /**
@@ -27,9 +33,9 @@ class UserPolicy
      * @param  \App\User  $user
      * @return mixed
      */
-    public function create(User $user)
+    public function create(User $currentUser)
     {
-        //
+        return $currentUser->isAdmin();
     }
 
     /**
@@ -41,7 +47,7 @@ class UserPolicy
      */
     public function update(User $currentUser, User $user)
     {
-        return $currentUser->id === $user->id;
+        return $currentUser->id === $user->id || $currentUser->isAdmin();
     }
 
     /**
@@ -53,6 +59,6 @@ class UserPolicy
      */
     public function delete(User $currentUser, User $user)
     {
-        return $currentUser->id === $user->id;
+        return $currentUser->id === $user->id || $currentUser->isAdmin();
     }
 }

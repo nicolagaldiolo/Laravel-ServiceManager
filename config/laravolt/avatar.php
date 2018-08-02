@@ -28,16 +28,16 @@ return [
     'shape' => 'circle',
 
     // Image width, in pixel
-    'width'    => 500,
+    'width'    => 200,
 
     // Image height, in pixel
-    'height'   => 500,
+    'height'   => 200,
 
     // Number of characters used as initials. If name consists of single word, the first N character will be used
     'chars'    => 2,
 
     // font size
-    'fontSize' => 400,
+    'fontSize' => 50,
 
     // convert initial letter in uppercase
     'uppercase' => false,
@@ -71,12 +71,12 @@ return [
     ],
 
     'border'    => [
-        'size'  => 1,
+        'size'  => 0,
 
         // border color, available value are:
         // 'foreground' (same as foreground color)
         // 'background' (same as background color)
         // or any valid hex ('#aabbcc')
-        'color' => 'foreground',
+        'color' => 'background',
     ],
 ];

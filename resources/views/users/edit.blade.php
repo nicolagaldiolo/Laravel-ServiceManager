@@ -110,7 +110,7 @@
                     </div>
 
 
-                    <form method="POST" action="{{route('user.update', $user)}}" class="m-form m-form--fit m-form--label-align-right" enctype="multipart/form-data">
+                    <form method="POST" action="{{route('users.update', $user)}}" class="m-form m-form--fit m-form--label-align-right" enctype="multipart/form-data">
                         @csrf
                         @method('PATCH')
 
@@ -126,7 +126,7 @@
                                         <label class="custom-file-label" for="customFile">Choose file</label>
 
                                         <div>
-                                        <img src="{{$user->avatar}}" style="display:block; width:100%; max-width: 100px; border-radius: 50%;" />
+                                        <img src="{{$user->avatar}}" style="display:block; width:100%; max-width: 80px; border-radius: 50%;" />
                                         </div>
 
                                         <span class="m-form__help">Please enter your contact number</span>

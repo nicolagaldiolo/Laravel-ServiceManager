@@ -18,5 +18,5 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/', 'DashboardController@index')->name('dashboard');
     Route::resource('domains', 'DomainsController')->except('show');
     Route::resource('providers', 'ProvidersController')->except('show');
-    Route::resource('user', 'UserController')->except('index', 'create', 'store', 'show');
+    Route::resource('users', 'UserController')->except('show');
 });

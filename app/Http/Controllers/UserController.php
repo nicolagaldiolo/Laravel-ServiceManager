@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UserRequest;
 use App\User;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\Auth;
 use Storage;
 
 class UserController extends Controller
@@ -16,7 +18,21 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $this->authorize('index', Auth::user());
+
+        $users = User::get();
+
+        if(request()->wantsJson() || request()->expectsJson()) {
+            return DataTables::of($users)->addColumn('actions', function($user){
+                return implode("", [
+                    '<a href="' . route('users.edit', $user) . '" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill"><i class="la la-edit"></i></a>',
+                    '<a href="' . route('users.destroy', $user) . '" class="delete btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill"><i class="la la-trash"></i></a>',
+                ]);
+            })->rawColumns(['actions'])->make(true);
+        }
+
+        return view('users.index');
+
     }
 
     /**
@@ -61,7 +77,7 @@ class UserController extends Controller
     {
         $this->authorize('view', $user);
 
-        return view('user.edit', compact('user'));
+        return view('users.edit', compact('user'));
     }
 
     /**

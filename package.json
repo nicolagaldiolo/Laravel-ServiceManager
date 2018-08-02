@@ -20,6 +20,7 @@
         "vue": "^2.5.7"
     },
     "dependencies": {
-        "bootstrap-colorpicker": "^3.0.0"
+        "bootstrap-colorpicker": "^3.0.0",
+        "puppeteer": "^1.6.1"
     }
 }
