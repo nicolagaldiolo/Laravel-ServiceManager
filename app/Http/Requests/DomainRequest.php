@@ -37,7 +37,7 @@ class DomainRequest extends FormRequest
             'hosting'   => 'sometimes|exists:providers,id',
             'deadline'  => 'required|date',
             'amount'    => 'required',
-            'payed'     => 'sometimes|boolean',
+            'payed'     => 'required|boolean',
             'note'      => 'sometimes|max:255'
         ];
     }

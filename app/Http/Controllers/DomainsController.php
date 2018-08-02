@@ -6,6 +6,7 @@ use App\Domains;
 use App\Http\Requests\DomainRequest;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\DataTables;
+use Spatie\Browsershot\Browsershot;
 
 class DomainsController extends Controller
 {
@@ -76,6 +77,9 @@ class DomainsController extends Controller
      */
     public function edit(Domains $domain)
     {
+
+        //"Fit should be one of `contain`, `max`, `fill`, `stretch`, `crop`"
+        //Browsershot::url($domain->url)->windowSize(1920, 1080)->fit('fill', 640, 480)->save('storage/domains/' . $domain->id . '.png');
         $this->authorize('view', $domain);
 
         $providers = Auth::user()->providers()->get();

@@ -95,7 +95,7 @@
             <div class="m-alert__text">
                 DataTables has the ability to read data from virtually any JSON data source that can be obtained by Ajax. This can be done, in its most simple form, by setting the ajax option to the address of the JSON data source. See official documentation
                 <a
-                    href="https://datatables.net/examples/data_sources/ajax.html" target="_blank">here</a>.
+                        href="https://datatables.net/examples/data_sources/ajax.html" target="_blank">here</a>.
             </div>
         </div>
         <div class="m-portlet m-portlet--mobile">
@@ -186,13 +186,9 @@
                 <table class="table table-striped- table-bordered table-hover table-checkable" id="m_table_1">
                     <thead>
                     <tr>
-                        <th>Url</th>
-                        <th>Domain</th>
-                        <th>Hosting</th>
-                        <th>Deadline</th>
-                        <th>Amount</th>
-                        <th>Payed</th>
-                        <th>Note</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Role</th>
                         <th>Actions</th>
                     </tr>
                     </thead>
@@ -218,22 +214,18 @@
             var dataTable = jQuery('#m_table_1').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: '{{route('domains.index')}}',
+                ajax: '{{route('users.index')}}',
                 columns: [
-                    { data: "url" },
-                    { data: "domain" },
-                    { data: "hosting" },
-                    { data: "deadline" },
-                    { data: "amount" },
-                    { data: "payed" },
-                    { data: "note" },
+                    { data: "name" },
+                    { data: "email" },
+                    { data: "role" },
                     { data: "actions", name: 'action', orderable: false, searchable: false}
                     //{ data: "updated_at" },
                     //{ data: "deleted_at" },
 
                 ],
                 columnDefs: [
-                    {
+                    /*{
                         targets: [ 1, 2 ],
                         //title: 'url222',
                         render: function(data, type, full, meta) {
@@ -241,7 +233,7 @@
                             var color = (typeof data.label !== 'undefined') ? 'style="background:' + data.label + '"' : '';
                             return '<span class="m-badge ' + data + ' m-badge--wide" ' + color + '>' + data.name + '</span>';
                         },
-                    },
+                    },*/
                     /*{
                         targets: -1,
                         title: 'Actions',
