@@ -15,6 +15,21 @@
                     @endif
 
                     You are logged in!
+
+
+                        @if($service == 'facebook')
+                            <div class="title m-b-md">
+                                Welcome {{ $details->user['name']}} ! <br> Your email is : {{
+    $details->user['email'] }} <br> You are {{ $details->user['gender'] }}.
+                            </div>
+                        @endif
+
+                        @if($service == 'github')
+                            <div class="title m-b-md">
+                                Welcome {{ $details->user['name']}} ! <br> Your email is : {{
+    $details->user['email'] }}
+                            </div>
+                        @endif
                 </div>
             </div>
         </div>

@@ -2,6 +2,8 @@
 
 namespace App;
 
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Image;
 use Laravolt\Avatar\Facade as Avatar;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
@@ -17,7 +19,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'is_verified', 'avatar'
+        'name', 'email', 'password', 'is_verified', 'avatar', 'role'
     ];
 
     /**
@@ -69,17 +71,28 @@ class User extends Authenticatable implements JWTSubject
 
     public function getAvatarAttribute($avatar)
     {
-        return ($avatar) ? '/storage/' . $avatar : Avatar::create($this->name)->toBase64();
+        return ($avatar) ? '/storage/' . $avatar : '/storage/avatar/' . $this->id . '.png';
     }
+
+
 
     public function setAvatarAttribute($avatar)
     {
-
         //Se volessi settare un custom name per il file
         //  $fileName = "avatar_" . $this->id . '.' . $avatar->extension();
         //  $this->attributes['avatar'] = $avatar->storeAs('avatar', $fileName);
+        //dd($avatar);
+        $image = \Intervention\Image\Facades\Image::make($avatar);
+        //$path = $avatar->hashName('avatar');
+        $image->fit(200);
 
-        $this->attributes['avatar'] = $avatar->store('avatar');
+        $filename = 'avatar/' . $this->id . '.png';
+        $image->save(public_path() . '/storage/' . $filename);
+        $this->attributes['avatar'] = $filename;
+
+
+        //$this->attributes['avatar'] = $avatar->fit(100,100)->storeAs('avatar', $this->id . '.png');
+        //$this->attributes['avatar'] = $avatar->store('avatar');
 
     }
 

@@ -114,8 +114,9 @@ class UserController extends Controller
         //$user->avatar = $filePath;
 
         //$user->save();
+        $redirect = (Auth::user()->isAdmin()) ? 'users.index' : 'dashboard';
 
-        return redirect()->route('dashboard');
+        return redirect()->route($redirect);
     }
 
     /**
@@ -127,5 +128,12 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         $this->authorize('delete', $user);
+
+        (bool) $res = $user->delete();
+
+        return [
+            'message'   => $res ? 'Domain deleted' : 'Domain not deleted',
+            'status'    => $res
+        ];
     }
 }

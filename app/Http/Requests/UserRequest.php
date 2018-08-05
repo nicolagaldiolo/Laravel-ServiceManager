@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UserRequest extends FormRequest
 {
@@ -34,7 +35,8 @@ class UserRequest extends FormRequest
         return [
             'name'      => 'sometimes|string',
             'email'     => $email,
-            'avatar'    => 'sometimes|image|mimes:jpeg,bmp,png'
+            'role'      => ['sometimes','required', Rule::in(['user', 'admin'])],
+            //'avatar'    => 'sometimes|image|mimes:jpeg,bmp,png'
         ];
     }
 }
