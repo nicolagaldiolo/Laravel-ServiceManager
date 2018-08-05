@@ -89,10 +89,12 @@
         </div>
     </div>
 
+
+
     <!-- END: Subheader -->
     <div class="m-content">
         <div class="row">
-            <div class="col-lg-12">
+            <div class="col-lg-4">
 
                 <!--begin::Portlet-->
                 <div class="m-portlet">
@@ -103,51 +105,84 @@
 													<i class="la la-gear"></i>
 												</span>
                                 <h3 class="m-portlet__head-text">
-                                    2 Columns Form Layout
+                                    User Avatar
                                 </h3>
                             </div>
                         </div>
                     </div>
 
+                    <!--begin::Form-->
 
-                    <form method="POST" action="{{route('users.update', $user)}}" class="m-form m-form--fit m-form--label-align-right" enctype="multipart/form-data">
+
+                    <!--<div class="m-dropzone dropzone m-dropzone--success" id="m-dropzone-three">
+                        <div class="m-dropzone__msg dz-message needsclick">
+                            <h3 class="m-dropzone__msg-title">Drop files here or click to upload.</h3>
+                            <span class="m-dropzone__msg-desc">Only image, pdf and psd files are allowed for upload</span>
+                        </div>
+                    </div>-->
+
+
+                    <div class="m-form">
+                        <div class="m-portlet__body">
+                            <div class="m-form__section m-form__section--first">
+
+                                <form id="m-dropzone-three" class="m-dropzone dropzone m-dropzone--success" action="{{route('users.avatar.update', $user)}}" method="post" enctype="multipart/form-data">
+                                    @csrf
+                                    @method('PATCH')
+
+                                    <div class="m-dropzone__msg dz-message needsclick">
+                                        <h3 class="m-dropzone__msg-title">Drop files here or click to upload.</h3>
+                                        <span class="m-dropzone__msg-desc">Only image, pdf and psd files are allowed for upload</span>
+                                    </div>
+                                </form>
+
+
+                                <!--<div class="form-group m-form__group">
+                                    <div class="m-dropzone dropzone m-dropzone--success" id="m-dropzone-three">
+                                        <div class="m-dropzone__msg dz-message needsclick">
+                                            <h3 class="m-dropzone__msg-title">Drop files here or click to upload.</h3>
+                                            <span class="m-dropzone__msg-desc">Only image, pdf and psd files are allowed for upload</span>
+                                        </div>
+                                    </div>
+                                </div>-->
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!--end::Form-->
+                </div>
+
+                <!--end::Portlet-->
+
+
+            </div>
+            <div class="col-lg-8">
+
+                <!--begin::Portlet-->
+                <div class="m-portlet">
+                    <div class="m-portlet__head">
+                        <div class="m-portlet__head-caption">
+                            <div class="m-portlet__head-title">
+												<span class="m-portlet__head-icon m--hide">
+													<i class="la la-gear"></i>
+												</span>
+                                <h3 class="m-portlet__head-text">
+                                    Form Sections
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--begin::Form-->
+                    <form class="m-form m-form--fit" action="{{route('users.update', $user)}}" method="post" enctype="multipart/form-data">
                         @csrf
                         @method('PATCH')
 
                         <div class="m-portlet__body">
-                            <div class="form-group m-form__group row">
-                                <div class="col-lg-6">
-
-
-                                    <label for="exampleInputEmail1">File Browser</label>
-
-                                    <div class="custom-file">
-                                        <input type="file" class="custom-file-input" name="avatar">
-                                        <label class="custom-file-label" for="customFile">Choose file</label>
-
-                                        <div>
-                                        <img src="{{$user->avatar}}" style="display:block; width:100%; max-width: 80px; border-radius: 50%;" />
-                                        </div>
-
-                                        <span class="m-form__help">Please enter your contact number</span>
-
-                                        @if ($errors->has('avatar'))
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('avatar') }}</strong>
-                                            </span>
-                                        @endif
-
-                                    </div>
-
-                                </div>
-
-
-
-
-                                <div class="col-lg-6">
-
-                                    <div class="m-form__seperator m-form__seperator--dashed m-form__seperator--space"></div>
-
+                            <div class="m-form__section m-form__section--first">
+                                <div class="form-group m-form__group">
                                     <label class="">Name:</label>
                                     <div class="m-input-icon m-input-icon--left">
                                         <input type="text" name="name" class="form-control m-input required" placeholder="Enter your name" value="{{old('name', $user->name)}}">
@@ -165,7 +200,10 @@
                                             </span>
                                     @endif
 
-                                    <div class="m-form__seperator m-form__seperator--dashed m-form__seperator--space"></div>
+                                </div>
+                                <div class="m-form__seperator m-form__seperator--dashed"></div>
+
+                                <div class="form-group m-form__group">
 
                                     <label class="">Email: *</label>
                                     <div class="m-input-icon m-input-icon--left">
@@ -184,19 +222,40 @@
                                             </span>
                                     @endif
 
-
                                 </div>
-                            </div>
 
+                                @if (Auth::user()->isAdmin())
+                                    <div class="m-form__seperator m-form__seperator--dashed"></div>
+                                    <div class="form-group m-form__group">
+                                        <label class="">Administrator</label>
+                                        <div>
+
+                                            <span class="m-switch m-switch--lg m-switch--icon m-switch--success">
+                                                <label>
+                                                    <input type="hidden" checked="checked" value="user" name="role">
+                                                    <input class="required" type="checkbox" @if(old('role', $user->role) == env('USER_ADMIN_ROLE'))checked="checked" @endif value="{{env('USER_ADMIN_ROLE')}}" name="role">
+                                                    <span></span>
+                                                </label>
+                                            </span>
+                                        </div>
+
+                                        <span class="m-form__help">Please set if this user is administrator.</span>
+
+                                        @if ($errors->has('role'))
+                                            <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $errors->first('role') }}</strong>
+                                                </span>
+                                        @endif
+
+                                    </div>
+                                @endif
+                            </div>
+                            <!--<div class="m-form__seperator m-form__seperator--dashed"></div>-->
                         </div>
                         <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
                             <div class="m-form__actions m-form__actions--solid">
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <button type="submit" class="btn btn-primary">Save</button>
-                                        <button type="reset" class="btn btn-secondary">Cancel</button>
-                                    </div>
-                                </div>
+                                <button type="submit" class="btn btn-primary">Save</button>
+                                <button type="reset" class="btn btn-secondary">Cancel</button>
                             </div>
                         </div>
                     </form>
@@ -208,11 +267,46 @@
             </div>
         </div>
     </div>
+
+
 @stop
 
 @section('scripts')
     @parent
     <script>
+        var DropzoneDemo = function () {
+
+            //== Private functions
+            var demos = function () {
+
+                // file type validation
+                Dropzone.options.mDropzoneThree = {
+                    paramName: "avatar", // The name that will be used to transfer the file
+                    maxFiles: 1,
+                    maxFilesize: 10, // MB
+                    //addRemoveLinks: true,
+                    acceptedFiles: "image/*,application/pdf,.psd",
+                    accept: function(file, done) {
+                        console.log("Invocata");
+                        console.log(file);
+                        if (file.name == "justinbieber.jpg") {
+                            done("Naha, you don't.");
+                        } else {
+                            done();
+                        }
+                    }
+                };
+            }
+
+            return {
+                // public functions
+                init: function() {
+                    demos();
+                }
+            };
+        }();
+
+        DropzoneDemo.init();
 
     </script>
 @stop

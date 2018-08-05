@@ -30,10 +30,13 @@ class UserRegisterListener
     {
         $user = $event->user;
 
-        $verification_code = str_random(30); //Generate verification code
-        DB::table('user_verifications')->insert(['user_id'=>$user->id,'token'=>$verification_code]);
+        //$verification_code = str_random(30); //Generate verification code
+        //DB::table('user_verifications')->insert(['user_id'=>$user->id,'token'=>$verification_code]);
 
-        Mail::to($user->email)->send(new UserRegisterEmail($user, $verification_code));
-        //logger('Log scatenato da Listener: ' . $event->user->name);
+        //Mail::to($user->email)->send(new UserRegisterEmail($user, $verification_code));
+        //Avatar::create('Susilo Bambang Yudhoyono')->save('sample.png');
+
+
+        logger('Log scatenato da Listener: ' . $event->user->name);
     }
 }

@@ -929,9 +929,7 @@
                                         m-dropdown-toggle="click">
                                         <a href="#" class="m-nav__link m-dropdown__toggle">
                                                     <span class="m-topbar__userpic">
-                                                        <img
-                                                            src="{{ asset('theme_assets/app/media/img/users/user4.jpg')}}"
-                                                            class="m--img-rounded m--marginless" alt=""/>
+                                                        <img src="{{Auth::user()->avatar}}" class="m--img-rounded m--marginless" alt=""/>
                                                     </span>
                                             <span class="m-topbar__username m--hide">Nick</span>
                                         </a>
@@ -943,9 +941,7 @@
                                                      style="background: url({{ asset('theme_assets/app/media/img/misc/user_profile_bg.jpg')}}); background-size: cover;">
                                                     <div class="m-card-user m-card-user--skin-dark">
                                                         <div class="m-card-user__pic">
-                                                            <img
-                                                                src="{{ asset('theme_assets/app/media/img/users/user4.jpg')}}"
-                                                                class="m--img-rounded m--marginless" alt=""/>
+                                                            <img src="{{Auth::user()->avatar}}" class="m--img-rounded m--marginless" alt=""/>
 
                                                             <!--
                                                                     <span class="m-type m-type--lg m--bg-danger"><span class="m--font-light">S<span><span>
@@ -1148,7 +1144,7 @@
                                                 </span>
                                 </li>
                                 <li class="m-menu__item " aria-haspopup="true">
-                                    <a href="" class="m-menu__link ">
+                                    <a href="{{route('users.index')}}" class="m-menu__link ">
                                         <i class="m-menu__link-bullet m-menu__link-bullet--dot">
                                             <span></span>
                                         </i>
@@ -1156,7 +1152,7 @@
                                     </a>
                                 </li>
                                 <li class="m-menu__item " aria-haspopup="true">
-                                    <a href="" class="m-menu__link ">
+                                    <a href="{{route('users.create')}}" class="m-menu__link ">
                                         <i class="m-menu__link-bullet m-menu__link-bullet--dot">
                                             <span></span>
                                         </i>
@@ -3371,15 +3367,18 @@
     <!--end::Page Snippets -->
     <script src="{{ asset('theme_assets/demo/default/custom/crud/forms/validation/form-controls.js')}}" type="text/javascript"></script>
     <script src="{{ asset('theme_assets/demo/default/custom/crud/forms/widgets/select2.js')}}" type="text/javascript"></script>
-    <!--<script src="{{ asset('theme_assets/demo/default/custom/crud/forms/widgets/bootstrap-datepicker.js')}}" type="text/javascript"></script>-->
+    <script src="{{ asset('theme_assets/demo/default/custom/crud/forms/widgets/bootstrap-datepicker.js')}}" type="text/javascript"></script>
     <script src="{{ asset('theme_assets/demo/default/custom/crud/forms/widgets/bootstrap-datetimepicker.js')}}" type="text/javascript"></script>
 
     <script src="{{ asset('theme_assets/demo/default/custom/crud/forms/widgets/input-mask.js')}}" type="text/javascript"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/2.5.3/js/bootstrap-colorpicker.min.js"></script>
 
+    {{--<script src="{{ asset('theme_assets/demo/default/custom/crud/forms/widgets/dropzone.js')}}" type="text/javascript"></script>--}}
+
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+
 @show
 
 </body>

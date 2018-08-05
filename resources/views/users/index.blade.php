@@ -186,6 +186,7 @@
                 <table class="table table-striped- table-bordered table-hover table-checkable" id="m_table_1">
                     <thead>
                     <tr>
+                        <th>Avatar</th>
                         <th>Name</th>
                         <th>Email</th>
                         <th>Role</th>
@@ -216,6 +217,7 @@
                 serverSide: true,
                 ajax: '{{route('users.index')}}',
                 columns: [
+                    { data: "avatar" },
                     { data: "name" },
                     { data: "email" },
                     { data: "role" },
@@ -225,43 +227,21 @@
 
                 ],
                 columnDefs: [
-                    /*{
-                        targets: [ 1, 2 ],
+                    {
+                        targets: [0],
                         //title: 'url222',
                         render: function(data, type, full, meta) {
                             if(data == null) return data;
-                            var color = (typeof data.label !== 'undefined') ? 'style="background:' + data.label + '"' : '';
-                            return '<span class="m-badge ' + data + ' m-badge--wide" ' + color + '>' + data.name + '</span>';
+                            return '<img src="' + data + '">';
                         },
-                    },*/
-                    /*{
-                        targets: -1,
-                        title: 'Actions',
-                        orderable: false,
-                        render: function(data, type, full, meta) {
-                            return `
-                        <span class="dropdown">
-                            <a href="#" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown" aria-expanded="true">
-                              <i class="la la-ellipsis-h"></i>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right">
-                                <a class="dropdown-item" href="#"><i class="la la-edit"></i> Edit Details</a>
-                                <a class="dropdown-item" href="#"><i class="la la-leaf"></i> Update Status</a>
-                                <a class="dropdown-item" href="#"><i class="la la-print"></i> Generate Report</a>
-                            </div>
-                        </span>
-                        <a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="View">
-                          <i class="la la-edit"></i>
-                        </a>`;
-                        },
-                    },*/
+                    },
                 ]
             });
 
             $('#m_table_1').on('click', '.delete', function (el) {
                 el.preventDefault();
 
-                if(confirm('Are you sure to delete the service?')){
+                if(confirm('Are you sure to delete this user?')){
                     var action = this.href;
                     $.ajax(action, {
 

@@ -19,4 +19,6 @@ Route::group(['middleware' => 'auth'], function() {
     Route::resource('domains', 'DomainsController')->except('show');
     Route::resource('providers', 'ProvidersController')->except('show');
     Route::resource('users', 'UserController')->except('show');
+
+    Route::patch('/users/{user}/avatar', 'UserAvatarController@update')->name('users.avatar.update');
 });
