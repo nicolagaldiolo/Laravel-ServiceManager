@@ -17,21 +17,13 @@ class UserObserver
 
     public function creating(User $user)
     {
-        //event(new UserRegister($user));
-
+        $user->avatar = Avatar::create($user->name)->getImageObject()->encode('png');
     }
 
     public function created(User $user)
     {
-        // la dimensione la specifico comunque anche nel file di configurazione
-        Avatar::create($user->name)->setDimension(200)->save(public_path() . '/storage/avatar/' . $user->id . '.png', 100); // quality = 100
+
     }
-
-    //public function created(Eloquent $model)
-    //{
-
-    //    if(Input::hasFile('logo')) Image::make(Input::file('logo')->getRealPath())->save(public_path() ."/gfx/product/logo_{$model->id}.png");
-    //}
 
     /**
      * Handle the user "updated" event.

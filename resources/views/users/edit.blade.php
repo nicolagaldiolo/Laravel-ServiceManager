@@ -280,7 +280,7 @@
             var demos = function () {
 
                 // file type validation
-                Dropzone.options.mDropzoneThree = {
+                var drop = Dropzone.options.mDropzoneThree = {
                     paramName: "avatar", // The name that will be used to transfer the file
                     maxFiles: 1,
                     maxFilesize: 10, // MB
@@ -296,6 +296,15 @@
                         }
                     }
                 };
+
+                drop.on("addedfile", function(file) {
+                    var reader = new FileReader();
+                    reader.onload = function(event) {
+                        // event.target.result contains base64 encoded image
+                        console.log(event.target.result);
+                    };
+                    reader.readAsDataURL(file);
+                });
             }
 
             return {

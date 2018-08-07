@@ -76,7 +76,10 @@ class UserAvatarController extends Controller
         $this->authorize('update', $user);
 
         if ($request->hasFile('avatar')){
-            $user->update(['avatar' => $request->file('avatar')]);
+            $user->update([
+                'avatar' => $request->file('avatar'),
+                'custom_avatar' => true,
+            ]);
         }
 
         //$user->update($request->validated());

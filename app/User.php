@@ -7,6 +7,8 @@ use Intervention\Image\Image;
 use Laravolt\Avatar\Facade as Avatar;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Hash;
+
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable implements JWTSubject
@@ -19,7 +21,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'is_verified', 'avatar', 'role'
+        'name', 'email', 'password', 'is_verified', 'avatar', 'custom_avatar', 'role'
     ];
 
     /**
@@ -76,7 +78,7 @@ class User extends Authenticatable implements JWTSubject
 
     public function getAvatarAttribute($avatar)
     {
-        return ($avatar) ? '/storage/' . $avatar : '/storage/avatar/' . $this->id . '.png';
+        return ($avatar) ? '/storage/avatar/' . $avatar : '';
     }
 
 
@@ -87,12 +89,29 @@ class User extends Authenticatable implements JWTSubject
         //  $fileName = "avatar_" . $this->id . '.' . $avatar->extension();
         //  $this->attributes['avatar'] = $avatar->storeAs('avatar', $fileName);
         //dd($avatar);
+        //$old_file =
+
+            try{
+                unlink(public_path() . '/storage/avatar/' . $this->attributes['avatar']);
+            }catch (\Exception $e){
+
+            }
+
+
+        //if (Storage::exists($file)) {
+        //
+        //}
+
         $image = \Intervention\Image\Facades\Image::make($avatar);
         //$path = $avatar->hashName('avatar');
         $image->fit(200);
 
-        $filename = 'avatar/' . $this->id . '.png';
-        $image->save(public_path() . '/storage/' . $filename);
+        $hashed_random_password = Hash::make(str_random(4));
+        //$filename = time() . '.' . $avatar->getClientOriginalExtension();
+        //Image::make($avatar)->resize(300, 300)->save( public_path('/uploads/avatars/' . $filename) );
+
+        $filename = uniqid() . ".png";
+        $image->save(public_path() . '/storage/avatar/' . $filename);
         $this->attributes['avatar'] = $filename;
 
 
