@@ -37,10 +37,49 @@
                 </div>
 
             </div>
+
+
+
+
             <div class="m-login__form-action">
                 <button id="m_login_signin_submit" class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air m-login__btn m-login__btn--primary">{{ __('Sign in') }}</button>
             </div>
         </form>
+
+        <div class="m-login__form-divider">
+            <div class="m-divider">
+                <span></span>
+                <span>OR</span>
+                <span></span>
+            </div>
+        </div>
+        <div class="m-login__options">
+            <a href="{{route('social.login', 'facebook')}}" class="btn btn-primary m-btn m-btn--pill  m-btn  m-btn m-btn--icon">
+									<span>
+										<i class="fab fa-facebook-f"></i>
+										<span>Facebook</span>
+									</span>
+            </a>
+            <a href="{{route('social.login', 'twitter')}}" class="btn btn-info m-btn m-btn--pill  m-btn  m-btn m-btn--icon">
+									<span>
+										<i class="fab fa-twitter"></i>
+										<span>Twitter</span>
+									</span>
+            </a>
+            <a href="{{route('social.login', 'google')}}" class="btn btn-danger m-btn m-btn--pill  m-btn  m-btn m-btn--icon">
+									<span>
+										<i class="fab fa-google"></i>
+										<span>Google</span>
+									</span>
+            </a>
+            <a href="{{route('social.login', 'github')}}" class="btn btn-secondary m-btn m-btn--pill  m-btn  m-btn m-btn--icon">
+									<span>
+										<i class="fab fa-github"></i>
+										<span>Github</span>
+									</span>
+            </a>
+        </div>
+
     </div>
     <!-- end:: Page -->
 

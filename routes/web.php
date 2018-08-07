@@ -14,6 +14,9 @@
 
 Auth::routes();
 
+Route::get('login/{provider}',          'Auth\SocialAccountController@redirectToProvider')->name('social.login');
+Route::get('login/{provider}/callback', 'Auth\SocialAccountController@handleProviderCallback')->name('social.login.callback');
+
 Route::group(['middleware' => 'auth'], function() {
     Route::get('/', 'DashboardController@index')->name('dashboard');
     Route::resource('domains', 'DomainsController')->except('show');
