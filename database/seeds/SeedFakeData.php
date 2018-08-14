@@ -11,7 +11,6 @@ class SeedFakeData extends Seeder
      */
     public function run()
     {
-
         DB::statement('SET FOREIGN_KEY_CHECKS=0');
 
         $me = App\User::create(
@@ -24,15 +23,15 @@ class SeedFakeData extends Seeder
             ]
         );
 
-        $users = factory(App\User::class, 4)->create();
+        $users = factory(App\User::class, 1)->create();
 
         $users->push($me);
 
         $users->each(function($user){
-            $providers = factory(App\Providers::class, 5)->create([
+            $providers = factory(App\Providers::class, 1)->create([
                 'user_id' => $user->id
             ]);
-            factory(App\Domains::class, 10)->create([
+            factory(App\Domains::class, 1)->create([
                 'domain' => collect($providers)->random()->id,
                 'hosting' => collect($providers)->random()->id,
                 'user_id' => $user->id

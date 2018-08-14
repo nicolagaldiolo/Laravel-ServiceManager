@@ -33,6 +33,10 @@
             @endif
         </div>
 
+        @if(!empty($domain->screenshoot))
+            <img src="{{$domain->screenshoot}}">
+        @endif
+
 
     </div>
 

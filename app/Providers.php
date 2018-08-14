@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use File;
 
 class Providers extends Model
 {
@@ -22,4 +23,18 @@ class Providers extends Model
     public function hostings(){
         return $this->hasMany(Domains::class, 'hosting', 'id', 'providers');
     }
+
+
+    public function getScreenshootAttribute($screenshoot)
+    {
+        return ($screenshoot) ? '/storage/' . $screenshoot : '';
+    }
+
+    public function setScreenshootAttribute($screenshoot)
+    {
+        if(File::exists(public_path($this->screenshoot))) File::delete(public_path($this->screenshoot)); // elimino il vecchio file se esiste
+
+        $this->attributes['screenshoot'] = $screenshoot;
+    }
+
 }

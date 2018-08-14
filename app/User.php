@@ -3,11 +3,12 @@
 namespace App;
 
 use Illuminate\Support\Facades\Storage;
-use Intervention\Image\Image;
+use Intervention\Image\Facades\Image;
 use Laravolt\Avatar\Facade as Avatar;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
+use File;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -78,45 +79,28 @@ class User extends Authenticatable implements JWTSubject
 
     public function getAvatarAttribute($avatar)
     {
-        return ($avatar) ? '/storage/avatar/' . $avatar : '';
+        return ($avatar) ? '/storage/' . $avatar : '';
     }
-
 
 
     public function setAvatarAttribute($avatar)
     {
-        //Se volessi settare un custom name per il file
-        //  $fileName = "avatar_" . $this->id . '.' . $avatar->extension();
-        //  $this->attributes['avatar'] = $avatar->storeAs('avatar', $fileName);
-        //dd($avatar);
-        //$old_file =
 
-            try{
-                unlink(public_path() . '/storage/avatar/' . $this->attributes['avatar']);
-            }catch (\Exception $e){
+        if(File::exists(public_path($this->avatar))) File::delete(public_path($this->avatar)); // elimino il vecchio file se esiste
 
+        try{ // il metodo hashName è un metodo dell'oggetto UploadedFile, quindi quando non ce l'ho disponibile genero il path a mano
+            if(is_string($avatar)){
+                throw new \Exception('Avatar is a string');
+            }else{
+                $path = $avatar->hashName('avatars');
             }
+        }catch (\Exception $e){
+            $path = 'avatars/' . uniqid() .".png";
+        }
 
-
-        //if (Storage::exists($file)) {
-        //
-        //}
-
-        $image = \Intervention\Image\Facades\Image::make($avatar);
-        //$path = $avatar->hashName('avatar');
-        $image->fit(200);
-
-        $hashed_random_password = Hash::make(str_random(4));
-        //$filename = time() . '.' . $avatar->getClientOriginalExtension();
-        //Image::make($avatar)->resize(300, 300)->save( public_path('/uploads/avatars/' . $filename) );
-
-        $filename = uniqid() . ".png";
-        $image->save(public_path() . '/storage/avatar/' . $filename);
-        $this->attributes['avatar'] = $filename;
-
-
-        //$this->attributes['avatar'] = $avatar->fit(100,100)->storeAs('avatar', $this->id . '.png');
-        //$this->attributes['avatar'] = $avatar->store('avatar');
+        $image = Image::make($avatar)->fit(200);
+        Storage::put($path, (string) $image->encode());
+        $this->attributes['avatar'] = $path;
 
     }
 

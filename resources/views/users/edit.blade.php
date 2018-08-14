@@ -130,6 +130,8 @@
                                     @csrf
                                     @method('PATCH')
 
+                                    <input type="hidden" name="custom_avatar" value="1">
+
                                     <div class="m-dropzone__msg dz-message needsclick">
                                         <h3 class="m-dropzone__msg-title">Drop files here or click to upload.</h3>
                                         <span class="m-dropzone__msg-desc">Only image, pdf and psd files are allowed for upload</span>
@@ -296,15 +298,6 @@
                         }
                     }
                 };
-
-                drop.on("addedfile", function(file) {
-                    var reader = new FileReader();
-                    reader.onload = function(event) {
-                        // event.target.result contains base64 encoded image
-                        console.log(event.target.result);
-                    };
-                    reader.readAsDataURL(file);
-                });
             }
 
             return {

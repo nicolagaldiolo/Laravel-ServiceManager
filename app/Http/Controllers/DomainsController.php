@@ -6,6 +6,7 @@ use App\Domains;
 use App\Http\Requests\DomainRequest;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\DataTables;
+use Spatie\Browsershot\Browsershot;
 
 class DomainsController extends Controller
 {

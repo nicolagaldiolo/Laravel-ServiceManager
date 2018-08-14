@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UserRequest;
+
+use App\Http\Requests\UserAvatarRequest;
 use App\User;
 use Illuminate\Http\Request;
-use Yajra\DataTables\DataTables;
-use Illuminate\Support\Facades\Auth;
-use Storage;
 
 class UserAvatarController extends Controller
 {
@@ -71,20 +69,10 @@ class UserAvatarController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(UserAvatarRequest $request, User $user)
     {
         $this->authorize('update', $user);
-
-        if ($request->hasFile('avatar')){
-            $user->update([
-                'avatar' => $request->file('avatar'),
-                'custom_avatar' => true,
-            ]);
-        }
-
-        //$user->update($request->validated());
-
-
+        $user->update($request->validated());
     }
 
     /**

@@ -61,6 +61,10 @@
             @endif
         </div>
 
+        @if(!empty($provider->screenshoot))
+        <img src="{{$provider->screenshoot}}">
+        @endif
+
 
     </div>
 

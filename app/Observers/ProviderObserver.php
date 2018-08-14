@@ -3,10 +3,23 @@
 namespace App\Observers;
 
 use App\Providers;
-use Spatie\Browsershot\Browsershot;
+use App\Jobs\GenerateProvidersScreenshoot;
+use File;
 
 class ProviderObserver
 {
+
+    /**
+     * Handle to the domains "creating" event.
+     *
+     * @param  \App\Domains  $domains
+     * @return void
+     */
+    public function creating(Providers $providers)
+    {
+        //
+    }
+
     /**
      * Handle to the providers "created" event.
      *
@@ -15,7 +28,8 @@ class ProviderObserver
      */
     public function created(Providers $providers)
     {
-        //Browsershot::url($providers->website)->windowSize(1920, 1080)->fit('fill', 640, 480)->save(public_path() . '/storage/providers/' . $providers->id . '.png');
+        // Chiamo il job
+        GenerateProvidersScreenshoot::dispatch($providers);
     }
 
     /**
@@ -29,6 +43,11 @@ class ProviderObserver
         //
     }
 
+    public function deleting(Providers $providers)
+    {
+        //
+    }
+
     /**
      * Handle the providers "deleted" event.
      *
@@ -37,6 +56,6 @@ class ProviderObserver
      */
     public function deleted(Providers $providers)
     {
-        //
+        if(File::exists(public_path($providers->screenshoot))) File::delete(public_path($providers->screenshoot));
     }
 }

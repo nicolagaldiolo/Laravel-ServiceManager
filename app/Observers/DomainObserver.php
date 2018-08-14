@@ -3,10 +3,23 @@
 namespace App\Observers;
 
 use App\Domains;
-use Spatie\Browsershot\Browsershot;
+use App\Jobs\GenerateDomainsScreenshoot;
+use File;
 
 class DomainObserver
 {
+
+    /**
+     * Handle to the domains "creating" event.
+     *
+     * @param  \App\Domains  $domains
+     * @return void
+     */
+    public function creating(Domains $domains)
+    {
+        //
+    }
+
     /**
      * Handle to the domains "created" event.
      *
@@ -15,9 +28,8 @@ class DomainObserver
      */
     public function created(Domains $domains)
     {
-        //"Fit should be one of `contain`, `max`, `fill`, `stretch`, `crop`"
-
-        //Browsershot::url($domains->url)->windowSize(1920, 1080)->fit('fill', 640, 480)->save(public_path() . '/storage/domains/' . $domains->id . '.png');
+        // Chiamo il job
+        GenerateDomainsScreenshoot::dispatch($domains);
     }
 
     /**
@@ -26,7 +38,13 @@ class DomainObserver
      * @param  \App\Domains  $domains
      * @return void
      */
+
     public function updated(Domains $domains)
+    {
+        //
+    }
+
+    public function deleting(Domains $domains)
     {
         //
     }
@@ -39,6 +57,6 @@ class DomainObserver
      */
     public function deleted(Domains $domains)
     {
-        //
+        if(File::exists(public_path($domains->screenshoot))) File::delete(public_path($domains->screenshoot));
     }
 }
