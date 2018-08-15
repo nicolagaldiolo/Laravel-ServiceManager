@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Domains;
+use App\Providers;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
@@ -10,20 +11,20 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Spatie\Browsershot\Browsershot;
 
-class GenerateDomainsScreenshoot implements ShouldQueue
+class GetScreenshoot implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public $domains;
+    public $object;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct(Domains $domains)
+    public function __construct($object)
     {
-        $this->domains = $domains;
+        $this->object = $object;
     }
 
     /**
@@ -31,20 +32,32 @@ class GenerateDomainsScreenshoot implements ShouldQueue
      *
      * @return void
      */
-    public function handle()
+    public function handle() // ho un unico Job che uso per il modello Domains e Providers
     {
         try {
-            $path = 'domains/' . uniqid() . ".png";
+
+            if($this->object instanceof Domains){
+                $folder = 'domains/';
+                $url = $this->object->url;
+            }
+
+            if($this->object instanceof Providers){
+                $folder = 'providers/';
+                $url = $this->object->website;
+            }
+
+            $path = $folder . uniqid() . ".png";
             //"Fit should be one of `contain`, `max`, `fill`, `stretch`, `crop`"
 
-            Browsershot::url($this->domains->url)
+            Browsershot::url($url)
                 ->dismissDialogs()
                 ->waitUntilNetworkIdle()
                 ->windowSize(1920, 1080)
                 ->fit('fill', 640, 480)
                 ->save(public_path() . '/storage/' . $path);
 
-            $this->domains->update(['screenshoot' => $path]); // setto il nuovo path a db
+            $this->object->update(['screenshoot' => $path]); // setto il nuovo path a db
+
         }catch (\Exception $e){
             //logger('Errore creazione screenshoot domain: ' . $e);
         }

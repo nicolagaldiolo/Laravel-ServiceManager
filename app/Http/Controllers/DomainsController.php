@@ -19,6 +19,8 @@ class DomainsController extends Controller
     {
         $domains = Auth::user()->domains()->with('domain', 'hosting')->get();
 
+        //dd($domains);
+
         if(request()->wantsJson() || request()->expectsJson()) {
             return DataTables::of($domains)->addColumn('actions', function($user){
                     return implode("", [

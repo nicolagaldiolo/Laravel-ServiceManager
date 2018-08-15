@@ -17,8 +17,8 @@ class CreateDomainsTable extends Migration
             $table->increments('id');
             $table->string('url')->unique();
             $table->string('screenshoot')->nullable();
-            $table->unsignedInteger('domain')->index()->nullable();
-            $table->unsignedInteger('hosting')->index()->nullable();
+            $table->unsignedInteger('domain_id')->index();
+            $table->unsignedInteger('hosting_id')->index();
             $table->dateTime('deadline');
             $table->decimal('amount', 10, 2);
             $table->boolean('payed');
@@ -28,8 +28,8 @@ class CreateDomainsTable extends Migration
 
             //foreignkey
             $table->foreign('user_id')->on('users')->references('id')->onDelete('cascade')->onUpdate('cascade');
-            //$table->foreign('domain')->on('providers')->references('id')->onDelete('set null')->onUpdate('cascade');
-            //$table->foreign('hosting')->on('providers')->references('id')->onDelete('set null')->onUpdate('cascade');
+            $table->foreign('domain_id')->on('providers')->references('id')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('hosting_id')->on('providers')->references('id')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

@@ -22,7 +22,9 @@ class DashboardController extends Controller
         $providers_sum = Auth()->user()->providers()->count();
         $user_sum = User::count();
 
-        return view('dashboard.index', compact('domains_sum', 'providers_sum', 'user_sum'));
+        $domains_calendar = Auth()->user()->domains()->get();
+
+        return view('dashboard.index', compact('domains_sum', 'providers_sum', 'user_sum', 'domains_calendar'));
 
     }
 

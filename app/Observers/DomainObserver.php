@@ -3,7 +3,7 @@
 namespace App\Observers;
 
 use App\Domains;
-use App\Jobs\GenerateDomainsScreenshoot;
+use App\Events\GenerateScreen;
 use File;
 
 class DomainObserver
@@ -28,8 +28,7 @@ class DomainObserver
      */
     public function created(Domains $domains)
     {
-        // Chiamo il job
-        GenerateDomainsScreenshoot::dispatch($domains);
+        event(new GenerateScreen($domains));
     }
 
     /**

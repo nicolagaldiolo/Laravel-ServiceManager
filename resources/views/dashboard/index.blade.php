@@ -6,7 +6,6 @@
         <div class="d-flex align-items-center">
             <div class="mr-auto">
                 <h3 class="m-subheader__title ">Dashboard</h3>
-
                 <ul>
                     <li>Servizi attivi: {{$domains_sum}}</li>
                     <li>Fornitori attivi: {{$providers_sum}}</li>
@@ -2814,10 +2813,105 @@
         </div>
 
         <!--End::Section-->
+
+        <!--Begin::Section-->
+        <div class="row">
+            <div class="col-lg-12">
+
+                <!--begin::Portlet-->
+                <div class="m-portlet" id="m_portlet">
+                    <div class="m-portlet__head">
+                        <div class="m-portlet__head-caption">
+                            <div class="m-portlet__head-title">
+												<span class="m-portlet__head-icon">
+													<i class="flaticon-map-location"></i>
+												</span>
+                                <h3 class="m-portlet__head-text">
+                                    Domains
+                                </h3>
+                            </div>
+                        </div>
+                        <div class="m-portlet__head-tools">
+                            <ul class="m-portlet__nav">
+                                <li class="m-portlet__nav-item">
+                                    <a href="{{route('domains.create')}}" class="btn btn-accent m-btn m-btn--custom m-btn--icon m-btn--pill m-btn--air">
+														<span>
+															<i class="la la-plus"></i>
+															<span>Add Event</span>
+														</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="m-portlet__body">
+                        <div id="m_calendar"></div>
+                    </div>
+                </div>
+
+                <!--end::Portlet-->
+            </div>
+        </div>
+        <!--End::Section-->
+
+
     </div>
 @stop
 
 @section('scripts')
     @parent
+
+    <script>
+        jQuery(document).ready(function() {
+            var calendarInit = function($) {
+                if ($('#m_calendar').length === 0) {
+                    return;
+                }
+
+                var todayDate = moment().startOf('day');
+                var YM = todayDate.format('YYYY-MM');
+                var YESTERDAY = todayDate.clone().subtract(1, 'day').format('YYYY-MM-DD');
+                var TODAY = todayDate.format('YYYY-MM-DD');
+                var TOMORROW = todayDate.clone().add(1, 'day').format('YYYY-MM-DD');
+
+                $('#m_calendar').fullCalendar({
+                    isRTL: mUtil.isRTL(),
+                    header: {
+                        left: 'prev,next today',
+                        center: 'title',
+                        right: 'month,agendaWeek,agendaDay,listWeek'
+                    },
+                    editable: true,
+                    eventLimit: true, // allow "more" link when too many events
+                    navLinks: true,
+                    //defaultDate: moment('2018-08-15'),
+                    events: [
+                        @foreach ($domains_calendar as $domain)
+                            {
+                                title: '{{$domain->url}}',
+                                url: '{{route('domains.edit', $domain)}}',
+                                start: moment('{{$domain->deadline}}'),
+                                description: '{{$domain->note}}',
+                                className: "m-fc-event--light m-fc-event--solid-primary",
+                                allDay: true,
+                            },
+                        @endforeach
+                    ],
+
+                    eventRender: function(event, element) {
+                        if (element.hasClass('fc-day-grid-event')) {
+                            element.data('content', event.description);
+                            element.data('placement', 'top');
+                            mApp.initPopover(element);
+                        } else if (element.hasClass('fc-time-grid-event')) {
+                            element.find('.fc-title').append('<div class="fc-description">' + event.description + '</div>');
+                        } else if (element.find('.fc-list-item-title').lenght !== 0) {
+                            element.find('.fc-list-item-title').append('<div class="fc-description">' + event.description + '</div>');
+                        }
+                    }
+                });
+            }(jQuery)
+        });
+    </script>
 
 @stop

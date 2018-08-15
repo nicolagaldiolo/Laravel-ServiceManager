@@ -45,16 +45,16 @@
     <div class="form-group m-form__group row">
         <label class="col-form-label col-lg-3 col-sm-12">Domain</label>
         <div class="col-lg-8 col-md-12">
-            <select class="form-control m-select2 m_select2_4" name="domain">
+            <select class="form-control m-select2 m_select2_4" name="domain_id">
                 @foreach($providers as $provider)
                     <option value="{{$provider->id}}"
-                            @if($provider->id == old('domain', $domain->domain)) selected @endif>{{$provider->name}}</option>
+                            @if($provider->id == old('domain_id', $domain->domain_id)) selected @endif>{{$provider->name}}</option>
                 @endforeach
             </select>
             <span class="m-form__help">Please select a domain provider.</span>
-            @if ($errors->has('domain'))
+            @if ($errors->has('domain_id'))
                 <span class="invalid-feedback" role="alert">
-                                <strong>{{ $errors->first('domain') }}</strong>
+                                <strong>{{ $errors->first('domain_id') }}</strong>
                             </span>
             @endif
         </div>
@@ -67,16 +67,16 @@
     <div class="form-group m-form__group row">
         <label class="col-form-label col-lg-3 col-sm-12">Hosting</label>
         <div class="col-lg-8 col-md-12">
-            <select class="form-control m-select2 m_select2_4" name="hosting">
+            <select class="form-control m-select2 m_select2_4" name="hosting_id">
                 @foreach($providers as $provider)
                     <option value="{{$provider->id}}"
-                            @if($provider->id == old('hosting', $domain->hosting)) selected @endif>{{$provider->name}}</option>
+                            @if($provider->id == old('hosting_id', $domain->hosting_id)) selected @endif>{{$provider->name}}</option>
                 @endforeach
             </select>
             <span class="m-form__help">Please select a hosting provider.</span>
-            @if ($errors->has('hosting'))
+            @if ($errors->has('hosting_id'))
                 <span class="invalid-feedback" role="alert">
-                                <strong>{{ $errors->first('hosting') }}</strong>
+                                <strong>{{ $errors->first('hosting_id') }}</strong>
                             </span>
             @endif
         </div>

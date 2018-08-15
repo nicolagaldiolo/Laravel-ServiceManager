@@ -21,12 +21,12 @@ class Domains extends Model
 
     // appartiene a un Providers(domain)
     public function domain(){
-        return $this->belongsTo(Providers::class, 'domain', 'id', 'providers');
+        return $this->belongsTo(Providers::class, 'domain_id', 'id', 'providers');
     }
 
     // appartiene a un Providers(hosting)
     public function hosting(){
-        return $this->belongsTo(Providers::class, 'hosting', 'id', 'providers');
+        return $this->belongsTo(Providers::class, 'hosting_id', 'id', 'providers');
     }
 
     public function getScreenshootAttribute($screenshoot)

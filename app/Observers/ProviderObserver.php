@@ -2,8 +2,8 @@
 
 namespace App\Observers;
 
+use App\Events\GenerateScreen;
 use App\Providers;
-use App\Jobs\GenerateProvidersScreenshoot;
 use File;
 
 class ProviderObserver
@@ -28,8 +28,7 @@ class ProviderObserver
      */
     public function created(Providers $providers)
     {
-        // Chiamo il job
-        GenerateProvidersScreenshoot::dispatch($providers);
+        event(new GenerateScreen($providers));
     }
 
     /**
@@ -40,7 +39,6 @@ class ProviderObserver
      */
     public function updated(Providers $providers)
     {
-        //
     }
 
     public function deleting(Providers $providers)

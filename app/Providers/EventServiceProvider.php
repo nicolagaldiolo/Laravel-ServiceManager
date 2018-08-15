@@ -15,8 +15,12 @@ class EventServiceProvider extends ServiceProvider
 
     protected $listen = [
         'App\Events\UserRegister' => [
-            'App\Listeners\UserRegisterListener',
+            'App\Listeners\UserRegisterListener'
         ],
+        'App\Events\GenerateScreen' => [
+            'App\Listeners\GenerateScreenListener'
+        ]
+
     ];
 
     /**

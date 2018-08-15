@@ -226,7 +226,7 @@
                 ],
                 columnDefs: [
                     {
-                        targets: [ 1],
+                        targets: [1],
                         //title: 'url222',
                         render: function(data, type, full, meta) {
 
@@ -236,27 +236,13 @@
                             return '<span class="m-badge m-badge--wide" ' + color + '>' + data + '</span>';
                         },
                     },
-                    /*{
-                        targets: -1,
-                        title: 'Actions',
-                        orderable: false,
+                    {
+                        targets: [2],
                         render: function(data, type, full, meta) {
-                            return `
-                        <span class="dropdown">
-                            <a href="#" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown" aria-expanded="true">
-                              <i class="la la-ellipsis-h"></i>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right">
-                                <a class="dropdown-item" href="#"><i class="la la-edit"></i> Edit Details</a>
-                                <a class="dropdown-item" href="#"><i class="la la-leaf"></i> Update Status</a>
-                                <a class="dropdown-item" href="#"><i class="la la-print"></i> Generate Report</a>
-                            </div>
-                        </span>
-                        <a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="View">
-                          <i class="la la-edit"></i>
-                        </a>`;
+                            if(full.screenshoot == null) return data;
+                            return '<img width="100" src="' + full.screenshoot + '"/>' + data;
                         },
-                    },*/
+                    },
                 ]
             });
 

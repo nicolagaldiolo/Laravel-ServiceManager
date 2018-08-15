@@ -23,17 +23,19 @@ class SeedFakeData extends Seeder
             ]
         );
 
-        $users = factory(App\User::class, 1)->create();
+        //$users = factory(App\User::class, 9)->create();
 
-        $users->push($me);
+        //$users->push($me);
+
+        $users = $me;
 
         $users->each(function($user){
-            $providers = factory(App\Providers::class, 1)->create([
+            $providers = factory(App\Providers::class, 5)->create([
                 'user_id' => $user->id
             ]);
-            factory(App\Domains::class, 1)->create([
-                'domain' => collect($providers)->random()->id,
-                'hosting' => collect($providers)->random()->id,
+            factory(App\Domains::class, 10)->create([
+                'domain_id' => collect($providers)->random()->id,
+                'hosting_id' => collect($providers)->random()->id,
                 'user_id' => $user->id
             ]);
         });

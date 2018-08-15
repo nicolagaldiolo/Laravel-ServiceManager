@@ -3362,7 +3362,7 @@
     <!--end::Page Vendors -->
 
     <!--begin::Page Snippets -->
-    <script src="{{ asset('theme_assets/app/js/dashboard.js')}}" type="text/javascript"></script>
+    <!--<script src="{{ asset('theme_assets/app/js/dashboard.js')}}" type="text/javascript"></script>-->
 
     <!--end::Page Snippets -->
     <script src="{{ asset('theme_assets/demo/default/custom/crud/forms/validation/form-controls.js')}}" type="text/javascript"></script>

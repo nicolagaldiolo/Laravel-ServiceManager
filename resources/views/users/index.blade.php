@@ -232,7 +232,7 @@
                         //title: 'url222',
                         render: function(data, type, full, meta) {
                             if(data == null) return data;
-                            return '<img src="' + data + '">';
+                            return '<img width="50" src="' + data + '"/>';
                         },
                     },
                 ]
