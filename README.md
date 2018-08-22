@@ -1,9 +1,16 @@
 # Laravel-HostingManager
 
-Command to run:
+## About
+Coming soon
 
-### Install dependencies
+## Installation
+
+Command to run.
+
+Install dependencies
+```
 composer install
+```
 
 ### Generate a Key
 php artisan key:generate
