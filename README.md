@@ -11,12 +11,15 @@ Install dependencies
 ```
 composer install
 ```
-
-### Generate a Key
+Generate a Key
+```
 php artisan key:generate
-
-### Run migration and seed
+```
+Run migration and seed
+```
 php artisan migrate:fresh --seed
-
-### Setup link to storage folder
+```
+Setup link to storage folder
+```
 php artisan storage:link
+```
