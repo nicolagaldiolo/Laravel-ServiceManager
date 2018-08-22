@@ -1,15 +1,32 @@
 # Laravel-HostingManager
 
-Command to run:
+## About
+Coming soon
 
-### Install dependencies
-composer install
+## Installation
 
-### Generate a Key
-php artisan key:generate
+Command to run.
 
-### Run migration and seed
-php artisan migrate:fresh --seed
-
-### Setup link to storage folder
-php artisan storage:link
+Install dependencies
+```
+$ composer install
+```
+Generate .env file
+```
+$ cp .env.example .env
+```
+Generate a Key
+```
+$ php artisan key:generate
+```
+Setup link to storage folder
+```
+$ php artisan storage:link
+```
+Run migration and seed
+```
+$ php artisan migrate:fresh --seed
+```
+## Login with demo user
+email: demouser@example.com
+password: password
