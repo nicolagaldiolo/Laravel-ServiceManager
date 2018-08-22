@@ -27,3 +27,6 @@ Run migration and seed
 ```
 $ php artisan migrate:fresh --seed
 ```
+## Login with demo user
+email: demouser@example.com
+password: password
