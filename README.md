@@ -11,6 +11,10 @@ Install dependencies
 ```
 composer install
 ```
+Generate .env file
+```
+cp .env.example .env
+```
 Generate a Key
 ```
 php artisan key:generate
