@@ -11,7 +11,7 @@ Install dependencies
 ```
 $ composer install
 ```
-Generate .env file
+Generate .env file and setup db info
 ```
 $ cp .env.example .env
 ```
