@@ -34,6 +34,11 @@ class User extends Authenticatable implements JWTSubject
         'password', 'remember_token',
     ];
 
+    // ha molti customers
+    public function customers()
+    {
+        return $this->hasMany(Customer::class);
+    }
 
     // ha molti domains
     public function domains()

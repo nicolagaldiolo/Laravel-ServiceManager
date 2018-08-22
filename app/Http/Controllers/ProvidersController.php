@@ -16,15 +16,13 @@ class ProvidersController extends Controller
      */
     public function index()
     {
-        //return Auth()->user()->providers()->get();
-
-        $providers = Auth::user()->providers()->get();
-
         if(request()->wantsJson() || request()->expectsJson()) {
-            return DataTables::of($providers)->addColumn('actions', function($user){
+            $providers = Auth::user()->providers()->get();
+
+            return DataTables::of($providers)->addColumn('actions', function($provider){
                 return implode("", [
-                    '<a href="' . route('providers.edit', $user) . '" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill"><i class="la la-edit"></i></a>',
-                    '<a href="' . route('providers.destroy', $user) . '" class="delete btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill"><i class="la la-trash"></i></a>',
+                    '<a href="' . route('providers.edit', $provider) . '" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill"><i class="la la-edit"></i></a>',
+                    '<a href="' . route('providers.destroy', $provider) . '" class="delete btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill"><i class="la la-trash"></i></a>',
                 ]);
             })->rawColumns(['actions'])->make(true);
         }

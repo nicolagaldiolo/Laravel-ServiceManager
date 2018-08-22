@@ -38,7 +38,7 @@ var Inputmask = function () {
         }); 
         
         // currency format
-        $("#m_inputmask_7").inputmask('€ 999.999.999,99', {
+        $("#m_inputmask_7").inputmask('999.999.999,99', {
             numericInput: true
         }); //123456  =>  € ___.__1.234,56
 

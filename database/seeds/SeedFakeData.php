@@ -30,10 +30,15 @@ class SeedFakeData extends Seeder
         $users = $me;
 
         $users->each(function($user){
+            $customers = factory(App\Customer::class, 6)->create([
+                'user_id' => $user->id
+            ]);
+
             $providers = factory(App\Providers::class, 5)->create([
                 'user_id' => $user->id
             ]);
             factory(App\Domains::class, 10)->create([
+                'customer_id' => collect($customers)->random()->id,
                 'domain_id' => collect($providers)->random()->id,
                 'hosting_id' => collect($providers)->random()->id,
                 'user_id' => $user->id

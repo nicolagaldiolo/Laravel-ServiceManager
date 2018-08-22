@@ -59,7 +59,18 @@ class GetScreenshoot implements ShouldQueue
             $this->object->update(['screenshoot' => $path]); // setto il nuovo path a db
 
         }catch (\Exception $e){
-            //logger('Errore creazione screenshoot domain: ' . $e);
+            logger('Errore creazione screenshoot: ' . $e);
         }
+    }
+
+    /**
+     * The job failed to process.
+     *
+     * @param  Exception  $exception
+     * @return void
+     */
+    public function failed(Exception $exception)
+    {
+        logger($exception);
     }
 }

@@ -22,6 +22,7 @@ class AppServiceProvider extends ServiceProvider
         User::observe(UserObserver::class);
         Domains::observe(DomainObserver::class);
         Providers::observe(ProviderObserver::class);
+
     }
 
     /**

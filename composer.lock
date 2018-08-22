@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "9dc26f4a88a5efa50e7a6fb59aaa677b",
+    "content-hash": "c939c13eb836efd85d1e071cdd228f6a",
     "packages": [
         {
             "name": "cakephp/chronos",
@@ -1045,6 +1045,55 @@
             "time": "2015-04-20T18:58:01+00:00"
         },
         {
+            "name": "karlmonson/laravel-ping",
+            "version": "1.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/karlmonson/laravel-ping.git",
+                "reference": "d8eaada970d44e0cf3cf4920d8d182938db34422"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/karlmonson/laravel-ping/zipball/d8eaada970d44e0cf3cf4920d8d182938db34422",
+                "reference": "d8eaada970d44e0cf3cf4920d8d182938db34422",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "~6.0",
+                "illuminate/support": "^5.1"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Karlmonson\\Ping\\PingServiceProvider"
+                    ],
+                    "aliases": {
+                        "Ping": "Karlmonson\\Ping\\Facades\\Ping"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Karlmonson\\Ping\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Karl Monson",
+                    "email": "karl@karlmonson.com",
+                    "homepage": "https://github.com/karlmonson",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Simple Ping For Laravel Applications",
+            "time": "2018-05-25T18:29:21+00:00"
+        },
+        {
             "name": "laravel/framework",
             "version": "v5.6.26",
             "source": {
@@ -1706,6 +1755,68 @@
                 "twitter"
             ],
             "time": "2016-08-17T00:36:58+00:00"
+        },
+        {
+            "name": "mcamara/laravel-localization",
+            "version": "1.3.10",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mcamara/laravel-localization.git",
+                "reference": "568d3197fdef4b50076fe3f9105474591f188e42"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mcamara/laravel-localization/zipball/568d3197fdef4b50076fe3f9105474591f188e42",
+                "reference": "568d3197fdef4b50076fe3f9105474591f188e42",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": "~5.2||~5.3||~5.4||~5.5||~5.6",
+                "php": ">=7.0.0"
+            },
+            "require-dev": {
+                "orchestra/testbench-browser-kit": "~3.4",
+                "phpunit/phpunit": "6.0.*"
+            },
+            "suggest": {
+                "ext-intl": "*"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Mcamara\\LaravelLocalization\\LaravelLocalizationServiceProvider"
+                    ],
+                    "aliases": {
+                        "LaravelLocalization": "Mcamara\\LaravelLocalization\\Facades\\LaravelLocalization"
+                    }
+                }
+            },
+            "autoload": {
+                "classmap": [],
+                "psr-0": {
+                    "Mcamara\\LaravelLocalization": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Marc Cámara",
+                    "email": "mcamara88@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Easy localization for Laravel",
+            "homepage": "https://github.com/mcamara/laravel-localization",
+            "keywords": [
+                "laravel",
+                "localization",
+                "php"
+            ],
+            "time": "2018-07-26T13:49:01+00:00"
         },
         {
             "name": "monolog/monolog",

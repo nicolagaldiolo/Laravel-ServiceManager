@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Jobs\CheckServiceStatus;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -26,6 +27,11 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
+        $schedule->call(function () {
+            logger("Sono stato chiamato");
+        })->everyMinute();
+
+        $schedule->job(new CheckServiceStatus)->everyMinute();
     }
 
     /**

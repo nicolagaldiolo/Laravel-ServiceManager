@@ -33,12 +33,13 @@ class DomainRequest extends FormRequest
 
         return [
             'url'       => $url_rule, // mi permette di ignorare i cambiamenti se l'url che stiamo passando appartiene al record corrent, se è cambiato allora scatta il controllo di validazione
-            'domain_id'    => 'sometimes|exists:providers,id',
-            'hosting_id'   => 'sometimes|exists:providers,id',
-            'deadline'  => 'required|date',
-            'amount'    => 'required',
-            'payed'     => 'required|boolean',
-            'note'      => 'sometimes|max:255'
+            'domain_id'     => 'sometimes|exists:providers,id',
+            'hosting_id'    => 'sometimes|exists:providers,id',
+            'customer_id'   => 'required|exists:customers,id',
+            'deadline'      => 'required|date|date_format:d-m-Y|after:' . date('d-m-Y'),
+            'amount'        => 'required|regex:/[0-9]+[.,]?[0-9]*/|max:8',
+            'payed'         => 'required|boolean',
+            'note'          => 'sometimes|max:255'
         ];
     }
 }

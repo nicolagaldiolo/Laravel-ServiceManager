@@ -17,11 +17,12 @@ Auth::routes();
 Route::get('login/{provider}',          'Auth\SocialAccountController@redirectToProvider')->name('social.login');
 Route::get('login/{provider}/callback', 'Auth\SocialAccountController@handleProviderCallback')->name('social.login.callback');
 
-Route::group(['middleware' => 'auth'], function() {
+Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => 'auth'], function() {
     Route::get('/', 'DashboardController@index')->name('dashboard');
     Route::resource('domains', 'DomainsController')->except('show');
+    Route::patch('/domains/{domain}/payed', 'DomainsController@payedUpdate')->name('domains.payed.update');
     Route::resource('providers', 'ProvidersController')->except('show');
     Route::resource('users', 'UserController')->except('show');
-
     Route::patch('/users/{user}/avatar', 'UserAvatarController@update')->name('users.avatar.update');
+    Route::resource('customers', 'CustomerController');
 });

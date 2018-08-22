@@ -23,7 +23,8 @@ var BootstrapDatepicker = function () {
             todayHighlight: true,
             orientation: "bottom left",
             templates: arrows,
-            //format: 'dd/mm/yyyy'
+            format: 'dd-mm-yyyy',
+            startDate: "+0d"
         });
 
         // minimum setup for modal demo

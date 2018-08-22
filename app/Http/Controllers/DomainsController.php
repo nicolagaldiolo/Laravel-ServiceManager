@@ -2,14 +2,18 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Domains;
 use App\Http\Requests\DomainRequest;
+use App\Http\Traits\DataTableDomainTrait;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Yajra\DataTables\DataTables;
-use Spatie\Browsershot\Browsershot;
 
 class DomainsController extends Controller
 {
+
+    use DataTableDomainTrait;
+
     /**
      * Display a listing of the resource.
      *
@@ -17,17 +21,12 @@ class DomainsController extends Controller
      */
     public function index()
     {
-        $domains = Auth::user()->domains()->with('domain', 'hosting')->get();
-
-        //dd($domains);
-
         if(request()->wantsJson() || request()->expectsJson()) {
-            return DataTables::of($domains)->addColumn('actions', function($user){
-                    return implode("", [
-                        '<a href="' . route('domains.edit', $user) . '" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill"><i class="la la-edit"></i></a>',
-                        '<a href="' . route('domains.destroy', $user) . '" class="delete btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill"><i class="la la-trash"></i></a>',
-                    ]);
-                })->rawColumns(['actions'])->make(true);
+
+            $domains = Auth::user()->domains()->with('domain', 'hosting')->get();
+
+            return $this->getDomainsDataTablesTraits($domains);
+
         }
 
         return view('domains.index');
@@ -39,12 +38,17 @@ class DomainsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $req)
     {
+        $customers = Auth::user()->customers()->get();
         $providers = Auth::user()->providers()->get();
         $domain = new Domains;
 
-        return view('domains.create', compact('domain', 'providers'));
+        if($req->has('cid')){
+            $domain->customer_id = $req->input('cid');
+        }
+
+        return view('domains.create', compact('domain', 'providers', 'customers'));
     }
 
     /**
@@ -82,10 +86,11 @@ class DomainsController extends Controller
 
         $this->authorize('view', $domain);
 
+        $customers = Auth::user()->customers()->get();
         $providers = Auth::user()->providers()->get();
-        $domain->load('domain', 'hosting');
+        $domain->load('domain', 'hosting', 'customer');
 
-        return view('domains.edit', compact('providers', 'domain'));
+        return view('domains.edit', compact('providers', 'domain', 'customers'));
     }
 
     /**
@@ -97,7 +102,6 @@ class DomainsController extends Controller
      */
     public function update(DomainRequest $request, Domains $domain)
     {
-
         $this->authorize('update', $domain);
         $domain->update($request->validated());
 
@@ -121,4 +125,35 @@ class DomainsController extends Controller
             'status'    => $res
         ];
     }
+
+    public function payedUpdate(Request $request, Domains $domain){
+        $this->authorize('update', $domain);
+        (bool) $res = $domain->update(['payed' => $request->get('payed')]);
+        return [
+            'message'   => $res ? 'Domain updated' : 'Domain not updated',
+            'status'    => $res
+        ];
+    }
+
+
+
+    public function urlExists($url=NULL)
+    {
+        if($url == NULL) return false;
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $data = curl_exec($ch);
+        $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+        if($httpcode>=200 && $httpcode<300){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+
 }

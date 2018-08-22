@@ -83,13 +83,6 @@ class UserAvatarController extends Controller
      */
     public function destroy(User $user)
     {
-        $this->authorize('delete', $user);
-
-        (bool) $res = $user->delete();
-
-        return [
-            'message'   => $res ? 'Domain deleted' : 'Domain not deleted',
-            'status'    => $res
-        ];
+        //
     }
 }
