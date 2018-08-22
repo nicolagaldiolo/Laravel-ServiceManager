@@ -15,11 +15,11 @@ class SeedFakeData extends Seeder
 
         $me = App\User::create(
             [
-                'name' => env('DEMOUSER'),
-                'email' => env('DEMOEMAIL'),
-                'password' => bcrypt(env('DEMOPASS')),
+                'name' => env('DEMOUSER', 'Demo'),
+                'email' => env('DEMOEMAIL', 'demouser@example.com'),
+                'password' => bcrypt(env('DEMOPASS', 'password')),
                 'is_verified' => 1,
-                'role' => env('USER_ADMIN_ROLE'),
+                'role' => env('USER_ADMIN_ROLE', 'admin'),
             ]
         );
 
