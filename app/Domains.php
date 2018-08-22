@@ -77,5 +77,9 @@ class Domains extends Model
         $val = preg_replace('/\.(?=.*\.)/', '', $val);
         return floatval($val);
     }
+    
+    public function scopeExpiring($query){
+      return $query->where('payed', 0)->whereMonth('deadline' , Carbon::today()->month);
+    }
 
 }

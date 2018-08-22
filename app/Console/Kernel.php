@@ -27,11 +27,11 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
-        $schedule->call(function () {
-            logger("Sono stato chiamato");
-        })->everyMinute();
+        //$schedule->call(function () {
+        //    logger("Sono stato chiamato");
+        //})->everyMinute();
 
-        $schedule->job(new CheckServiceStatus)->everyMinute();
+        $schedule->job(new CheckServiceStatus)->everyThirtyMinutes();
     }
 
     /**

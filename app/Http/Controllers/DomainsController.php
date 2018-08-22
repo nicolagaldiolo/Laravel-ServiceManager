@@ -6,6 +6,9 @@ namespace App\Http\Controllers;
 use App\Domains;
 use App\Http\Requests\DomainRequest;
 use App\Http\Traits\DataTableDomainTrait;
+use App\Jobs\ExpiringDomainsAlert;
+use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -21,14 +24,68 @@ class DomainsController extends Controller
      */
     public function index()
     {
+      
         if(request()->wantsJson() || request()->expectsJson()) {
-
+  
             $domains = Auth::user()->domains()->with('domain', 'hosting')->get();
-
+  
             return $this->getDomainsDataTablesTraits($domains);
-
+  
         }
-
+  
+        //ExpiringDomainsAlert::dispatch();
+  
+        
+        //$domain = Domains::expiring();
+        //$test = $domain->count();
+  
+        //$user = User::with('customers.domains')->get();
+  
+        //$test = User-with('domains')->expiring()->get();
+      
+        $user = User::with(['customers.domains' => function($query){
+          $query->where('payed', 0)->whereMonth('deadline' , Carbon::today()->month);
+        }])->get();
+        
+        
+        //$user = User::all();
+        //$user->each()
+        dd($user);
+        
+        
+  
+      //$test = $user->customers->count();
+      //$categories = Category::with('products')->orderBy('category_name');
+      //$categories->products->count();
+        
+        
+        //dd();
+  
+        /*$user = User::with(['customers', 'domains' => function($query){
+          $query->whereMonth('deadline' , Carbon::today()->month);
+        }])->get();*/
+        
+        
+        
+        
+        /*$user->each(function($item){
+          
+          dd($item->customers->domains->count());
+          //try {
+          //  $health = Ping::check($item->url);
+          //}catch (\Exception $e){
+          //  $health = 500;
+          //}
+          //$status = ($health == 200) ? true : false;
+          //$item->update( ['status' => $status]);
+          //if(!is_null($item->email) && $item->domains->count() > 0){
+          //  Mail::to($item->email)->send(new ExipiringDomainsEmail($item));
+          //}
+        });*/
+      
+      
+      
+  
         return view('domains.index');
 
     }
