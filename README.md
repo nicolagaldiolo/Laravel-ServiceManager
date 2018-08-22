@@ -5,11 +5,10 @@ Coming soon
 
 ## Installation
 
-Command to run.
-
-Install dependencies
+Install dependencies composer and npm
 ```
 $ composer install
+$ npm install
 ```
 Generate .env file and setup db info
 ```
