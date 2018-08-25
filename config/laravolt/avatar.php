@@ -40,7 +40,7 @@ return [
     'fontSize' => 100,
 
     // convert initial letter in uppercase
-    'uppercase' => false,
+    'uppercase' => true,
 
     // Fonts used to render text.
     // If contains more than one fonts, randomly selected based on name supplied

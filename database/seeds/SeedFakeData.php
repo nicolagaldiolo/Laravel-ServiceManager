@@ -19,15 +19,18 @@ class SeedFakeData extends Seeder
                 'email' => env('DEMOEMAIL', 'demouser@example.com'),
                 'password' => bcrypt(env('DEMOPASS', 'password')),
                 'is_verified' => 1,
-                'role' => env('USER_ADMIN_ROLE', 'admin'),
+                'role' => config('userrole.admin'),
             ]
         );
 
-        //$users = factory(App\User::class, 9)->create();
+        $users = factory(App\User::class, 9)->create([
+            'role' => config('userrole.admin'),
+            'password' => bcrypt(env('DEMOPASS', 'password')),
+        ]);
 
-        //$users->push($me);
+        $users->push($me);
 
-        $users = $me;
+        //$users = $me;
 
         $users->each(function($user){
             $customers = factory(App\Customer::class, 6)->create([

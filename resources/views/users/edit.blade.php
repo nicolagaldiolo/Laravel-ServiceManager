@@ -234,8 +234,8 @@
 
                                             <span class="m-switch m-switch--lg m-switch--icon m-switch--success">
                                                 <label>
-                                                    <input type="hidden" checked="checked" value="user" name="role">
-                                                    <input class="required" type="checkbox" @if(old('role', $user->role) == env('USER_ADMIN_ROLE'))checked="checked" @endif value="{{env('USER_ADMIN_ROLE')}}" name="role">
+                                                    <input type="hidden" checked="checked" value="{{config('userrole.user')}}" name="role">
+                                                    <input class="required" type="checkbox" @if(old('role', $user->role) == config('userrole.admin'))checked="checked" @endif value="{{config('userrole.admin')}}" name="role">
                                                     <span></span>
                                                 </label>
                                             </span>
@@ -257,7 +257,7 @@
                         <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
                             <div class="m-form__actions m-form__actions--solid">
                                 <button type="submit" class="btn btn-primary">Save</button>
-                                <button type="reset" class="btn btn-secondary">Cancel</button>
+                                <a href="{{route('users.index')}}" class="btn btn-secondary">Cancel</a>
                             </div>
                         </div>
                     </form>
@@ -266,6 +266,24 @@
                 </div>
 
                 <!--end::Portlet-->
+
+                <form action="{{route('users.destroy', $user)}}" method="post">
+                    @csrf
+                    @method('DELETE')
+                    <div class="m-alert m-alert--icon m-alert--outline alert alert-danger no-bg" role="alert">
+                        <div class="m-alert__icon">
+                            <i class="la la-warning"></i>
+                        </div>
+                        <div class="m-alert__text">
+                            <strong>Delete account</strong><br>
+                            This will permanently delete all data.
+                        </div>
+                        <div class="m-alert__actions" style="">
+                            <button type="submit" onclick="return confirm('Are you Sure?')" class="btn btn-danger btn-md m-btn m-btn--pill m-btn--wide">Delete account</button>
+                        </div>
+                    </div>
+                </form>
+
             </div>
         </div>
     </div>

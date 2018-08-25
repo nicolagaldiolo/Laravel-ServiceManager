@@ -9,10 +9,10 @@
         </div>
 
 
-        <form class="m-login__form m-form formValidate" method="POST" action="{{ route('register') }}" aria-label="{{ __('Register') }}">
+        <form class="m-login__form m-form" method="POST" action="{{ route('register') }}" aria-label="{{ __('Register') }}">
             @csrf
             <div class="form-group m-form__group">
-                <input class="form-control m-input required{{ $errors->has('name') ? ' is-invalid' : '' }}" type="text" value="{{ old('name') }}" placeholder="{{ __('Fullname') }}" name="name" autofocus>
+                <input class="form-control m-input{{ $errors->has('name') ? ' is-invalid' : '' }}" type="text" value="{{ old('name') }}" placeholder="{{ __('Fullname') }}" name="name" autofocus>
 
                 @if ($errors->has('name'))
                     <span class="invalid-feedback" role="alert">
@@ -22,7 +22,7 @@
 
             </div>
             <div class="form-group m-form__group">
-                <input class="form-control m-input required email{{ $errors->has('email') ? ' is-invalid' : '' }}" type="email" placeholder="{{ __('E-Mail Address') }}" value="{{ old('email') }}" name="email" autocomplete="off">
+                <input class="form-control m-input email{{ $errors->has('email') ? ' is-invalid' : '' }}" type="email" placeholder="{{ __('E-Mail Address') }}" value="{{ old('email') }}" name="email" autocomplete="off">
 
                 @if ($errors->has('email'))
                     <span class="invalid-feedback" role="alert">

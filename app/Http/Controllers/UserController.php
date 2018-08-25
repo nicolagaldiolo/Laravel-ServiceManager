@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\NewUserRequest;
 use App\Http\Requests\UserRequest;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Auth\Events\Registered;
 use Storage;
 
 class UserController extends Controller
@@ -42,7 +45,9 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        $this->authorize('create', Auth::user());
+
+        return view('users.new');
     }
 
     /**
@@ -51,9 +56,15 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(NewUserRequest $request)
     {
-        //
+        $request->merge(['password' => Hash::make($request->password)]);
+        User::create($request->validated());
+
+        return redirect()
+            ->route('users.index')
+            ->with('type', 'success')
+            ->with('status', 'User created with success');
     }
 
     /**
@@ -91,32 +102,13 @@ class UserController extends Controller
     {
         $this->authorize('update', $user);
 
-        /*if (!request()->hasFile('avatar')) { //controllo se nella request c'è una chiave album_thumb altrimenti torno false
-            dd("non c'è");
-        }
-        $file = request()->file('avatar'); // salvo nella variabile l'oggetto uploadedFile
-        if (!$file->isValid()) { // controllo se il file contiene errori torno false altrimenti procedo
-            dd("non valido");
-        }*/
-
         $user->update($request->validated());
 
-        //$user->name = $request->get('name');
-        //$user->email = $request->get('name');
-        //$user->save();
+        if((Auth::user()->id == $user->id) && !$user->isAdmin()){
+            return redirect()->route('dashboard');
+        }
 
-        //avendo impostato come disco di default per il salvataggio il disco public nel file config/filesystem.php non
-        // serve che passo alcun parametro aggiuntivo, se in quale caso particolare voglio dichiare un disco diverso
-        // da quello di default posso passare come 2° parametro il disco di salvataggio tra quelli configurati (local, public, S3)
-        //$filePath = $file->store(env('ALBUM_THUMB_DIR')); // do libertà al laravel di creare un file con un nome random
-        //$fileName = "album_" . $user->id . '.' . $file->extension();
-        //$filePath = $file->storeAs('images/album_thumbs', $fileName); // imposto il nome del file
-        //$user->avatar = $filePath;
-
-        //$user->save();
-        $redirect = (Auth::user()->isAdmin()) ? 'users.index' : 'dashboard';
-
-        return redirect()->route($redirect);
+        return redirect()->route('users.index');
     }
 
     /**
@@ -129,11 +121,19 @@ class UserController extends Controller
     {
         $this->authorize('delete', $user);
 
-        (bool) $res = $user->delete();
+        if(request()->wantsJson() || request()->expectsJson()) {
+            $redirect = (Auth::user() == $user) ? route('login') : '';
+            (bool) $res = $user->delete();
+            return [
+                'redirect' => $redirect,
+                'message' => $res ? 'Domain deleted' : 'Domain not deleted',
+                'status' => $res
+            ];
+        }
 
-        return [
-            'message'   => $res ? 'Domain deleted' : 'Domain not deleted',
-            'status'    => $res
-        ];
+        if(Auth::user() == $user){
+            $user->delete();
+            return redirect()->route('login');
+        }
     }
 }

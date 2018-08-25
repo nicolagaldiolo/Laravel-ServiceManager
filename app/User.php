@@ -78,7 +78,7 @@ class User extends Authenticatable implements JWTSubject
     }
 
     public function isAdmin(){
-        return $this->role == env('USER_ADMIN_ROLE');
+        return $this->role == config('userrole.admin');
     }
 
 

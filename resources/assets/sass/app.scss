@@ -1,3 +1,8 @@
 .invalid-feedback{
     display: block;
 }
+
+.no-bg,
+.alert.m-alert--outline.alert-danger.no-bg{
+    background: transparent;
+}

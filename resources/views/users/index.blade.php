@@ -110,7 +110,7 @@
                 <div class="m-portlet__head-tools">
                     <ul class="m-portlet__nav">
                         <li class="m-portlet__nav-item">
-                            <a href="{{route('domains.create')}}" class="btn btn-primary m-btn m-btn--pill m-btn--custom m-btn--icon m-btn--air">
+                            <a href="{{route('users.create')}}" class="btn btn-primary m-btn m-btn--pill m-btn--custom m-btn--icon m-btn--air">
 												<span>
 													<i class="la la-cart-plus"></i>
 													<span>New Record</span>
@@ -232,7 +232,7 @@
                         //title: 'url222',
                         render: function(data, type, full, meta) {
                             if(data == null) return data;
-                            return '<img width="50" src="' + data + '"/>';
+                            return '<img class="m--img-rounded" width="50" src="' + data + '"/>';
                         },
                     },
                 ]
@@ -251,7 +251,11 @@
                         },
                         success: function( data ) {
                             //console.log(data);
-                            dataTable.ajax.reload();
+                            if(data.redirect != ''){
+                                window.location.replace(data.redirect);
+                            }else{
+                                dataTable.ajax.reload();
+                            }
                         },
                         error: function(xhr, status, error) {
                             alert(error);
