@@ -92,7 +92,10 @@
             <label class="">Deadline *</label>
 
             <div class="m-input-icon m-input-icon--left">
-                <input type="text" class="form-control required" id="m_datepicker_1" name="deadline" readonly value="{{old('deadline', $domain->deadlineFormatted)}}" placeholder="Select date" />
+
+                <input type="text" class="form-control required" name="deadline" value="{{old('deadline', $domain->deadline)}}" placeholder="Select date" />
+
+            <!--<input type="text" class="form-control required" id="m_datepicker_1" name="deadline" readonly value="{{old('deadline', $domain->deadlineFormatted)}}" placeholder="Select date" />-->
                 <span class="m-input-icon__icon m-input-icon__icon--left">
                                                         <span>
                                                             <i class="la la-calendar"></i>

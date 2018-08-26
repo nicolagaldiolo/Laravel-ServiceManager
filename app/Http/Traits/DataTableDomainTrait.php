@@ -12,9 +12,10 @@ trait DataTableDomainTrait {
             ->editColumn('amount', function ($domain) {
                 return $domain->amountFormatted;
             })
-            ->editColumn('deadline', function ($domain) {
-                return $domain->deadline ? with(new Carbon($domain->deadline))->diffForHumans() : '';
-            })
+            //->editColumn('deadline', function ($domain) {
+                //return $domain->deadline ? with(new Carbon($domain->deadline))->diffForHumans() : '';
+            //    return $domain->deadline ? $domain->deadlineFormatted : '';
+            //})
             ->addColumn('actions', function($domain){
 
                 $payedStatus = ($domain->payed === 1) ? 0 : 1;

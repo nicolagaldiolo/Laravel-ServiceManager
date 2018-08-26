@@ -35,17 +35,17 @@ class Domains extends Model
         return $this->belongsTo(Providers::class, 'hosting_id', 'id', 'providers');
     }
 
-    public function getDeadlineFormattedAttribute()
-    {
-        $deadline = $this->deadline;
-        if(!is_null($deadline))
-        return $deadline->format('d-m-Y');
-    }
+    //public function getDeadlineFormattedAttribute()
+    //{
+    //    $deadline = $this->deadline;
+    //    if(!is_null($deadline))
+    //    return $deadline->format('d-m-Y');
+    //}
 
     // NON VA BENE, si incazza al momento del lancio del seed
-    public function setDeadlineAttribute($deadline) {
-        $this->attributes['deadline'] = Carbon::createFromFormat('d-m-Y', $deadline);
-    }
+    //public function setDeadlineAttribute($deadline) {
+    //    $this->attributes['deadline'] = Carbon::createFromFormat('d-m-Y', $deadline);
+    //}
 
 
     public function getAmountFormattedAttribute()
@@ -77,9 +77,16 @@ class Domains extends Model
         $val = preg_replace('/\.(?=.*\.)/', '', $val);
         return floatval($val);
     }
-    
+
+    public function scopeToExpire($query){
+        return $query->whereMonth('deadline' , Carbon::today()->month)
+            ->whereYear('deadline' , Carbon::today()->year);
+    }
+
     public function scopeExpiring($query){
-      return $query->where('payed', 0)->whereMonth('deadline' , Carbon::today()->month);
+      return $query->where('payed', 0)
+          ->whereMonth('deadline' , Carbon::today()->month)
+          ->whereYear('deadline' , Carbon::today()->year);
     }
 
 }

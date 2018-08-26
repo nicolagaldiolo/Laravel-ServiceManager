@@ -34,9 +34,11 @@ class CheckServiceStatus implements ShouldQueue
         try {
             $domains = Domains::get();
             $domains->each(function($item){
+                logger('Eseguo dominio: ' . $item->url);
                 try {
                     $health = Ping::check($item->url);
                 }catch (\Exception $e){
+                    logger('Errore Check dominio: ' . $e);
                     $health = 500;
                 }
                 $status = ($health == 200) ? true : false;
@@ -44,7 +46,7 @@ class CheckServiceStatus implements ShouldQueue
             });
             logger("JOB COMPLETED: Check dominio effettuato");
         }catch (\Exception $e){
-            logger('Errore Check dominio: ' . $e);
+            logger('Errore generico Check dominio: ' . $e);
         }
     }
 

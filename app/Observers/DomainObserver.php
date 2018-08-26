@@ -4,6 +4,7 @@ namespace App\Observers;
 
 use App\Domains;
 use App\Events\GenerateScreen;
+use Carbon\Carbon;
 use File;
 
 class DomainObserver
@@ -41,6 +42,21 @@ class DomainObserver
     public function updated(Domains $domains)
     {
         //
+    }
+
+    /**
+     * Handle the domains "saving" event.
+     *
+     * @param  \App\Domains  $domains
+     * @return void
+     */
+
+    public function saving(Domains $domains)
+    {
+        if( $domains->deadline->lte(Carbon::now()->endOfMonth()) && $domains->payed == 1){
+            $years_gab = Carbon::now()->endOfMonth()->diffInYears($domains->deadline->endOfMonth());
+            $domains->deadline = $domains->deadline->addYear($years_gab + 1);
+        }
     }
 
     public function deleting(Domains $domains)

@@ -36,7 +36,8 @@ class DomainRequest extends FormRequest
             'domain_id'     => 'sometimes|exists:providers,id',
             'hosting_id'    => 'sometimes|exists:providers,id',
             'customer_id'   => 'required|exists:customers,id',
-            'deadline'      => 'required|date|date_format:d-m-Y|after:' . date('d-m-Y'),
+            //'deadline'      => 'required|date|date_format:d-m-Y|after:' . date('d-m-Y'),
+            'deadline'      => 'required|date',
             'amount'        => 'required|regex:/[0-9]+[.,]?[0-9]*/|max:8',
             'payed'         => 'required|boolean',
             'note'          => 'sometimes|max:255'

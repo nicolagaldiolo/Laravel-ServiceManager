@@ -2,8 +2,8 @@
 
 namespace App\Jobs;
 
-use App\Mail\ExipiringDomainsEmail;
 use App\User;
+use App\Mail\ExipiringDomainsEmail;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
@@ -33,28 +33,26 @@ class ExpiringDomainsAlert implements ShouldQueue
      */
     public function handle()
     {
-  
       try {
-  
-        $user = User::with(['domains' => function($query){
-          $query->where('payed', 0)->whereMonth('deadline' , Carbon::today()->month);
-        }])->get();
-        
-        $user->each(function($item){
-          //try {
-          //  $health = Ping::check($item->url);
-          //}catch (\Exception $e){
-          //  $health = 500;
-          //}
-          //$status = ($health == 200) ? true : false;
-          //$item->update( ['status' => $status]);
-          if(!is_null($item->email) && $item->domains->count() > 0){
-            Mail::to($item->email)->send(new ExipiringDomainsEmail($item));
-          }
-        });
-        logger("JOB COMPLETED: Email send");
+          $users = User::whereHas('customers.domains', function($q){
+              $q->expiring();
+          })->with([
+              'customers' => function($q){
+                  $q->whereHas('domains');
+              },
+              'customers.domains' => function($q){
+                  $q->expiring();
+              },
+          ])->get();
+
+          $users->each(function($item){
+              if(!is_null($item->email)){
+                  Mail::to($item->email)->send(new ExipiringDomainsEmail($item));
+              }
+          });
+          logger("JOB COMPLETED: Email send");
       }catch (\Exception $e){
-        logger('Error email sending: ' . $e);
+          logger('Error email sending: ' . $e);
       }
     }
   
