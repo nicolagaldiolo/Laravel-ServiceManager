@@ -19,7 +19,13 @@ class EventServiceProvider extends ServiceProvider
         ],
         'App\Events\GenerateScreen' => [
             'App\Listeners\GenerateScreenListener'
-        ]
+        ],
+        'App\Events\CheckServiceStatus' => [
+            'App\Listeners\CheckServiceStatusListener',
+        ],
+        'App\Events\ExpiringDomainsAlert' => [
+            'App\Listeners\ExpiringDomainsAlertListener',
+        ],
 
     ];
 

@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Storage;
 
 class SeedFakeData extends Seeder
 {
@@ -13,6 +14,10 @@ class SeedFakeData extends Seeder
     {
         DB::statement('SET FOREIGN_KEY_CHECKS=0');
 
+        Storage::deleteDirectory(config('custompath.avatars'));
+        Storage::deleteDirectory(config('custompath.domains'));
+        Storage::deleteDirectory(config('custompath.providers'));
+
         $me = App\User::create(
             [
                 'name' => env('DEMOUSER', 'Demo'),
@@ -24,7 +29,6 @@ class SeedFakeData extends Seeder
         );
 
         $users = factory(App\User::class, 9)->create([
-            'role' => config('userrole.admin'),
             'password' => bcrypt(env('DEMOPASS', 'password')),
         ]);
 

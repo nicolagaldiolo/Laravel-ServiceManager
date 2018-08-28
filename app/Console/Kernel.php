@@ -3,8 +3,12 @@
 namespace App\Console;
 
 use App\Domains;
-use App\Jobs\CheckServiceStatus;
-use App\Jobs\ExpiringDomainsAlert;
+use App\Events\ExpiringDomainsAlert;
+use App\Events\GenerateScreen;
+use App\Events\UserRegister;
+use App\Events\CheckServiceStatus;
+use App\Jobs\ExpiringDomains;
+use App\Providers;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -28,12 +32,38 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
 
+        /*
         $schedule->call(function () {
             Domains::toExpire()->update(['payed' => 0]);
-        })->everyThirtyMinutes();
+        })->everyMinute();
+        */
 
-        $schedule->job(new CheckServiceStatus)->everyThirtyMinutes();
-        $schedule->job(new ExpiringDomainsAlert)->everyThirtyMinutes();
+        /*
+        $schedule->call(function(){
+            Domains::get()->each(function($item){
+                event(new CheckServiceStatus($item));
+            });
+        })->everyTenMinutes();
+        */
+
+        /*
+        $schedule->call(function(){
+            Domains::->get()->each(function($item){
+                event(new GenerateScreen($item));
+            });
+
+            Providers::->get()->each(function($item){
+                event(new GenerateScreen($item));
+            });
+
+        })->everyTenMinutes();
+        */
+
+
+        //$schedule->call(function(){
+        //    event(new ExpiringDomainsAlert());
+        //})->everyMinute();
+
     }
 
     /**

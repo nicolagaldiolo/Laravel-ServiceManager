@@ -6,7 +6,7 @@ namespace App\Http\Controllers;
 use App\Domains;
 use App\Http\Requests\DomainRequest;
 use App\Http\Traits\DataTableDomainTrait;
-use App\Jobs\ExpiringDomainsAlert;
+use App\Jobs\ExpiringDomains;
 use App\Jobs\GetScreenshoot;
 use App\Mail\ExipiringDomainsEmail;
 use App\User;

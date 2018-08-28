@@ -2,7 +2,7 @@
 
 namespace App\Events;
 
-use App\User;
+use App\Domains;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
@@ -11,7 +11,7 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class UserRegister
+class CheckServiceStatus
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -21,11 +21,11 @@ class UserRegister
      * @return void
      */
 
-    public $user;
+    public $domains;
 
-    public function __construct(User $user)
+    public function __construct(Domains $domains)
     {
-        $this->user = $user;
+        $this->domains = $domains;
     }
 
     /**

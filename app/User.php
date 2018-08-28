@@ -97,16 +97,30 @@ class User extends Authenticatable implements JWTSubject
             if(is_string($avatar)){
                 throw new \Exception('Avatar is a string');
             }else{
-                $path = $avatar->hashName('avatars');
+                $path = $avatar->hashName(config('custompath.avatars'));
             }
         }catch (\Exception $e){
-            $path = 'avatars/' . uniqid() .".png";
+            $path = config('custompath.avatars') . '/' . uniqid() .".png";
         }
 
         $image = Image::make($avatar)->fit(200);
         Storage::put($path, (string) $image->encode());
         $this->attributes['avatar'] = $path;
 
+    }
+
+    public function scopeDomainsExpiring($query)
+    {
+        return $query->whereHas('customers.domains', function ($q) {
+            $q->expiring();
+        })->with([
+            'customers' => function ($q) {
+                $q->whereHas('domains');
+            },
+            'customers.domains' => function ($q) {
+                $q->expiring();
+            },
+        ]);
     }
 
 }

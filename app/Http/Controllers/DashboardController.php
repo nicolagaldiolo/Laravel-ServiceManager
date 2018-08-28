@@ -2,12 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Domains;
+use App\Events\ExpiringDomainsAlert;
+use App\Events\GenerateScreen;
 use App\Providers;
 use App\Http\Requests\ProviderRequest;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\DataTables;
+use Ping;
 
 class DashboardController extends Controller
 {
@@ -18,6 +24,7 @@ class DashboardController extends Controller
      */
     public function index()
     {
+
         $domains_sum = Auth()->user()->domains()->count();
         $providers_sum = Auth()->user()->providers()->count();
         $user_sum = User::count();

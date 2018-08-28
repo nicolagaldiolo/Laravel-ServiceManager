@@ -44,7 +44,7 @@ class Domains extends Model
 
     // NON VA BENE, si incazza al momento del lancio del seed
     //public function setDeadlineAttribute($deadline) {
-    //    $this->attributes['deadline'] = Carbon::createFromFormat('d-m-Y', $deadline);
+    //  $this->attributes['deadline'] = Carbon::createFromFormat('d-m-Y', $deadline);
     //}
 
 

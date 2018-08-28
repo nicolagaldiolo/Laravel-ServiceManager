@@ -9,6 +9,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Support\Facades\Storage;
 use Spatie\Browsershot\Browsershot;
 
 class GetScreenshoot implements ShouldQueue
@@ -37,16 +38,18 @@ class GetScreenshoot implements ShouldQueue
         try {
 
             if($this->object instanceof Domains){
-                $folder = 'domains/';
+                $folder = config('custompath.domains');
                 $url = $this->object->url;
             }
 
             if($this->object instanceof Providers){
-                $folder = 'providers/';
+                $folder = config('custompath.providers');
                 $url = $this->object->website;
             }
 
-            $path = $folder . uniqid() . ".png";
+            if(!Storage::exists($folder)) Storage::makeDirectory($folder);
+
+            $path = $folder . '/' . uniqid() . ".png";
             //"Fit should be one of `contain`, `max`, `fill`, `stretch`, `crop`"
 
             Browsershot::url($url)
@@ -59,18 +62,7 @@ class GetScreenshoot implements ShouldQueue
             $this->object->update(['screenshoot' => $path]); // setto il nuovo path a db
 
         }catch (\Exception $e){
-            logger('Errore creazione screenshoot: ' . $e);
+            //logger('Errore creazione screenshoot: ' . $e);
         }
-    }
-
-    /**
-     * The job failed to process.
-     *
-     * @param  Exception  $exception
-     * @return void
-     */
-    public function failed(Exception $exception)
-    {
-        logger($exception);
     }
 }

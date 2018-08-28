@@ -2,12 +2,12 @@
 
 namespace App\Listeners;
 
-use App\Events\UserRegister;
-use App\Mail\UserRegisterEmail;
+use App\Events\CheckServiceStatus;
+use App\Jobs\CheckService;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Support\Facades\Mail;
-class UserRegisterListener
+
+class CheckServiceStatusListener
 {
     /**
      * Create the event listener.
@@ -22,12 +22,11 @@ class UserRegisterListener
     /**
      * Handle the event.
      *
-     * @param  UserRegister  $event
+     * @param  CheckServiceStatus  $event
      * @return void
      */
-    public function handle(UserRegister $event)
+    public function handle(CheckServiceStatus $event)
     {
-        $user = $event->user;
-        Mail::to($user->email)->send(new UserRegisterEmail($user, $verification_code));
+        CheckService::dispatch($event->domains);
     }
 }

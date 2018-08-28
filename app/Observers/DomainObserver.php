@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\Domains;
+use App\Events\CheckServiceStatus;
 use App\Events\GenerateScreen;
 use Carbon\Carbon;
 use File;
@@ -29,7 +30,9 @@ class DomainObserver
      */
     public function created(Domains $domains)
     {
-        event(new GenerateScreen($domains));
+
+        //event(new GenerateScreen($domains));
+        //event(new CheckServiceStatus($domains));
     }
 
     /**
