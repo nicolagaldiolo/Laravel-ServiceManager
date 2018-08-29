@@ -22,7 +22,6 @@ class CreateUsersTable extends Migration
             $table->boolean('custom_avatar')->default(0);
             $table->string('role', 16)->default('user');
             $table->rememberToken();
-            $table->boolean('is_verified')->default(0);
             $table->timestamps();
         });
     }

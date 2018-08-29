@@ -12,7 +12,7 @@ class ProviderObserver
     /**
      * Handle to the domains "creating" event.
      *
-     * @param  \App\Domains  $domains
+     * @param  \App\Domain  $domains
      * @return void
      */
     public function creating(Providers $providers)

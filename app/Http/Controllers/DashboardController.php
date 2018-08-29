@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Domains;
-use App\Events\ExpiringDomainsAlert;
+use App\Domain;
+use App\Events\ToPayDomainsAlert;
 use App\Events\GenerateScreen;
 use App\Providers;
 use App\Http\Requests\ProviderRequest;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
@@ -25,13 +26,31 @@ class DashboardController extends Controller
     public function index()
     {
 
-        $domains_sum = Auth()->user()->domains()->count();
-        $providers_sum = Auth()->user()->providers()->count();
-        $user_sum = User::count();
+        $dashboard = Auth()->user()->load('domains.customer', 'providers.domains', 'providers.hostings', 'customers.domains');
 
-        $domains_calendar = Auth()->user()->domains()->get();
+        $expiringDomains = $dashboard->domains->filter(function($item){
+            return ($item->deadline->month == Carbon::today()->month) && ($item->deadline->year == Carbon::today()->year);
+        });
 
-        return view('dashboard.index', compact('domains_sum', 'providers_sum', 'user_sum', 'domains_calendar'));
+        $dashboard['expiringDomains'] = $expiringDomains;
+        $dashboard['monthlyService_percent'] = round(($expiringDomains->sum('amount') * 100) / $dashboard->domains->sum('amount'), 2);
+        $domainsByMounth = collect(array_fill(1, 12, 0));
+
+        $dashboard->domains->each(function($item) use($domainsByMounth){
+            $domainsByMounth[$item->deadline->month] += $item->amount;
+        });
+        $dashboard['domainsByMounth'] = $domainsByMounth;
+
+        $totalDomain = Domain::count();
+
+        $usersSummary = User::with('domains')->get();
+        $usersSummary->each(function($item) use($totalDomain){
+            $item['domains_total_perc'] = round(($item->domains->count() * 100) / $totalDomain, 2);
+        });
+
+        $dashboard['usersSummary'] = $usersSummary;
+
+        return view('dashboard.index', compact( 'dashboard'));
 
     }
 

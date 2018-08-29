@@ -2,13 +2,14 @@
 
 namespace App\Console;
 
-use App\Domains;
-use App\Events\ExpiringDomainsAlert;
+use App\Domain;
+use App\Events\ToPayDomainsAlert;
 use App\Events\GenerateScreen;
 use App\Events\UserRegister;
 use App\Events\CheckServiceStatus;
-use App\Jobs\ExpiringDomains;
+use App\Jobs\ToPayDomains;
 use App\Providers;
+use Carbon\Carbon;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -34,12 +35,21 @@ class Kernel extends ConsoleKernel
 
         /*
         $schedule->call(function () {
-            Domains::toExpire()->update(['payed' => 0]);
+
+            // Incremento la data di un anno dei servizi pagati
+            Domain::updateDeadlineNextYear()->each(function($item){
+                $years_gap = Carbon::now()->endOfMonth()->diffInYears($item->deadline->endOfMonth());
+                $item->update(['deadline' => $item->deadline->addYear($years_gap + 1)]);
+            });
+
+            // Aggiorno la tabella domains settando i servizi da pagare
+            Domain::expiring()->update(['payed' => 0]);
+
         })->everyMinute();
         */
 
-        /*
-        $schedule->call(function(){
+
+        /*$schedule->call(function(){
             Domains::get()->each(function($item){
                 event(new CheckServiceStatus($item));
             });
@@ -48,20 +58,20 @@ class Kernel extends ConsoleKernel
 
         /*
         $schedule->call(function(){
-            Domains::->get()->each(function($item){
+            Domain::get()->each(function($item){
                 event(new GenerateScreen($item));
             });
 
-            Providers::->get()->each(function($item){
+            Providers::get()->each(function($item){
                 event(new GenerateScreen($item));
             });
 
-        })->everyTenMinutes();
+        })->everyThirtyMinutes();
         */
 
 
         //$schedule->call(function(){
-        //    event(new ExpiringDomainsAlert());
+        //    event(new ToPayDomainsAlert());
         //})->everyMinute();
 
     }

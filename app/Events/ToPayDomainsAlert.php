@@ -10,7 +10,7 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class ExpiringDomainsAlert
+class ToPayDomainsAlert
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 

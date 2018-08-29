@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Customer;
-use App\Domains;
+use App\Domain;
 use App\Http\Requests\CustomerRequest;
 use App\Http\Traits\DataTableDomainTrait;
 use Illuminate\Http\Request;
@@ -47,7 +47,7 @@ class CustomerController extends Controller
     public function create()
     {
         $customer = new Customer;
-        $domain = new Domains;
+        $domain = new Domain;
         return view('customers.create', compact('customer', 'domain'));
     }
 
@@ -80,18 +80,14 @@ class CustomerController extends Controller
 
         }
 
-        $userDomains = Auth::user()->domains()->get();
-        $customerDomains = $userDomains->filter(function($item) use($customer){
-            return $item->customer_id === $customer->id;
-        });
-
-        $toPay = $customerDomains->filter(function($item){
+        $customerDomains = $customer->load('domains');
+        $customerDomainsCount = $customerDomains->domains->count();
+        $customerRevenue = $customerDomains->domains->sum('amount');
+        $toPay = $customerDomains->domains->filter(function($item){
             return $item->payed === 0;
         })->count();
 
-        $customerRevenue = $customerDomains->sum('amount');
-        $customerDomainsCount = $customerDomains->count();
-        $revenueAvarage = round(($customerRevenue * 100) / $userDomains->sum('amount'), 2);
+        $revenueAvarage = round(($customerRevenue * 100) / Auth::user()->domains()->sum('amount'), 2);
 
         return view('customers.show', compact('customer', 'customerRevenue', 'customerDomainsCount', 'toPay', 'revenueAvarage'));
 

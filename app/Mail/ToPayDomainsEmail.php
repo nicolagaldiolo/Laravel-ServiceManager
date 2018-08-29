@@ -9,7 +9,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class ExipiringDomainsEmail extends Mailable
+class ToPayDomainsEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -33,6 +33,6 @@ class ExipiringDomainsEmail extends Mailable
      */
     public function build()
     {
-      return $this->subject('Domini in scadenza - ' . Carbon::now()->format('F Y') )->markdown('emails.users.expiring-domains');
+      return $this->subject('Domini in scadenza - ' . Carbon::now()->format('F Y') )->markdown('emails.users.topay-domains');
     }
 }

@@ -105,7 +105,7 @@
             <!--begin::Form-->
             <form method="POST" action="{{route('domains.store')}}" class="m-form m-form--fit m-form--label-align-right">
                 @csrf
-                @include('domains._form')
+                @include('domains._form', ['deadline' => true])
             </form>
 
             <!--end::Form-->

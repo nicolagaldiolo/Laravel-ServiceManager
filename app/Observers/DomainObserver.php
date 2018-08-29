@@ -2,9 +2,11 @@
 
 namespace App\Observers;
 
-use App\Domains;
+use App\Domain;
 use App\Events\CheckServiceStatus;
+use App\Events\ExpiringDomainsWriteTable;
 use App\Events\GenerateScreen;
+use App\ExpiringDomain;
 use Carbon\Carbon;
 use File;
 
@@ -14,10 +16,10 @@ class DomainObserver
     /**
      * Handle to the domains "creating" event.
      *
-     * @param  \App\Domains  $domains
+     * @param  \App\Domain  $domains
      * @return void
      */
-    public function creating(Domains $domains)
+    public function creating(Domain $domains)
     {
         //
     }
@@ -25,10 +27,10 @@ class DomainObserver
     /**
      * Handle to the domains "created" event.
      *
-     * @param  \App\Domains  $domains
+     * @param  \App\Domain  $domains
      * @return void
      */
-    public function created(Domains $domains)
+    public function created(Domain $domains)
     {
 
         //event(new GenerateScreen($domains));
@@ -38,11 +40,11 @@ class DomainObserver
     /**
      * Handle the domains "updated" event.
      *
-     * @param  \App\Domains  $domains
+     * @param  \App\Domain  $domains
      * @return void
      */
 
-    public function updated(Domains $domains)
+    public function updated(Domain $domains)
     {
         //
     }
@@ -50,19 +52,16 @@ class DomainObserver
     /**
      * Handle the domains "saving" event.
      *
-     * @param  \App\Domains  $domains
+     * @param  \App\Domain  $domains
      * @return void
      */
 
-    public function saving(Domains $domains)
+    public function saving(Domain $domains)
     {
-        if( $domains->deadline->lte(Carbon::now()->endOfMonth()) && $domains->payed == 1){
-            $years_gab = Carbon::now()->endOfMonth()->diffInYears($domains->deadline->endOfMonth());
-            $domains->deadline = $domains->deadline->addYear($years_gab + 1);
-        }
+        //
     }
 
-    public function deleting(Domains $domains)
+    public function deleting(Domain $domains)
     {
         //
     }
@@ -70,10 +69,10 @@ class DomainObserver
     /**
      * Handle the domains "deleted" event.
      *
-     * @param  \App\Domains  $domains
+     * @param  \App\Domain  $domains
      * @return void
      */
-    public function deleted(Domains $domains)
+    public function deleted(Domain $domains)
     {
         if(File::exists(public_path($domains->screenshoot))) File::delete(public_path($domains->screenshoot));
     }

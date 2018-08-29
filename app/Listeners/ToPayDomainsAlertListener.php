@@ -3,12 +3,12 @@
 namespace App\Listeners;
 
 use App\User;
-use App\Events\ExpiringDomainsAlert;
-use App\Jobs\ExpiringDomains;
+use App\Events\ToPayDomainsAlert;
+use App\Jobs\ToPayDomains;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class ExpiringDomainsAlertListener
+class ToPayDomainsAlertListener
 {
     /**
      * Create the event listener.
@@ -23,14 +23,13 @@ class ExpiringDomainsAlertListener
     /**
      * Handle the event.
      *
-     * @param  ExpiringDomainsAlert  $event
+     * @param  ToPayDomainsAlert  $event
      * @return void
      */
-    public function handle(ExpiringDomainsAlert $event)
+    public function handle(ToPayDomainsAlert $event)
     {
-        User::domainsExpiring()->get()
-            ->each(function($item){
-                ExpiringDomains::dispatch($item);
-            });
+        User::domainsExpiring()->each(function($item){
+            ToPayDomains::dispatch($item);
+        });
     }
 }

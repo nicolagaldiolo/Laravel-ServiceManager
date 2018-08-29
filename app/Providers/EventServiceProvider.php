@@ -23,9 +23,9 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\CheckServiceStatus' => [
             'App\Listeners\CheckServiceStatusListener',
         ],
-        'App\Events\ExpiringDomainsAlert' => [
-            'App\Listeners\ExpiringDomainsAlertListener',
-        ],
+        'App\Events\ToPayDomainsAlert' => [
+            'App\Listeners\ToPayDomainsAlertListener',
+        ]
 
     ];
 

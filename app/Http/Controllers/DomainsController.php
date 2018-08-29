@@ -3,12 +3,13 @@
 namespace App\Http\Controllers;
 
 
-use App\Domains;
+use App\Domain;
+use App\ExpiringDomain;
 use App\Http\Requests\DomainRequest;
 use App\Http\Traits\DataTableDomainTrait;
-use App\Jobs\ExpiringDomains;
+use App\Jobs\ToPayDomains;
 use App\Jobs\GetScreenshoot;
-use App\Mail\ExipiringDomainsEmail;
+use App\Mail\ToPayDomainsEmail;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -49,13 +50,14 @@ class DomainsController extends Controller
     {
         $customers = Auth::user()->customers()->get();
         $providers = Auth::user()->providers()->get();
-        $domain = new Domains;
+        $domain = new Domain;
+        $expiring = false;
 
         if($req->has('cid')){
             $domain->customer_id = $req->input('cid');
         }
 
-        return view('domains.create', compact('domain', 'providers', 'customers'));
+        return view('domains.create', compact('domain', 'providers', 'customers', 'expiring'));
     }
 
     /**
@@ -77,7 +79,7 @@ class DomainsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Domains $domain)
+    public function show(Domain $domain)
     {
 
     }
@@ -88,16 +90,18 @@ class DomainsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Domains $domain)
+    public function edit(Domain $domain)
     {
 
         $this->authorize('view', $domain);
 
+
+        $expiring = $domain->deadline->lte(Carbon::now()->endOfMonth());
         $customers = Auth::user()->customers()->get();
         $providers = Auth::user()->providers()->get();
         $domain->load('domain', 'hosting', 'customer');
 
-        return view('domains.edit', compact('providers', 'domain', 'customers'));
+        return view('domains.edit', compact('providers', 'domain', 'customers', 'expiring'));
     }
 
     /**
@@ -107,7 +111,7 @@ class DomainsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(DomainRequest $request, Domains $domain)
+    public function update(DomainRequest $request, Domain $domain)
     {
         $this->authorize('update', $domain);
         $domain->update($request->validated());
@@ -121,7 +125,7 @@ class DomainsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Domains $domain)
+    public function destroy(Domain $domain)
     {
         $this->authorize('delete', $domain);
 
@@ -133,7 +137,7 @@ class DomainsController extends Controller
         ];
     }
 
-    public function payedUpdate(Request $request, Domains $domain){
+    public function payedUpdate(Request $request, Domain $domain){
         $this->authorize('update', $domain);
         (bool) $res = $domain->update(['payed' => $request->get('payed')]);
         return [

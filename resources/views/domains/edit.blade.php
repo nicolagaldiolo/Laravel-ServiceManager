@@ -145,7 +145,7 @@
                     <form method="POST" action="{{route('domains.update', $domain)}}" class="m-form m-form--fit">
                         @csrf
                         @method('PATCH')
-                        @include('domains._form')
+                        @include('domains._form', ['deadline' => false])
                     </form>
 
                     <!--end::Form-->

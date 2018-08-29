@@ -43,7 +43,7 @@ class User extends Authenticatable implements JWTSubject
     // ha molti domains
     public function domains()
     {
-        return $this->hasMany(Domains::class);
+        return $this->hasMany(Domain::class);
     }
 
     // ha molti providers
@@ -112,13 +112,13 @@ class User extends Authenticatable implements JWTSubject
     public function scopeDomainsExpiring($query)
     {
         return $query->whereHas('customers.domains', function ($q) {
-            $q->expiring();
+            $q->toPay();
         })->with([
             'customers' => function ($q) {
                 $q->whereHas('domains');
             },
             'customers.domains' => function ($q) {
-                $q->expiring();
+                $q->toPay();
             },
         ]);
     }

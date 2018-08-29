@@ -1,20 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-    <!-- BEGIN: Subheader -->
-    <div class="m-subheader ">
-        <div class="d-flex align-items-center">
-            <div class="mr-auto">
-                <h3 class="m-subheader__title ">Dashboard</h3>
-                <ul>
-                    <li>Servizi attivi: {{$domains_sum}}</li>
-                    <li>Fornitori attivi: {{$providers_sum}}</li>
-                    <li>Utenti attivi: {{$user_sum}}</li>
-                </ul>
 
-            </div>
-        </div>
-    </div>
+    {{--dd($dashboard->expiringDomains)--}}
 
     <!-- END: Subheader -->
     <div class="m-content">
@@ -27,28 +15,11 @@
                             <div class="m-widget1__item">
                                 <div class="row m-row--no-padding align-items-center">
                                     <div class="col">
-                                        <h3 class="m-widget1__title">Member Profit</h3>
-                                        <span class="m-widget1__desc">Awerage Weekly Profit</span>
-                                    </div>
-                                    <div class="col m--align-right">
-                                        <span class="m-widget1__number m--font-brand">+$17,800</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!--end:: Widgets/Stats2-1 -->
-                    </div>
-                    <div class="col-md-12 col-lg-12 col-xl-3">
-                        <!--begin:: Widgets/Stats2-1 -->
-                        <div class="m-widget1">
-                            <div class="m-widget1__item">
-                                <div class="row m-row--no-padding align-items-center">
-                                    <div class="col">
-                                        <h3 class="m-widget1__title">Member Profit</h3>
-                                        <span class="m-widget1__desc">Awerage Weekly Profit</span>
-                                    </div>
-                                    <div class="col m--align-right">
-                                        <span class="m-widget1__number m--font-info">+$17,800</span>
+                                        <h3 class="m-widget1__title">Fatturato totale</h3>
+                                        <span class="m-widget1__desc">Ricavato da {{$dashboard->domains->count()}}
+                                            servizi</span>
+                                        <br>
+                                        <span class="m-widget1__number m--font-brand">&euro; {{$dashboard->domains->sum('amount')}}</span>
                                     </div>
                                 </div>
                             </div>
@@ -61,11 +32,10 @@
                             <div class="m-widget1__item">
                                 <div class="row m-row--no-padding align-items-center">
                                     <div class="col">
-                                        <h3 class="m-widget1__title">Member Profit</h3>
-                                        <span class="m-widget1__desc">Awerage Weekly Profit</span>
-                                    </div>
-                                    <div class="col m--align-right">
-                                        <span class="m-widget1__number m--font-danger">+$17,800</span>
+                                        <h3 class="m-widget1__title">Incasso {{\Carbon\Carbon::now()->format('F Y')}}</h3>
+                                        <span class="m-widget1__desc">Ricavato da {{$dashboard->expiringDomains->count()}} servizi</span>
+                                        <br>
+                                        <span class="m-widget1__number m--font-info">&euro; {{$dashboard->expiringDomains->sum('amount')}}</span>
                                     </div>
                                 </div>
                             </div>
@@ -78,11 +48,27 @@
                             <div class="m-widget1__item">
                                 <div class="row m-row--no-padding align-items-center">
                                     <div class="col">
-                                        <h3 class="m-widget1__title">Member Profit</h3>
-                                        <span class="m-widget1__desc">Awerage Weekly Profit</span>
+                                        <h3 class="m-widget1__title">Servizi da incassare</h3>
+                                        <span class="m-widget1__desc">In attesa di pagamento</span>
+                                        <br>
+                                        <span class="m-widget1__number m--font-danger">{{$domainsToPayCount}}</span>
                                     </div>
-                                    <div class="col m--align-right">
-                                        <span class="m-widget1__number m--font-success">+$17,800</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end:: Widgets/Stats2-1 -->
+                    </div>
+                    <div class="col-md-12 col-lg-12 col-xl-3">
+                        <!--begin:: Widgets/Stats2-1 -->
+                        <div class="m-widget1">
+                            <div class="m-widget1__item">
+                                <div class="row m-row--no-padding align-items-center">
+                                    <div class="col">
+                                        <h3 class="m-widget1__title">Incidenza fatturato</h3>
+                                        <span class="m-widget1__desc">Incidenza mensile sul fatturato</span>
+                                        <br>
+                                        <span class="m-widget1__number m--font-success">{{$dashboard->monthlyService_percent}}
+                                            %</span>
                                     </div>
                                 </div>
                             </div>
@@ -95,7 +81,6 @@
         </div>
 
 
-
         <!--Begin::Section-->
         <div class="row">
             <div class="col-xl-6">
@@ -106,14 +91,16 @@
                         <div class="m-portlet__head-caption">
                             <div class="m-portlet__head-title">
                                 <h3 class="m-portlet__head-text">
-                                    Domini in scadenza
+                                    Andamento annuale
                                 </h3>
                             </div>
                         </div>
                         <div class="m-portlet__head-tools">
                             <ul class="m-portlet__nav">
-                                <li class="m-portlet__nav-item m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push" m-dropdown-toggle="hover" aria-expanded="true">
-                                    <a href="{{route('domains.index')}}" class="m-portlet__nav-link btn btn--sm m-btn--pill btn-primary m-btn m-btn--label-brand">
+                                <li class="m-portlet__nav-item m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push"
+                                    m-dropdown-toggle="hover" aria-expanded="true">
+                                    <a href="{{route('domains.index')}}"
+                                       class="m-portlet__nav-link btn btn--sm m-btn--pill btn-brand m-btn">
                                         Tutti i servizi
                                     </a>
                                 </li>
@@ -124,60 +111,69 @@
 
                         <!--begin::Widget5-->
                         <div class="m-widget4">
-                            <div class="m-widget4__chart m-portlet-fit--sides m--margin-top-10 m--margin-top-20" style="height:260px;">
-                                <canvas id="m_chart_trends_stats"></canvas>
+                            <div class="m-widget4__chart m-portlet-fit--sides m--margin-top-10 m--margin-top-20"
+                                 style="height:260px;">
+                                <canvas id="m_chart_activities"></canvas>
                             </div>
-                            <div class="m-widget4__item">
-                                <div class="m-widget4__img m-widget4__img--logo">
-                                    <img src="https://keenthemes.com/metronic/themes/themes/metronic/dist/preview/assets/app/media/img/client-logos/logo1.png" alt="">
-                                </div>
-                                <div class="m-widget4__info">
-													<span class="m-widget4__title">
-														Phyton
-													</span>
-                                    <br>
-                                    <span class="m-widget4__sub">
-														A Programming Language
-													</span>
-                                </div>
-                                <span class="m-widget4__ext">
-													<span class="m-widget4__number m--font-danger">+$17</span>
-												</span>
+
+                            <!--begin::Widget 11-->
+                            <div class="m-widget11" style="margin-top:50px;">
+
+                                @if($domainsToPay->isEmpty())
+                                    <div class="alert alert-brand" role="alert">
+                                        <strong>Fantastico!</strong> Non ci sono altri servizi da gestire
+                                    </div>
+                                @else
+                                    <div class="table-responsive">
+                                        <!--begin::Table-->
+                                        <table class="table">
+                                            <!--begin::Thead-->
+                                            <thead>
+                                            <tr>
+                                                <td class="m-widget11__label"></td>
+                                                <td class="m-widget11__app">Dominio</td>
+                                                <td class="m-widget11__sales">Status</td>
+                                                <td class="m-widget11__price m--align-right">Amount</td>
+                                                <td class="m-widget11__total m--align-right"></td>
+                                            </tr>
+                                            </thead>
+                                            <!--end::Thead-->
+                                            <!--begin::Tbody-->
+                                            <tbody>
+                                            @foreach($domainsToPay as $domain)
+
+                                                <tr>
+                                                    <td>
+                                                        <img src="{{$domain->screenshoot}}" alt="">
+                                                    </td>
+                                                    <td>
+                                                        <span class="m-widget11__title">{{$domain->url}}</span>
+                                                        <span class="m-widget11__sub">{{$domain->customer->name}}</span>
+                                                    </td>
+                                                    <td>
+                                                        {{$domain->deadline->diffForHumans()}}
+                                                    </td>
+                                                    <td class="m--align-right m--font-brand">
+                                                        &euro; {{$domain->amount}}</td>
+                                                    <td class="m--align-right">
+                                                        @if(!$domain->payed)
+                                                            <a href="{{route('domains.edit', $domain)}}"
+                                                               class="btn m-btn--pill btn-outline-brand m-btn btn-sm">Edit</a>
+                                                        @endif
+                                                    </td>
+
+                                                </tr>
+                                            @endforeach
+                                            </tbody>
+                                            <!--end::Tbody-->
+                                        </table>
+                                        <!--end::Table-->
+                                    </div>
+
+                                @endif
                             </div>
-                            <div class="m-widget4__item">
-                                <div class="m-widget4__img m-widget4__img--logo">
-                                    <img src="https://keenthemes.com/metronic/themes/themes/metronic/dist/preview/assets/app/media/img/client-logos/logo1.png" alt="">
-                                </div>
-                                <div class="m-widget4__info">
-													<span class="m-widget4__title">
-														FlyThemes
-													</span>
-                                    <br>
-                                    <span class="m-widget4__sub">
-														A Let's Fly Fast Again Language
-													</span>
-                                </div>
-                                <span class="m-widget4__ext">
-													<span class="m-widget4__number m--font-danger">+$300</span>
-												</span>
-                            </div>
-                            <div class="m-widget4__item">
-                                <div class="m-widget4__img m-widget4__img--logo">
-                                    <img src="https://keenthemes.com/metronic/themes/themes/metronic/dist/preview/assets/app/media/img/client-logos/logo1.png" alt="">
-                                </div>
-                                <div class="m-widget4__info">
-													<span class="m-widget4__title">
-														AirApp
-													</span>
-                                    <br>
-                                    <span class="m-widget4__sub">
-														Awesome App For Project Management
-													</span>
-                                </div>
-                                <span class="m-widget4__ext">
-													<span class="m-widget4__number m--font-danger">+$6700</span>
-												</span>
-                            </div>
+                            <!--end::Widget 11-->
+
                         </div>
 
                         <!--end::Widget 5-->
@@ -186,6 +182,7 @@
 
                 <!--end:: Widgets/Top Products-->
             </div>
+
             <div class="col-xl-6">
 
                 <!--begin:: Widgets/Activity-->
@@ -203,55 +200,55 @@
                         <div class="m-widget17">
                             <div class="m-widget17__visual m-widget17__visual--chart m-portlet-fit--top m-portlet-fit--sides m--bg-danger">
                                 <div class="m-widget17__chart" style="height:320px;">
-                                    <canvas id="m_chart_activities"></canvas>
+                                    {{--<canvas id="m_chart_activities"></canvas>--}}
                                 </div>
                             </div>
                             <div class="m-widget17__stats">
                                 <div class="m-widget17__items m-widget17__items-col1">
                                     <div class="m-widget17__item">
 														<span class="m-widget17__icon">
-															<i class="flaticon-truck m--font-brand"></i>
+															<i class="flaticon-users m--font-brand"></i>
 														</span>
                                         <span class="m-widget17__subtitle">
-															Delivered
+															Customers
 														</span>
                                         <span class="m-widget17__desc">
-															15 New Paskages
+															{{$dashboard->customers->count()}} Customers attivi
 														</span>
                                     </div>
                                     <div class="m-widget17__item">
 														<span class="m-widget17__icon">
-															<i class="flaticon-paper-plane m--font-info"></i>
+															<i class="flaticon-interface-7 m--font-info"></i>
 														</span>
                                         <span class="m-widget17__subtitle">
-															Reporeted
+															Providers
 														</span>
                                         <span class="m-widget17__desc">
-															72 Support Cases
+															{{$dashboard->providers->count()}} Providers active
 														</span>
                                     </div>
                                 </div>
                                 <div class="m-widget17__items m-widget17__items-col2">
                                     <div class="m-widget17__item">
 														<span class="m-widget17__icon">
-															<i class="flaticon-pie-chart m--font-success"></i>
+															<i class="flaticon-layers m--font-success"></i>
 														</span>
                                         <span class="m-widget17__subtitle">
-															Ordered
+															Domains
 														</span>
                                         <span class="m-widget17__desc">
-															72 New Items
+															{{$dashboard->domains->count()}} Domains active
 														</span>
                                     </div>
                                     <div class="m-widget17__item">
 														<span class="m-widget17__icon">
-															<i class="flaticon-time m--font-danger"></i>
+															<i class="flaticon-profile m--font-danger"></i>
 														</span>
                                         <span class="m-widget17__subtitle">
-															Arrived
+															Users
 														</span>
                                         <span class="m-widget17__desc">
-															34 Upgraded Boxes
+                                                        {{$dashboard->usersSummary->count()}} Users active
 														</span>
                                     </div>
                                 </div>
@@ -287,7 +284,8 @@
                         <div class="m-portlet__head-tools">
                             <ul class="m-portlet__nav">
                                 <li class="m-portlet__nav-item">
-                                    <a href="{{route('domains.create')}}" class="btn btn-accent m-btn m-btn--custom m-btn--icon m-btn--pill m-btn--air">
+                                    <a href="{{route('domains.create')}}"
+                                       class="btn btn-accent m-btn m-btn--custom m-btn--icon m-btn--pill m-btn--air">
 														<span>
 															<i class="la la-plus"></i>
 															<span>Add Event</span>
@@ -313,151 +311,31 @@
                         <div class="m-portlet__head-caption">
                             <div class="m-portlet__head-title">
                                 <h3 class="m-portlet__head-text">
-                                    Audit Log
+                                    Status servizi
                                 </h3>
                             </div>
                         </div>
                         <div class="m-portlet__head-tools">
-                            <ul class="nav nav-pills nav-pills--brand m-nav-pills--align-right m-nav-pills--btn-pill m-nav-pills--btn-sm" role="tablist">
-                                <li class="nav-item m-tabs__item">
-                                    <a class="nav-link m-tabs__link active" data-toggle="tab" href="#m_widget4_tab1_content" role="tab">
-                                        Today
-                                    </a>
-                                </li>
-                                <li class="nav-item m-tabs__item">
-                                    <a class="nav-link m-tabs__link" data-toggle="tab" href="#m_widget4_tab2_content" role="tab">
-                                        Week
-                                    </a>
-                                </li>
-                                <li class="nav-item m-tabs__item">
-                                    <a class="nav-link m-tabs__link" data-toggle="tab" href="#m_widget4_tab3_content" role="tab">
-                                        Month
-                                    </a>
-                                </li>
-                            </ul>
+                            <a class="btn m-btn--pill btn-secondary btn-sm m-btn" href="{{route('domains.index')}}">Tutti
+                                i
+                                servizi</a>
                         </div>
                     </div>
                     <div class="m-portlet__body">
-                        <div class="tab-content">
-                            <div class="tab-pane active" id="m_widget4_tab1_content">
-                                <div class="m-scrollable" data-scrollable="true" data-height="550" style="">
-                                    <div class="m-list-timeline m-list-timeline--skin-light">
-                                        <div class="m-list-timeline__items">
-                                            <div class="m-list-timeline__item">
-                                                <span class="m-list-timeline__badge m-list-timeline__badge--success"></span>
-                                                <span class="m-list-timeline__text">12 new users registered</span>
-                                                <span class="m-list-timeline__time">Just now</span>
-                                            </div>
-                                            <div class="m-list-timeline__item">
-                                                <span class="m-list-timeline__badge m-list-timeline__badge--info"></span>
-                                                <span class="m-list-timeline__text">System shutdown
-																	<span class="m-badge m-badge--success m-badge--wide">pending</span>
-																</span>
-                                                <span class="m-list-timeline__time">14 mins</span>
-                                            </div>
-                                            <div class="m-list-timeline__item">
-                                                <span class="m-list-timeline__badge m-list-timeline__badge--danger"></span>
-                                                <span class="m-list-timeline__text">New invoice received</span>
-                                                <span class="m-list-timeline__time">20 mins</span>
-                                            </div>
-                                            <div class="m-list-timeline__item">
-                                                <span class="m-list-timeline__badge m-list-timeline__badge--accent"></span>
-                                                <span class="m-list-timeline__text">DB overloaded 80%
-																	<span class="m-badge m-badge--info m-badge--wide">settled</span>
-																</span>
-                                                <span class="m-list-timeline__time">1 hr</span>
-                                            </div>
-                                            <div class="m-list-timeline__item">
-                                                <span class="m-list-timeline__badge m-list-timeline__badge--warning"></span>
-                                                <span class="m-list-timeline__text">System error -
-																	<a href="#" class="m-link">Check</a>
-																</span>
-                                                <span class="m-list-timeline__time">2 hrs</span>
-                                            </div>
-                                            <div class="m-list-timeline__item">
-                                                <span class="m-list-timeline__badge m-list-timeline__badge--brand"></span>
-                                                <span class="m-list-timeline__text">Production server down</span>
-                                                <span class="m-list-timeline__time">3 hrs</span>
-                                            </div>
-                                            <div class="m-list-timeline__item">
-                                                <span class="m-list-timeline__badge m-list-timeline__badge--info"></span>
-                                                <span class="m-list-timeline__text">Production server up</span>
-                                                <span class="m-list-timeline__time">5 hrs</span>
-                                            </div>
-                                            <div class="m-list-timeline__item">
-                                                <span class="m-list-timeline__badge m-list-timeline__badge--success"></span>
-                                                <span href="" class="m-list-timeline__text">New order received
-																	<span class="m-badge m-badge--danger m-badge--wide">urgent</span>
-																</span>
-                                                <span class="m-list-timeline__time">7 hrs</span>
-                                            </div>
-                                            <div class="m-list-timeline__item">
-                                                <span class="m-list-timeline__badge m-list-timeline__badge--success"></span>
-                                                <span class="m-list-timeline__text">12 new users registered</span>
-                                                <span class="m-list-timeline__time">Just now</span>
-                                            </div>
-                                            <div class="m-list-timeline__item">
-                                                <span class="m-list-timeline__badge m-list-timeline__badge--info"></span>
-                                                <span class="m-list-timeline__text">System shutdown
-																	<span class="m-badge m-badge--success m-badge--wide">pending</span>
-																</span>
-                                                <span class="m-list-timeline__time">14 mins</span>
-                                            </div>
-                                            <div class="m-list-timeline__item">
-                                                <span class="m-list-timeline__badge m-list-timeline__badge--danger"></span>
-                                                <span class="m-list-timeline__text">New invoice received</span>
-                                                <span class="m-list-timeline__time">20 mins</span>
-                                            </div>
-                                            <div class="m-list-timeline__item">
-                                                <span class="m-list-timeline__badge m-list-timeline__badge--accent"></span>
-                                                <span class="m-list-timeline__text">DB overloaded 80%
-																	<span class="m-badge m-badge--info m-badge--wide">settled</span>
-																</span>
-                                                <span class="m-list-timeline__time">1 hr</span>
-                                            </div>
-                                            <div class="m-list-timeline__item">
-                                                <span class="m-list-timeline__badge m-list-timeline__badge--danger"></span>
-                                                <span class="m-list-timeline__text">New invoice received</span>
-                                                <span class="m-list-timeline__time">20 mins</span>
-                                            </div>
-                                            <div class="m-list-timeline__item">
-                                                <span class="m-list-timeline__badge m-list-timeline__badge--accent"></span>
-                                                <span class="m-list-timeline__text">DB overloaded 80%
-																	<span class="m-badge m-badge--info m-badge--wide">settled</span>
-																</span>
-                                                <span class="m-list-timeline__time">1 hr</span>
-                                            </div>
-                                            <div class="m-list-timeline__item">
-                                                <span class="m-list-timeline__badge m-list-timeline__badge--warning"></span>
-                                                <span class="m-list-timeline__text">System error -
-																	<a href="#" class="m-link">Check</a>
-																</span>
-                                                <span class="m-list-timeline__time">2 hrs</span>
-                                            </div>
-                                            <div class="m-list-timeline__item">
-                                                <span class="m-list-timeline__badge m-list-timeline__badge--brand"></span>
-                                                <span class="m-list-timeline__text">Production server down</span>
-                                                <span class="m-list-timeline__time">3 hrs</span>
-                                            </div>
-                                            <div class="m-list-timeline__item">
-                                                <span class="m-list-timeline__badge m-list-timeline__badge--info"></span>
-                                                <span class="m-list-timeline__text">Production server up</span>
-                                                <span class="m-list-timeline__time">5 hrs</span>
-                                            </div>
-                                            <div class="m-list-timeline__item">
-                                                <span class="m-list-timeline__badge m-list-timeline__badge--success"></span>
-                                                <span href="" class="m-list-timeline__text">New order received
-																	<span class="m-badge m-badge--danger m-badge--wide">urgent</span>
-																</span>
-                                                <span class="m-list-timeline__time">7 hrs</span>
-                                            </div>
+                        <div class="m-scrollable" data-scrollable="true" data-height="550" style="">
+                            <div class="m-list-timeline m-list-timeline--skin-light">
+                                <div class="m-list-timeline__items">
+                                    @foreach($dashboard->domains as $domain)
+                                        <div class="m-list-timeline__item">
+                                            <span class="m-list-timeline__badge @if($domain->status == 1)m-list-timeline__badge--success @else m-list-timeline__badge--danger @endif"></span>
+                                            <span class="m-list-timeline__text">{{$domain->url}}</span>
+                                            <span class="m-list-timeline__time">
+                                            <span class="m-badge m-badge--wide @if($domain->status == 1) m-badge--success @else m-badge--danger @endif">@if($domain->status == 1)
+                                                    Online @else Offline @endif</span>
+                                        </span>
                                         </div>
-                                    </div>
+                                    @endforeach
                                 </div>
-                            </div>
-                            <div class="tab-pane" id="m_widget4_tab2_content">
-                            </div>
-                            <div class="tab-pane" id="m_widget4_tab3_content">
                             </div>
                         </div>
                     </div>
@@ -468,6 +346,7 @@
 
         </div>
         <!--End::Section-->
+
 
         <!--Begin::Section-->
         <div class="row">
@@ -480,150 +359,36 @@
                         <div class="m-portlet__head-caption">
                             <div class="m-portlet__head-title">
                                 <h3 class="m-portlet__head-text">
-                                    Authors Profit
+                                    Fornitori
                                 </h3>
                             </div>
                         </div>
                         <div class="m-portlet__head-tools">
-                            <ul class="m-portlet__nav">
-                                <li class="m-portlet__nav-item m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push" m-dropdown-toggle="hover">
-                                    <a href="#" class="m-portlet__nav-link m-dropdown__toggle dropdown-toggle btn btn--sm m-btn--pill btn-secondary m-btn m-btn--label-brand">
-                                        All
-                                    </a>
-                                    <div class="m-dropdown__wrapper">
-                                        <span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
-                                        <div class="m-dropdown__inner">
-                                            <div class="m-dropdown__body">
-                                                <div class="m-dropdown__content">
-                                                    <ul class="m-nav">
-                                                        <li class="m-nav__section m-nav__section--first">
-                                                            <span class="m-nav__section-text">Quick Actions</span>
-                                                        </li>
-                                                        <li class="m-nav__item">
-                                                            <a href="" class="m-nav__link">
-                                                                <i class="m-nav__link-icon flaticon-share"></i>
-                                                                <span class="m-nav__link-text">Activity</span>
-                                                            </a>
-                                                        </li>
-                                                        <li class="m-nav__item">
-                                                            <a href="" class="m-nav__link">
-                                                                <i class="m-nav__link-icon flaticon-chat-1"></i>
-                                                                <span class="m-nav__link-text">Messages</span>
-                                                            </a>
-                                                        </li>
-                                                        <li class="m-nav__item">
-                                                            <a href="" class="m-nav__link">
-                                                                <i class="m-nav__link-icon flaticon-info"></i>
-                                                                <span class="m-nav__link-text">FAQ</span>
-                                                            </a>
-                                                        </li>
-                                                        <li class="m-nav__item">
-                                                            <a href="" class="m-nav__link">
-                                                                <i class="m-nav__link-icon flaticon-lifebuoy"></i>
-                                                                <span class="m-nav__link-text">Support</span>
-                                                            </a>
-                                                        </li>
-                                                        <li class="m-nav__separator m-nav__separator--fit">
-                                                        </li>
-                                                        <li class="m-nav__item">
-                                                            <a href="#" class="btn btn-outline-danger m-btn m-btn--pill m-btn--wide btn-sm">Cancel</a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
+                            <a class="btn m-btn--pill btn-secondary btn-sm m-btn" href="{{route('providers.index')}}">Esplora</a>
                         </div>
                     </div>
                     <div class="m-portlet__body">
                         <div class="m-widget4">
-                            <div class="m-widget4__item">
-                                <div class="m-widget4__img m-widget4__img--logo">
-                                    <img src="https://keenthemes.com/metronic/themes/themes/metronic/dist/preview/assets/app/media/img/client-logos/logo4.png" alt="">
+                            @foreach($dashboard->providers as $provider)
+                                <div class="m-widget4__item">
+                                    <div class="m-widget4__img m-widget4__img--logo">
+                                        <img src="{{$provider->screenshoot}}" alt="">
+                                    </div>
+                                    <div class="m-widget4__info">
+                                        <span class="m-widget4__title">{{$provider->name}}</span>
+                                        <br>
+                                        <span class="m-widget4__sub">
+                                            <a target="_blank" href="{{$provider->website}}">{{$provider->website}}</a>
+                                        </span>
+                                    </div>
+                                    <span class="m-widget4__ext">
+                                        <span class="m-widget4__number m--font-brand">{{$provider->domains->count()}}
+                                            <small>Domains</small> <br>{{$provider->hostings->count()}}
+                                            <small>Hostings</small></span>
+                                    </span>
                                 </div>
-                                <div class="m-widget4__info">
-													<span class="m-widget4__title">
-														Trump Themes
-													</span>
-                                    <br>
-                                    <span class="m-widget4__sub">
-														Make Metronic Great Again
-													</span>
-                                </div>
-                                <span class="m-widget4__ext">
-													<span class="m-widget4__number m--font-brand">+$2500</span>
-												</span>
-                            </div>
-                            <div class="m-widget4__item">
-                                <div class="m-widget4__img m-widget4__img--logo">
-                                    <img src="https://keenthemes.com/metronic/themes/themes/metronic/dist/preview/assets/app/media/img/client-logos/logo4.png" alt="">
-                                </div>
-                                <div class="m-widget4__info">
-													<span class="m-widget4__title">
-														StarBucks
-													</span>
-                                    <br>
-                                    <span class="m-widget4__sub">
-														Good Coffee & Snacks
-													</span>
-                                </div>
-                                <span class="m-widget4__ext">
-													<span class="m-widget4__number m--font-brand">-$290</span>
-												</span>
-                            </div>
-                            <div class="m-widget4__item">
-                                <div class="m-widget4__img m-widget4__img--logo">
-                                    <img src="https://keenthemes.com/metronic/themes/themes/metronic/dist/preview/assets/app/media/img/client-logos/logo4.png" alt="">
-                                </div>
-                                <div class="m-widget4__info">
-													<span class="m-widget4__title">
-														Phyton
-													</span>
-                                    <br>
-                                    <span class="m-widget4__sub">
-														A Programming Language
-													</span>
-                                </div>
-                                <span class="m-widget4__ext">
-													<span class="m-widget4__number m--font-brand">+$17</span>
-												</span>
-                            </div>
-                            <div class="m-widget4__item">
-                                <div class="m-widget4__img m-widget4__img--logo">
-                                    <img src="https://keenthemes.com/metronic/themes/themes/metronic/dist/preview/assets/app/media/img/client-logos/logo4.png" alt="">
-                                </div>
-                                <div class="m-widget4__info">
-													<span class="m-widget4__title">
-														GreenMakers
-													</span>
-                                    <br>
-                                    <span class="m-widget4__sub">
-														Make Green Great Again
-													</span>
-                                </div>
-                                <span class="m-widget4__ext">
-													<span class="m-widget4__number m--font-brand">-$2.50</span>
-												</span>
-                            </div>
-                            <div class="m-widget4__item">
-                                <div class="m-widget4__img m-widget4__img--logo">
-                                    <img src="https://keenthemes.com/metronic/themes/themes/metronic/dist/preview/assets/app/media/img/client-logos/logo4.png" alt="">
-                                </div>
-                                <div class="m-widget4__info">
-													<span class="m-widget4__title">
-														FlyThemes
-													</span>
-                                    <br>
-                                    <span class="m-widget4__sub">
-														A Let's Fly Fast Again Language
-													</span>
-                                </div>
-                                <span class="m-widget4__ext">
-													<span class="m-widget4__number m--font-brand">+$200</span>
-												</span>
-                            </div>
+                            @endforeach
+
                         </div>
                     </div>
                 </div>
@@ -639,150 +404,31 @@
                         <div class="m-portlet__head-caption">
                             <div class="m-portlet__head-title">
                                 <h3 class="m-portlet__head-text">
-                                    Authors Profit
+                                    Customers
                                 </h3>
                             </div>
                         </div>
                         <div class="m-portlet__head-tools">
-                            <ul class="m-portlet__nav">
-                                <li class="m-portlet__nav-item m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push" m-dropdown-toggle="hover">
-                                    <a href="#" class="m-portlet__nav-link m-dropdown__toggle dropdown-toggle btn btn--sm m-btn--pill btn-secondary m-btn m-btn--label-brand">
-                                        All
-                                    </a>
-                                    <div class="m-dropdown__wrapper">
-                                        <span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
-                                        <div class="m-dropdown__inner">
-                                            <div class="m-dropdown__body">
-                                                <div class="m-dropdown__content">
-                                                    <ul class="m-nav">
-                                                        <li class="m-nav__section m-nav__section--first">
-                                                            <span class="m-nav__section-text">Quick Actions</span>
-                                                        </li>
-                                                        <li class="m-nav__item">
-                                                            <a href="" class="m-nav__link">
-                                                                <i class="m-nav__link-icon flaticon-share"></i>
-                                                                <span class="m-nav__link-text">Activity</span>
-                                                            </a>
-                                                        </li>
-                                                        <li class="m-nav__item">
-                                                            <a href="" class="m-nav__link">
-                                                                <i class="m-nav__link-icon flaticon-chat-1"></i>
-                                                                <span class="m-nav__link-text">Messages</span>
-                                                            </a>
-                                                        </li>
-                                                        <li class="m-nav__item">
-                                                            <a href="" class="m-nav__link">
-                                                                <i class="m-nav__link-icon flaticon-info"></i>
-                                                                <span class="m-nav__link-text">FAQ</span>
-                                                            </a>
-                                                        </li>
-                                                        <li class="m-nav__item">
-                                                            <a href="" class="m-nav__link">
-                                                                <i class="m-nav__link-icon flaticon-lifebuoy"></i>
-                                                                <span class="m-nav__link-text">Support</span>
-                                                            </a>
-                                                        </li>
-                                                        <li class="m-nav__separator m-nav__separator--fit">
-                                                        </li>
-                                                        <li class="m-nav__item">
-                                                            <a href="#" class="btn btn-outline-danger m-btn m-btn--pill m-btn--wide btn-sm">Cancel</a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
+                            <a class="btn m-btn--pill btn-secondary btn-sm m-btn" href="{{route('customers.index')}}">Esplora</a>
                         </div>
                     </div>
                     <div class="m-portlet__body">
                         <div class="m-widget4">
-                            <div class="m-widget4__item">
-                                <div class="m-widget4__img m-widget4__img--logo">
-                                    <img src="https://keenthemes.com/metronic/themes/themes/metronic/dist/preview/assets/app/media/img/client-logos/logo4.png" alt="">
+                            @foreach($dashboard->customers as $customer)
+                                <div class="m-widget4__item">
+                                    <div class="m-widget4__info" style="padding-left: 0;">
+                                        <span class="m-widget4__title">{{$customer->name}}</span>
+                                        <br>
+                                        <span class="m-widget4__sub">
+                                            {{$customer->domains->count()}} Servizi attivi
+                                        </span>
+                                    </div>
+                                    <span class="m-widget4__ext">
+                                        <span class="m-widget4__number m--font-brand">&euro; {{$customer->domains->sum('amount')}}</span>
+                                    </span>
                                 </div>
-                                <div class="m-widget4__info">
-													<span class="m-widget4__title">
-														Trump Themes
-													</span>
-                                    <br>
-                                    <span class="m-widget4__sub">
-														Make Metronic Great Again
-													</span>
-                                </div>
-                                <span class="m-widget4__ext">
-													<span class="m-widget4__number m--font-brand">+$2500</span>
-												</span>
-                            </div>
-                            <div class="m-widget4__item">
-                                <div class="m-widget4__img m-widget4__img--logo">
-                                    <img src="https://keenthemes.com/metronic/themes/themes/metronic/dist/preview/assets/app/media/img/client-logos/logo4.png" alt="">
-                                </div>
-                                <div class="m-widget4__info">
-													<span class="m-widget4__title">
-														StarBucks
-													</span>
-                                    <br>
-                                    <span class="m-widget4__sub">
-														Good Coffee & Snacks
-													</span>
-                                </div>
-                                <span class="m-widget4__ext">
-													<span class="m-widget4__number m--font-brand">-$290</span>
-												</span>
-                            </div>
-                            <div class="m-widget4__item">
-                                <div class="m-widget4__img m-widget4__img--logo">
-                                    <img src="https://keenthemes.com/metronic/themes/themes/metronic/dist/preview/assets/app/media/img/client-logos/logo4.png" alt="">
-                                </div>
-                                <div class="m-widget4__info">
-													<span class="m-widget4__title">
-														Phyton
-													</span>
-                                    <br>
-                                    <span class="m-widget4__sub">
-														A Programming Language
-													</span>
-                                </div>
-                                <span class="m-widget4__ext">
-													<span class="m-widget4__number m--font-brand">+$17</span>
-												</span>
-                            </div>
-                            <div class="m-widget4__item">
-                                <div class="m-widget4__img m-widget4__img--logo">
-                                    <img src="https://keenthemes.com/metronic/themes/themes/metronic/dist/preview/assets/app/media/img/client-logos/logo4.png" alt="">
-                                </div>
-                                <div class="m-widget4__info">
-													<span class="m-widget4__title">
-														GreenMakers
-													</span>
-                                    <br>
-                                    <span class="m-widget4__sub">
-														Make Green Great Again
-													</span>
-                                </div>
-                                <span class="m-widget4__ext">
-													<span class="m-widget4__number m--font-brand">-$2.50</span>
-												</span>
-                            </div>
-                            <div class="m-widget4__item">
-                                <div class="m-widget4__img m-widget4__img--logo">
-                                    <img src="https://keenthemes.com/metronic/themes/themes/metronic/dist/preview/assets/app/media/img/client-logos/logo4.png" alt="">
-                                </div>
-                                <div class="m-widget4__info">
-													<span class="m-widget4__title">
-														FlyThemes
-													</span>
-                                    <br>
-                                    <span class="m-widget4__sub">
-														A Let's Fly Fast Again Language
-													</span>
-                                </div>
-                                <span class="m-widget4__ext">
-													<span class="m-widget4__number m--font-brand">+$200</span>
-												</span>
-                            </div>
+                            @endforeach
+
                         </div>
                     </div>
                 </div>
@@ -797,113 +443,43 @@
                         <div class="m-portlet__head-caption">
                             <div class="m-portlet__head-title">
                                 <h3 class="m-portlet__head-text">
-                                    User Progress
+                                    Users
                                 </h3>
                             </div>
                         </div>
                         <div class="m-portlet__head-tools">
-                            <ul class="nav nav-pills nav-pills--brand m-nav-pills--align-right m-nav-pills--btn-pill m-nav-pills--btn-sm" role="tablist">
-                                <li class="nav-item m-tabs__item">
-                                    <a class="nav-link m-tabs__link active" data-toggle="tab" href="#m_widget4_tab1_content" role="tab">
-                                        Today
-                                    </a>
-                                </li>
-                                <li class="nav-item m-tabs__item">
-                                    <a class="nav-link m-tabs__link" data-toggle="tab" href="#m_widget4_tab2_content" role="tab">
-                                        Week
-                                    </a>
-                                </li>
-                                <li class="nav-item m-tabs__item">
-                                    <a class="nav-link m-tabs__link" data-toggle="tab" href="#m_widget4_tab3_content" role="tab">
-                                        Month
-                                    </a>
-                                </li>
-                            </ul>
+                            <a class="btn m-btn--pill btn-secondary btn-sm m-btn" href="{{route('users.index')}}">Esplora</a>
                         </div>
                     </div>
                     <div class="m-portlet__body">
-                        <div class="tab-content">
-                            <div class="tab-pane active" id="m_widget4_tab1_content">
-                                <div class="m-widget4 m-widget4--progress">
-                                    <div class="m-widget4__item">
-                                        <div class="m-widget4__img m-widget4__img--pic">
-                                            <img src="https://keenthemes.com/metronic/themes/themes/metronic/dist/preview/assets/app/media/img/users/100_14.jpg" alt="">
-                                        </div>
-                                        <div class="m-widget4__info">
-							                <span class="m-widget4__title">Anna Strong</span><br>
-                                            <span class="m-widget4__sub">Visual Designer,Google Inc</span>
-                                        </div>
-                                        <div class="m-widget4__progress">
-                                            <div class="m-widget4__progress-wrapper">
-                                                <span class="m-widget17__progress-number">63%</span>
-                                                <span class="m-widget17__progress-label">London</span>
-                                                <div class="progress m-progress--sm">
-                                                    <div class="progress-bar bg-danger" role="progressbar" style="width: 63%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="63"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="m-widget4__item">
-                                        <div class="m-widget4__img m-widget4__img--pic">
-                                            <img src="https://keenthemes.com/metronic/themes/themes/metronic/dist/preview/assets/app/media/img/users/100_14.jpg" alt="">
-                                        </div>
-                                        <div class="m-widget4__info">
-                                            <span class="m-widget4__title">Anna Strong</span><br>
-                                            <span class="m-widget4__sub">Visual Designer,Google Inc</span>
-                                        </div>
-                                        <div class="m-widget4__progress">
-                                            <div class="m-widget4__progress-wrapper">
-                                                <span class="m-widget17__progress-number">63%</span>
-                                                <span class="m-widget17__progress-label">London</span>
-                                                <div class="progress m-progress--sm">
-                                                    <div class="progress-bar bg-danger" role="progressbar" style="width: 63%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="63"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="m-widget4__item">
-                                        <div class="m-widget4__img m-widget4__img--pic">
-                                            <img src="https://keenthemes.com/metronic/themes/themes/metronic/dist/preview/assets/app/media/img/users/100_14.jpg" alt="">
-                                        </div>
-                                        <div class="m-widget4__info">
-                                            <span class="m-widget4__title">Anna Strong</span><br>
-                                            <span class="m-widget4__sub">Visual Designer,Google Inc</span>
-                                        </div>
-                                        <div class="m-widget4__progress">
-                                            <div class="m-widget4__progress-wrapper">
-                                                <span class="m-widget17__progress-number">63%</span>
-                                                <span class="m-widget17__progress-label">London</span>
-                                                <div class="progress m-progress--sm">
-                                                    <div class="progress-bar bg-danger" role="progressbar" style="width: 63%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="63"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="m-widget4__item">
-                                        <div class="m-widget4__img m-widget4__img--pic">
-                                            <img src="https://keenthemes.com/metronic/themes/themes/metronic/dist/preview/assets/app/media/img/users/100_14.jpg" alt="">
-                                        </div>
-                                        <div class="m-widget4__info">
-                                            <span class="m-widget4__title">Anna Strong</span><br>
-                                            <span class="m-widget4__sub">Visual Designer,Google Inc</span>
-                                        </div>
-                                        <div class="m-widget4__progress">
-                                            <div class="m-widget4__progress-wrapper">
-                                                <span class="m-widget17__progress-number">63%</span>
-                                                <span class="m-widget17__progress-label">London</span>
-                                                <div class="progress m-progress--sm">
-                                                    <div class="progress-bar bg-danger" role="progressbar" style="width: 63%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="63"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
 
+                        <div class="m-widget4 m-widget4--progress">
+                            @foreach($dashboard->usersSummary as $user)
+                                <div class="m-widget4__item">
+                                    <div class="m-widget4__img m-widget4__img--pic">
+                                        <img src="{{$user->avatar}}" alt="">
+                                    </div>
+                                    <div class="m-widget4__info">
+                                        <span class="m-widget4__title">{{$user->name}}</span><br>
+                                        <span class="m-widget4__sub">{{$user->domains->count()}}
+                                            servizi (&euro; {{$user->domains->sum('amount')}})</span>
+                                    </div>
+                                    <div class="m-widget4__progress">
+                                        <div class="m-widget4__progress-wrapper">
+                                            <span class="m-widget17__progress-number">{{$user->domains_total_perc}}
+                                                %</span>
+                                            <span class="m-widget17__progress-label">Domini totali</span>
+                                            <div class="progress m-progress--sm">
+                                                <div class="progress-bar bg-danger" role="progressbar"
+                                                     style="width: {{$user->domains_total_perc}}%;"
+                                                     aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="tab-pane" id="m_widget4_tab2_content">
-                            </div>
-                            <div class="tab-pane" id="m_widget4_tab3_content">
-                            </div>
+                            @endforeach
+
+
                         </div>
                     </div>
                 </div>
@@ -913,7 +489,6 @@
 
         <!--End::Section-->
 
-
     </div>
 @stop
 
@@ -921,8 +496,107 @@
     @parent
 
     <script>
-        jQuery(document).ready(function() {
-            var calendarInit = function($) {
+        jQuery(document).ready(function () {
+
+
+            //== Activities Charts.
+            //** Based on Chartjs plugin - http://www.chartjs.org/
+            var activitiesChart = function activitiesChart($) {
+                if ($('#m_chart_activities').length == 0) {
+                    return;
+                }
+
+                var ctx = document.getElementById("m_chart_activities").getContext("2d");
+
+                var gradient = ctx.createLinearGradient(0, 0, 0, 240);
+                gradient.addColorStop(0, Chart.helpers.color('#00c5dc').alpha(0.7).rgbString());
+                gradient.addColorStop(1, Chart.helpers.color('#f2feff').alpha(0).rgbString());
+
+                var domainsData = [];
+                @foreach($dashboard->domainsByMounth as $domain)
+                domainsData.push({{$domain}})
+                        @endforeach
+
+                var config = {
+                        type: 'line',
+                        data: {
+                            labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+                            datasets: [{
+                                label: "Totale Incasso",
+                                backgroundColor: gradient, // Put the gradient here as a fill color
+                                borderColor: '#0dc8de',
+
+                                pointBackgroundColor: Chart.helpers.color('#ffffff').alpha(0).rgbString(),
+                                pointBorderColor: Chart.helpers.color('#ffffff').alpha(0).rgbString(),
+                                pointHoverBackgroundColor: mApp.getColor('danger'),
+                                pointHoverBorderColor: Chart.helpers.color('#000000').alpha(0.2).rgbString(),
+
+                                //fill: 'start',
+                                data: domainsData
+                            }]
+                        },
+                        options: {
+                            title: {
+                                display: false
+                            },
+                            tooltips: {
+                                mode: 'nearest',
+                                intersect: false,
+                                position: 'nearest',
+                                xPadding: 10,
+                                yPadding: 10,
+                                caretPadding: 10
+                            },
+                            legend: {
+                                display: false
+                            },
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            scales: {
+                                xAxes: [{
+                                    display: false,
+                                    gridLines: false,
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: 'Month'
+                                    }
+                                }],
+                                yAxes: [{
+                                    display: false,
+                                    gridLines: false,
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: 'Value'
+                                    },
+                                    ticks: {
+                                        beginAtZero: true
+                                    }
+                                }]
+                            },
+                            elements: {
+                                line: {
+                                    tension: 0.0000001
+                                },
+                                point: {
+                                    radius: 4,
+                                    borderWidth: 12
+                                }
+                            },
+                            layout: {
+                                padding: {
+                                    left: 0,
+                                    right: 0,
+                                    top: 10,
+                                    bottom: 0
+                                }
+                            }
+                        }
+                    };
+
+                var chart = new Chart(ctx, config);
+            }(jQuery);
+
+            var calendarInit = function ($) {
                 if ($('#m_calendar').length === 0) {
                     return;
                 }
@@ -945,19 +619,19 @@
                     navLinks: true,
                     //defaultDate: moment('2018-08-15'),
                     events: [
-                        @foreach ($domains_calendar as $domain)
-                            {
-                                title: '{{$domain->url}}',
-                                url: '{{route('domains.edit', $domain)}}',
-                                start: moment('{{$domain->deadline}}'),
-                                description: '{{$domain->note}}',
-                                className: "m-fc-event--light m-fc-event--solid-primary",
-                                allDay: true,
-                            },
+                            @foreach ($dashboard->domains as $domain)
+                        {
+                            title: '{{$domain->url}}',
+                            url: '{{route('domains.edit', $domain)}}',
+                            start: moment('{{$domain->deadline}}'),
+                            description: '{{$domain->note}}',
+                            className: "m-fc-event--light m-fc-event--solid-primary",
+                            allDay: true,
+                        },
                         @endforeach
                     ],
 
-                    eventRender: function(event, element) {
+                    eventRender: function (event, element) {
                         if (element.hasClass('fc-day-grid-event')) {
                             element.data('content', event.description);
                             element.data('placement', 'top');
@@ -969,7 +643,8 @@
                         }
                     }
                 });
-            }(jQuery)
+            }(jQuery);
+
         });
     </script>
 

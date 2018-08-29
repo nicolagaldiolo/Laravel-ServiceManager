@@ -23,28 +23,25 @@ class SeedFakeData extends Seeder
                 'name' => env('DEMOUSER', 'Demo'),
                 'email' => env('DEMOEMAIL', 'demouser@example.com'),
                 'password' => bcrypt(env('DEMOPASS', 'password')),
-                'is_verified' => 1,
                 'role' => config('userrole.admin'),
             ]
         );
 
-        $users = factory(App\User::class, 9)->create([
+        $users = factory(App\User::class, 4)->create([
             'password' => bcrypt(env('DEMOPASS', 'password')),
         ]);
 
         $users->push($me);
 
-        //$users = $me;
-
         $users->each(function($user){
-            $customers = factory(App\Customer::class, 6)->create([
+            $customers = factory(App\Customer::class, 4)->create([
                 'user_id' => $user->id
             ]);
 
-            $providers = factory(App\Providers::class, 5)->create([
+            $providers = factory(App\Providers::class, 4)->create([
                 'user_id' => $user->id
             ]);
-            factory(App\Domains::class, 10)->create([
+            factory(App\Domain::class, 5)->create([
                 'customer_id' => collect($customers)->random()->id,
                 'domain_id' => collect($providers)->random()->id,
                 'hosting_id' => collect($providers)->random()->id,

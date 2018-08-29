@@ -2,7 +2,7 @@
 
 namespace App\Jobs;
 
-use App\Domains;
+use App\Domain;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
@@ -22,7 +22,7 @@ class CheckService implements ShouldQueue
 
     public $domain;
 
-    public function __construct(Domains $domain)
+    public function __construct(Domain $domain)
     {
         $this->domain = $domain;
     }
@@ -38,7 +38,7 @@ class CheckService implements ShouldQueue
         try {
             $health = Ping::check($this->domain->url);
         }catch (\Exception $e){
-            logger('Errore Check dominio: ' . $e);
+            //logger('Errore Check dominio: ' . $e);
         }
         $status = ($health == 200) ? true : false;
         $this->domain->update( ['status' => $status]);

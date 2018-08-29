@@ -2,7 +2,7 @@
 
 namespace App\Jobs;
 
-use App\Domains;
+use App\Domain;
 use App\Providers;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
@@ -37,7 +37,7 @@ class GetScreenshoot implements ShouldQueue
     {
         try {
 
-            if($this->object instanceof Domains){
+            if($this->object instanceof Domain){
                 $folder = config('custompath.domains');
                 $url = $this->object->url;
             }
@@ -56,7 +56,7 @@ class GetScreenshoot implements ShouldQueue
                 ->dismissDialogs()
                 ->waitUntilNetworkIdle()
                 ->windowSize(1920, 1080)
-                ->fit('fill', 640, 480)
+                ->fit('fill', 640, 640)
                 ->save(public_path() . '/storage/' . $path);
 
             $this->object->update(['screenshoot' => $path]); // setto il nuovo path a db

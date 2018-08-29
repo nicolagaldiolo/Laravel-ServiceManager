@@ -14,9 +14,11 @@
                     <span class="m-menu__link-title">
                                         <span class="m-menu__link-wrap">
                                             <span class="m-menu__link-text">Dashboard</span>
-                                            <!--<span class="m-menu__link-badge">
-                                                <span class="m-badge m-badge--danger">2</span>
-                                            </span>-->
+                                            @if($domainsToPayCount > 0)
+                                                <span class="m-menu__link-badge">
+                                                    <span class="m-badge m-badge--danger">{{$domainsToPayCount}}</span>
+                                                </span>
+                                            @endif
                                         </span>
                                     </span>
                 </a>

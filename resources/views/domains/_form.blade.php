@@ -83,35 +83,33 @@
 
         </div>
 
-        <div class="m-form__seperator m-form__seperator--dashed"></div>
+        @if($deadline)
+            <div class="m-form__seperator m-form__seperator--dashed"></div>
 
 
-        <div class="m-form__seperator m-form__seperator--dashed"></div>
+            <div class="form-group m-form__group">
+                <label class="">Deadline *</label>
 
-        <div class="form-group m-form__group">
-            <label class="">Deadline *</label>
+                <div class="m-input-icon m-input-icon--left">
 
-            <div class="m-input-icon m-input-icon--left">
-
-                <input type="text" class="form-control required" name="deadline" value="{{old('deadline', $domain->deadline)}}" placeholder="Select date" />
-
-            <!--<input type="text" class="form-control required" id="m_datepicker_1" name="deadline" readonly value="{{old('deadline', $domain->deadlineFormatted)}}" placeholder="Select date" />-->
-                <span class="m-input-icon__icon m-input-icon__icon--left">
-                                                        <span>
-                                                            <i class="la la-calendar"></i>
+                    <input type="text" class="form-control required" id="m_datepicker_1" name="deadline" readonly value="{{old('deadline', $domain->deadlineFormatted)}}" placeholder="Select date" />
+                    <span class="m-input-icon__icon m-input-icon__icon--left">
+                                                            <span>
+                                                                <i class="la la-calendar"></i>
+                                                            </span>
                                                         </span>
-                                                    </span>
+
+                </div>
+                <span class="m-form__help">Please enter a deadline.</span>
+                @if ($errors->has('deadline'))
+                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('deadline') }}</strong>
+                                    </span>
+                @endif
+
 
             </div>
-            <span class="m-form__help">Please enter a deadline.</span>
-            @if ($errors->has('deadline'))
-                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $errors->first('deadline') }}</strong>
-                                </span>
-            @endif
-
-
-        </div>
+        @endif
 
         <div class="m-form__seperator m-form__seperator--dashed"></div>
 
@@ -138,33 +136,35 @@
 
         </div>
 
-        <div class="m-form__seperator m-form__seperator--dashed"></div>
+        @if($expiring)
+            <div class="m-form__seperator m-form__seperator--dashed"></div>
 
-        <div class="m-form__group form-group">
-            <label class="">Pagato</label>
+            <div class="m-form__group form-group">
+                <label class="">Pagato</label>
 
-            <div>
+                <div>
 
-                                    <span class="m-switch m-switch--lg m-switch--icon m-switch--success">
-                                        <label>
-                                            <input type="hidden" checked="checked" value="0" name="payed">
-                                            <input class="required" type="checkbox"
-                                                   @if(old('payed', $domain->payed) == 1)checked="checked"
-                                                   @endif value="1"
-                                                   name="payed">
-                                            <span></span>
-                                        </label>
+                                        <span class="m-switch m-switch--lg m-switch--icon m-switch--success">
+                                            <label>
+                                                <input type="hidden" checked="checked" value="0" name="payed">
+                                                <input class="required" type="checkbox"
+                                                       @if(old('payed', $domain->payed) == 1)checked="checked"
+                                                       @endif value="1"
+                                                       name="payed">
+                                                <span></span>
+                                            </label>
+                                        </span>
+                </div>
+                <span class="m-form__help">Please set the state of payment.</span>
+                @if ($errors->has('payed'))
+                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('payed') }}</strong>
                                     </span>
+                @endif
+
+
             </div>
-            <span class="m-form__help">Please set the state of payment.</span>
-            @if ($errors->has('payed'))
-                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $errors->first('payed') }}</strong>
-                                </span>
-            @endif
-
-
-        </div>
+        @endif
 
         <div class="m-form__seperator m-form__seperator--dashed"></div>
 

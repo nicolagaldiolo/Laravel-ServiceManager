@@ -14,6 +14,6 @@ class Customer extends Model
     }
 
     public function domains(){
-        return $this->hasMany(Domains::class);
+        return $this->hasMany(Domain::class);
     }
 }

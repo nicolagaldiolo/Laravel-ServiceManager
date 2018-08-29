@@ -22,7 +22,7 @@ class CreateDomainsTable extends Migration
             $table->unsignedInteger('hosting_id')->index();
             $table->date('deadline');
             $table->decimal('amount', 10, 2);
-            $table->boolean('payed');
+            $table->boolean('payed')->default(1);
             $table->boolean('status')->default(0);
             $table->string('note')->nullable();
             $table->unsignedInteger('user_id')->index();

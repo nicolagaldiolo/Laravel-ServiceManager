@@ -6,7 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use File;
 
-class Domains extends Model
+class Domain extends Model
 {
 
     protected $guarded = [];
@@ -35,17 +35,19 @@ class Domains extends Model
         return $this->belongsTo(Providers::class, 'hosting_id', 'id', 'providers');
     }
 
-    //public function getDeadlineFormattedAttribute()
-    //{
-    //    $deadline = $this->deadline;
-    //    if(!is_null($deadline))
-    //    return $deadline->format('d-m-Y');
-    //}
+    public function getDeadlineFormattedAttribute()
+    {
+        $deadline = $this->deadline;
+        if(!is_null($deadline))
+        return $deadline->format('d-m-Y');
+    }
 
-    // NON VA BENE, si incazza al momento del lancio del seed
-    //public function setDeadlineAttribute($deadline) {
-    //  $this->attributes['deadline'] = Carbon::createFromFormat('d-m-Y', $deadline);
-    //}
+    public function setDeadlineAttribute($deadline) {
+
+        if(is_string($deadline)) $deadline = Carbon::createFromFormat('d-m-Y', $deadline);
+        $this->attributes['deadline'] = $deadline;
+
+    }
 
 
     public function getAmountFormattedAttribute()
@@ -78,15 +80,19 @@ class Domains extends Model
         return floatval($val);
     }
 
-    public function scopeToExpire($query){
-        return $query->whereMonth('deadline' , Carbon::today()->month)
-            ->whereYear('deadline' , Carbon::today()->year);
+    public function scopeUpdateDeadlineNextYear($query){
+        return $query->whereDate('deadline', '<=', Carbon::now()->subMonth()->endOfMonth())
+            ->where('payed', 1);
     }
 
     public function scopeExpiring($query){
-      return $query->where('payed', 0)
-          ->whereMonth('deadline' , Carbon::today()->month)
-          ->whereYear('deadline' , Carbon::today()->year);
+        return $query->whereMonth('deadline', Carbon::today()->month)
+            ->whereYear('deadline' , Carbon::today()->year);
+    }
+
+    public function scopeToPay($query){
+        return $query->where('payed', 0)
+            ->whereDate('deadline', '<=', Carbon::now()->endOfMonth());
     }
 
 }

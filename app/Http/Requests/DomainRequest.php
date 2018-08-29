@@ -27,8 +27,12 @@ class DomainRequest extends FormRequest
         if ($this->method() == 'PATCH') {
             $domain = $this->route('domain');
             $url_rule = 'required|url|unique:domains,url,' . $domain->id;
+            //$deadline = 'sometimes|date|date_format:d-m-Y|after:' . date('d-m-Y');
+            $deadline = 'sometimes|date';
         } else {
             $url_rule = 'required|url|unique:domains,url';
+            //$deadline = 'required|date|date_format:d-m-Y|after:' . date('d-m-Y');
+            $deadline = 'required|date';
         }
 
         return [
@@ -36,10 +40,9 @@ class DomainRequest extends FormRequest
             'domain_id'     => 'sometimes|exists:providers,id',
             'hosting_id'    => 'sometimes|exists:providers,id',
             'customer_id'   => 'required|exists:customers,id',
-            //'deadline'      => 'required|date|date_format:d-m-Y|after:' . date('d-m-Y'),
-            'deadline'      => 'required|date',
-            'amount'        => 'required|regex:/[0-9]+[.,]?[0-9]*/|max:8',
-            'payed'         => 'required|boolean',
+            'deadline'      => $deadline,
+            'amount'        => 'sometimes|regex:/[0-9]+[.,]?[0-9]*/|max:8',
+            'payed'         => 'sometimes|boolean',
             'note'          => 'sometimes|max:255'
         ];
     }

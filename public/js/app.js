@@ -513,7 +513,7 @@ var Dashboard = function () {
 
     //== Trends Stats.
     //** Based on Chartjs plugin - http://www.chartjs.org/
-    var trendsStats = function trendsStats() {
+    /*var trendsStats = function trendsStats() {
         if ($('#m_chart_trends_stats').length == 0) {
             return;
         }
@@ -527,9 +527,9 @@ var Dashboard = function () {
         var config = {
             type: 'line',
             data: {
-                labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "January", "February", "March", "April"],
+                labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
                 datasets: [{
-                    label: "Sales Stats",
+                    label: "Totale Incasso",
                     backgroundColor: gradient, // Put the gradient here as a fill color
                     borderColor: '#0dc8de',
 
@@ -539,7 +539,7 @@ var Dashboard = function () {
                     pointHoverBorderColor: Chart.helpers.color('#000000').alpha(0.2).rgbString(),
 
                     //fill: 'start',
-                    data: [20, 10, 18, 15, 26, 18, 15, 22, 16, 12, 12, 13, 10, 18, 14, 24, 16, 12, 19, 21, 16, 14, 21, 21, 13, 15, 22, 24, 21, 11, 14, 19, 21, 17]
+                    data: [200.45, 100, 70, 300, 100, 10, 90, 200, 0, 11, 40, 300]
                 }]
             },
             options: {
@@ -604,6 +604,7 @@ var Dashboard = function () {
 
         var chart = new Chart(ctx, config);
     };
+    */
 
     //== Trends Stats 2.
     //** Based on Chartjs plugin - http://www.chartjs.org/
@@ -836,98 +837,6 @@ var Dashboard = function () {
                 data.element.animate(animationDefinition, false);
             }
         });
-    };
-
-    //== Activities Charts.
-    //** Based on Chartjs plugin - http://www.chartjs.org/
-    var activitiesChart = function activitiesChart() {
-        if ($('#m_chart_activities').length == 0) {
-            return;
-        }
-
-        var ctx = document.getElementById("m_chart_activities").getContext("2d");
-
-        var gradient = ctx.createLinearGradient(0, 0, 0, 240);
-        gradient.addColorStop(0, Chart.helpers.color('#e14c86').alpha(1).rgbString());
-        gradient.addColorStop(1, Chart.helpers.color('#e14c86').alpha(0.3).rgbString());
-
-        var config = {
-            type: 'line',
-            data: {
-                labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October"],
-                datasets: [{
-                    label: "Sales Stats",
-                    backgroundColor: gradient,
-                    borderColor: '#e13a58',
-
-                    pointBackgroundColor: Chart.helpers.color('#000000').alpha(0).rgbString(),
-                    pointBorderColor: Chart.helpers.color('#000000').alpha(0).rgbString(),
-                    pointHoverBackgroundColor: mApp.getColor('light'),
-                    pointHoverBorderColor: Chart.helpers.color('#ffffff').alpha(0.1).rgbString(),
-
-                    //fill: 'start',
-                    data: [10, 14, 12, 16, 9, 11, 13, 9, 13, 15]
-                }]
-            },
-            options: {
-                title: {
-                    display: false
-                },
-                tooltips: {
-                    mode: 'nearest',
-                    intersect: false,
-                    position: 'nearest',
-                    xPadding: 10,
-                    yPadding: 10,
-                    caretPadding: 10
-                },
-                legend: {
-                    display: false
-                },
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    xAxes: [{
-                        display: false,
-                        gridLines: false,
-                        scaleLabel: {
-                            display: true,
-                            labelString: 'Month'
-                        }
-                    }],
-                    yAxes: [{
-                        display: false,
-                        gridLines: false,
-                        scaleLabel: {
-                            display: true,
-                            labelString: 'Value'
-                        },
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
-                },
-                elements: {
-                    line: {
-                        tension: 0.0000001
-                    },
-                    point: {
-                        radius: 4,
-                        borderWidth: 12
-                    }
-                },
-                layout: {
-                    padding: {
-                        left: 0,
-                        right: 0,
-                        top: 10,
-                        bottom: 0
-                    }
-                }
-            }
-        };
-
-        var chart = new Chart(ctx, config);
     };
 
     //== Bandwidth Charts 1.
@@ -1906,13 +1815,13 @@ var Dashboard = function () {
             salesStats();
             salesByApps();
             latestUpdates();
-            trendsStats();
+            //trendsStats();
             trendsStats2();
             latestTrendsMap();
             revenueChange();
             supportTickets();
             supportTickets2();
-            activitiesChart();
+            //activitiesChart();
             bandwidthChart1();
             bandwidthChart2();
             adWordsStat();
@@ -1938,7 +1847,7 @@ var Dashboard = function () {
 //== Class Definition
 var HostingManager = function ($) {
 
-    var dataTableDomains = function dataTableDomains($url) {
+    /*var dataTableDomains = function dataTableDomains($url) {
 
         var dataTable = jQuery('#m_table_1').DataTable({
             processing: true,
@@ -2043,7 +1952,7 @@ var HostingManager = function ($) {
             }
         });
     };
-
+    */
     var handleForms = function handleForms() {
 
         $.validator.addClassRules({
@@ -2076,9 +1985,9 @@ var HostingManager = function ($) {
             handleForms();
             general();
         },
-        datatableDomainsInit: function datatableDomainsInit($url) {
-            dataTableDomains($url);
-        }
+        //datatableDomainsInit: function datatableDomainsInit($url) {
+        //    dataTableDomains($url);
+        //}
     };
 }(jQuery);
 
