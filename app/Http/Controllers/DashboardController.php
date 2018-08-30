@@ -3,21 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Domain;
-use App\Events\ToPayDomainsAlert;
-use App\Events\GenerateScreen;
-use App\Providers;
-use App\Http\Requests\ProviderRequest;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
-use Yajra\DataTables\DataTables;
-use Ping;
 
 class DashboardController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -33,7 +26,10 @@ class DashboardController extends Controller
         });
 
         $dashboard['expiringDomains'] = $expiringDomains;
-        $dashboard['monthlyService_percent'] = round(($expiringDomains->sum('amount') * 100) / $dashboard->domains->sum('amount'), 2);
+
+        $monthlyService_percent = $dashboard->domains->sum('amount') > 0 ? ($expiringDomains->sum('amount') * 100) / $dashboard->domains->sum('amount') : 0;
+
+        $dashboard['monthlyService_percent'] = round($monthlyService_percent, 2);
         $domainsByMounth = collect(array_fill(1, 12, 0));
 
         $dashboard->domains->each(function($item) use($domainsByMounth){
@@ -45,7 +41,8 @@ class DashboardController extends Controller
 
         $usersSummary = User::with('domains')->get();
         $usersSummary->each(function($item) use($totalDomain){
-            $item['domains_total_perc'] = round(($item->domains->count() * 100) / $totalDomain, 2);
+            $domains_total_perc = $totalDomain > 0 ? ($item->domains->count() * 100) / $totalDomain : 0;
+            $item['domains_total_perc'] = round($domains_total_perc, 2);
         });
 
         $dashboard['usersSummary'] = $usersSummary;

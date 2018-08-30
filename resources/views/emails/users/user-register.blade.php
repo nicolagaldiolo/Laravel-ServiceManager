@@ -1,14 +1,14 @@
 @component('mail::message')
-# Hi, {{$user->name}}
+# Ciao, {{$admin->name}}
 
-Thank you for creating an account with us. Don't forget to complete your registration!
-<br>
-Please click on the link below or copy it into the address bar of your browser to confirm your email address:
+Un nuovo utente si è registrato {{$user->created_at->diffForHumans()}}!
 
-@component('mail::button', ['url' => route('user.verify', $verification_code)])
-Complete registration
+## {{$user->name}} <br> {{$user->email}}
+
+@component('mail::button', ['url' => route('dashboard')])
+Accedi
 @endcomponent
 
-Thanks,<br>
+Grazie,<br>
 {{ config('app.name') }}
 @endcomponent

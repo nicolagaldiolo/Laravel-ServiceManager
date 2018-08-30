@@ -1,4 +1,4 @@
-@extends('layouts.login')
+@extends('layouts.auth')
 
 @section('content')
 
@@ -58,11 +58,8 @@
                 </div>
             </div>
             <div class="m-login__form-action">
-                <button id="m_login_signup_submit" class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air  m-login__btn">{{ __('Register') }}</button>&nbsp;&nbsp;
+                <button id="m_login_signup_submit" class="btn btn-focus m-btn m-btn--pill m-btn--custom m-login__btn">{{ __('Register') }}</button>&nbsp;&nbsp;
             </div>
         </form>
     </div>
-
-
-
 @endsection

@@ -4,10 +4,7 @@ namespace App\Observers;
 
 use App\Domain;
 use App\Events\CheckServiceStatus;
-use App\Events\ExpiringDomainsWriteTable;
 use App\Events\GenerateScreen;
-use App\ExpiringDomain;
-use Carbon\Carbon;
 use File;
 
 class DomainObserver

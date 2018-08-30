@@ -18,13 +18,13 @@ class UserRegisterEmail extends Mailable
      * @return void
      */
 
+    public $admin;
     public $user;
-    public $verification_code;
 
-    public function __construct(User $user, $verification_code)
+    public function __construct(User $admin, User $user)
     {
+        $this->admin = $admin;
         $this->user = $user;
-        $this->verification_code = $verification_code;
     }
 
     /**
@@ -34,6 +34,7 @@ class UserRegisterEmail extends Mailable
      */
     public function build()
     {
-        return $this->subject('Please verify your email address.')->markdown('emails.users.user-register');
+
+        return $this->subject(config('app.name') . ' - New User Register')->markdown('emails.users.user-register');
     }
 }

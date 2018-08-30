@@ -5,11 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests\NewUserRequest;
 use App\Http\Requests\UserRequest;
 use App\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Auth\Events\Registered;
 use Storage;
 
 class UserController extends Controller
@@ -61,10 +59,8 @@ class UserController extends Controller
         $request->merge(['password' => Hash::make($request->password)]);
         User::create($request->validated());
 
-        return redirect()
-            ->route('users.index')
-            ->with('type', 'success')
-            ->with('status', 'User created with success');
+        return redirect()->route('users.index')
+            ->with('status', 'User creato con successo');;
     }
 
     /**
@@ -104,11 +100,10 @@ class UserController extends Controller
 
         $user->update($request->validated());
 
-        if((Auth::user()->id == $user->id) && !$user->isAdmin()){
-            return redirect()->route('dashboard');
-        }
+        $redirect = (Auth::user()->id == $user->id && !$user->isAdmin()) ? 'dashboard' : 'users.index';
 
-        return redirect()->route('users.index');
+        return redirect()->route($redirect)
+            ->with('status', 'User aggiornato con successo');
     }
 
     /**

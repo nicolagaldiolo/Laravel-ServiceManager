@@ -35,7 +35,7 @@ class UserRequest extends FormRequest
         return [
             'name'      => 'sometimes|string',
             'email'     => $email,
-            'role'      => ['required', Rule::in([config('userrole.admin'), config('userrole.user')])]
+            'role'      => ['sometimes', Rule::in([config('userrole.admin'), config('userrole.user')])]
         ];
     }
 }

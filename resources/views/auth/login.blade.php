@@ -1,4 +1,4 @@
-@extends('layouts.login')
+@extends('layouts.auth')
 
 @section('content')
 
@@ -7,10 +7,10 @@
         <div class="m-login__head">
             <h3 class="m-login__title">{{ __('Sign In To Admin') }}</h3>
         </div>
-        <form class="m-login__form m-form formValidate" method="POST" action="{{ route('login') }}" aria-label="{{ __('Login') }}">
+        <form class="m-login__form m-form" method="POST" action="{{ route('login') }}" aria-label="{{ __('Login') }}">
             @csrf
             <div class="form-group m-form__group">
-                <input class="form-control m-input required email{{ $errors->has('email') ? ' is-invalid' : '' }}" type="email" placeholder="{{ __('E-Mail Address') }}" name="email" value="{{ old('email') }}" autocomplete="off" autofocus>
+                <input class="form-control m-input email{{ $errors->has('email') ? ' is-invalid' : '' }}" type="email" placeholder="{{ __('E-Mail Address') }}" name="email" value="{{ old('email') }}" autocomplete="off" autofocus>
                 @if ($errors->has('email'))
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $errors->first('email') }}</strong>
@@ -42,7 +42,7 @@
 
 
             <div class="m-login__form-action">
-                <button id="m_login_signin_submit" class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air m-login__btn m-login__btn--primary">{{ __('Sign in') }}</button>
+                <button id="m_login_signin_submit" class="btn btn-focus m-btn m-btn--pill m-btn--custom m-login__btn m-login__btn--primary">{{ __('Sign in') }}</button>
             </div>
         </form>
 

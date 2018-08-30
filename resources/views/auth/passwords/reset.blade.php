@@ -1,4 +1,4 @@
-@extends('layouts.login')
+@extends('layouts.auth')
 
 @section('content')
 
@@ -7,14 +7,14 @@
         <div class="m-login__head">
             <h3 class="m-login__title">{{ __('Reset Password') }}</h3>
         </div>
-        <form class="m-login__form m-form formValidate" method="POST" action="{{ route('password.request') }}"
+        <form class="m-login__form m-form" method="POST" action="{{ route('password.request') }}"
               aria-label="{{ __('Reset Password') }}">
             @csrf
 
             <input type="hidden" name="token" value="{{ $token }}">
 
             <div class="form-group m-form__group">
-                <input class="form-control m-input required email{{ $errors->has('email') ? ' is-invalid' : '' }}"
+                <input class="form-control m-input email{{ $errors->has('email') ? ' is-invalid' : '' }}"
                        type="email" placeholder="{{ __('E-Mail Address') }}" name="email"
                        value="{{ $email ?? old('email') }}" autocomplete="off" autofocus>
                 @if ($errors->has('email'))
@@ -40,7 +40,7 @@
 
             <div class="m-login__form-action">
                 <button id="m_login_signin_submit"
-                        class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air m-login__btn m-login__btn--primary">{{ __('Reset Password') }}</button>
+                        class="btn btn-focus m-btn m-btn--pill m-btn--custom m-login__btn m-login__btn--primary">{{ __('Reset Password') }}</button>
             </div>
         </form>
     </div>

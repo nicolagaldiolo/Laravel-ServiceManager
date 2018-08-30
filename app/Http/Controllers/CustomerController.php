@@ -6,7 +6,6 @@ use App\Customer;
 use App\Domain;
 use App\Http\Requests\CustomerRequest;
 use App\Http\Traits\DataTableDomainTrait;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\DataTables;
 
@@ -61,7 +60,8 @@ class CustomerController extends Controller
     {
         Auth::user()->customers()->create($request->validated());
 
-        return redirect()->route('customers.index');
+        return redirect()->route('customers.index')
+            ->with('status', 'Customer creato con successo');
     }
 
     /**
@@ -101,6 +101,8 @@ class CustomerController extends Controller
      */
     public function edit(Customer $customer)
     {
+        $this->authorize('view', $customer);
+
         return view('customers.edit', compact('customer'));
     }
 
@@ -116,7 +118,8 @@ class CustomerController extends Controller
         $this->authorize('update', $customer);
         $customer->update($request->validated());
 
-        return redirect()->route('customers.index');
+        return redirect()->route('customers.index')
+            ->with('status', 'Customer aggiornato con successo');
     }
 
     /**

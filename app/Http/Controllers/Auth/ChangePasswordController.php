@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Requests\ChangePasswordRequest;
 use App\User;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class ChangePasswordController extends Controller
@@ -21,6 +22,9 @@ class ChangePasswordController extends Controller
         $user->password = Hash::make($request->get('new_password'));
         $user->save();
 
-        return redirect()->route('users.index');
+        $redirect = Auth::user()->isAdmin() ? 'users.index' : 'dashboard';
+
+        return redirect()->route($redirect)
+            ->with('status', 'Password aggiornata con successo');
     }
 }

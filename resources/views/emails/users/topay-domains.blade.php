@@ -27,6 +27,6 @@
 Gestisci i servizi
 @endcomponent
 
-Thanks,<br>
+Grazie,<br>
 {{ config('app.name') }}
 @endcomponent

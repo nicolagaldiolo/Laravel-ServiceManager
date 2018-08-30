@@ -2,20 +2,13 @@
 
 namespace App\Http\Controllers;
 
-
 use App\Domain;
 use App\ExpiringDomain;
 use App\Http\Requests\DomainRequest;
 use App\Http\Traits\DataTableDomainTrait;
-use App\Jobs\ToPayDomains;
-use App\Jobs\GetScreenshoot;
-use App\Mail\ToPayDomainsEmail;
-use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Mail;
 
 class DomainsController extends Controller
 {
@@ -70,7 +63,8 @@ class DomainsController extends Controller
     {
         Auth::user()->domains()->create($request->validated());
 
-        return redirect()->route('domains.index');
+        return redirect()->route('domains.index')
+            ->with('status', 'Dominio creato con successo');
     }
 
     /**
@@ -95,7 +89,6 @@ class DomainsController extends Controller
 
         $this->authorize('view', $domain);
 
-
         $expiring = $domain->deadline->lte(Carbon::now()->endOfMonth());
         $customers = Auth::user()->customers()->get();
         $providers = Auth::user()->providers()->get();
@@ -116,7 +109,8 @@ class DomainsController extends Controller
         $this->authorize('update', $domain);
         $domain->update($request->validated());
 
-        return redirect()->route('domains.index');
+        return redirect()->route('domains.index')
+            ->with('status', 'Dominio aggiornato con successo');
     }
 
     /**

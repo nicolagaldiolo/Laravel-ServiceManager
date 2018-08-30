@@ -5,10 +5,13 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-//require('bootstrap-colorpicker');
+
 
 
 //== Class definition
+
+//require('bootstrap-colorpicker/dist/js/bootstrap-colorpicker.js');
+
 var Dashboard = function() {
 
     //== Sparkline Chart helper function
@@ -2101,6 +2104,7 @@ var HostingManager = function($) {
 
     var general = function(){
         $('#mycp').colorpicker();
+
         $('#m_inputmask_7').change(function(i){
             console.log(i);
         })

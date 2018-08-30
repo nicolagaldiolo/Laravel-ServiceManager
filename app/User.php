@@ -109,6 +109,11 @@ class User extends Authenticatable implements JWTSubject
 
     }
 
+    public function scopeAdmin($query)
+    {
+        return $query->where('role', config('userrole.admin'));
+    }
+
     public function scopeDomainsExpiring($query)
     {
         return $query->whereHas('customers.domains', function ($q) {

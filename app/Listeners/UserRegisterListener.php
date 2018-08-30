@@ -3,10 +3,11 @@
 namespace App\Listeners;
 
 use App\Events\UserRegister;
-use App\Mail\UserRegisterEmail;
+use App\Jobs\UserRegisterAlert;
+use App\User;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Support\Facades\Mail;
+
 class UserRegisterListener
 {
     /**
@@ -27,7 +28,10 @@ class UserRegisterListener
      */
     public function handle(UserRegister $event)
     {
-        $user = $event->user;
-        Mail::to($user->email)->send(new UserRegisterEmail($user, $verification_code));
+
+        User::admin()->each(function($admin) use($event){
+            UserRegisterAlert::dispatch($admin, $event->user);
+        });
+
     }
 }

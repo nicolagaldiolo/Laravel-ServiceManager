@@ -8,6 +8,7 @@ use App\User;
 use App\Observers\UserObserver;
 use App\Observers\DomainObserver;
 use App\Observers\ProviderObserver;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -29,6 +30,8 @@ class AppServiceProvider extends ServiceProvider
             return $view->with('domainsToPay', $domainsToPay)
                 ->with('domainsToPayCount', $domainsToPayCount);
         });
+
+        Blade::component('components.feedback', 'feedback');
 
     }
 

@@ -1,4 +1,4 @@
-@extends('layouts.login')
+@extends('layouts.auth')
 
 @section('content')
 
@@ -7,12 +7,12 @@
             <h3 class="m-login__title">{{ __('Forgotten Password ?') }}</h3>
             <div class="m-login__desc">{{ __('Enter your email to reset your password:') }}</div>
         </div>
-        <form class="m-login__form m-form formValidate" method="POST" action="{{ route('password.email') }}" aria-label="{{ __('Reset Password') }}">
+        <form class="m-login__form m-form" method="POST" action="{{ route('password.email') }}" aria-label="{{ __('Reset Password') }}">
 
             @csrf
 
             <div class="form-group m-form__group">
-                <input class="form-control m-input required email{{ $errors->has('email') ? ' is-invalid' : '' }}" type="email" placeholder="{{ __('E-Mail Address') }}" name="email" id="email" autocomplete="off" value="{{ old('email') }}">
+                <input class="form-control m-input email{{ $errors->has('email') ? ' is-invalid' : '' }}" type="email" placeholder="{{ __('E-Mail Address') }}" name="email" id="email" autocomplete="off" value="{{ old('email') }}">
 
                 @if ($errors->has('email'))
                     <span class="invalid-feedback" role="alert">
@@ -22,7 +22,7 @@
 
             </div>
             <div class="m-login__form-action">
-                <button id="m_login_forget_password_submit" class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air  m-login__btn m-login__btn--primaryr">{{ __('Send Password Reset Link') }}</button>&nbsp;&nbsp;
+                <button id="m_login_forget_password_submit" class="btn btn-focus m-btn m-btn--pill m-btn--custom m-login__btn m-login__btn--primaryr">{{ __('Send Password Reset Link') }}</button>&nbsp;&nbsp;
             </div>
         </form>
     </div>

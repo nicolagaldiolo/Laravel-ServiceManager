@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-
 use App\Http\Requests\UserAvatarRequest;
 use App\User;
 use Illuminate\Http\Request;

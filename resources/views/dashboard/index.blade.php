@@ -32,8 +32,10 @@
                             <div class="m-widget1__item">
                                 <div class="row m-row--no-padding align-items-center">
                                     <div class="col">
-                                        <h3 class="m-widget1__title">Incasso {{\Carbon\Carbon::now()->format('F Y')}}</h3>
-                                        <span class="m-widget1__desc">Ricavato da {{$dashboard->expiringDomains->count()}} servizi</span>
+                                        <h3 class="m-widget1__title">
+                                            Incasso {{\Carbon\Carbon::now()->format('F Y')}}</h3>
+                                        <span class="m-widget1__desc">Ricavato da {{$dashboard->expiringDomains->count()}}
+                                            servizi</span>
                                         <br>
                                         <span class="m-widget1__number m--font-info">&euro; {{$dashboard->expiringDomains->sum('amount')}}</span>
                                     </div>
@@ -90,6 +92,9 @@
                     <div class="m-portlet__head">
                         <div class="m-portlet__head-caption">
                             <div class="m-portlet__head-title">
+                                <span class="m-portlet__head-icon">
+                                    <i class="flaticon-line-graph"></i>
+                                </span>
                                 <h3 class="m-portlet__head-text">
                                     Andamento annuale
                                 </h3>
@@ -117,13 +122,26 @@
                             </div>
 
                             <!--begin::Widget 11-->
-                            <div class="m-widget11" style="margin-top:50px;">
+                            <div class="m-widget11" style="margin-top:20px;">
+                                <div class="m-portlet__head" style="padding: 0;">
+                                    <div class="m-portlet__head-caption">
+                                        <div class="m-portlet__head-title">
+                                            <span class="m-portlet__head-icon">
+                                                <i class="flaticon-piggy-bank"></i>
+                                            </span>
+                                            <h3 class="m-portlet__head-text">
+                                                Domini da incassare
+                                            </h3>
+                                        </div>
+                                    </div>
+                                </div>
 
                                 @if($domainsToPay->isEmpty())
                                     <div class="alert alert-brand" role="alert">
                                         <strong>Fantastico!</strong> Non ci sono altri servizi da gestire
                                     </div>
                                 @else
+
                                     <div class="table-responsive">
                                         <!--begin::Table-->
                                         <table class="table">
@@ -178,6 +196,8 @@
 
                         <!--end::Widget 5-->
                     </div>
+
+
                 </div>
 
                 <!--end:: Widgets/Top Products-->
@@ -190,6 +210,9 @@
                     <div class="m-portlet__head">
                         <div class="m-portlet__head-caption">
                             <div class="m-portlet__head-title">
+                                <span class="m-portlet__head-icon">
+                                    <i class="flaticon-stopwatch" style="color:#fff;"></i>
+                                </span>
                                 <h3 class="m-portlet__head-text m--font-light">
                                     Summary
                                 </h3>
@@ -274,10 +297,10 @@
                         <div class="m-portlet__head-caption">
                             <div class="m-portlet__head-title">
 												<span class="m-portlet__head-icon">
-													<i class="flaticon-map-location"></i>
+													<i class="flaticon-calendar"></i>
 												</span>
                                 <h3 class="m-portlet__head-text">
-                                    Domains
+                                    Calendar
                                 </h3>
                             </div>
                         </div>
@@ -285,10 +308,10 @@
                             <ul class="m-portlet__nav">
                                 <li class="m-portlet__nav-item">
                                     <a href="{{route('domains.create')}}"
-                                       class="btn btn-accent m-btn m-btn--custom m-btn--icon m-btn--pill m-btn--air">
+                                       class="btn btn-accent m-btn m-btn--custom m-btn--icon m-btn--pill">
 														<span>
 															<i class="la la-plus"></i>
-															<span>Add Event</span>
+															<span>Aggiungi dominio</span>
 														</span>
                                     </a>
                                 </li>
@@ -310,6 +333,9 @@
                     <div class="m-portlet__head">
                         <div class="m-portlet__head-caption">
                             <div class="m-portlet__head-title">
+                                <span class="m-portlet__head-icon">
+                                    <i class="flaticon-network"></i>
+                                </span>
                                 <h3 class="m-portlet__head-text">
                                     Status servizi
                                 </h3>
@@ -351,13 +377,20 @@
         <!--Begin::Section-->
         <div class="row">
 
-            <div class="col-xl-4">
+            @if(Auth::user()->isAdmin())
+                <div class="col-xl-4">
+            @else
+                <div class="col-xl-6">
+            @endif
 
                 <!--begin:: Widgets/Authors Profit-->
                 <div class="m-portlet m-portlet--bordered-semi m-portlet--full-height ">
                     <div class="m-portlet__head">
                         <div class="m-portlet__head-caption">
                             <div class="m-portlet__head-title">
+                                <span class="m-portlet__head-icon">
+                                    <i class="flaticon-interface-7"></i>
+                                </span>
                                 <h3 class="m-portlet__head-text">
                                     Fornitori
                                 </h3>
@@ -396,256 +429,271 @@
                 <!--end:: Widgets/Authors Profit-->
             </div>
 
-            <div class="col-xl-4">
+            @if(Auth::user()->isAdmin())
+                <div class="col-xl-4">
+            @else
+                <div class="col-xl-6">
+            @endif
 
-                <!--begin:: Widgets/Authors Profit-->
-                <div class="m-portlet m-portlet--bordered-semi m-portlet--full-height ">
-                    <div class="m-portlet__head">
-                        <div class="m-portlet__head-caption">
-                            <div class="m-portlet__head-title">
-                                <h3 class="m-portlet__head-text">
-                                    Customers
-                                </h3>
-                            </div>
-                        </div>
-                        <div class="m-portlet__head-tools">
-                            <a class="btn m-btn--pill btn-secondary btn-sm m-btn" href="{{route('customers.index')}}">Esplora</a>
-                        </div>
-                    </div>
-                    <div class="m-portlet__body">
-                        <div class="m-widget4">
-                            @foreach($dashboard->customers as $customer)
-                                <div class="m-widget4__item">
-                                    <div class="m-widget4__info" style="padding-left: 0;">
-                                        <span class="m-widget4__title">{{$customer->name}}</span>
-                                        <br>
-                                        <span class="m-widget4__sub">
+                        <!--begin:: Widgets/Authors Profit-->
+                            <div class="m-portlet m-portlet--bordered-semi m-portlet--full-height ">
+                                <div class="m-portlet__head">
+                                    <div class="m-portlet__head-caption">
+                                        <div class="m-portlet__head-title">
+                                <span class="m-portlet__head-icon">
+                                    <i class="flaticon-users"></i>
+                                </span>
+                                            <h3 class="m-portlet__head-text">
+                                                Customers
+                                            </h3>
+                                        </div>
+                                    </div>
+                                    <div class="m-portlet__head-tools">
+                                        <a class="btn m-btn--pill btn-secondary btn-sm m-btn"
+                                           href="{{route('customers.index')}}">Esplora</a>
+                                    </div>
+                                </div>
+                                <div class="m-portlet__body">
+                                    <div class="m-widget4">
+                                        @foreach($dashboard->customers as $customer)
+                                            <div class="m-widget4__item">
+                                                <div class="m-widget4__info" style="padding-left: 0;">
+                                                    <span class="m-widget4__title">{{$customer->name}}</span>
+                                                    <br>
+                                                    <span class="m-widget4__sub">
                                             {{$customer->domains->count()}} Servizi attivi
                                         </span>
-                                    </div>
-                                    <span class="m-widget4__ext">
+                                                </div>
+                                                <span class="m-widget4__ext">
                                         <span class="m-widget4__number m--font-brand">&euro; {{$customer->domains->sum('amount')}}</span>
                                     </span>
+                                            </div>
+                                        @endforeach
+
+                                    </div>
                                 </div>
-                            @endforeach
-
-                        </div>
-                    </div>
-                </div>
-
-                <!--end:: Widgets/Authors Profit-->
-            </div>
-
-            <div class="col-xl-4">
-                <!--begin:: Widgets/User Progress -->
-                <div class="m-portlet m-portlet--full-height ">
-                    <div class="m-portlet__head">
-                        <div class="m-portlet__head-caption">
-                            <div class="m-portlet__head-title">
-                                <h3 class="m-portlet__head-text">
-                                    Users
-                                </h3>
                             </div>
-                        </div>
-                        <div class="m-portlet__head-tools">
-                            <a class="btn m-btn--pill btn-secondary btn-sm m-btn" href="{{route('users.index')}}">Esplora</a>
-                        </div>
-                    </div>
-                    <div class="m-portlet__body">
 
-                        <div class="m-widget4 m-widget4--progress">
-                            @foreach($dashboard->usersSummary as $user)
-                                <div class="m-widget4__item">
-                                    <div class="m-widget4__img m-widget4__img--pic">
-                                        <img src="{{$user->avatar}}" alt="">
+                            <!--end:: Widgets/Authors Profit-->
+                        </div>
+
+                        @if(Auth::user()->isAdmin())
+                            <div class="col-xl-4">
+                                <!--begin:: Widgets/User Progress -->
+                                <div class="m-portlet m-portlet--full-height ">
+                                    <div class="m-portlet__head">
+                                        <div class="m-portlet__head-caption">
+                                            <div class="m-portlet__head-title">
+                                <span class="m-portlet__head-icon">
+                                    <i class="flaticon-profile"></i>
+                                </span>
+                                                <h3 class="m-portlet__head-text">
+                                                    Users
+                                                </h3>
+                                            </div>
+                                        </div>
+                                        <div class="m-portlet__head-tools">
+                                            <a class="btn m-btn--pill btn-secondary btn-sm m-btn"
+                                               href="{{route('users.index')}}">Esplora</a>
+                                        </div>
                                     </div>
-                                    <div class="m-widget4__info">
-                                        <span class="m-widget4__title">{{$user->name}}</span><br>
-                                        <span class="m-widget4__sub">{{$user->domains->count()}}
-                                            servizi (&euro; {{$user->domains->sum('amount')}})</span>
-                                    </div>
-                                    <div class="m-widget4__progress">
-                                        <div class="m-widget4__progress-wrapper">
+                                    <div class="m-portlet__body">
+
+                                        <div class="m-widget4 m-widget4--progress">
+                                            @foreach($dashboard->usersSummary as $user)
+                                                <div class="m-widget4__item">
+                                                    <div class="m-widget4__img m-widget4__img--pic">
+                                                        <img src="{{$user->avatar}}" alt="">
+                                                    </div>
+                                                    <div class="m-widget4__info">
+                                                        <span class="m-widget4__title">{{$user->name}}</span><br>
+                                                        <span class="m-widget4__sub">{{$user->domains->count()}}
+                                                            servizi (&euro; {{$user->domains->sum('amount')}})</span>
+                                                    </div>
+                                                    <div class="m-widget4__progress">
+                                                        <div class="m-widget4__progress-wrapper">
                                             <span class="m-widget17__progress-number">{{$user->domains_total_perc}}
                                                 %</span>
-                                            <span class="m-widget17__progress-label">Domini totali</span>
-                                            <div class="progress m-progress--sm">
-                                                <div class="progress-bar bg-danger" role="progressbar"
-                                                     style="width: {{$user->domains_total_perc}}%;"
-                                                     aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                                            </div>
+                                                            <!--<span class="m-widget17__progress-label">Domini totali</span>-->
+                                                            <div class="progress m-progress--sm">
+                                                                <div class="progress-bar bg-danger" role="progressbar"
+                                                                     style="width: {{$user->domains_total_perc}}%;"
+                                                                     aria-valuenow="25" aria-valuemin="0"
+                                                                     aria-valuemax="100"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+
+
                                         </div>
                                     </div>
                                 </div>
-                            @endforeach
+                                <!--end:: Widgets/User Progress -->  </div>
+                        @endif
 
-
-                        </div>
-                    </div>
                 </div>
-                <!--end:: Widgets/User Progress -->  </div>
+
+                <!--End::Section-->
 
         </div>
+        @stop
 
-        <!--End::Section-->
+        @section('scripts')
+            @parent
 
-    </div>
-@stop
-
-@section('scripts')
-    @parent
-
-    <script>
-        jQuery(document).ready(function () {
+            <script>
+                jQuery(document).ready(function () {
 
 
-            //== Activities Charts.
-            //** Based on Chartjs plugin - http://www.chartjs.org/
-            var activitiesChart = function activitiesChart($) {
-                if ($('#m_chart_activities').length == 0) {
-                    return;
-                }
+                    //== Activities Charts.
+                    //** Based on Chartjs plugin - http://www.chartjs.org/
+                    var activitiesChart = function activitiesChart($) {
+                        if ($('#m_chart_activities').length == 0) {
+                            return;
+                        }
 
-                var ctx = document.getElementById("m_chart_activities").getContext("2d");
+                        var ctx = document.getElementById("m_chart_activities").getContext("2d");
 
-                var gradient = ctx.createLinearGradient(0, 0, 0, 240);
-                gradient.addColorStop(0, Chart.helpers.color('#00c5dc').alpha(0.7).rgbString());
-                gradient.addColorStop(1, Chart.helpers.color('#f2feff').alpha(0).rgbString());
+                        var gradient = ctx.createLinearGradient(0, 0, 0, 240);
+                        gradient.addColorStop(0, Chart.helpers.color('#00c5dc').alpha(0.7).rgbString());
+                        gradient.addColorStop(1, Chart.helpers.color('#f2feff').alpha(0).rgbString());
 
-                var domainsData = [];
-                @foreach($dashboard->domainsByMounth as $domain)
-                domainsData.push({{$domain}})
-                        @endforeach
+                        var domainsData = [];
+                        @foreach($dashboard->domainsByMounth as $domain)
+                        domainsData.push({{$domain}})
+                                @endforeach
 
-                var config = {
-                        type: 'line',
-                        data: {
-                            labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
-                            datasets: [{
-                                label: "Totale Incasso",
-                                backgroundColor: gradient, // Put the gradient here as a fill color
-                                borderColor: '#0dc8de',
+                        var config = {
+                                type: 'line',
+                                data: {
+                                    labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+                                    datasets: [{
+                                        label: "Totale Incasso",
+                                        backgroundColor: gradient, // Put the gradient here as a fill color
+                                        borderColor: '#0dc8de',
 
-                                pointBackgroundColor: Chart.helpers.color('#ffffff').alpha(0).rgbString(),
-                                pointBorderColor: Chart.helpers.color('#ffffff').alpha(0).rgbString(),
-                                pointHoverBackgroundColor: mApp.getColor('danger'),
-                                pointHoverBorderColor: Chart.helpers.color('#000000').alpha(0.2).rgbString(),
+                                        pointBackgroundColor: Chart.helpers.color('#ffffff').alpha(0).rgbString(),
+                                        pointBorderColor: Chart.helpers.color('#ffffff').alpha(0).rgbString(),
+                                        pointHoverBackgroundColor: mApp.getColor('danger'),
+                                        pointHoverBorderColor: Chart.helpers.color('#000000').alpha(0.2).rgbString(),
 
-                                //fill: 'start',
-                                data: domainsData
-                            }]
-                        },
-                        options: {
-                            title: {
-                                display: false
-                            },
-                            tooltips: {
-                                mode: 'nearest',
-                                intersect: false,
-                                position: 'nearest',
-                                xPadding: 10,
-                                yPadding: 10,
-                                caretPadding: 10
-                            },
-                            legend: {
-                                display: false
-                            },
-                            responsive: true,
-                            maintainAspectRatio: false,
-                            scales: {
-                                xAxes: [{
-                                    display: false,
-                                    gridLines: false,
-                                    scaleLabel: {
-                                        display: true,
-                                        labelString: 'Month'
-                                    }
-                                }],
-                                yAxes: [{
-                                    display: false,
-                                    gridLines: false,
-                                    scaleLabel: {
-                                        display: true,
-                                        labelString: 'Value'
-                                    },
-                                    ticks: {
-                                        beginAtZero: true
-                                    }
-                                }]
-                            },
-                            elements: {
-                                line: {
-                                    tension: 0.0000001
+                                        //fill: 'start',
+                                        data: domainsData
+                                    }]
                                 },
-                                point: {
-                                    radius: 4,
-                                    borderWidth: 12
+                                options: {
+                                    title: {
+                                        display: false
+                                    },
+                                    tooltips: {
+                                        mode: 'nearest',
+                                        intersect: false,
+                                        position: 'nearest',
+                                        xPadding: 10,
+                                        yPadding: 10,
+                                        caretPadding: 10
+                                    },
+                                    legend: {
+                                        display: false
+                                    },
+                                    responsive: true,
+                                    maintainAspectRatio: false,
+                                    scales: {
+                                        xAxes: [{
+                                            display: false,
+                                            gridLines: false,
+                                            scaleLabel: {
+                                                display: true,
+                                                labelString: 'Month'
+                                            }
+                                        }],
+                                        yAxes: [{
+                                            display: false,
+                                            gridLines: false,
+                                            scaleLabel: {
+                                                display: true,
+                                                labelString: 'Value'
+                                            },
+                                            ticks: {
+                                                beginAtZero: true
+                                            }
+                                        }]
+                                    },
+                                    elements: {
+                                        line: {
+                                            tension: 0.0000001
+                                        },
+                                        point: {
+                                            radius: 4,
+                                            borderWidth: 12
+                                        }
+                                    },
+                                    layout: {
+                                        padding: {
+                                            left: 0,
+                                            right: 0,
+                                            top: 10,
+                                            bottom: 0
+                                        }
+                                    }
                                 }
+                            };
+
+                        var chart = new Chart(ctx, config);
+                    }(jQuery);
+
+                    var calendarInit = function ($) {
+                        if ($('#m_calendar').length === 0) {
+                            return;
+                        }
+
+                        var todayDate = moment().startOf('day');
+                        var YM = todayDate.format('YYYY-MM');
+                        var YESTERDAY = todayDate.clone().subtract(1, 'day').format('YYYY-MM-DD');
+                        var TODAY = todayDate.format('YYYY-MM-DD');
+                        var TOMORROW = todayDate.clone().add(1, 'day').format('YYYY-MM-DD');
+
+                        $('#m_calendar').fullCalendar({
+                            isRTL: mUtil.isRTL(),
+                            header: {
+                                left: 'prev,next today',
+                                center: 'title',
+                                right: 'month,agendaWeek,agendaDay,listWeek'
                             },
-                            layout: {
-                                padding: {
-                                    left: 0,
-                                    right: 0,
-                                    top: 10,
-                                    bottom: 0
+                            editable: true,
+                            eventLimit: true, // allow "more" link when too many events
+                            navLinks: true,
+                            //defaultDate: moment('2018-08-15'),
+                            events: [
+                                    @foreach ($dashboard->domains as $domain)
+                                {
+                                    title: '{{$domain->url}}',
+                                    url: '{{route('domains.edit', $domain)}}',
+                                    start: moment('{{$domain->deadline}}'),
+                                    description: '{{$domain->note}}',
+                                    className: "m-fc-event--light m-fc-event--solid-primary",
+                                    allDay: true,
+                                },
+                                @endforeach
+                            ],
+
+                            eventRender: function (event, element) {
+                                if (element.hasClass('fc-day-grid-event')) {
+                                    element.data('content', event.description);
+                                    element.data('placement', 'top');
+                                    mApp.initPopover(element);
+                                } else if (element.hasClass('fc-time-grid-event')) {
+                                    element.find('.fc-title').append('<div class="fc-description">' + event.description + '</div>');
+                                } else if (element.find('.fc-list-item-title').lenght !== 0) {
+                                    element.find('.fc-list-item-title').append('<div class="fc-description">' + event.description + '</div>');
                                 }
                             }
-                        }
-                    };
+                        });
+                    }(jQuery);
 
-                var chart = new Chart(ctx, config);
-            }(jQuery);
-
-            var calendarInit = function ($) {
-                if ($('#m_calendar').length === 0) {
-                    return;
-                }
-
-                var todayDate = moment().startOf('day');
-                var YM = todayDate.format('YYYY-MM');
-                var YESTERDAY = todayDate.clone().subtract(1, 'day').format('YYYY-MM-DD');
-                var TODAY = todayDate.format('YYYY-MM-DD');
-                var TOMORROW = todayDate.clone().add(1, 'day').format('YYYY-MM-DD');
-
-                $('#m_calendar').fullCalendar({
-                    isRTL: mUtil.isRTL(),
-                    header: {
-                        left: 'prev,next today',
-                        center: 'title',
-                        right: 'month,agendaWeek,agendaDay,listWeek'
-                    },
-                    editable: true,
-                    eventLimit: true, // allow "more" link when too many events
-                    navLinks: true,
-                    //defaultDate: moment('2018-08-15'),
-                    events: [
-                            @foreach ($dashboard->domains as $domain)
-                        {
-                            title: '{{$domain->url}}',
-                            url: '{{route('domains.edit', $domain)}}',
-                            start: moment('{{$domain->deadline}}'),
-                            description: '{{$domain->note}}',
-                            className: "m-fc-event--light m-fc-event--solid-primary",
-                            allDay: true,
-                        },
-                        @endforeach
-                    ],
-
-                    eventRender: function (event, element) {
-                        if (element.hasClass('fc-day-grid-event')) {
-                            element.data('content', event.description);
-                            element.data('placement', 'top');
-                            mApp.initPopover(element);
-                        } else if (element.hasClass('fc-time-grid-event')) {
-                            element.find('.fc-title').append('<div class="fc-description">' + event.description + '</div>');
-                        } else if (element.find('.fc-list-item-title').lenght !== 0) {
-                            element.find('.fc-list-item-title').append('<div class="fc-description">' + event.description + '</div>');
-                        }
-                    }
                 });
-            }(jQuery);
-
-        });
-    </script>
+            </script>
 
 @stop

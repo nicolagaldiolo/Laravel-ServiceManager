@@ -33,6 +33,6 @@ class ToPayDomainsEmail extends Mailable
      */
     public function build()
     {
-      return $this->subject('Domini in scadenza - ' . Carbon::now()->format('F Y') )->markdown('emails.users.topay-domains');
+      return $this->subject(config('app.name') . ' - Domini in scadenza - ' . Carbon::now()->format('F Y') )->markdown('emails.users.topay-domains');
     }
 }

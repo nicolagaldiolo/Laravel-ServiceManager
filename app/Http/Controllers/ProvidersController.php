@@ -54,7 +54,8 @@ class ProvidersController extends Controller
     {
         Auth()->user()->providers()->create($request->validated());
 
-        return redirect()->route('providers.index');
+        return redirect()->route('providers.index')
+            ->with('status', 'Provider creato con successo');
     }
 
     /**
@@ -93,7 +94,8 @@ class ProvidersController extends Controller
         $this->authorize('update', $provider);
         $provider->update($request->validated());
 
-        return redirect()->route('providers.index');
+        return redirect()->route('providers.index')
+            ->with('status', 'Provider aggiornato con successo');
 
     }
 
