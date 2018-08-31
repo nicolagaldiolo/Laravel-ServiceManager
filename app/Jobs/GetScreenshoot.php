@@ -55,14 +55,14 @@ class GetScreenshoot implements ShouldQueue
             Browsershot::url($url)
                 ->dismissDialogs()
                 ->waitUntilNetworkIdle()
-                ->windowSize(1920, 1080)
+                ->windowSize(1080, 1080)
                 ->fit('fill', 640, 640)
                 ->save(public_path() . '/storage/' . $path);
 
             $this->object->update(['screenshoot' => $path]); // setto il nuovo path a db
 
         }catch (\Exception $e){
-            //logger('Errore creazione screenshoot: ' . $e);
+            logger('Errore creazione screenshoot: ' . $e);
         }
     }
 }

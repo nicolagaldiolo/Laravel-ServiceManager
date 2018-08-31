@@ -123,11 +123,13 @@ return [
     |
     */
 
-    'passwordCheck' => "The :attribute is invalid.",
-
     'custom' => [
         'attribute-name' => [
             'rule-name' => 'custom-message',
+        ],
+
+        'current_password' => [
+            'password_check' => 'La password è errata',
         ],
     ],
 

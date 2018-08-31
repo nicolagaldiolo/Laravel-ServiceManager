@@ -4,8 +4,7 @@
             <label class="">URL *</label>
 
             <div class="m-input-icon m-input-icon--left">
-                <input type="text" class="form-control m-input required" name="url" placeholder="Enter your url"
-                       value="{{old('url', $domain->url)}}">
+                <input type="text" class="form-control m-input required" name="url" value="{{old('url', $domain->url)}}">
                 <span class="m-input-icon__icon m-input-icon__icon--left">
                                                         <span>
                                                             <i class="la la-globe"></i>
@@ -85,33 +84,31 @@
 
         </div>
 
-        @if($deadline)
-            <div class="m-form__seperator m-form__seperator--dashed"></div>
+
+        <div class="m-form__seperator m-form__seperator--dashed"></div>
 
 
-            <div class="form-group m-form__group">
-                <label class="">Deadline *</label>
+        <div class="form-group m-form__group">
+            <label class="">Deadline *</label>
 
-                <div class="m-input-icon m-input-icon--left">
+            <div class="m-input-icon m-input-icon--left">
 
-                    <input type="text" class="form-control required" id="m_datepicker_1" name="deadline" readonly value="{{old('deadline', $domain->deadlineFormatted)}}" placeholder="Select date" />
-                    <span class="m-input-icon__icon m-input-icon__icon--left">
-                                                            <span>
-                                                                <i class="la la-calendar"></i>
-                                                            </span>
+                <input @if(!$deadline)disabled @endif type="text" class="form-control required" id="m_datepicker_1" name="deadline" readonly value="{{old('deadline', $domain->deadlineFormatted)}}" placeholder="Select date" />
+                <span class="m-input-icon__icon m-input-icon__icon--left">
+                                                        <span>
+                                                            <i class="la la-calendar"></i>
                                                         </span>
-
-                </div>
-                <span class="m-form__help">Please enter a deadline.</span>
-                @if ($errors->has('deadline'))
-                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('deadline') }}</strong>
-                                    </span>
-                @endif
-
-
+                                                    </span>
             </div>
-        @endif
+            <span class="m-form__help">Please enter a deadline.</span>
+            @if ($errors->has('deadline'))
+                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('deadline') }}</strong>
+                                </span>
+            @endif
+
+
+        </div>
 
         <div class="m-form__seperator m-form__seperator--dashed"></div>
 
@@ -173,8 +170,7 @@
         <div class="form-group m-form__group">
             <label class="">Note</label>
 
-            <textarea class="form-control m-input" name="note" placeholder="Enter a note"
-                      rows="10">{{old('note', $domain->note)}}</textarea>
+            <textarea class="form-control m-input" name="note" rows="10">{{old('note', $domain->note)}}</textarea>
             <span class="m-form__help">Please enter a note.</span>
             @if ($errors->has('note'))
                 <span class="invalid-feedback" role="alert">

@@ -1,6 +1,5 @@
 @section('scripts')
     <script src="{{ asset('js/app.js') }}"></script>
-    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/2.5.3/js/bootstrap-colorpicker.min.js"></script>-->
 @show
 
 @if(session('status'))
@@ -26,5 +25,6 @@
         // toastr.info()
         // toastr.warning()
         // toastr.error()
+
     </script>
 @endif

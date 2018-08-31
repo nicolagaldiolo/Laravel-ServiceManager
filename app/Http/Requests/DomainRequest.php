@@ -23,7 +23,6 @@ class DomainRequest extends FormRequest
      */
     public function rules()
     {
-        //dd($this);
 
         if ($this->method() == 'PATCH') {
             $domain = $this->route('domain');

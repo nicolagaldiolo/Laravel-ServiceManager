@@ -128,6 +128,9 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
+        'current_password' => [
+            'password_check' => 'The password is incorrect',
+        ],
     ],
 
     /*

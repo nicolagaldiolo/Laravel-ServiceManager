@@ -2,12 +2,12 @@
 
 @section('content')
     @component('components.title')
-        Customers
+        {{__('messages.customers')}}
     @endcomponent
     <div class="m-content">
         <div class="m-portlet m-portlet--mobile">
-            @component('components.tableHeader', ['icon' => 'flaticon-users', 'button' => 'Nuovo customer', 'url' => route('customers.create')])
-                Tutti i customers
+            @component('components.tableHeader', ['icon' => 'flaticon-users', 'button' => __('messages.new_customer'), 'url' => route('customers.create')])
+                {{__('messages.all_customers')}}
             @endcomponent
             <div class="m-portlet__body">
 
@@ -15,11 +15,11 @@
                 <table class="table table-striped- table-bordered table-hover table-checkable" id="m_table_1">
                     <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Phone</th>
-                        <th>address</th>
-                        <th>Actions</th>
+                        <th>{{__('messages.name')}}</th>
+                        <th>{{__('messages.email')}}</th>
+                        <th>{{__('messages.phone')}}</th>
+                        <th>{{__('messages.address')}}</th>
+                        <th>{{__('messages.actions')}}</th>
                     </tr>
                     </thead>
                 </table>
@@ -56,11 +56,11 @@
                 var _self = this;
 
                 swal({
-                    title: 'Are you sure?',
-                    text: "You won't be able to revert this!",
+                    title: '{{__('messages.are_sure')}}',
+                    text: "{{__('messages.are_sure_desc')}}",
                     type: 'warning',
                     showCancelButton: true,
-                    confirmButtonText: 'Yes, delete it!'
+                    confirmButtonText: '{{__('messages.confirm_delete')}}'
                 }).then(function(result) {
 
                     if (result.value) {
@@ -74,11 +74,11 @@
                             },
                             success: function( data ) {
                                 //console.log(data);
-                                swal('Deleted!', 'The record has been deleted.', 'success')
+                                swal('{{__('messages.deleted_title')}}', '{{__('messages.deleted_desc')}}', 'success')
                                 dataTable.ajax.reload();
                             },
                             error: function(xhr, status, error) {
-                                swal('Error!', 'There was a problem.', 'error')
+                                swal('{{__('messages.error_title')}}', '{{__('messages.error_desc')}}', 'error')
                             },
 
                         });

@@ -31,7 +31,7 @@
                         <div class="col-lg-6">
                             <label>Full Name *</label>
                             <div class="m-input-icon m-input-icon--left">
-                                <input type="text" class="form-control m-input" placeholder="Enter full name"
+                                <input type="text" class="form-control m-input"
                                        name="name" value="{{old('name')}}">
                                 <span class="m-input-icon__icon m-input-icon__icon--left"><span><i
                                                 class="la la-user"></i></span></span>
@@ -49,7 +49,7 @@
                             <label class="">Email *</label>
                             <div class="m-input-icon m-input-icon--left">
                                 <input type="email" class="form-control m-input" name="email"
-                                       placeholder="Enter your email" value="{{old('email')}}">
+                                       value="{{old('email')}}">
                                 <span class="m-input-icon__icon m-input-icon__icon--left"><span><i
                                                 class="la la-envelope"></i></span></span>
                             </div>

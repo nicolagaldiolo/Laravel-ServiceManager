@@ -1,5 +1,4 @@
-//@import "~bootstrap-colorpicker/src/sass/colorpicker.scss";
-
+@import "~bootstrap-colorpicker/dist/css/bootstrap-colorpicker.css";
 @import "../metronic/vendors/base/vendors.bundle.css";
 @import "../metronic/demo/default/base/style.bundle.css";
 @import "../metronic/vendors/custom/fullcalendar/fullcalendar.bundle.css";
@@ -12,4 +11,159 @@
 .no-bg,
 .alert.m-alert--outline.alert-danger.no-bg{
     background: transparent;
+}
+
+#toast-container{
+    &.toast-top-full-width{
+        & > div{
+            opacity: 1;
+            box-shadow: none;
+            margin-top: 6px;
+        }
+    }
+}
+
+.progress{
+    &.m-progress--sm{
+        .progress-bar{
+            height: 100%;
+        }
+    }
+}
+
+.m--margin-0{
+    margin:0 !important;
+}
+
+.m--padding-0{
+    padding:0 !important;
+}
+
+.m-login{
+    &.m-login--2{
+        .m-login__wrapper{
+            .m-login__container{
+                .m-login__logo{
+                    margin-bottom: 2rem;
+                }
+            }
+        }
+    }
+}
+
+
+.m-widget1{
+    .m-widget1__item{
+        .m-widget1__number{
+            font-size: 2rem;
+        }
+    }
+}
+.m-widget4{
+    .m-widget4__item{
+        &:first-child{
+            padding-top:0;
+        }
+        width: 100%;
+        .m-widget4__img{
+            &.m-widget4__img--pic,
+            &.m-widget4__img--logo{
+                img {
+                    width: 3.5rem;
+                    margin-right: 12px;
+                }
+            }
+        }
+
+        .m-widget4__ext{
+            .m-widget4__number{
+                white-space: nowrap;
+            }
+        }
+        .m-widget4__info{
+            padding: 0;
+            .m-widget4__sub{
+                white-space: nowrap;
+            }
+        }
+
+    }
+    &.m-widget4--progress{
+        .m-widget4__progress{
+            padding-left: 12px;
+            padding-right: 0;
+            .m-widget4__progress-wrapper{
+                .progress{
+                    margin-top: 0;
+                }
+            }
+        }
+    }
+}
+
+.m-widget11{
+    .table {
+        tbody > tr > td{
+            &.amount{
+                font-weight: 600;
+            }
+        }
+    }
+}
+
+.m-widget12{
+    .m-widget12__item{
+        .m-widget12__text1 > span,
+        .m-widget12__text2 > span{
+            font-size:3rem;
+        }
+    }
+}
+
+.m-widget17{
+    .m-widget17__stats{
+        .m-widget17__items{
+            .m-widget17__item{
+                .m-widget17__icon > i{
+                    font-size: 2.8rem;
+                }
+                .m-widget17__subtitle{
+                    margin-top:0;
+                    font-size:1.3rem;
+                }
+                .m-widget17__desc{
+                    font-size:1rem;
+                }
+            }
+        }
+    }
+}
+
+.m-social-link{
+    margin-top: 30px;
+    display:flex;
+    justify-content: space-between;
+}
+
+@media screen and (max-width: 767px) {
+    .m-login{
+        &.m-login--2{
+            .m-login__wrapper{
+                .m-login__container{
+                    .m-login__form{
+                        margin-bottom: 4rem;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .m-social-link{
+        flex-direction: column;
+        a:not(:first-child){
+            margin-top: 10px;
+        }
+    }
 }

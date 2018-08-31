@@ -7,6 +7,7 @@ use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Spatie\Browsershot\Browsershot;
 
 class DashboardController extends Controller
 {
@@ -18,7 +19,6 @@ class DashboardController extends Controller
      */
     public function index()
     {
-
         $dashboard = Auth()->user()->load('domains.customer', 'providers.domains', 'providers.hostings', 'customers.domains');
 
         $expiringDomains = $dashboard->domains->filter(function($item){

@@ -3,7 +3,7 @@
 @section('content')
 
     @component('components.title')
-        Customers
+        {{__('messages.customers')}}
     @endcomponent
     <div class="m-content">
 
@@ -20,7 +20,7 @@
                                     <i class="flaticon-browser"></i>
                                 </span>
                                 <h3 class="m-portlet__head-text">
-                                    Customer info
+                                    {{__('messages.customer_info')}}
                                 </h3>
                             </div>
                         </div>
@@ -28,24 +28,24 @@
                     <div class="m-portlet__body">
                         <div class="m-widget13">
                             <div class="m-widget13__item">
-				                <span class="m-widget13__desc">Customer Name</span>
+				                <span class="m-widget13__desc">{{__('messages.name')}}</span>
                                 <span class="m-widget13__text m-widget13__text-bolder">{{$customer->name}}</span>
                             </div>
                             <div class="m-widget13__item">
-				                <span class="m-widget13__desc">Email</span>
+				                <span class="m-widget13__desc">{{__('messages.email')}}</span>
                                 <span class="m-widget13__text m-widget13__text-bolder">{{$customer->email}}</span>
                             </div>
                             <div class="m-widget13__item">
-				                <span class="m-widget13__desc">Phone</span>
+				                <span class="m-widget13__desc">{{__('messages.phone')}}</span>
                                 <span class="m-widget13__text">{{$customer->phone}}</span>
                             </div>
                             <div class="m-widget13__item">
-				                <span class="m-widget13__desc">Address</span>
+				                <span class="m-widget13__desc">{{__('messages.address')}}</span>
                                 <span class="m-widget13__text">{{$customer->address}}</span>
                             </div>
 
                             <div class="m-widget13__action">
-                                <a class="btn m-btn--pill btn-secondary" href="{{route('customers.edit', $customer)}}">Edit</a>
+                                <a class="btn m-btn--pill btn-secondary" href="{{route('customers.edit', $customer)}}">{{__('messages.edit')}}</a>
                             </div>
                         </div>
                     </div>
@@ -62,7 +62,7 @@
                                     <i class="flaticon-diagram"></i>
                                 </span>
                                 <h3 class="m-portlet__head-text">
-                                    Customer summary
+                                    {{__('messages.customer_summary')}}
                                 </h3>
                             </div>
                         </div>
@@ -70,9 +70,9 @@
                     <div class="m-portlet__body">
                         <div class="m-widget12">
                             <div class="m-widget12__item">
-                                <span class="m-widget12__text1">Totale fatturato<br><span>€ {{$customerRevenue}}</span></span>
+                                <span class="m-widget12__text1">{{__('messages.total_revenue')}}<br><span>€ {{$customerRevenue}}</span></span>
                                 <div class="m-widget12__text2">
-                                    <div class="m-widget12__desc">Media fatturato totale</div>
+                                    <div class="m-widget12__desc">{{__('messages.avarage_revenue')}}</div>
                                     <br>
                                     <div class="m-widget12__progress">
                                         <div class="m-widget12__progress-sm progress m-progress--sm">
@@ -84,8 +84,8 @@
                             </div>
 
                             <div class="m-widget12__item">
-                                <span class="m-widget12__text1">Servizi attivi<br><span>{{$customerDomainsCount}}</span></span>
-                                <span class="m-widget12__text2">Servizi in scadenza<br><span>{{$toPay}}</span></span>
+                                <span class="m-widget12__text1">{{__('messages.domains_active_')}}<br><span>{{$customerDomainsCount}}</span></span>
+                                <span class="m-widget12__text2">{{__('messages.domains_deadline')}}<br><span>{{$toPay}}</span></span>
                             </div>
 
                         </div>

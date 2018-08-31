@@ -3,7 +3,7 @@
 @section('content')
 
     @component('components.title')
-        Customers
+        {{__('messages.customers')}}
     @endcomponent
     <div class="m-content">
 
@@ -16,7 +16,7 @@
 													<i class="flaticon-edit-1"></i>
 												</span>
                         <h3 class="m-portlet__head-text">
-                            Edit customer
+                            {{__('messages.edit_customer')}}
                         </h3>
                     </div>
                 </div>

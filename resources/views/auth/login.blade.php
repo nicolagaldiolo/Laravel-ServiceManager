@@ -53,7 +53,7 @@
                 <span></span>
             </div>
         </div>
-        <div class="m-login__options">
+        <div class="m-login__options m-social-link">
             <a href="{{route('social.login', 'facebook')}}" class="btn btn-primary m-btn m-btn--pill  m-btn  m-btn m-btn--icon">
 									<span>
 										<i class="fab fa-facebook-f"></i>
