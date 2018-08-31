@@ -15,9 +15,8 @@
                             <div class="m-widget1__item">
                                 <div class="row m-row--no-padding align-items-center">
                                     <div class="col">
-                                        <h3 class="m-widget1__title">Fatturato totale</h3>
-                                        <span class="m-widget1__desc">Ricavato da {{$dashboard->domains->count()}}
-                                            servizi</span>
+                                        <h3 class="m-widget1__title">{{__('messages.total_revenue')}}</h3>
+                                        <span class="m-widget1__desc">{{__(trans('messages.obtained_from', [ 'attribute' => $dashboard->domains->count() ]))}}</span>
                                         <br>
                                         <span class="m-widget1__number m--font-brand">&euro; {{$dashboard->domains->sum('amount')}}</span>
                                     </div>
@@ -33,9 +32,8 @@
                                 <div class="row m-row--no-padding align-items-center">
                                     <div class="col">
                                         <h3 class="m-widget1__title">
-                                            Incasso {{\Carbon\Carbon::now()->format('F Y')}}</h3>
-                                        <span class="m-widget1__desc">Ricavato da {{$dashboard->expiringDomains->count()}}
-                                            servizi</span>
+                                            {{__('messages.revenues')}}  {{\Carbon\Carbon::now()->format('F Y')}}</h3>
+                                        <span class="m-widget1__desc">{{__(trans('messages.obtained_from', [ 'attribute' => $dashboard->expiringDomains->count() ]))}}</span>
                                         <br>
                                         <span class="m-widget1__number m--font-info">&euro; {{$dashboard->expiringDomains->sum('amount')}}</span>
                                     </div>
@@ -50,8 +48,8 @@
                             <div class="m-widget1__item">
                                 <div class="row m-row--no-padding align-items-center">
                                     <div class="col">
-                                        <h3 class="m-widget1__title">Servizi da incassare</h3>
-                                        <span class="m-widget1__desc">In attesa di pagamento</span>
+                                        <h3 class="m-widget1__title">{{__('messages.to_cash_in')}}</h3>
+                                        <span class="m-widget1__desc">{{__('messages.pending_payment')}}</span>
                                         <br>
                                         <span class="m-widget1__number m--font-danger">{{$domainsToPayCount}}</span>
                                     </div>
@@ -66,11 +64,10 @@
                             <div class="m-widget1__item">
                                 <div class="row m-row--no-padding align-items-center">
                                     <div class="col">
-                                        <h3 class="m-widget1__title">Incidenza fatturato</h3>
-                                        <span class="m-widget1__desc">Incidenza mensile sul fatturato</span>
+                                        <h3 class="m-widget1__title">{{__('messages.sales_impact')}}</h3>
+                                        <span class="m-widget1__desc">{{__('messages.monthly_sales_amount')}}</span>
                                         <br>
-                                        <span class="m-widget1__number m--font-success">{{$dashboard->monthlyService_percent}}
-                                            %</span>
+                                        <span class="m-widget1__number m--font-success">{{$dashboard->monthlyService_percent}}%</span>
                                     </div>
                                 </div>
                             </div>
@@ -96,7 +93,7 @@
                                     <i class="flaticon-line-graph"></i>
                                 </span>
                                 <h3 class="m-portlet__head-text">
-                                    Andamento annuale
+                                    {{__('messages.annual_trend')}}
                                 </h3>
                             </div>
                         </div>
@@ -106,7 +103,7 @@
                                     m-dropdown-toggle="hover" aria-expanded="true">
                                     <a href="{{route('domains.index')}}"
                                        class="m-portlet__nav-link btn btn--sm m-btn--pill btn-brand m-btn">
-                                        Tutti i servizi
+                                        {{__('messages.all_domains')}}
                                     </a>
                                 </li>
                             </ul>
@@ -122,15 +119,15 @@
                             </div>
 
                             <!--begin::Widget 11-->
-                            <div class="m-widget11" style="margin-top:20px;">
-                                <div class="m-portlet__head" style="padding: 0;">
+                            <div class="m-widget11 m--margin-top-20">
+                                <div class="m-portlet__head m--padding-0">
                                     <div class="m-portlet__head-caption">
                                         <div class="m-portlet__head-title">
                                             <span class="m-portlet__head-icon">
                                                 <i class="flaticon-piggy-bank"></i>
                                             </span>
                                             <h3 class="m-portlet__head-text">
-                                                Domini da incassare
+                                                {{__('messages.to_cash_in')}}
                                             </h3>
                                         </div>
                                     </div>
@@ -138,7 +135,7 @@
 
                                 @if($domainsToPay->isEmpty())
                                     <div class="alert alert-brand" role="alert">
-                                        <strong>Fantastico!</strong> Non ci sono altri servizi da gestire
+                                        <strong>{{__('messages.fantastic')}}</strong> {{__('messages.no_other_domains')}}
                                     </div>
                                 @else
 
@@ -149,9 +146,9 @@
                                             <thead>
                                             <tr>
                                                 <td class="m-widget11__label"></td>
-                                                <td class="m-widget11__app">Dominio</td>
-                                                <td class="m-widget11__sales">Status</td>
-                                                <td class="m-widget11__price m--align-right">Amount</td>
+                                                <td class="m-widget11__app">{{__('messages.domain')}}</td>
+                                                <td class="m-widget11__sales">{{__('messages.status')}}</td>
+                                                <td class="m-widget11__price m--align-right">{{__('messages.amount')}}</td>
                                                 <td class="m-widget11__total m--align-right"></td>
                                             </tr>
                                             </thead>
@@ -171,12 +168,11 @@
                                                     <td>
                                                         {{$domain->deadline->diffForHumans()}}
                                                     </td>
-                                                    <td class="m--align-right m--font-brand">
-                                                        &euro; {{$domain->amount}}</td>
+                                                    <td class="m--align-right m--font-brand amount">&euro; {{$domain->amount}}</td>
                                                     <td class="m--align-right">
                                                         @if(!$domain->payed)
                                                             <a href="{{route('domains.edit', $domain)}}"
-                                                               class="btn m-btn--pill btn-outline-brand m-btn btn-sm">Edit</a>
+                                                               class="btn m-btn--pill btn-outline-brand m-btn btn-sm">{{__('messages.edit')}}</a>
                                                         @endif
                                                     </td>
 
@@ -211,10 +207,10 @@
                         <div class="m-portlet__head-caption">
                             <div class="m-portlet__head-title">
                                 <span class="m-portlet__head-icon">
-                                    <i class="flaticon-stopwatch" style="color:#fff;"></i>
+                                    <i class="flaticon-stopwatch m--font-light"></i>
                                 </span>
                                 <h3 class="m-portlet__head-text m--font-light">
-                                    Summary
+                                    {{__('messages.summary')}}
                                 </h3>
                             </div>
                         </div>
@@ -222,9 +218,7 @@
                     <div class="m-portlet__body">
                         <div class="m-widget17">
                             <div class="m-widget17__visual m-widget17__visual--chart m-portlet-fit--top m-portlet-fit--sides m--bg-danger">
-                                <div class="m-widget17__chart" style="height:320px;">
-                                    {{--<canvas id="m_chart_activities"></canvas>--}}
-                                </div>
+                                <div class="m-widget17__chart" style="height:320px;"></div>
                             </div>
                             <div class="m-widget17__stats">
                                 <div class="m-widget17__items m-widget17__items-col1">
@@ -233,10 +227,11 @@
 															<i class="flaticon-users m--font-brand"></i>
 														</span>
                                         <span class="m-widget17__subtitle">
-															Customers
+															{{__('messages.customers')}}
 														</span>
                                         <span class="m-widget17__desc">
-															{{$dashboard->customers->count()}} Customers attivi
+															@if($dashboard->customers->count() > 0){{$dashboard->customers->count()}}@endif
+                                                            {{trans_choice('messages.customers_active', $dashboard->customers->count())}}
 														</span>
                                     </div>
                                     <div class="m-widget17__item">
@@ -244,10 +239,11 @@
 															<i class="flaticon-interface-7 m--font-info"></i>
 														</span>
                                         <span class="m-widget17__subtitle">
-															Providers
+															{{__('messages.providers')}}
 														</span>
                                         <span class="m-widget17__desc">
-															{{$dashboard->providers->count()}} Providers active
+                                                            @if($dashboard->providers->count() > 0){{$dashboard->providers->count()}}@endif
+															{{trans_choice('messages.providers_active', $dashboard->providers->count())}}
 														</span>
                                     </div>
                                 </div>
@@ -257,10 +253,11 @@
 															<i class="flaticon-layers m--font-success"></i>
 														</span>
                                         <span class="m-widget17__subtitle">
-															Domains
+															{{__('messages.domains')}}
 														</span>
                                         <span class="m-widget17__desc">
-															{{$dashboard->domains->count()}} Domains active
+                                                            @if($dashboard->domains->count() > 0){{$dashboard->domains->count()}}@endif
+															{{trans_choice('messages.domains_active', $dashboard->domains->count())}}
 														</span>
                                     </div>
                                     <div class="m-widget17__item">
@@ -268,10 +265,11 @@
 															<i class="flaticon-profile m--font-danger"></i>
 														</span>
                                         <span class="m-widget17__subtitle">
-															Users
+															{{__('messages.users')}}
 														</span>
                                         <span class="m-widget17__desc">
-                                                        {{$dashboard->usersSummary->count()}} Users active
+                                                            @if($dashboard->usersSummary->count() > 0){{$dashboard->usersSummary->count()}}@endif
+                                                            {{trans_choice('messages.users_active', $dashboard->usersSummary->count())}}
 														</span>
                                     </div>
                                 </div>
@@ -300,7 +298,7 @@
 													<i class="flaticon-calendar"></i>
 												</span>
                                 <h3 class="m-portlet__head-text">
-                                    Calendar
+                                    {{__('messages.calendar')}}
                                 </h3>
                             </div>
                         </div>
@@ -311,7 +309,7 @@
                                        class="btn btn-accent m-btn m-btn--custom m-btn--icon m-btn--pill">
 														<span>
 															<i class="la la-plus"></i>
-															<span>Aggiungi dominio</span>
+															<span>{{__('messages.new_domain')}}</span>
 														</span>
                                     </a>
                                 </li>
@@ -337,14 +335,12 @@
                                     <i class="flaticon-network"></i>
                                 </span>
                                 <h3 class="m-portlet__head-text">
-                                    Status servizi
+                                    {{__('messages.domains_status')}}
                                 </h3>
                             </div>
                         </div>
                         <div class="m-portlet__head-tools">
-                            <a class="btn m-btn--pill btn-secondary btn-sm m-btn" href="{{route('domains.index')}}">Tutti
-                                i
-                                servizi</a>
+                            <a class="btn m-btn--pill btn-secondary btn-sm m-btn" href="{{route('domains.index')}}">{{__('messages.all_domains')}}</a>
                         </div>
                     </div>
                     <div class="m-portlet__body">
@@ -357,7 +353,7 @@
                                             <span class="m-list-timeline__text">{{$domain->url}}</span>
                                             <span class="m-list-timeline__time">
                                             <span class="m-badge m-badge--wide @if($domain->status == 1) m-badge--success @else m-badge--danger @endif">@if($domain->status == 1)
-                                                    Online @else Offline @endif</span>
+                                                    {{__('messages.online')}} @else {{__('messages.offline')}} @endif</span>
                                         </span>
                                         </div>
                                     @endforeach
@@ -384,7 +380,7 @@
             @endif
 
                 <!--begin:: Widgets/Authors Profit-->
-                <div class="m-portlet m-portlet--bordered-semi m-portlet--full-height ">
+                <div class="m-portlet m-portlet--full-height ">
                     <div class="m-portlet__head">
                         <div class="m-portlet__head-caption">
                             <div class="m-portlet__head-title">
@@ -392,12 +388,12 @@
                                     <i class="flaticon-interface-7"></i>
                                 </span>
                                 <h3 class="m-portlet__head-text">
-                                    Fornitori
+                                    {{__('messages.providers')}}
                                 </h3>
                             </div>
                         </div>
                         <div class="m-portlet__head-tools">
-                            <a class="btn m-btn--pill btn-secondary btn-sm m-btn" href="{{route('providers.index')}}">Esplora</a>
+                            <a class="btn m-btn--pill btn-secondary btn-sm m-btn" href="{{route('providers.index')}}">{{__('messages.all_providers')}}</a>
                         </div>
                     </div>
                     <div class="m-portlet__body">
@@ -408,17 +404,18 @@
                                         <img src="{{$provider->screenshoot}}" alt="">
                                     </div>
                                     <div class="m-widget4__info">
-                                        <span class="m-widget4__title">{{$provider->name}}</span>
-                                        <br>
-                                        <span class="m-widget4__sub">
+                                        <span class="m-widget4__title">
+                                            {{$provider->name}}<br>
                                             <a target="_blank" href="{{$provider->website}}">{{$provider->website}}</a>
                                         </span>
+                                        <br>
+                                        <span class="m-widget4__sub">
+                                            @if($provider->domains->count() > 0){{$provider->domains->count()}}@endif
+                                            {{trans_choice('messages.domains_active', $provider->domains->count())}} |
+                                            @if($provider->hostings->count() > 0){{$provider->hostings->count()}}@endif
+                                            {{trans_choice('messages.hostings_active', $provider->hostings->count())}}
+                                        </span>
                                     </div>
-                                    <span class="m-widget4__ext">
-                                        <span class="m-widget4__number m--font-brand">{{$provider->domains->count()}}
-                                            <small>Domains</small> <br>{{$provider->hostings->count()}}
-                                            <small>Hostings</small></span>
-                                    </span>
                                 </div>
                             @endforeach
 
@@ -436,7 +433,7 @@
             @endif
 
                         <!--begin:: Widgets/Authors Profit-->
-                            <div class="m-portlet m-portlet--bordered-semi m-portlet--full-height ">
+                            <div class="m-portlet m-portlet--full-height ">
                                 <div class="m-portlet__head">
                                     <div class="m-portlet__head-caption">
                                         <div class="m-portlet__head-title">
@@ -444,13 +441,13 @@
                                     <i class="flaticon-users"></i>
                                 </span>
                                             <h3 class="m-portlet__head-text">
-                                                Customers
+                                                {{__('messages.customers')}}
                                             </h3>
                                         </div>
                                     </div>
                                     <div class="m-portlet__head-tools">
                                         <a class="btn m-btn--pill btn-secondary btn-sm m-btn"
-                                           href="{{route('customers.index')}}">Esplora</a>
+                                           href="{{route('customers.index')}}">{{__('messages.all_customers')}}</a>
                                     </div>
                                 </div>
                                 <div class="m-portlet__body">
@@ -461,8 +458,9 @@
                                                     <span class="m-widget4__title">{{$customer->name}}</span>
                                                     <br>
                                                     <span class="m-widget4__sub">
-                                            {{$customer->domains->count()}} Servizi attivi
-                                        </span>
+                                                        @if($customer->domains->count() > 0){{$customer->domains->count()}}@endif
+                                                        {{trans_choice('messages.domains_active', $customer->domains->count())}}
+                                                    </span>
                                                 </div>
                                                 <span class="m-widget4__ext">
                                         <span class="m-widget4__number m--font-brand">&euro; {{$customer->domains->sum('amount')}}</span>
@@ -488,13 +486,13 @@
                                     <i class="flaticon-profile"></i>
                                 </span>
                                                 <h3 class="m-portlet__head-text">
-                                                    Users
+                                                    {{__('messages.users')}}
                                                 </h3>
                                             </div>
                                         </div>
                                         <div class="m-portlet__head-tools">
                                             <a class="btn m-btn--pill btn-secondary btn-sm m-btn"
-                                               href="{{route('users.index')}}">Esplora</a>
+                                               href="{{route('users.index')}}">{{__('messages.all_users')}}</a>
                                         </div>
                                     </div>
                                     <div class="m-portlet__body">
@@ -507,14 +505,14 @@
                                                     </div>
                                                     <div class="m-widget4__info">
                                                         <span class="m-widget4__title">{{$user->name}}</span><br>
-                                                        <span class="m-widget4__sub">{{$user->domains->count()}}
-                                                            servizi (&euro; {{$user->domains->sum('amount')}})</span>
+                                                        <span class="m-widget4__sub">
+                                                            @if($user->domains->count() > 0){{$user->domains->count()}}@endif
+                                                            {{trans_choice('messages.domains_active', $user->domains->count())}} (&euro; {{$user->domains->sum('amount')}})
+                                                        </span>
                                                     </div>
                                                     <div class="m-widget4__progress">
                                                         <div class="m-widget4__progress-wrapper">
-                                            <span class="m-widget17__progress-number">{{$user->domains_total_perc}}
-                                                %</span>
-                                                            <!--<span class="m-widget17__progress-label">Domini totali</span>-->
+                                                            <span class="m-widget17__progress-number">{{$user->domains_total_perc}}%</span>
                                                             <div class="progress m-progress--sm">
                                                                 <div class="progress-bar bg-danger" role="progressbar"
                                                                      style="width: {{$user->domains_total_perc}}%;"

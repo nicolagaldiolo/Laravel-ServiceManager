@@ -17,7 +17,6 @@
                     <th>Amount</th>
                     <th>Note</th>
                     <th>Payed</th>
-                    <th>Status</th>
                     <th>Actions</th>
                 </tr>
                 </thead>
@@ -46,19 +45,33 @@
                     { data: "amount" },
                     { data: "note" },
                     { data: "payed" },
-                    { data: "status" },
                     { data: "actions", name: 'action', orderable: false, searchable: false}
-                    //{ data: "updated_at" },
-                    //{ data: "deleted_at" },
-
                 ],
                 columnDefs: [
                     {
                         targets: 0,
                         render: function(data, type, full, meta) {
-                            //console.log(full);
-                            if(full.screenshoot == null) return data;
-                            return '<img width="100" src="' + full.screenshoot + '"/>' + data;
+                            var image = (full.screenshoot !== null) ? '<img src="' + full.screenshoot + '">' : '';
+
+                            var label,status;
+                            if(full.status == 1){
+                                label = "success";
+                                status = "Online";
+                            }else{
+                                label = "danger";
+                                status = "Offline";
+                            }
+
+                            var html = '<div class="m-card-user m-card-user--sm">' +
+                                '  <div class="m-card-user__pic">' +
+                                '    <div class="m-card-user__no-photo">' + image + '</div>' +
+                                '  </div>'+
+                                '  <div class="m-card-user__details">'+
+                                '    <span class="m-card-user__name">' + data + '</span>'+
+                                '    <span class="m-badge m-badge--' + label + ' m-badge--dot"></span>&nbsp;<span class="m--font-bold m--font-' + label + '">' + status + '</span>'+
+                                '  </div>'+
+                                '</div>';
+                            return html;
                         },
                     },
 
@@ -86,24 +99,7 @@
                             }
                             return '<span class="m-badge  m-badge--' + label + ' m-badge--wide">' + status + '</span>';
                         },
-                    },
-
-                    {
-                        targets: 7,
-                        render: function(data, type, full, meta) {
-                            if(data == null) return data;
-
-                            var label,status;
-                            if(data == 1){
-                                label = "primary";
-                                status = "Online";
-                            }else{
-                                label = "danger";
-                                status = "Offline";
-                            }
-                            return '<span class="m-badge m-badge--' + label + ' m-badge--dot"></span>&nbsp;<span class="m--font-bold m--font-' + label + '">' + status + '</span>';
-                        },
-                    },
+                    }
 
                 ]
             });

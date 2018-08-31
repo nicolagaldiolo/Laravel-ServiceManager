@@ -27,26 +27,29 @@ class SeedFakeData extends Seeder
             ]
         );
 
-        $users = factory(App\User::class, 4)->create([
-            'password' => bcrypt(env('DEMOPASS', 'password')),
-        ]);
+        if(config('app.env') !== 'production') {
 
-        $users->push($me);
-
-        $users->each(function($user){
-            $customers = factory(App\Customer::class, 4)->create([
-                'user_id' => $user->id
+            $users = factory(App\User::class, 4)->create([
+                'password' => bcrypt(env('DEMOPASS', 'password')),
             ]);
 
-            $providers = factory(App\Providers::class, 4)->create([
-                'user_id' => $user->id
-            ]);
-            factory(App\Domain::class, 5)->create([
-                'customer_id' => collect($customers)->random()->id,
-                'domain_id' => collect($providers)->random()->id,
-                'hosting_id' => collect($providers)->random()->id,
-                'user_id' => $user->id
-            ]);
-        });
+            $users->push($me);
+
+            $users->each(function ($user) {
+                $customers = factory(App\Customer::class, 4)->create([
+                    'user_id' => $user->id
+                ]);
+
+                $providers = factory(App\Providers::class, 4)->create([
+                    'user_id' => $user->id
+                ]);
+                factory(App\Domain::class, 5)->create([
+                    'customer_id' => collect($customers)->random()->id,
+                    'domain_id' => collect($providers)->random()->id,
+                    'hosting_id' => collect($providers)->random()->id,
+                    'user_id' => $user->id
+                ]);
+            });
+        }
     }
 }

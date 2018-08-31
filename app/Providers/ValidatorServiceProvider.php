@@ -13,7 +13,6 @@ class ValidatorServiceProvider extends ServiceProvider {
             if ((Hash::check($value, Auth::user()->password))) {
                 return true;
             }
-            return false;
         });
     }
 

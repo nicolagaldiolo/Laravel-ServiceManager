@@ -72,7 +72,7 @@
                                 <div class="form-group m-form__group">
                                     <label class="">Name:</label>
                                     <div class="m-input-icon m-input-icon--left">
-                                        <input type="text" name="name" class="form-control m-input required" placeholder="Enter your name" value="{{old('name', $user->name)}}">
+                                        <input type="text" name="name" class="form-control m-input required" value="{{old('name', $user->name)}}">
                                         <span class="m-input-icon__icon m-input-icon__icon--left">
                                                         <span>
                                                             <i class="la la-user"></i>
@@ -94,7 +94,7 @@
 
                                     <label class="">Email: *</label>
                                     <div class="m-input-icon m-input-icon--left">
-                                        <input type="email" name="email" class="form-control m-input required email" placeholder="Enter your email" value="{{old('email', $user->email)}}">
+                                        <input type="email" name="email" class="form-control m-input required email" value="{{old('email', $user->email)}}">
                                         <span class="m-input-icon__icon m-input-icon__icon--left">
                                                         <span>
                                                             <i class="la la-at"></i>

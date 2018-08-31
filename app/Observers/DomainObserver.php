@@ -29,9 +29,8 @@ class DomainObserver
      */
     public function created(Domain $domains)
     {
-
-        //event(new GenerateScreen($domains));
-        //event(new CheckServiceStatus($domains));
+        event(new GenerateScreen($domains));
+        event(new CheckServiceStatus($domains));
     }
 
     /**

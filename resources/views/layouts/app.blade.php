@@ -241,7 +241,7 @@
                                                                 <li class="m-nav__item">
                                                                     <a href="{{route('change.password', Auth::user())}}"
                                                                        class="m-nav__link">
-                                                                        <i class="m-nav__link-icon flaticon-lock-1"></i>
+                                                                        <i class="m-nav__link-icon flaticon-lock"></i>
                                                                         <span class="m-nav__link-text">Change Password</span>
                                                                     </a>
                                                                 </li>

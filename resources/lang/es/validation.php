@@ -130,6 +130,9 @@ return [
         'email'    => [
             'unique' => 'El :attribute ya ha sido registrado.',
         ],
+        'current_password' => [
+            'password_check' => 'La contraseña es incorrecta',
+        ],
     ],
 
     /*

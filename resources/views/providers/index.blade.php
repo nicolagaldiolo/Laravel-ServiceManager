@@ -19,7 +19,6 @@
                     <tr>
                         <th>Name</th>
                         <th>Label</th>
-                        <th>Website</th>
                         <th>Actions</th>
                     </tr>
                     </thead>
@@ -43,28 +42,33 @@
                 columns: [
                     { data: "name" },
                     { data: "label" },
-                    { data: "website" },
                     { data: "actions", name: 'action', orderable: false, searchable: false}
-                    //{ data: "updated_at" },
-                    //{ data: "deleted_at" },
-
                 ],
                 columnDefs: [
+                    {
+                        targets: [0],
+                        render: function(data, type, full, meta){
+                            var image = (full.screenshoot !== null) ? '<img src="' + full.screenshoot + '">' : '';
+                            var html = '<div class="m-card-user m-card-user--sm">' +
+                                    '  <div class="m-card-user__pic">' +
+                                    '    <div class="m-card-user__no-photo">' + image + '</div>' +
+                                    '  </div>'+
+                                    '  <div class="m-card-user__details">'+
+                                    '    <span class="m-card-user__name">' + data + '</span>'+
+                                    '    <a target="_blank" href="' + full.website + '" class="m-card-user__email m-link">' + full.website + '</a>'+
+                                    '  </div>'+
+                                    '</div>';
+                            return html;
+                        }
+                    },
                     {
                         targets: [1],
                         //title: 'url222',
                         render: function(data, type, full, meta) {
                             var color = (typeof data !== 'undefined') ? 'style="background:' + data + '"' : '';
-                            return '<span class="m-badge m-badge--wide" ' + color + '>' + data + '</span>';
+                            return '<span class="m-badge m-badge--wide m-badge--brand" ' + color + '>' + data + '</span>';
                         },
-                    },
-                    {
-                        targets: [2],
-                        render: function(data, type, full, meta) {
-                            if(full.screenshoot == null) return data;
-                            return '<img width="100" src="' + full.screenshoot + '"/>' + data;
-                        },
-                    },
+                    }
                 ]
             });
 

@@ -33,7 +33,6 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
 
-        /*
         $schedule->call(function () {
 
             // Incremento la data di un anno dei servizi pagati
@@ -46,17 +45,14 @@ class Kernel extends ConsoleKernel
             Domain::expiring()->update(['payed' => 0]);
 
         })->everyMinute();
-        */
 
 
-        /*$schedule->call(function(){
-            Domains::get()->each(function($item){
+        $schedule->call(function(){
+            Domain::get()->each(function($item){
                 event(new CheckServiceStatus($item));
             });
         })->everyTenMinutes();
-        */
 
-        /*
         $schedule->call(function(){
             Domain::get()->each(function($item){
                 event(new GenerateScreen($item));
@@ -67,12 +63,10 @@ class Kernel extends ConsoleKernel
             });
 
         })->everyThirtyMinutes();
-        */
 
-
-        //$schedule->call(function(){
-        //    event(new ToPayDomainsAlert());
-        //})->everyMinute();
+        $schedule->call(function(){
+            event(new ToPayDomainsAlert());
+        })->everyTenMinutes();
 
     }
 

@@ -6,7 +6,7 @@
                 <li class="m-nav__item m-nav__item--home">
                     <a href="{{route('dashboard')}}" class="m-nav__link m-nav__link--icon">
                         <i class="m-nav__link-icon la la-home"></i>
-                        <span class="m-nav__link-text" style="padding-left: 10px;">Torna alla dashboard</span>
+                        <span class="m-nav__link-text m--padding-left-10">{{__('messages.back_to_dashboard')}}</span>
                     </a>
                 </li>
             </ul>

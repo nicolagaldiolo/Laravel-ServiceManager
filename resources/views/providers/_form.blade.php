@@ -4,7 +4,7 @@
             <label class="">Name *</label>
 
                 <div class="m-input-icon m-input-icon--left">
-                    <input type="text" class="form-control m-input required" name="name" placeholder="Enter the provider name" value="{{old('name', $provider->name)}}">
+                    <input type="text" class="form-control m-input required" name="name" value="{{old('name', $provider->name)}}">
                     <span class="m-input-icon__icon m-input-icon__icon--left">
                                                         <span>
                                                             <i class="la la-tag"></i>
@@ -31,7 +31,7 @@
             <label class="">Website *</label>
 
                 <div class="m-input-icon m-input-icon--left">
-                    <input type="text" class="form-control m-input required" name="website" placeholder="Enter the provider URL" value="{{old('website', $provider->website)}}">
+                    <input type="text" class="form-control m-input required" name="website" value="{{old('website', $provider->website)}}">
                     <span class="m-input-icon__icon m-input-icon__icon--left">
                                                         <span>
                                                             <i class="la la-globe"></i>
@@ -56,7 +56,7 @@
             <label class="">Label *</label>
 
                 <div class="m-input-icon m-input-icon--left">
-                    <input id="mycp" type="text" class="form-control m-input required" name="label" placeholder="#3d557b" value="{{old('label', $provider->label)}}">
+                    <input type="text" class="form-control m-input required cp_colorpicker" name="label" value="{{old('label', $provider->label)}}" />
                     <span class="m-input-icon__icon m-input-icon__icon--left">
                                                         <span>
                                                             <i class="la la-tint"></i>

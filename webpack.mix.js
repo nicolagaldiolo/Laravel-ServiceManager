@@ -23,6 +23,7 @@ mix.scripts(
         'resources/assets/metronic/vendors/custom/fullcalendar/fullcalendar.bundle.js',
         'resources/assets/metronic/vendors/custom/datatables/datatables.bundle.js',
         'resources/assets/metronic/demo/default/custom/components/base/toastr.js',
+        'node_modules/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.js',
         'resources/assets/js/app.js',
     ], 'public/js/app.js')
     .sass('resources/assets/sass/app.scss', 'public/css');
