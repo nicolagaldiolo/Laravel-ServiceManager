@@ -562,8 +562,8 @@
 
                         var domainsData = [];
                         @foreach($dashboard->domainsByMounth as $domain)
-                        domainsData.push({{$domain}})
-                                @endforeach
+                            domainsData.push({{$domain}})
+                        @endforeach
 
                         var config = {
                                 type: 'line',

@@ -1,4 +1,3 @@
-<!-- BEGIN: Subheader -->
 <div class="m-subheader ">
     <div class="d-flex align-items-center">
         <div class="mr-auto">
@@ -14,4 +13,3 @@
         </div>
     </div>
 </div>
-<!-- END: Subheader -->

@@ -23,6 +23,7 @@ class DomainRequest extends FormRequest
      */
     public function rules()
     {
+        //dd($this);
 
         if ($this->method() == 'PATCH') {
             $domain = $this->route('domain');
@@ -37,8 +38,8 @@ class DomainRequest extends FormRequest
 
         return [
             'url'       => $url_rule, // mi permette di ignorare i cambiamenti se l'url che stiamo passando appartiene al record corrent, se è cambiato allora scatta il controllo di validazione
-            'domain_id'     => 'sometimes|exists:providers,id',
-            'hosting_id'    => 'sometimes|exists:providers,id',
+            'domain_id'     => 'sometimes|nullable|exists:providers,id',
+            'hosting_id'    => 'sometimes|nullable|exists:providers,id',
             'customer_id'   => 'required|exists:customers,id',
             'deadline'      => $deadline,
             'amount'        => 'sometimes|regex:/[0-9]+[.,]?[0-9]*/|max:8',

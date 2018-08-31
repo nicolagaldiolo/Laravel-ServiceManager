@@ -9,7 +9,7 @@
                 <div class="m-grid__item m-grid__item--fluid	m-login__wrapper">
                     <div class="m-login__container">
                         <div class="m-login__logo">
-                            <img src="{{ asset('theme_assets/app/media/img/logos/logo-2.png')}}">
+                            <img src="{{ asset('images/logo/logo_large.png')}}">
                         </div>
 
                         <!-- begin:: Page -->

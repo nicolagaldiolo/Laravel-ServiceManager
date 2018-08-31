@@ -19,7 +19,7 @@
                             <div class="m-stack m-stack--ver m-stack--general">
                                 <div class="m-stack__item m-stack__item--middle m-brand__logo">
                                     <a href="{{ url('/') }}" class="m-brand__logo-wrapper">
-                                        <img alt="{{ config('app.name') }}" src="{{ asset('theme_assets/app/media/img/logos/logo_default_dark.png')}}">
+                                        <img alt="{{ config('app.name') }}" src="{{ asset('images/logo/logo_default_dark.png')}}">
                                     </a>
                                 </div>
                                 <div class="m-stack__item m-stack__item--middle m-brand__tools">
@@ -110,14 +110,14 @@
                                                     <span class="m-nav__link-badge m-badge m-badge--dot m-badge--dot-small m-badge--danger"></span>
                                                 @endif
                                                 <span class="m-nav__link-icon">
-                                                                <i class="flaticon-music-2"></i>
+                                                                <i class="flaticon-alarm"></i>
                                                             </span>
                                             </a>
                                             <div class="m-dropdown__wrapper">
                                                 <span class="m-dropdown__arrow m-dropdown__arrow--center"></span>
                                                 <div class="m-dropdown__inner">
                                                     <div class="m-dropdown__header m--align-center"
-                                                         style="background: url({{ asset('theme_assets/app/media/img/misc/notification_bg.jpg')}}); background-size: cover;">
+                                                         style="background: url({{ asset('images/misc/notification_bg.jpg')}}); background-size: cover;">
                                                         <span class="m-dropdown__header-title">Servizi da incassare</span>
                                                         <span class="m-dropdown__header-subtitle">In attesa di pagamento</span>
                                                     </div>
@@ -156,17 +156,16 @@
                                         <li class="m-nav__item m-topbar__languages m-dropdown m-dropdown--small m-dropdown--arrow m-dropdown--align-right m-dropdown--mobile-full-width"
                                             m-dropdown-toggle="click" aria-expanded="true">
                                             <a href="#" class="m-nav__link m-dropdown__toggle">
-                <span class="m-nav__link-text">
-                    <img class="m-topbar__language-selected-img"
-                         src="{{ asset('theme_assets/app/media/img/flags') .  "/" . App::getLocale() . ".svg" }}">
-                </span>
+                                                <span class="m-nav__link-text">
+                                                    <img class="m-topbar__language-selected-img" src="{{ asset('images/flags') .  "/" . App::getLocale() . ".svg" }}">
+                                                </span>
                                             </a>
                                             <div class="m-dropdown__wrapper" style="z-index: 101;">
                                                 <span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"
                                                       style="left: auto; right: 5px;"></span>
                                                 <div class="m-dropdown__inner">
                                                     <div class="m-dropdown__header m--align-center"
-                                                         style="background: url('theme_assets/app/media/img/misc/flagsquick_actions_bg.jpg'); background-size: cover;">
+                                                         style="background: url('images/misc/flagsquick_actions_bg.jpg'); background-size: cover;">
                                                         <span class="m-dropdown__header-subtitle">{{ __('messages.selectLang') }}</span>
                                                     </div>
                                                     <div class="m-dropdown__body">
@@ -180,7 +179,7 @@
                                                                            href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
                                                                             <span class="m-nav__link-icon"><img
                                                                                         class="m-topbar__language-img"
-                                                                                        src="{{ asset('theme_assets/app/media/img/flags') .  "/" . $localeCode . ".svg" }}"></span>
+                                                                                        src="{{ asset('images/flags') .  "/" . $localeCode . ".svg" }}"></span>
                                                                             <span class="m-nav__link-title m-topbar__language-text m-nav__link-text">{{ $properties['native'] }}</span>
                                                                         </a>
                                                                     </li>
@@ -207,7 +206,7 @@
                                                         class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
                                                 <div class="m-dropdown__inner">
                                                     <div class="m-dropdown__header m--align-center"
-                                                         style="background: url({{ asset('theme_assets/app/media/img/misc/user_profile_bg.jpg')}}); background-size: cover;">
+                                                         style="background: url({{ asset('images/misc/user_profile_bg.jpg')}}); background-size: cover;">
                                                         <div class="m-card-user m-card-user--skin-dark">
                                                             <div class="m-card-user__pic">
                                                                 <img src="{{Auth::user()->avatar}}"

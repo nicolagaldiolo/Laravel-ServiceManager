@@ -31,8 +31,6 @@ class AppServiceProvider extends ServiceProvider
                 ->with('domainsToPayCount', $domainsToPayCount);
         });
 
-        Blade::component('components.feedback', 'feedback');
-
     }
 
     /**

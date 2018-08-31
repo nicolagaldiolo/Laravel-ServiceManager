@@ -27,9 +27,9 @@
             <label class="">Customer *</label>
 
             <select class="form-control m-select2 m_select2_4" name="customer_id">
+                <option value="">Please choose a customer</option>
                 @foreach($customers as $customer)
-                    <option value="{{$customer->id}}"
-                            @if($customer->id == old('customer_id', $domain->customer_id)) selected @endif>{{$customer->name}}</option>
+                    <option value="{{$customer->id}}" @if($customer->id == old('customer_id', $domain->customer_id)) selected @endif>{{$customer->name}}</option>
                 @endforeach
             </select>
             <span class="m-form__help">Please select a customer.</span>
@@ -48,6 +48,7 @@
             <label class="">Domain</label>
 
             <select class="form-control m-select2 m_select2_4" name="domain_id">
+                <option value="">Please choose a provider</option>
                 @foreach($providers as $provider)
                     <option value="{{$provider->id}}"
                             @if($provider->id == old('domain_id', $domain->domain_id)) selected @endif>{{$provider->name}}</option>
@@ -68,6 +69,7 @@
             <label class="">Hosting</label>
 
             <select class="form-control m-select2 m_select2_4" name="hosting_id">
+                <option value="">Please choose a provider</option>
                 @foreach($providers as $provider)
                     <option value="{{$provider->id}}"
                             @if($provider->id == old('hosting_id', $domain->hosting_id)) selected @endif>{{$provider->name}}</option>
