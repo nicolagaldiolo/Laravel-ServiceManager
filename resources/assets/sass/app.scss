@@ -1,5 +1,9 @@
 //@import "~bootstrap-colorpicker/src/sass/colorpicker.scss";
 
+@import "../metronic/vendors/base/vendors.bundle.css";
+@import "../metronic/demo/default/base/style.bundle.css";
+@import "../metronic/vendors/custom/fullcalendar/fullcalendar.bundle.css";
+@import "../metronic/vendors/custom/datatables/datatables.bundle.css";
 
 .invalid-feedback{
     display: block;

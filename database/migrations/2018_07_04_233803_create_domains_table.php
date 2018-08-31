@@ -18,8 +18,8 @@ class CreateDomainsTable extends Migration
             $table->string('url')->unique();
             $table->unsignedInteger('customer_id')->index();
             $table->string('screenshoot')->nullable();
-            $table->unsignedInteger('domain_id')->index();
-            $table->unsignedInteger('hosting_id')->index();
+            $table->unsignedInteger('domain_id')->nullable()->index();
+            $table->unsignedInteger('hosting_id')->nullable()->index();
             $table->date('deadline');
             $table->decimal('amount', 10, 2);
             $table->boolean('payed')->default(1);
@@ -31,8 +31,8 @@ class CreateDomainsTable extends Migration
             //foreignkey
             $table->foreign('user_id')->on('users')->references('id')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('customer_id')->on('customers')->references('id')->onDelete('cascade')->onUpdate('cascade');
-            //$table->foreign('domain_id')->on('providers')->references('id')->onDelete('cascade')->onUpdate('cascade');
-            //$table->foreign('hosting_id')->on('providers')->references('id')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('domain_id')->on('providers')->references('id')->onDelete('set null')->onUpdate('set null');
+            $table->foreign('hosting_id')->on('providers')->references('id')->onDelete('set null')->onUpdate('set null');
         });
     }
 
