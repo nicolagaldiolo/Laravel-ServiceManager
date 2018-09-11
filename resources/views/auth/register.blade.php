@@ -48,15 +48,6 @@
                 <input class="form-control m-input password password_confirm m-login__form-input--last" type="password" placeholder="{{ __('Confirm Password') }}" name="password_confirmation">
             </div>
 
-            <div class="row form-group m-form__group m-login__form-sub">
-                <div class="col m--align-left">
-                    <label class="m-checkbox m-checkbox--focus">
-                        <input type="checkbox" name="agree">I Agree the <a href="#" class="m-link m-link--focus">terms and conditions</a>.
-                        <span></span>
-                    </label>
-                    <span class="m-form__help"></span>
-                </div>
-            </div>
             <div class="m-login__form-action">
                 <button id="m_login_signup_submit" class="btn btn-focus m-btn m-btn--pill m-btn--custom m-login__btn">{{ __('Register') }}</button>&nbsp;&nbsp;
             </div>

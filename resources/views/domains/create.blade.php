@@ -3,7 +3,7 @@
 @section('content')
 
     @component('components.title')
-        Domains
+        {{__('messages.domains')}}
     @endcomponent
 
     <!-- END: Subheader -->
@@ -18,7 +18,7 @@
                             <i class="flaticon-plus"></i>
                         </span>
                         <h3 class="m-portlet__head-text">
-                            New domain
+                            {{__('messages.new_domain')}}
                         </h3>
                     </div>
                 </div>
@@ -29,10 +29,8 @@
                 @csrf
                 @include('domains._form', ['deadline' => true])
             </form>
-
             <!--end::Form-->
         </div>
-
         <!--end::Portlet-->
 
     </div>

@@ -1,8 +1,8 @@
 <!-- END: Subheader -->
 <div class="m-content">
     <div class="m-portlet m-portlet--mobile">
-        @component('components.tableHeader', ['icon' => 'flaticon-layers', 'button' => 'Nuovo dominio', 'url' => $dataTableNewUrl])
-            Tutti i domini
+        @component('components.tableHeader', ['icon' => 'flaticon-layers', 'button' => __('messages.new_domain'), 'url' => $dataTableNewUrl])
+            {{__('messages.all_domains')}}
         @endcomponent
         <div class="m-portlet__body">
 
@@ -10,14 +10,14 @@
             <table class="table table-striped- table-bordered table-hover table-checkable" id="m_table_1">
                 <thead>
                 <tr>
-                    <th>Url</th>
-                    <th>Domain</th>
-                    <th>Hosting</th>
-                    <th>Deadline</th>
-                    <th>Amount</th>
-                    <th>Note</th>
-                    <th>Payed</th>
-                    <th>Actions</th>
+                    <th>{{__('messages.url')}}</th>
+                    <th>{{__('messages.domain')}}th>
+                    <th>{{__('messages.hosting')}}</th>
+                    <th>{{__('messages.deadline')}}</th>
+                    <th>{{__('messages.amount')}}</th>
+                    <th>{{__('messages.note')}}</th>
+                    <th>{{__('messages.payed')}}</th>
+                    <th>{{__('messages.actions')}}</th>
                 </tr>
                 </thead>
             </table>
@@ -56,10 +56,10 @@
                             var label,status;
                             if(full.status == 1){
                                 label = "success";
-                                status = "Online";
+                                status = "{{__('messages.online')}}";
                             }else{
                                 label = "danger";
-                                status = "Offline";
+                                status = "{{__('messages.offline')}}";
                             }
 
                             var html = '<div class="m-card-user m-card-user--sm">' +
@@ -92,10 +92,10 @@
                             var label,status;
                             if(data == 1){
                                 label = "primary";
-                                status = "Payed";
+                                status = "{{__('messages.payed')}}";
                             }else{
                                 label = "danger";
-                                status = "Not Payed";
+                                status = "{{__('messages.not_payed')}}";
                             }
                             return '<span class="m-badge  m-badge--' + label + ' m-badge--wide">' + status + '</span>';
                         },
@@ -110,11 +110,11 @@
                 var _self = this;
 
                 swal({
-                    title: 'Are you sure?',
-                    text: "You won't be able to revert this!",
+                    title: '{{__('messages.are_sure')}}',
+                    text: "{{__('messages.are_sure_desc')}}",
                     type: 'warning',
                     showCancelButton: true,
-                    confirmButtonText: 'Yes, delete it!'
+                    confirmButtonText: '{{__('messages.confirm_delete')}}'
                 }).then(function(result) {
 
                     if (result.value) {
@@ -127,11 +127,11 @@
                             },
                             success: function (data) {
                                 //console.log(data);
-                                swal('Deleted!', 'The record has been deleted.', 'success')
+                                swal('{{__('messages.deleted_title')}}', '{{__('messages.deleted_desc')}}', 'success')
                                 dataTable.ajax.reload();
                             },
                             error: function (xhr, status, error) {
-                                swal('Error!', 'There was a problem.', 'error')
+                                swal('{{__('messages.error_title')}}', '{{__('messages.error_desc')}}', 'error')
                             },
 
                         })
@@ -146,11 +146,11 @@
                 var _self = this;
 
                 swal({
-                    title: 'Are you sure?',
-                    text: "Do you want to proceed?",
+                    title: '{{__('messages.are_sure')}}',
+                    text: "{{__('messages.are_sure_desc')}}",
                     type: 'warning',
                     showCancelButton: true,
-                    confirmButtonText: 'Yes, of course!'
+                    confirmButtonText: '{{__('messages.yes_procede')}}'
                 }).then(function(result) {
 
                     if (result.value) {
@@ -164,11 +164,11 @@
                             },
                             success: function (data) {
                                 //console.log(data);
-                                swal('Great!', 'Operation performed successfully.', 'success')
+                                swal('{{__('messages.confirm_title')}}', '{{__('messages.confirm_desc')}}', 'success')
                                 dataTable.ajax.reload();
                             },
                             error: function (xhr, status, error) {
-                                swal('Error!', 'There was a problem.', 'error')
+                                swal('{{__('messages.error_title')}}', '{{__('messages.error_desc')}}', 'error')
                             },
 
                         })

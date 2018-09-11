@@ -18,7 +18,7 @@
 
                         <div class="m-login__account">
                                     <span class="m-login__account-msg">
-                                        Don't have an account yet ?
+                                        {{__('messages.not_account')}}
                                     </span>&nbsp;&nbsp;
                             <a href="{{ route('register') }}" id="m_login_signup" class="m-link m-link--light m-login__account-link">{{ __('Register') }}</a>
                         </div>

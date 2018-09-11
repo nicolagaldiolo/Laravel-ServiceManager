@@ -2,7 +2,7 @@
 
 @section('content')
     @component('components.title')
-        Users
+        {{__('messages.users')}}
     @endcomponent
 
     <!-- END: Subheader -->
@@ -19,7 +19,7 @@
 													<i class="flaticon-profile-1"></i>
 												</span>
                                 <h3 class="m-portlet__head-text">
-                                    Change avatar
+                                    {{__('messages.change_avatar')}}
                                 </h3>
                             </div>
                         </div>
@@ -32,8 +32,8 @@
                                     @method('PATCH')
                                     <input type="hidden" name="custom_avatar" value="1">
                                     <div class="m-dropzone__msg dz-message needsclick">
-                                        <h3 class="m-dropzone__msg-title">Drop files here or click to upload.</h3>
-                                        <span class="m-dropzone__msg-desc">Only image are allowed for upload</span>
+                                        <h3 class="m-dropzone__msg-title">{{__('messages.drop_zone_avatar')}}</h3>
+                                        <span class="m-dropzone__msg-desc">{{__('messages.drop_zone_avatar_desc')}}</span>
                                     </div>
                                 </form>
                             </div>
@@ -56,7 +56,7 @@
 													<i class="flaticon-edit-1"></i>
 												</span>
                                 <h3 class="m-portlet__head-text">
-                                    Edit user
+                                    {{__('messages.edit_user')}}
                                 </h3>
                             </div>
                         </div>
@@ -70,7 +70,7 @@
                         <div class="m-portlet__body">
                             <div class="m-form__section m-form__section--first">
                                 <div class="form-group m-form__group">
-                                    <label class="">Name:</label>
+                                    <label class="">{{__('messages.name')}} *</label>
                                     <div class="m-input-icon m-input-icon--left">
                                         <input type="text" name="name" class="form-control m-input required" value="{{old('name', $user->name)}}">
                                         <span class="m-input-icon__icon m-input-icon__icon--left">
@@ -79,7 +79,7 @@
                                                         </span>
                                                     </span>
                                     </div>
-                                    <span class="m-form__help">Please enter your name</span>
+                                    <span class="m-form__help">{{__('messages.enter_full_name')}}</span>
 
                                     @if ($errors->has('name'))
                                         <span class="invalid-feedback" role="alert">
@@ -92,7 +92,7 @@
 
                                 <div class="form-group m-form__group">
 
-                                    <label class="">Email: *</label>
+                                    <label class="">{{__('messages.email')}} *</label>
                                     <div class="m-input-icon m-input-icon--left">
                                         <input type="email" name="email" class="form-control m-input required email" value="{{old('email', $user->email)}}">
                                         <span class="m-input-icon__icon m-input-icon__icon--left">
@@ -101,7 +101,7 @@
                                                         </span>
                                                     </span>
                                     </div>
-                                    <span class="m-form__help">Please enter your email</span>
+                                    <span class="m-form__help">{{__('messages.enter_email')}}</span>
 
                                     @if ($errors->has('email'))
                                         <span class="invalid-feedback" role="alert">
@@ -114,7 +114,7 @@
                                 @if (Auth::user()->isAdmin())
                                     <div class="m-form__seperator m-form__seperator--dashed"></div>
                                     <div class="form-group m-form__group">
-                                        <label class="">Administrator</label>
+                                        <label class="">{{__('messages.admin')}}</label>
                                         <div>
 
                                             <span class="m-switch m-switch--lg m-switch--icon m-switch--success">
@@ -126,7 +126,7 @@
                                             </span>
                                         </div>
 
-                                        <span class="m-form__help">Please set if this user is administrator.</span>
+                                        <span class="m-form__help">{{__('messages.set_admin')}}</span>
 
                                         @if ($errors->has('role'))
                                             <span class="invalid-feedback" role="alert">
@@ -140,14 +140,14 @@
                         </div>
                         <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
                             <div class="m-form__actions m-form__actions--solid">
-                                <button type="submit" class="btn btn-primary">Save</button>
+                                <button type="submit" class="btn btn-primary">{{__('messages.save')}}</button>
                                 <a href="
                                     @if (Auth::user()->isAdmin())
                                         {{route('users.index')}}
                                     @else
                                         {{route('dashboard')}}
                                     @endif
-                                        " class="btn btn-secondary">Cancel</a>
+                                        " class="btn btn-secondary">{{__('messages.cancel')}}</a>
                             </div>
                         </div>
                     </form>
@@ -165,11 +165,11 @@
                             <i class="la la-warning"></i>
                         </div>
                         <div class="m-alert__text">
-                            <strong>Delete account</strong><br>
-                            This will permanently delete all data.
+                            <strong>{{__('messages.delete_account')}}</strong><br>
+                            {{__('messages.delete_account_desc')}}
                         </div>
                         <div class="m-alert__actions" style="">
-                            <button type="submit" class="btn btn-danger btn-md m-btn m-btn--pill m-btn--wide">Delete account</button>
+                            <button type="submit" class="btn btn-danger btn-md m-btn m-btn--pill m-btn--wide">{{__('messages.delete_account')}}</button>
                         </div>
                     </div>
                 </form>
@@ -189,11 +189,11 @@
             var _self = this;
 
             swal({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
+                title: '{{__('messages.are_sure')}}',
+                text: "{{__('messages.are_sure_desc')}}",
                 type: 'warning',
                 showCancelButton: true,
-                confirmButtonText: 'Yes, delete it!'
+                confirmButtonText: '{{__('messages.confirm_delete')}}'
             }).then(function(result) {
                 if (result.value) _self.submit();
             });

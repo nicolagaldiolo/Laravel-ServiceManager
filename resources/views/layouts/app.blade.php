@@ -5,7 +5,6 @@
 
     <!-- begin::Body -->
     <body class="m-page--fluid m--skin- m-content--skin-light2 m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--fixed m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default">
-
         <!-- begin:: Page -->
         <div class="m-grid m-grid--hor m-grid--root m-page">
 
@@ -73,25 +72,25 @@
                                     <li class="m-menu__item m-menu__item--rel">
                                         <a href="{{route('customers.create')}}" class="m-menu__link">
                                             <i class="m-menu__link-icon flaticon-user-add"></i>
-                                            <span class="m-menu__link-text">Customer</span>
+                                            <span class="m-menu__link-text">{{__('messages.customer')}}</span>
                                         </a>
                                     </li>
                                     <li class="m-menu__item m-menu__item--rel">
                                         <a href="{{route('domains.create')}}" class="m-menu__link">
                                             <i class="m-menu__link-icon flaticon-add"></i>
-                                            <span class="m-menu__link-text">Domain</span>
+                                            <span class="m-menu__link-text">{{__('messages.domain')}}</span>
                                         </a>
                                     </li>
                                     <li class="m-menu__item m-menu__item--rel">
                                         <a href="{{route('providers.create')}}" class="m-menu__link">
                                             <i class="m-menu__link-icon flaticon-app"></i>
-                                            <span class="m-menu__link-text">Provider</span>
+                                            <span class="m-menu__link-text">{{__('messages.provider')}}</span>
                                         </a>
                                     </li>
                                     <li class="m-menu__item m-menu__item--rel">
                                         <a href="{{route('users.create')}}" class="m-menu__link">
                                             <i class="m-menu__link-icon flaticon-user"></i>
-                                            <span class="m-menu__link-text">User</span>
+                                            <span class="m-menu__link-text">{{__('messages.user')}}</span>
                                         </a>
                                     </li>
                                 </ul>
@@ -118,8 +117,8 @@
                                                 <div class="m-dropdown__inner">
                                                     <div class="m-dropdown__header m--align-center"
                                                          style="background: url({{ asset('images/misc/notification_bg.jpg')}}); background-size: cover;">
-                                                        <span class="m-dropdown__header-title">Servizi da incassare</span>
-                                                        <span class="m-dropdown__header-subtitle">In attesa di pagamento</span>
+                                                        <span class="m-dropdown__header-title">{{__('messages.to_cash_in')}}</span>
+                                                        <span class="m-dropdown__header-subtitle">{{__('messages.pending_payment')}}</span>
                                                     </div>
                                                     <div class="m-dropdown__body">
                                                         <div class="m-dropdown__content">
@@ -127,8 +126,7 @@
 
                                                             @if($domainsToPay->isEmpty())
                                                                 <div class="alert alert-brand" role="alert">
-                                                                    <strong>Fantastico!</strong> Non ci sono altri servizi da
-                                                                    gestire
+                                                                    <strong>{{__('messages.fantastic')}}</strong> {{__('messages.no_other_domains')}}
                                                                 </div>
                                                             @else
 
@@ -192,6 +190,7 @@
                                             </div>
                                         </li>
 
+
                                         <li class="m-nav__item m-topbar__user-profile m-topbar__user-profile--img  m-dropdown m-dropdown--medium m-dropdown--arrow m-dropdown--header-bg-fill m-dropdown--align-right m-dropdown--mobile-full-width m-dropdown--skin-light"
                                             m-dropdown-toggle="click">
                                             <a href="#" class="m-nav__link m-dropdown__toggle">
@@ -199,7 +198,7 @@
                                                             <img src="{{Auth::user()->avatar}}"
                                                                  class="m--img-rounded m--marginless" alt=""/>
                                                         </span>
-                                                <span class="m-topbar__username m--hide">Nick</span>
+                                                <span class="m-topbar__username m--hide">{{Auth::user()->name}}</span>
                                             </a>
                                             <div class="m-dropdown__wrapper">
                                                 <span
@@ -223,16 +222,13 @@
                                                     <div class="m-dropdown__body">
                                                         <div class="m-dropdown__content">
                                                             <ul class="m-nav m-nav--skin-light">
-                                                                <li class="m-nav__section m--hide">
-                                                                    <span class="m-nav__section-text">Section</span>
-                                                                </li>
                                                                 <li class="m-nav__item">
                                                                     <a href="{{route('users.edit', Auth::user())}}"
                                                                        class="m-nav__link">
                                                                         <i class="m-nav__link-icon flaticon-profile"></i>
                                                                         <span class="m-nav__link-title">
                                                                                     <span class="m-nav__link-wrap">
-                                                                                        <span class="m-nav__link-text">Edit profile</span>
+                                                                                        <span class="m-nav__link-text">{{__('messages.edit_profile')}}</span>
                                                                                     </span>
                                                                                 </span>
                                                                     </a>
@@ -242,7 +238,7 @@
                                                                     <a href="{{route('change.password', Auth::user())}}"
                                                                        class="m-nav__link">
                                                                         <i class="m-nav__link-icon flaticon-lock"></i>
-                                                                        <span class="m-nav__link-text">Change Password</span>
+                                                                        <span class="m-nav__link-text">{{__('messages.change_password')}}</span>
                                                                     </a>
                                                                 </li>
 
@@ -253,13 +249,13 @@
                                                                 <li class="m-nav__item">
                                                                     <a target="_blank" href="https://github.com/nicolagaldiolo/Laravel-HostingManager/issues" class="m-nav__link">
                                                                         <i class="m-nav__link-icon flaticon-info"></i>
-                                                                        <span class="m-nav__link-text">Issues reports</span>
+                                                                        <span class="m-nav__link-text">{{__('messages.issues_reports')}}</span>
                                                                     </a>
                                                                 </li>
                                                                 <li class="m-nav__item">
                                                                     <a href="mailto:galdiolo.nicola@gmail.com" class="m-nav__link">
                                                                         <i class="m-nav__link-icon flaticon-lifebuoy"></i>
-                                                                        <span class="m-nav__link-text">Support</span>
+                                                                        <span class="m-nav__link-text">{{__('messages.support')}}</span>
                                                                     </a>
                                                                 </li>
 
@@ -314,19 +310,19 @@
                     <div class="m-stack m-stack--flex-tablet-and-mobile m-stack--ver m-stack--desktop">
                         <div class="m-stack__item m-stack__item--left m-stack__item--middle m-stack__item--last">
                                         <span class="m-footer__copyright">
-                                            {{\Carbon\Carbon::now()::now()->year}} &copy; {{ config('app.name') }} is licensed under the MIT License by <a class="m-link" target="_blank" href="https://github.com/nicolagaldiolo">Nicola Galdiolo</a>
+                                            {{\Carbon\Carbon::now()::now()->year}} &copy; {{ config('app.name') }} {{__('messages.copy')}} <a class="m-link" target="_blank" href="https://github.com/nicolagaldiolo">Nicola Galdiolo</a>
                                         </span>
                         </div>
                         <div class="m-stack__item m-stack__item--right m-stack__item--middle m-stack__item--first">
                             <ul class="m-footer__nav m-nav m-nav--inline m--pull-right">
                                 <li class="m-nav__item">
                                     <a target="_blank" href="https://github.com/nicolagaldiolo/Laravel-HostingManager/issues" class="m-nav__link">
-                                        <span class="m-nav__link-text">Issues reports</span>
+                                        <span class="m-nav__link-text">{{__('messages.issues_reports')}}</span>
                                     </a>
                                 </li>
                                 <li class="m-nav__item">
                                     <a href="mailto:galdiolo.nicola@gmail.com" class="m-nav__link">
-                                        <span class="m-nav__link-text">Support</span>
+                                        <span class="m-nav__link-text">{{__('messages.support')}}</span>
                                     </a>
                                 </li>
                                 <li class="m-nav__item m-nav__item">
