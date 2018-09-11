@@ -3,7 +3,7 @@
 @section('content')
 
     @component('components.title')
-        Providers
+        {{__('messages.providers')}}
     @endcomponent
 
     <!-- END: Subheader -->
@@ -18,7 +18,7 @@
                             <i class="flaticon-plus"></i>
                         </span>
                         <h3 class="m-portlet__head-text">
-                            New provider
+                            {{__('messages.new_provider')}}
                         </h3>
                     </div>
                 </div>

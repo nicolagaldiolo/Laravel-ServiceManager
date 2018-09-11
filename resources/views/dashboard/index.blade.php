@@ -566,9 +566,22 @@
                         var config = {
                                 type: 'line',
                                 data: {
-                                    labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+                                    labels: [
+                                        "{{__('messages.january')}}",
+                                        "{{__('messages.february')}}",
+                                        "{{__('messages.march')}}",
+                                        "{{__('messages.april')}}",
+                                        "{{__('messages.may')}}",
+                                        "{{__('messages.june')}}",
+                                        "{{__('messages.july')}}",
+                                        "{{__('messages.august')}}",
+                                        "{{__('messages.september')}}",
+                                        "{{__('messages.october')}}",
+                                        "{{__('messages.november')}}",
+                                        "{{__('messages.december')}}"
+                                    ],
                                     datasets: [{
-                                        label: "Totale Incasso",
+                                        label: "{{__('messages.total_earning')}}",
                                         backgroundColor: gradient, // Put the gradient here as a fill color
                                         borderColor: '#0dc8de',
 

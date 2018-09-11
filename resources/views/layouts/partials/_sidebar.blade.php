@@ -13,7 +13,7 @@
                     <i class="m-menu__link-icon flaticon-line-graph"></i>
                     <span class="m-menu__link-title">
                                         <span class="m-menu__link-wrap">
-                                            <span class="m-menu__link-text">Dashboard</span>
+                                            <span class="m-menu__link-text">{{__('messages.dashboard')}}</span>
                                             @if($domainsToPayCount > 0)
                                                 <span class="m-menu__link-badge">
                                                     <span class="m-badge m-badge--danger">{{$domainsToPayCount}}</span>
@@ -24,13 +24,13 @@
                 </a>
             </li>
             <li class="m-menu__section ">
-                <h4 class="m-menu__section-text">Actions</h4>
+                <h4 class="m-menu__section-text">{{__('messages.actions')}}</h4>
                 <i class="m-menu__section-icon flaticon-more-v3"></i>
             </li>
             <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
                 <a href="javascript:;" class="m-menu__link m-menu__toggle">
                     <i class="m-menu__link-icon flaticon-users"></i>
-                    <span class="m-menu__link-text">Customers</span>
+                    <span class="m-menu__link-text">{{__('messages.customers')}}</span>
                     <i class="m-menu__ver-arrow la la-angle-right"></i>
                 </a>
                 <div class="m-menu__submenu ">
@@ -38,7 +38,7 @@
                     <ul class="m-menu__subnav">
                         <li class="m-menu__item  m-menu__item--parent" aria-haspopup="true">
                                             <span class="m-menu__link">
-                                                <span class="m-menu__link-text">Customers</span>
+                                                <span class="m-menu__link-text">{{__('messages.customers')}}</span>
                                             </span>
                         </li>
                         <li class="m-menu__item " aria-haspopup="true">
@@ -46,7 +46,7 @@
                                 <i class="m-menu__link-bullet m-menu__link-bullet--dot">
                                     <span></span>
                                 </i>
-                                <span class="m-menu__link-text">All customers</span>
+                                <span class="m-menu__link-text">{{__('messages.all_customers')}}</span>
                             </a>
                         </li>
                         <li class="m-menu__item " aria-haspopup="true">
@@ -54,7 +54,7 @@
                                 <i class="m-menu__link-bullet m-menu__link-bullet--dot">
                                     <span></span>
                                 </i>
-                                <span class="m-menu__link-text">New Customer</span>
+                                <span class="m-menu__link-text">{{__('messages.new_customer')}}</span>
                             </a>
                         </li>
                     </ul>
@@ -63,7 +63,7 @@
             <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
                 <a href="javascript:;" class="m-menu__link m-menu__toggle">
                     <i class="m-menu__link-icon flaticon-layers"></i>
-                    <span class="m-menu__link-text">Domains</span>
+                    <span class="m-menu__link-text">{{__('messages.domains')}}</span>
                     <i class="m-menu__ver-arrow la la-angle-right"></i>
                 </a>
                 <div class="m-menu__submenu ">
@@ -71,7 +71,7 @@
                     <ul class="m-menu__subnav">
                         <li class="m-menu__item  m-menu__item--parent" aria-haspopup="true">
                                             <span class="m-menu__link">
-                                                <span class="m-menu__link-text">Domains</span>
+                                                <span class="m-menu__link-text">{{__('messages.domains')}}</span>
                                             </span>
                         </li>
                         <li class="m-menu__item " aria-haspopup="true">
@@ -79,7 +79,7 @@
                                 <i class="m-menu__link-bullet m-menu__link-bullet--dot">
                                     <span></span>
                                 </i>
-                                <span class="m-menu__link-text">All domains</span>
+                                <span class="m-menu__link-text">{{__('messages.all_domains')}}</span>
                             </a>
                         </li>
                         <li class="m-menu__item " aria-haspopup="true">
@@ -87,7 +87,7 @@
                                 <i class="m-menu__link-bullet m-menu__link-bullet--dot">
                                     <span></span>
                                 </i>
-                                <span class="m-menu__link-text">New Domain</span>
+                                <span class="m-menu__link-text">{{__('messages.new_domain')}}</span>
                             </a>
                         </li>
                     </ul>
@@ -96,7 +96,7 @@
             <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
                 <a href="javascript:;" class="m-menu__link m-menu__toggle">
                     <i class="m-menu__link-icon flaticon-interface-7"></i>
-                    <span class="m-menu__link-text">Providers</span>
+                    <span class="m-menu__link-text">{{__('messages.providers')}}</span>
                     <i class="m-menu__ver-arrow la la-angle-right"></i>
                 </a>
                 <div class="m-menu__submenu ">
@@ -107,7 +107,7 @@
                                 <i class="m-menu__link-bullet m-menu__link-bullet--dot">
                                     <span></span>
                                 </i>
-                                <span class="m-menu__link-text">All providers</span>
+                                <span class="m-menu__link-text">{{__('messages.all_providers')}}</span>
                             </a>
                         </li>
                         <li class="m-menu__item " aria-haspopup="true">
@@ -115,7 +115,7 @@
                                 <i class="m-menu__link-bullet m-menu__link-bullet--dot">
                                     <span></span>
                                 </i>
-                                <span class="m-menu__link-text">New Service</span>
+                                <span class="m-menu__link-text">{{__('messages.new_provider')}}</span>
                             </a>
                         </li>
                     </ul>
@@ -125,7 +125,7 @@
                 <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
                     <a href="javascript:;" class="m-menu__link m-menu__toggle">
                         <i class="m-menu__link-icon flaticon-profile"></i>
-                        <span class="m-menu__link-text">Users</span>
+                        <span class="m-menu__link-text">{{__('messages.users')}}</span>
                         <i class="m-menu__ver-arrow la la-angle-right"></i>
                     </a>
                     <div class="m-menu__submenu ">
@@ -133,7 +133,7 @@
                         <ul class="m-menu__subnav">
                             <li class="m-menu__item  m-menu__item--parent" aria-haspopup="true">
                                             <span class="m-menu__link">
-                                                <span class="m-menu__link-text">Users</span>
+                                                <span class="m-menu__link-text">{{__('messages.users')}}</span>
                                             </span>
                             </li>
                             <li class="m-menu__item " aria-haspopup="true">
@@ -141,15 +141,15 @@
                                     <i class="m-menu__link-bullet m-menu__link-bullet--dot">
                                         <span></span>
                                     </i>
-                                    <span class="m-menu__link-text">All users</span>
+                                    <span class="m-menu__link-text">{{__('messages.all_users')}}</span>
                                 </a>
                             </li>
-                            <li class="m-menu__item " aria-haspopup="true">
+                            <li class="m-menu__item" aria-haspopup="true">
                                 <a href="{{route('users.create')}}" class="m-menu__link ">
                                     <i class="m-menu__link-bullet m-menu__link-bullet--dot">
                                         <span></span>
                                     </i>
-                                    <span class="m-menu__link-text">New user</span>
+                                    <span class="m-menu__link-text">{{__('messages.new_user')}}</span>
                                 </a>
                             </li>
                         </ul>

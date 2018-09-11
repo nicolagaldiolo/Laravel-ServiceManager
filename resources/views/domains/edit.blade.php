@@ -3,7 +3,7 @@
 @section('content')
 
     @component('components.title')
-        Domains
+        {{__('messages.domains')}}
     @endcomponent
 
     <!-- END: Subheader -->
@@ -20,7 +20,7 @@
                                     <i class="flaticon-browser"></i>
                                 </span>
                                 <h3 class="m-portlet__head-text">
-                                    Site screenshoot
+                                    {{__('messages.site_screenshoot')}}
                                 </h3>
                             </div>
                         </div>
@@ -54,7 +54,7 @@
 													<i class="flaticon-edit-1"></i>
 												</span>
                                 <h3 class="m-portlet__head-text">
-                                    Edit domain
+                                    {{__('messages.edit_domain')}}
                                 </h3>
                             </div>
                         </div>

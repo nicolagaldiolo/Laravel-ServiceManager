@@ -1,7 +1,7 @@
 <div class="m-portlet__body">
     <div class="m-form__section m-form__section--first">
         <div class="form-group m-form__group">
-            <label class="">Name *</label>
+            <label class="">{{__('messages.name')}} *</label>
 
                 <div class="m-input-icon m-input-icon--left">
                     <input type="text" class="form-control m-input required" name="name" value="{{old('name', $provider->name)}}">
@@ -11,7 +11,7 @@
                                                         </span>
                                                     </span>
                 </div>
-                <span class="m-form__help">Please enter the provider name.</span>
+                <span class="m-form__help">{{__('messages.provider_name')}}</span>
 
                 @if ($errors->has('name'))
                     <span class="invalid-feedback" role="alert">
@@ -28,7 +28,7 @@
 
 
         <div class="form-group m-form__group">
-            <label class="">Website *</label>
+            <label class="">{{__('messages.website')}} *</label>
 
                 <div class="m-input-icon m-input-icon--left">
                     <input type="text" class="form-control m-input required" name="website" value="{{old('website', $provider->website)}}">
@@ -38,7 +38,7 @@
                                                         </span>
                                                     </span>
                 </div>
-                <span class="m-form__help">Please enter the provider URL.</span>
+                <span class="m-form__help">{{__('messages.enter_url')}}</span>
                 @if ($errors->has('website'))
                     <span class="invalid-feedback" role="alert">
                                     <strong>{{ $errors->first('website') }}</strong>
@@ -53,7 +53,7 @@
 
 
         <div class="form-group m-form__group">
-            <label class="">Label *</label>
+            <label class="">{{__('messages.label')}} *</label>
 
                 <div class="m-input-icon m-input-icon--left">
                     <input type="text" class="form-control m-input required cp_colorpicker" name="label" value="{{old('label', $provider->label)}}" />
@@ -63,7 +63,7 @@
                                                         </span>
                                                     </span>
                 </div>
-                <span class="m-form__help">Please enter a label color.</span>
+                <span class="m-form__help">{{__('messages.enter_label')}}</span>
                 @if ($errors->has('label'))
                     <span class="invalid-feedback" role="alert">
                                     <strong>{{ $errors->first('label') }}</strong>
@@ -80,7 +80,7 @@
 
 <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
     <div class="m-form__actions m-form__actions--solid">
-        <button type="submit" class="btn btn-primary">Save</button>
-        <a href="{{route('providers.index')}}" class="btn btn-secondary">Cancel</a>
+        <button type="submit" class="btn btn-primary">{{__('messages.save')}}</button>
+        <a href="{{route('providers.index')}}" class="btn btn-secondary">{{__('messages.cancel')}}</a>
     </div>
 </div>
