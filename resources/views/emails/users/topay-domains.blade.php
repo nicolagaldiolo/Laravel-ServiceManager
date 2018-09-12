@@ -1,5 +1,5 @@
 @component('mail::message')
-# Ciao {{$user->name}}, di seguito l'elenco dei servizi in scadenza:
+# Hi {{$user->name}}, below is the list of expiring services:
 <br>
 
 @foreach($user->customers as $customer)
@@ -7,9 +7,9 @@
 ## Customer: {{$customer->name}}
 <table>
     <tr>
-        <th>Dominio</th>
-        <th>Scadenza</th>
-        <th>importo</th>
+        <th>Domain</th>
+        <th>Expiring</th>
+        <th>Amount</th>
     </tr>
     @foreach($customer->domains as $domain)
         <tr>
@@ -24,9 +24,9 @@
 @endforeach
 
 @component('mail::button', ['url' => route('domains.index')])
-Gestisci i servizi
+Manage your services
 @endcomponent
 
-Grazie,<br>
+Thanks,<br>
 {{ config('app.name') }}
 @endcomponent

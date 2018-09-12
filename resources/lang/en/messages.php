@@ -167,7 +167,7 @@ return [
     'all_users' => 'All users',
     'users_active' => '{0} No active users|[1] active user|[2,*] active users',
     'change_avatar' => 'Change avatar',
-    'drop_zone_avatar' => 'Drop files here or click to upload.',
+    'drop_zone_avatar' => 'Drop file here or click to upload.',
     'drop_zone_avatar_desc' => 'Only image are allowed for upload.',
     'avatar' => 'Avatar',
     'role' => 'Role',
