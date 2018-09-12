@@ -36,8 +36,6 @@ class UserRegisterAlert implements ShouldQueue
      */
     public function handle()
     {
-
         Mail::to($this->admin->email)->send(new UserRegisterEmail($this->admin, $this->userRegistered));
-
     }
 }

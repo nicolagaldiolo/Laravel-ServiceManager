@@ -109,14 +109,14 @@ return [
     |
     |
     */
-    'customer' => 'Customer',
-    'customers' => 'Customers',
-    'new_customer' => 'New customer',
-    'edit_customer' => 'Edit customer',
-    'all_customers' => 'All customers',
-    'customers_active' => '{0} No active customers|[1] active customer|[2,*] active customers',
-    'customer_info' => 'Customer info',
-    'customer_summary' => 'Customer summary',
+    'customer' => 'Cliente',
+    'customers' => 'Clientes',
+    'new_customer' => 'Nuevo cliente',
+    'edit_customer' => 'Editar cliente',
+    'all_customers' => 'Todos los clientes',
+    'customers_active' => '{0} Sin clientes activos|[1] cliente activo|[2,*] clientes activos',
+    'customer_info' => 'Información del cliente',
+    'customer_summary' => 'Resumen del cliente',
 
     /*
     |--------------------------------------------------------------------------
@@ -125,20 +125,20 @@ return [
     |
     |
     */
-    'domain' => 'Domain',
-    'domains' => 'Domains',
+    'domain' => 'Dominio',
+    'domains' => 'Dominios',
     'hosting' => 'Hosting',
-    'new_domain' => 'New domain',
-    'edit_domain' => 'Edit domain',
-    'all_domains' => 'All domains',
-    'domains_active' => '{0} No active domains|[1] active domain|[2,*] active domains',
-    'hostings_active' => '{0} No active hostings|[1] active hosting|[2,*] active hostings',
-    'domains_active_' => 'Active domains',
-    'domains_deadline' => 'Expiring domains',
-    'domains_status' => 'Domains status',
-    'online' => 'Online',
-    'offline' => 'Offline',
-    'site_screenshoot' => 'Site screenshoot',
+    'new_domain' => 'Nuevo dominio',
+    'edit_domain' => 'Editar dominio',
+    'all_domains' => 'Todos los dominios',
+    'domains_active' => '{0} Sin dominios activos|[1] dominio activo|[2,*] dominios activos',
+    'hostings_active' => '{0} Sin hostings activos|[1] hosting activo|[2,*] hostings activos',
+    'domains_active_' => 'Dominios activos',
+    'domains_deadline' => 'Dominios caducados',
+    'domains_status' => 'El estado de los dominios',
+    'online' => 'En línea',
+    'offline' => 'Desconectado',
+    'site_screenshoot' => 'Captura de pantalla del sitio',
     /*
     |--------------------------------------------------------------------------
     | Providers
@@ -146,12 +146,12 @@ return [
     |
     |
     */
-    'provider' => 'Provider',
-    'providers' => 'Providers',
-    'new_provider' => 'New provider',
-    'edit_provider' => 'Edit provider',
-    'all_providers' => 'All providers',
-    'providers_active' => '{0} No active providers|[1] active provider|[2,*] active providers',
+    'provider' => 'Proveedor',
+    'providers' => 'Proveedores',
+    'new_provider' => 'Nuevo proveedor',
+    'edit_provider' => 'Editar proveedor',
+    'all_providers' => 'Todos los proveedores',
+    'providers_active' => '{0} Sin proveedores activos|[1] proveedor activo|[2,*] proveedores activos',
 
     /*
     |--------------------------------------------------------------------------
@@ -160,15 +160,15 @@ return [
     |
     |
     */
-    'user' => 'User',
-    'users' => 'Users',
-    'new_user' => 'New user',
-    'edit_user' => 'Edit user',
-    'all_users' => 'All users',
-    'users_active' => '{0} No active users|[1] active user|[2,*] active users',
-    'change_avatar' => 'Change avatar',
-    'drop_zone_avatar' => 'Drop files here or click to upload.',
-    'drop_zone_avatar_desc' => 'Only image are allowed for upload.',
+    'user' => 'Usuario',
+    'users' => 'Usuarios',
+    'new_user' => 'Nuevo usuario',
+    'edit_user' => 'Editar usuario',
+    'all_users' => 'Todos los usuarios',
+    'users_active' => '{0} No usuarios activos|[1] usuario activo|[2,*] usuarios activos',
+    'change_avatar' => 'Cambiar avatar',
+    'drop_zone_avatar' => 'Suelta el archivo aquí o haz clic para cargarlo.',
+    'drop_zone_avatar_desc' => 'Solo la imagen está permitida para subir.',
     'avatar' => 'Avatar',
-    'role' => 'Role',
+    'role' => 'Papel',
 ];

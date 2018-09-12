@@ -1,14 +1,14 @@
 @component('mail::message')
-# Ciao, {{$admin->name}}
+# Hi, {{$admin->name}}
 
-Un nuovo utente si è registrato {{$user->created_at->diffForHumans()}}!
+A new user registered {{$user->created_at->diffForHumans()}}!
 
 ## {{$user->name}} <br> {{$user->email}}
 
 @component('mail::button', ['url' => route('dashboard')])
-Accedi
+Login
 @endcomponent
 
-Grazie,<br>
+Thanks,<br>
 {{ config('app.name') }}
 @endcomponent

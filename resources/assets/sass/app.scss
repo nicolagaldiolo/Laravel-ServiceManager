@@ -104,12 +104,23 @@
 .m-widget11{
     .table {
         tbody > tr > td{
+            .m-widget11__info_domain{
+                display: flex;
+                align-items: center;
+                img{
+                    width: 3.5rem;
+                    margin-right: 12px;
+                    border-radius: 50%;
+                }
+            }
             &.amount{
                 font-weight: 600;
             }
         }
     }
 }
+
+widget11__app
 
 .m-widget12{
     .m-widget12__item{
