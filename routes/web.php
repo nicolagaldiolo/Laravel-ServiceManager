@@ -15,7 +15,11 @@ Auth::routes();
 Route::get('login/{provider}',          'Auth\SocialAccountController@redirectToProvider')->name('social.login');
 Route::get('login/{provider}/callback', 'Auth\SocialAccountController@handleProviderCallback')->name('social.login.callback');
 
-Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => 'auth'], function() {
+Route::group(
+    [
+        'prefix' => LaravelLocalization::setLocale(),
+        'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath', 'auth']
+    ], function() {
 
     // Dashboard
     Route::get('/', 'DashboardController@index')->name('dashboard');

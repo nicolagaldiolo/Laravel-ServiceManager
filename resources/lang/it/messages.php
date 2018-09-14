@@ -131,7 +131,7 @@ return [
     'new_domain' => 'Nuovo dominio',
     'edit_domain' => 'Modifica dominio',
     'all_domains' => 'Tutti i domini',
-    'domains_active' => '{0} Nessun dominio attivi|[1] dominio attivo|[2,*] domini attivi',
+    'domains_active' => '{0} Nessun dominio attivo|[1] dominio attivo|[2,*] domini attivi',
     'hostings_active' => '{0} Nessun hosting attivo|[1] hosting attivo|[2,*] hosting attivi',
     'domains_active_' => 'Domini attivi',
     'domains_deadline' => 'Domini in scadenza',
