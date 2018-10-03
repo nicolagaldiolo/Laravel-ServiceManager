@@ -76,7 +76,7 @@
                                         </a>
                                     </li>
                                     <li class="m-menu__item m-menu__item--rel">
-                                        <a href="{{route('domains.create')}}" class="m-menu__link">
+                                        <a href="{{route('services.create')}}" class="m-menu__link">
                                             <i class="m-menu__link-icon flaticon-add"></i>
                                             <span class="m-menu__link-text">{{__('messages.domain')}}</span>
                                         </a>
@@ -99,6 +99,9 @@
                             <!-- END: Horizontal Menu -->
 
                             <!-- BEGIN: Topbar -->
+
+                            {{--
+
                             <div id="m_header_topbar" class="m-topbar  m-stack m-stack--ver m-stack--general m-stack--fluid">
                                 <div class="m-stack__item m-topbar__nav-wrapper">
                                     <ul class="m-topbar__nav m-nav m-nav--inline">
@@ -286,6 +289,8 @@
                                     </ul>
                                 </div>
                             </div>
+
+                            --}}
 
                             <!-- END: Topbar -->
                         </div>

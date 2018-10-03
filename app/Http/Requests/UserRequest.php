@@ -2,8 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\UserType;
+use BenSampo\Enum\Rules\EnumValue;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 class UserRequest extends FormRequest
 {
@@ -24,18 +25,14 @@ class UserRequest extends FormRequest
      */
     public function rules()
     {
-
-        if ($this->method() == 'PATCH') {
-            $user = $this->route('user');
-            $email = 'required|email|unique:users,email,' . $user->id;
-        } else {
-            $email = 'required|email|unique:users,email';
-        }
+        $user = $this->route('user') ? $this->route('user')->id : 'NULL';
+        //unique:table,column,except,idColumn
 
         return [
-            'name'      => 'sometimes|string',
-            'email'     => $email,
-            'role'      => ['sometimes', Rule::in([config('userrole.admin'), config('userrole.user')])]
+            'name'      => 'sometimes|string|max:255',
+            'email'     => 'required|email|max:255|unique:users,email,' . $user,
+            'password'  => 'sometimes|string|min:6|max:255|confirmed',
+            'role'      => ['required', new EnumValue(UserType::class, false)],
         ];
     }
 }

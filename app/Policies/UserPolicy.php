@@ -13,7 +13,7 @@ class UserPolicy
      * Determine whether the user can view the domains.
      *
      * @param  \App\User  $user
-     * @param  \App\Domain  $domains
+     * @param  \App\Service  $domains
      * @return mixed
      */
 
@@ -42,7 +42,7 @@ class UserPolicy
      * Determine whether the user can update the domains.
      *
      * @param  \App\User  $user
-     * @param  \App\Domain  $domains
+     * @param  \App\Service  $domains
      * @return mixed
      */
     public function update(User $currentUser, User $user)
@@ -54,7 +54,7 @@ class UserPolicy
      * Determine whether the user can delete the domains.
      *
      * @param  \App\User  $user
-     * @param  \App\Domain  $domains
+     * @param  \App\Service  $domains
      * @return mixed
      */
     public function delete(User $currentUser, User $user)

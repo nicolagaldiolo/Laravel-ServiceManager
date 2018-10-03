@@ -14,9 +14,9 @@ class SocialAccountController extends Controller
      *
      * @return Response
      */
-    public function redirectToProvider($provider)
+    public function redirectToProvider($socialProvider)
     {
-        return Socialite::driver($provider)->redirect();
+        return Socialite::driver($socialProvider)->redirect();
     }
 
     /**
@@ -24,17 +24,17 @@ class SocialAccountController extends Controller
      *
      * @return Response
      */
-    public function handleProviderCallback($provider)
+    public function handleProviderCallback($socialProvider)
     {
 
         // interrogo il social network e mi faccio tornare le informazioni che immagazzino in $user
         try {
-            $socialUser = Socialite::driver($provider)->user();
+            $socialUser = Socialite::driver($socialProvider)->user();
         } catch (\Exception $e) {
             return redirect()->route('login');
         }
 
-        $account = LinkedSocialAccount::whereProviderName($provider)->whereProviderId($socialUser->getId())->first(); // cerco se le info tornare appartengono ad un utente
+        $account = LinkedSocialAccount::whereProviderName($socialProvider)->whereProviderId($socialUser->getId())->first(); // cerco se le info tornare appartengono ad un utente
         if ($account) {
             $user = $account->user; // se trovo corrispondenza torna l'utente
         } else {
@@ -57,8 +57,8 @@ class SocialAccountController extends Controller
             }
 
             $user->accounts()->create([ // associo il social account all'utente appena creato o esistente
-                'provider_id'   => $socialUser->getId(),
-                'provider_name' => $provider,
+                'social_provider_id'   => $socialUser->getId(),
+                'social_provider_name' => $socialProvider,
             ]);
 
         }

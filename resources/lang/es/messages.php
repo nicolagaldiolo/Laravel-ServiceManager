@@ -44,9 +44,13 @@ return [
     'enter_url' => 'Por favor ingrese la URL de su sitio web.',
     'choose_customer' => 'Por favor elija un cliente',
     'choose_provider' => 'Por favor elija un proveedor',
+    'choose_service_type' => 'Por favor elija un tipo de servicio',
     'provider_name' => 'Por favor ingrese el nombre del proveedor.',
     'note' => 'Nota',
     'enter_note' => 'Por favor ingrese una nota.',
+    'enter_service_type_name' => 'Por favor ingrese el nombre del tipo de servicio',
+    'frequency_renewal' => 'Renovación de frecuencia',
+    'choose_frequency_renewal' => 'Por favor configure una frecuencia de renovación',
     'payed' => 'Pagado',
     'not_payed' => 'No pagado',
     'status_payment' => 'Por favor, configure el estado de pago.',
@@ -55,16 +59,14 @@ return [
     'are_sure' => 'Estás seguro?',
     'are_sure_desc' => 'No podrás revertir esto!',
     'confirm_delete' => 'Sí, eliminarlo!',
-    'deleted_title' => 'Eliminado!',
-    'deleted_desc' => 'El registro ha sido eliminado.',
     'confirm_title' => 'Estupendo!',
     'confirm_desc' => 'Operación realizada con éxito.',
     'yes_procede' => 'Sí, por supuesto!',
-    'error_title' => 'Error!',
-    'error_desc' => 'Había un problema.',
     'error_authorized' => 'No queda nada por hacer aquí.',
     'error_404_title' => 'Oops...',
     'error_404_desc' => 'Parece que algo salió mal. Estamos trabajando en ello',
+    'error_title' => 'Error!',
+    'error_desc' => 'There was a problem.',
     'edit' => 'Editar',
     'total_revenue' => 'Cifras de ventas',
     'avarage_revenue' => 'Ventas totales promedio',
@@ -139,6 +141,17 @@ return [
     'online' => 'En línea',
     'offline' => 'Desconectado',
     'site_screenshoot' => 'Captura de pantalla del sitio',
+    /*
+    |--------------------------------------------------------------------------
+    | Service types
+    |--------------------------------------------------------------------------
+    |
+    |
+    */
+    'service_types' => 'Tipos de servicio',
+    'service_type' => 'Tipo de servicio',
+    'all_service_types' => 'Todos los tipos de servicio',
+    'new_service_type' => 'Nuevo tipo de servicio',
     /*
     |--------------------------------------------------------------------------
     | Providers

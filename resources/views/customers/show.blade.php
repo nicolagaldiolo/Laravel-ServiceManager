@@ -84,7 +84,7 @@
                             </div>
 
                             <div class="m-widget12__item">
-                                <span class="m-widget12__text1">{{__('messages.domains_active_')}}<br><span>{{$customerDomainsCount}}</span></span>
+                                <span class="m-widget12__text1">{{__('messages.domains_active_')}}<br><span>{{$customerServicesCount}}</span></span>
                                 <span class="m-widget12__text2">{{__('messages.domains_deadline')}}<br><span>{{$toPay}}</span></span>
                             </div>
 
@@ -100,9 +100,9 @@
         </div>
         <!--End::Section-->
 
-    </div>
+        @if($customerServicesCount > 0)
+            @include('services._dataTable', ['dataTableUrl' => route('customers.show', $customer), 'dataTableNewUrl' => route('services.create') . '?cid=' . $customer->id ])
+        @endif
 
-    @if($customerDomainsCount > 0)
-        @include('domains._dataTable', ['dataTableUrl' => route('customers.show', $customer), 'dataTableNewUrl' => route('domains.create') . '?cid=' . $customer->id ])
-    @endif
+    </div>
 @stop

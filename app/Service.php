@@ -6,35 +6,37 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use File;
 
-class Domain extends Model
+class Service extends Model
 {
 
     protected $guarded = [];
-
-    protected $dates = [
-        'deadline'
-    ];
-
-    // appartiene ad un User
-    public function user(){
-        return $this->belongsTo(User::class);
-    }
 
     //appartiene ad un customer
     public function customer(){
         return $this->belongsTo(Customer::class);
     }
 
-    // appartiene a un Providers(domain)
-    public function domain(){
-        return $this->belongsTo(Providers::class, 'domain_id', 'id', 'providers');
+    //appartiene ad un provider
+    public function provider(){
+        return $this->belongsTo(Provider::class);
     }
 
-    // appartiene a un Providers(hosting)
-    public function hosting(){
-        return $this->belongsTo(Providers::class, 'hosting_id', 'id', 'providers');
+    //appartiene ad un type
+    public function serviceType(){
+        return $this->belongsTo(ServiceType::class);
     }
 
+    // Ha molti Renewals
+    public function renewals(){
+        return $this->hasMany(Renewal::class);
+    }
+
+    //mi faccio tornare l'utente a cui appartiene indirettamente questo service
+    public function user(){
+        return $this->customer->user;
+    }
+
+    /*
     public function getDeadlineFormattedAttribute()
     {
         $deadline = $this->deadline;
@@ -60,7 +62,7 @@ class Domain extends Model
     {
         $this->attributes['amount'] = $this->floatvalue($amount);
     }
-
+    */
 
     public function getScreenshootAttribute($screenshoot)
     {
@@ -74,18 +76,18 @@ class Domain extends Model
         $this->attributes['screenshoot'] = $screenshoot;
     }
 
-    public function floatvalue($val){
+    /*public function floatvalue($val){
         $val = str_replace(",",".",$val);
         $val = preg_replace('/\.(?=.*\.)/', '', $val);
         return floatval($val);
-    }
+    }*/
 
-    public function scopeUpdateDeadlineNextYear($query){
+    /*public function scopeUpdateDeadlineNextYear($query){
         return $query->whereDate('deadline', '<=', Carbon::now()->subMonth()->endOfMonth())
             ->where('payed', 1);
-    }
+    }*/
 
-    public function scopeExpiring($query){
+    /*public function scopeExpiring($query){
         return $query->whereMonth('deadline', Carbon::today()->month)
             ->whereYear('deadline' , Carbon::today()->year);
     }
@@ -93,6 +95,6 @@ class Domain extends Model
     public function scopeToPay($query){
         return $query->where('payed', 0)
             ->whereDate('deadline', '<=', Carbon::now()->endOfMonth());
-    }
+    }*/
 
 }

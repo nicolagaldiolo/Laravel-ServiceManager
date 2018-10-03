@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Providers;
+use App\Provider;
 use App\Http\Requests\ProviderRequest;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\DataTables;
@@ -16,6 +16,7 @@ class ProvidersController extends Controller
      */
     public function index()
     {
+
         if(request()->wantsJson() || request()->expectsJson()) {
             $providers = Auth::user()->providers()->get();
 
@@ -39,7 +40,7 @@ class ProvidersController extends Controller
     public function create()
     {
 
-        $provider = new Providers;
+        $provider = new Provider;
 
         return view('providers.create', compact('provider'));
     }
@@ -64,7 +65,7 @@ class ProvidersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Providers $provider)
+    public function show(Provider $provider)
     {
 
     }
@@ -75,7 +76,7 @@ class ProvidersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Providers $provider)
+    public function edit(Provider $provider)
     {
         $this->authorize('view', $provider);
 
@@ -89,7 +90,7 @@ class ProvidersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(ProviderRequest $request, Providers $provider)
+    public function update(ProviderRequest $request, Provider $provider)
     {
         $this->authorize('update', $provider);
         $provider->update($request->validated());
@@ -105,15 +106,16 @@ class ProvidersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Providers $provider)
+    public function destroy(Provider $provider)
     {
         $this->authorize('delete', $provider);
 
-        (bool) $res = $provider->delete();
+        $provider->delete();
 
-        return [
-            'message'   => $res ? 'Provider deleted' : 'Provider not deleted',
-            'status'    => $res
-        ];
+        if(request()->wantsJson() || request()->expectsJson()) {
+            return [
+                'message' => 'Provider eliminato con successo'
+            ];
+        }
     }
 }

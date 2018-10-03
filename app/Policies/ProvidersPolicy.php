@@ -3,7 +3,7 @@
 namespace App\Policies;
 
 use App\User;
-use App\Providers;
+use App\Provider;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class ProvidersPolicy
@@ -14,10 +14,10 @@ class ProvidersPolicy
      * Determine whether the user can view the providers.
      *
      * @param  \App\User  $user
-     * @param  \App\Providers  $providers
+     * @param  \App\Provider  $providers
      * @return mixed
      */
-    public function view(User $user, Providers $providers)
+    public function view(User $user, Provider $providers)
     {
         return $user->id === $providers->user_id;
     }
@@ -37,10 +37,10 @@ class ProvidersPolicy
      * Determine whether the user can update the providers.
      *
      * @param  \App\User  $user
-     * @param  \App\Providers  $providers
+     * @param  \App\Provider  $providers
      * @return mixed
      */
-    public function update(User $user, Providers $providers)
+    public function update(User $user, Provider $providers)
     {
         return $user->id === $providers->user_id;
     }
@@ -49,10 +49,10 @@ class ProvidersPolicy
      * Determine whether the user can delete the providers.
      *
      * @param  \App\User  $user
-     * @param  \App\Providers  $providers
+     * @param  \App\Provider  $providers
      * @return mixed
      */
-    public function delete(User $user, Providers $providers)
+    public function delete(User $user, Provider $providers)
     {
         return $user->id === $providers->user_id;
     }

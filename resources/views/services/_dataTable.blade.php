@@ -1,36 +1,34 @@
 <!-- END: Subheader -->
-<div class="m-content">
-    <div class="m-portlet m-portlet--mobile">
-        @component('components.tableHeader', ['icon' => 'flaticon-layers', 'button' => __('messages.new_domain'), 'url' => $dataTableNewUrl])
-            {{__('messages.all_domains')}}
-        @endcomponent
-        <div class="m-portlet__body">
 
-            <!--begin: Datatable -->
-            <table class="table table-striped- table-bordered table-hover table-checkable" id="m_table_1">
-                <thead>
-                <tr>
-                    <th>{{__('messages.url')}}</th>
-                    <th>{{__('messages.domain')}}th>
-                    <th>{{__('messages.hosting')}}</th>
-                    <th>{{__('messages.deadline')}}</th>
-                    <th>{{__('messages.amount')}}</th>
-                    <th>{{__('messages.note')}}</th>
-                    <th>{{__('messages.payed')}}</th>
-                    <th>{{__('messages.actions')}}</th>
-                </tr>
-                </thead>
-            </table>
-        </div>
+<div class="m-portlet m-portlet--mobile">
+    @component('components.tableHeader', ['icon' => 'flaticon-layers', 'button' => __('messages.new_domain'), 'url' => $dataTableNewUrl])
+        {{__('messages.all_domains')}}
+    @endcomponent
+    <div class="m-portlet__body">
+
+        <!--begin: Datatable -->
+        <table class="table table-striped- table-bordered table-hover table-checkable" id="m_table_1">
+            <thead>
+            <tr>
+                <th>{{__('messages.url')}}</th>
+                <th>{{__('messages.customer')}}</th>
+                <th>{{__('messages.provider')}}</th>
+                <th>{{__('messages.service_type')}}</th>
+                <th>{{__('messages.frequency_renewal')}}</th>
+                <th>Scadenza</th>
+                <th>Importo</th>
+                <th>Stato</th>
+                <th>{{__('messages.actions')}}</th>
+            </tr>
+            </thead>
+        </table>
     </div>
-
-    <!-- END EXAMPLE TABLE PORTLET-->
 </div>
-
 
 @section('scripts')
     @parent
     <script>
+
 
         jQuery(document).ready( function () {
             var dataTable = jQuery('#m_table_1').DataTable({
@@ -39,12 +37,13 @@
                 ajax: '{{$dataTableUrl}}',
                 columns: [
                     { data: "url" },
-                    { data: "domain" },
-                    { data: "hosting" },
+                    { data: "customer" },
+                    { data: "provider" },
+                    { data: "service_type" },
+                    { data: "frequency" },
                     { data: "deadline" },
                     { data: "amount" },
-                    { data: "note" },
-                    { data: "payed" },
+                    { data: "status" },
                     { data: "actions", name: 'action', orderable: false, searchable: false}
                 ],
                 columnDefs: [
@@ -74,16 +73,30 @@
                             return html;
                         },
                     },
-
+                    
                     {
-                        targets: [ 1, 2 ],
+                        targets: [ 1 ],
                         render: function(data, type, full, meta) {
-                            if(data == null) return data;
-                            var color = (typeof data.label !== 'undefined') ? 'style="background:' + data.label + '"' : '';
-                            return '<span class="m-badge ' + data + ' m-badge--wide" ' + color + '>' + data.name + '</span>';
+                            return data == null ? '' : data.name;
                         },
                     },
 
+                    {
+                        targets: [ 2 ],
+                        render: function(data, type, full, meta) {
+                            if(data == null) return '';
+                            var color = (typeof data.label !== 'undefined') ? 'style="background:' + data.label + '"' : '';
+                            return '<span class="m-badge m-badge--brand m-badge--wide" ' + color + '>' + data.name + '</span>';
+                        },
+                    },
+
+                    {
+                        targets: [ 3 ],
+                        render: function(data, type, full, meta) {
+                            return data == null ? '' : data.name;
+                        },
+                    },
+/*
                     {
                         targets: 6,
                         render: function(data, type, full, meta) {
@@ -100,8 +113,9 @@
                             return '<span class="m-badge  m-badge--' + label + ' m-badge--wide">' + status + '</span>';
                         },
                     }
-
+*/
                 ]
+
             });
 
             $('#m_table_1').on('click', '.delete', function (el) {
@@ -119,6 +133,7 @@
 
                     if (result.value) {
                         var action = _self.href;
+
                         $.ajax(action, {
 
                             method: "DELETE",
@@ -126,12 +141,12 @@
                                 '_token': $('meta[name="csrf-token"]').attr('content')
                             },
                             success: function (data) {
-                                //console.log(data);
-                                swal('{{__('messages.deleted_title')}}', '{{__('messages.deleted_desc')}}', 'success')
+                                toastr.success(data.message);
                                 dataTable.ajax.reload();
                             },
-                            error: function (xhr, status, error) {
-                                swal('{{__('messages.error_title')}}', '{{__('messages.error_desc')}}', 'error')
+                            error: function (resp, status, error) {
+                                resp = JSON.parse(resp.responseText);
+                                toastr.error(resp.message);
                             },
 
                         })
@@ -162,13 +177,13 @@
                                 '_token': $('meta[name="csrf-token"]').attr('content'),
                                 'payed': _self.getAttribute('data-status')
                             },
-                            success: function (data) {
-                                //console.log(data);
-                                swal('{{__('messages.confirm_title')}}', '{{__('messages.confirm_desc')}}', 'success')
+                            success: function(data) {
+                                toastr.success(data.message);
                                 dataTable.ajax.reload();
                             },
-                            error: function (xhr, status, error) {
-                                swal('{{__('messages.error_title')}}', '{{__('messages.error_desc')}}', 'error')
+                            error: function(resp, status, error) {
+                                resp = JSON.parse(resp.responseText);
+                                toastr.error(resp.message);
                             },
 
                         })

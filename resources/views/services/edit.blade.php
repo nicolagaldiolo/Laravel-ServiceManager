@@ -8,7 +8,6 @@
 
     <!-- END: Subheader -->
     <div class="m-content">
-
         <div class="row">
             <div class="col-lg-4">
                 <!--begin::Portlet-->
@@ -30,8 +29,8 @@
                         <div class="m-portlet__body">
                             <div class="m-form__section m-form__section--first">
 
-                                @if(!empty($domain->screenshoot))
-                                    <img src="{{$domain->screenshoot}}" style="max-width: 100%;">
+                                @if(!empty($service->screenshoot))
+                                    <img src="{{$service->screenshoot}}" style="max-width: 100%;">
                                 @endif
 
                             </div>
@@ -61,10 +60,10 @@
                     </div>
 
                     <!--begin::Form-->
-                    <form method="POST" action="{{route('domains.update', $domain)}}" class="m-form m-form--fit">
+                    <form method="POST" action="{{route('services.update', $service)}}" class="m-form m-form--fit">
                         @csrf
                         @method('PATCH')
-                        @include('domains._form', ['deadline' => false])
+                        @include('services._form', ['deadline' => false])
                     </form>
 
                     <!--end::Form-->

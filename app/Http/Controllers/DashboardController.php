@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Domain;
+use App\Service;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -37,7 +37,7 @@ class DashboardController extends Controller
         });
         $dashboard['domainsByMounth'] = $domainsByMounth;
 
-        $totalDomain = Domain::count();
+        $totalDomain = Service::count();
 
         $usersSummary = User::with('domains')->get();
         $usersSummary->each(function($item) use($totalDomain){

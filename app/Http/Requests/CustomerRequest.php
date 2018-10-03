@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class CustomerRequest extends FormRequest
 {
@@ -23,9 +24,13 @@ class CustomerRequest extends FormRequest
      */
     public function rules()
     {
+
+        $customer = $this->route('customer') ? $this->route('customer')->id : 'NULL';
+        //unique:table,column,except,idColumn
+
         return [
             'name'      => 'required|string',
-            'email'     => 'required|email',
+            'email'     => 'required|email|unique:customers,email,' . $customer . ',id,user_id,' . Auth::user()->id,
             'phone'     => 'sometimes',
             'address'   => 'sometimes'
         ];

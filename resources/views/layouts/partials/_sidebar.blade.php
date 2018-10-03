@@ -8,6 +8,8 @@
     <div id="m_ver_menu" class="m-aside-menu  m-aside-menu--skin-dark m-aside-menu--submenu-skin-dark "
          m-menu-vertical="1" m-menu-scrollable="1" m-menu-dropdown-timeout="500" style="position: relative;">
         <ul class="m-menu__nav  m-menu__nav--dropdown-submenu-arrow ">
+
+            {{--
             <li class="m-menu__item  m-menu__item--active" aria-haspopup="true">
                 <a href="{{route('dashboard')}}" class="m-menu__link ">
                     <i class="m-menu__link-icon flaticon-line-graph"></i>
@@ -23,6 +25,9 @@
                                     </span>
                 </a>
             </li>
+
+            --}}
+
             <li class="m-menu__section ">
                 <h4 class="m-menu__section-text">{{__('messages.actions')}}</h4>
                 <i class="m-menu__section-icon flaticon-more-v3"></i>
@@ -75,7 +80,7 @@
                                             </span>
                         </li>
                         <li class="m-menu__item " aria-haspopup="true">
-                            <a href="{{route('domains.index')}}" class="m-menu__link ">
+                            <a href="{{route('services.index')}}" class="m-menu__link ">
                                 <i class="m-menu__link-bullet m-menu__link-bullet--dot">
                                     <span></span>
                                 </i>
@@ -83,11 +88,19 @@
                             </a>
                         </li>
                         <li class="m-menu__item " aria-haspopup="true">
-                            <a href="{{route('domains.create')}}" class="m-menu__link ">
+                            <a href="{{route('services.create')}}" class="m-menu__link ">
                                 <i class="m-menu__link-bullet m-menu__link-bullet--dot">
                                     <span></span>
                                 </i>
                                 <span class="m-menu__link-text">{{__('messages.new_domain')}}</span>
+                            </a>
+                        </li>
+                        <li class="m-menu__item " aria-haspopup="true">
+                            <a href="{{route('service-types.index')}}" class="m-menu__link ">
+                                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                                    <span></span>
+                                </i>
+                                <span class="m-menu__link-text">{{__('messages.service_types')}}</span>
                             </a>
                         </li>
                     </ul>

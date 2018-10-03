@@ -3,9 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
 
-class NewUserRequest extends FormRequest
+class ServiceTypeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,11 +25,11 @@ class NewUserRequest extends FormRequest
     public function rules()
     {
 
+        $serviceType = $this->route('service_type') ? $this->route('service_type')->id : 'NULL';
+        //unique:table,column,except,idColumn
+
         return [
-            'name'      => 'required|string|max:255',
-            'email'     => 'required|string|email|max:255|unique:users',
-            'password'  => 'required|string|min:6|confirmed',
-            'role'      => ['required', Rule::in([config('userrole.admin'), config('userrole.user')])]
+            'name' => 'required|unique:service_types,name,' . $serviceType . ',id,user_id,' . Auth::user()->id
         ];
     }
 }

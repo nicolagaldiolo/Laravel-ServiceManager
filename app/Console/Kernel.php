@@ -2,13 +2,13 @@
 
 namespace App\Console;
 
-use App\Domain;
+use App\Service;
 use App\Events\ToPayDomainsAlert;
 use App\Events\GenerateScreen;
 use App\Events\UserRegister;
 use App\Events\CheckServiceStatus;
 use App\Jobs\ToPayDomains;
-use App\Providers;
+use App\Provider;
 use Carbon\Carbon;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -33,40 +33,47 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
 
-        $schedule->call(function () {
+        /*$schedule->call(function () {
 
             // Incremento la data di un anno dei servizi pagati
-            Domain::updateDeadlineNextYear()->each(function($item){
+            Service::updateDeadlineNextYear()->each(function($item){
                 $years_gap = Carbon::now()->endOfMonth()->diffInYears($item->deadline->endOfMonth());
                 $item->update(['deadline' => $item->deadline->addYear($years_gap + 1)]);
             });
 
             // Aggiorno la tabella domains settando i servizi da pagare
-            Domain::expiring()->update(['payed' => 0]);
+            Service::expiring()->update(['payed' => 0]);
 
         })->everyMinute();
+        */
 
 
+        /*
         $schedule->call(function(){
-            Domain::get()->each(function($item){
+            Service::get()->each(function($item){
                 event(new CheckServiceStatus($item));
             });
         })->everyTenMinutes();
+        */
 
+        /*
         $schedule->call(function(){
-            Domain::get()->each(function($item){
+            Service::get()->each(function($item){
                 event(new GenerateScreen($item));
             });
 
-            Providers::get()->each(function($item){
+            Provider::get()->each(function($item){
                 event(new GenerateScreen($item));
             });
 
         })->everyThirtyMinutes();
+        */
 
+        /*
         $schedule->call(function(){
             event(new ToPayDomainsAlert());
         })->everyTenMinutes();
+        */
 
     }
 

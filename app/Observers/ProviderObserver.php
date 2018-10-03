@@ -3,7 +3,7 @@
 namespace App\Observers;
 
 use App\Events\GenerateScreen;
-use App\Providers;
+use App\Provider;
 use File;
 
 class ProviderObserver
@@ -12,10 +12,10 @@ class ProviderObserver
     /**
      * Handle to the domains "creating" event.
      *
-     * @param  \App\Domain  $domains
+     * @param  \App\Service  $domains
      * @return void
      */
-    public function creating(Providers $providers)
+    public function creating(Provider $providers)
     {
         //
     }
@@ -23,25 +23,25 @@ class ProviderObserver
     /**
      * Handle to the providers "created" event.
      *
-     * @param  \App\Providers  $providers
+     * @param  \App\Provider  $providers
      * @return void
      */
-    public function created(Providers $providers)
+    public function created(Provider $providers)
     {
-        event(new GenerateScreen($providers));
+        //event(new GenerateScreen($providers));
     }
 
     /**
      * Handle the providers "updated" event.
      *
-     * @param  \App\Providers  $providers
+     * @param  \App\Provider  $providers
      * @return void
      */
-    public function updated(Providers $providers)
+    public function updated(Provider $providers)
     {
     }
 
-    public function deleting(Providers $providers)
+    public function deleting(Provider $providers)
     {
         //
     }
@@ -49,10 +49,10 @@ class ProviderObserver
     /**
      * Handle the providers "deleted" event.
      *
-     * @param  \App\Providers  $providers
+     * @param  \App\Provider  $providers
      * @return void
      */
-    public function deleted(Providers $providers)
+    public function deleted(Provider $providers)
     {
         if(File::exists(public_path($providers->screenshoot))) File::delete(public_path($providers->screenshoot));
     }

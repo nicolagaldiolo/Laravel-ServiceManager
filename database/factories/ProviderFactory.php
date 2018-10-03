@@ -2,7 +2,7 @@
 
 use Faker\Generator as Faker;
 
-$factory->define(App\Providers::class, function (Faker $faker) {
+$factory->define(App\Provider::class, function (Faker $faker) {
     return [
         'name' => $faker->unique()->company,
         'label' => $faker->unique()->hexColor,

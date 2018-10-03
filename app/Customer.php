@@ -13,7 +13,7 @@ class Customer extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function domains(){
-        return $this->hasMany(Domain::class);
+    public function services(){
+        return $this->hasMany(Service::class);
     }
 }

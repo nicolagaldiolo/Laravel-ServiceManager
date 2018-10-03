@@ -1,0 +1,184 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Enums\RenewalSM;
+use App\Service;
+use App\ExpiringDomain;
+use App\Http\Requests\ServiceRequest;
+use App\Http\Traits\DataTableServiceTrait;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Yajra\DataTables\DataTables;
+
+class ServicesController extends Controller
+{
+
+    use DataTableServiceTrait;
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+
+        //$pippo = Service::orderBy('created_at', 'desc')->first();
+        //dd($pippo);
+
+        if(request()->wantsJson() || request()->expectsJson()) {
+            $services = Auth::user()->services()->with('provider', 'customer', 'serviceType')->get();
+            return $this->getServicesDataTablesTraits($services);
+        }
+
+        return view('services.index');
+
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create(Request $req)
+    {
+        $customers = Auth::user()->customers()->get();
+        $providers = Auth::user()->providers()->get();
+        $service_types = Auth::user()->serviceTypes()->get();
+        $service = new Service;
+
+        if($req->has('cid')){
+            $service->customer_id = $req->input('cid');
+        }
+
+        return view('services.create', compact('service', 'providers', 'service_types', 'customers'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(ServiceRequest $request)
+    {
+        Service::create($request->validated());
+
+        return redirect()->route('services.index')
+            ->with('status', 'Servizio creato con successo');
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Service $service)
+    {
+
+        //$renewals = $service->renewals()->first();
+        //$data = $renewals->getStateAttribute();
+        //$data = $renewals->getPossibleTransitions();
+        //dd($data);
+
+        if(request()->wantsJson() || request()->expectsJson()) {
+            $renewals = $service->renewals()->orderBy('deadline', 'DESC')->get();
+            return DataTables::of($renewals)
+                ->editColumn('amount', function ($renewal) {
+                    return $renewal->amountFormatted;
+                })
+                //->editColumn('deadline', function ($renewal) {
+                    //return $renewal->deadline ? with(new Carbon($renewal->deadline))->diffForHumans() : '';
+                //    return $renewal->deadline ? $renewal->deadlineFormatted : '';
+                //})
+                ->editColumn('status', function ($renewal){
+                    $status = $renewal->getStateAttribute();
+                    return '<span class="m-badge m-badge--' . $status[key($status)]['label'] . ' m-badge--wide">' . RenewalSM::getDescription(key($status)) . '</span>';
+
+                })
+                ->addColumn('actions', function($renewal) use($service){
+
+                    $buttons = $renewal->getPossibleTransitions();
+                    array_walk($buttons, function(&$k, $v) use($renewal, $service){
+                        $k = '<a href="' . route('services.renewals.transition.update', ['service'=>$service,'renewals'=>$renewal,'transition'=>$v]) . '" class="update-transition btn btn-sm m-btn m-btn--custom btn-' . $k['label'] . '"><i class="'. $k['icon'] . '"></i> ' . RenewalSM::getDescription($v) . '</a>';
+                    });
+
+                    $buttons[] = '<a href="' . route('services.renewals.destroy', ['service'=>$service,'renewals'=>$renewal]) . '" class="delete btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill"><i class="la la-trash"></i></a>';
+
+                    return implode("", $buttons);
+
+                })->rawColumns(['status','actions'])->make(true);
+        }else{
+            $service->load('provider', 'customer', 'serviceType');
+            return view('services.show', compact('service'));
+        }
+
+
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Service $service)
+    {
+
+        $this->authorize('view', $service);
+
+        $customers = Auth::user()->customers()->get();
+        $providers = Auth::user()->providers()->get();
+        $service_types = Auth::user()->serviceTypes()->get();
+
+        return view('services.edit', compact('service', 'providers', 'service_types', 'customers'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(ServiceRequest $request, Service $service)
+    {
+        $this->authorize('update', $service);
+        $service->update($request->validated());
+
+        return redirect()->route('services.index')
+            ->with('status', 'Dominio aggiornato con successo');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Service $service)
+    {
+        $this->authorize('delete', $service);
+
+        $service->delete();
+
+        if(request()->wantsJson() || request()->expectsJson()) {
+            return [
+                'message' => 'Service eliminato con successo'
+            ];
+        }
+    }
+
+    /*public function payedUpdate(Request $request, Service $service){
+        $this->authorize('update', $service);
+        (bool) $res = $service->update(['payed' => $request->get('payed')]);
+        return [
+            'message'   => $res ? 'Domain updated' : 'Domain not updated',
+            'status'    => $res
+        ];
+    }*/
+
+
+}

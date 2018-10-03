@@ -101,17 +101,13 @@
                         <div class="col-lg-6">
                             <label>{{__('messages.admin')}} *</label>
                             <div>
-
-                                            <span class="m-switch m-switch--lg m-switch--icon m-switch--success">
-                                                <label>
-                                                    <input type="hidden" checked="checked"
-                                                           value="{{config('userrole.user')}}" name="role">
-                                                    <input class="required" type="checkbox"
-                                                           @if(old('role') == config('userrole.admin'))checked="checked"
-                                                           @endif value="{{config('userrole.admin')}}" name="role">
-                                                    <span></span>
-                                                </label>
-                                            </span>
+                                <span class="m-switch m-switch--lg m-switch--icon m-switch--success">
+                                    <label>
+                                        <input type="hidden" checked="checked" value="{{\App\Enums\UserType::User}}" name="role">
+                                        <input class="required" type="checkbox" @if(old('role') == \App\Enums\UserType::Admin)checked="checked" @endif value="{{\App\Enums\UserType::Admin}}" name="role">
+                                        <span></span>
+                                    </label>
+                                </span>
                             </div>
 
                             <span class="m-form__help">{{__('messages.set_admin')}}</span>

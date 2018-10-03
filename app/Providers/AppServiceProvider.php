@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use App\Domain;
-use App\Providers;
+use App\Service;
+use App\Provider;
 use App\User;
 use App\Observers\UserObserver;
 use App\Observers\DomainObserver;
@@ -22,15 +22,15 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         User::observe(UserObserver::class);
-        Domain::observe(DomainObserver::class);
-        Providers::observe(ProviderObserver::class);
+        Service::observe(DomainObserver::class);
+        Provider::observe(ProviderObserver::class);
 
         \View::composer(['layouts.app', 'dashboard.index'], function ($view){
 
-            $domainsToPay = Auth()->user()->domains()->toPay()->orderBy('deadline')->get();
-            $domainsToPayCount = $domainsToPay->count();
-            return $view->with('domainsToPay', $domainsToPay)
-                ->with('domainsToPayCount', $domainsToPayCount);
+            //$domainsToPay = Auth()->user()->domains()->toPay()->orderBy('deadline')->get();
+            //$domainsToPayCount = $domainsToPay->count();
+            //return $view->with('domainsToPay', $domainsToPay)
+            //    ->with('domainsToPayCount', $domainsToPayCount);
 
         });
 

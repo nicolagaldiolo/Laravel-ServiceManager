@@ -44,9 +44,13 @@ return [
     'enter_url' => 'Please enter your website URL.',
     'choose_customer' => 'Please choose a customer',
     'choose_provider' => 'Please choose a provider',
+    'choose_service_type' => 'Please choose a type of service',
     'provider_name' => 'Please enter the provider name.',
     'note' => 'Note',
     'enter_note' => 'Please enter a note.',
+    'enter_service_type_name' => 'Please enter the name of the service type',
+    'frequency_renewal' => 'Frequency renewal',
+    'choose_frequency_renewal' => 'Please set a renewal frequency',
     'payed' => 'Payed',
     'not_payed' => 'Not payed',
     'status_payment' => 'Please set the state of payment.',
@@ -55,16 +59,14 @@ return [
     'are_sure' => 'Are you sure?',
     'are_sure_desc' => 'You wont be able to revert this!',
     'confirm_delete' => 'Yes, delete it!',
-    'deleted_title' => 'Deleted!',
-    'deleted_desc' => 'The record has been deleted.',
     'confirm_title' => 'Great!',
     'confirm_desc' => 'Operation performed successfully.',
     'yes_procede' => 'Yes, of course!',
-    'error_title' => 'Error!',
-    'error_desc' => 'There was a problem.',
     'error_authorized' => 'Nothing left to do here.',
     'error_404_title' => 'Oops...',
     'error_404_desc' => 'Looks like something went wrong. We\'re working on it',
+    'error_title' => 'Error!',
+    'error_desc' => 'There was a problem.',
     'edit' => 'Edit',
     'total_revenue' => 'Sales figures',
     'avarage_revenue' => 'Average total sales',
@@ -139,6 +141,18 @@ return [
     'online' => 'Online',
     'offline' => 'Offline',
     'site_screenshoot' => 'Site screenshoot',
+    /*
+    |--------------------------------------------------------------------------
+    | Service types
+    |--------------------------------------------------------------------------
+    |
+    |
+    */
+    'service_types' => 'Service types',
+    'service_type' => 'Service type',
+    'all_service_types' => 'All service types',
+    'new_service_type' => 'New service type',
+
     /*
     |--------------------------------------------------------------------------
     | Providers

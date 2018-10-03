@@ -2,8 +2,8 @@
 
 namespace App\Jobs;
 
-use App\Domain;
-use App\Providers;
+use App\Service;
+use App\Provider;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
@@ -37,12 +37,12 @@ class GetScreenshoot implements ShouldQueue
     {
         try {
 
-            if($this->object instanceof Domain){
+            if($this->object instanceof Service){
                 $folder = config('custompath.domains');
                 $url = $this->object->url;
             }
 
-            if($this->object instanceof Providers){
+            if($this->object instanceof Provider){
                 $folder = config('custompath.providers');
                 $url = $this->object->website;
             }

@@ -3,16 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Customer;
-use App\Domain;
+use App\Service;
 use App\Http\Requests\CustomerRequest;
-use App\Http\Traits\DataTableDomainTrait;
+use App\Http\Traits\DataTableServiceTrait;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\DataTables;
 
 class CustomerController extends Controller
 {
 
-    use DataTableDomainTrait;
+    use DataTableServiceTrait;
 
     /**
      * Display a listing of the resource.
@@ -46,7 +46,7 @@ class CustomerController extends Controller
     public function create()
     {
         $customer = new Customer;
-        $domain = new Domain;
+        $domain = new Service;
         return view('customers.create', compact('customer', 'domain'));
     }
 
@@ -74,22 +74,22 @@ class CustomerController extends Controller
     {
 
         if(request()->wantsJson() || request()->expectsJson()) {
-            $domains = $customer->domains()->with('domain', 'hosting')->get();
+            $services = $customer->services()->with('provider', 'customer', 'serviceType')->get();
 
-            return $this->getDomainsDataTablesTraits($domains);
+            return $this->getServicesDataTablesTraits($services);
 
         }
 
-        $customerDomains = $customer->load('domains');
-        $customerDomainsCount = $customerDomains->domains->count();
-        $customerRevenue = $customerDomains->domains->sum('amount');
-        $toPay = $customerDomains->domains->filter(function($item){
-            return $item->payed === 0;
-        })->count();
+        $customerServices = $customer->load('services');
+        $customerServicesCount = $customerServices->services->count();
+        $customerRevenue = 0;//$customerServices->services->sum('amount');
+        $toPay = 0;//$customerServices->Services->filter(function($item){
+            //return $item->payed === 0;
+        //})->count();
 
-        $revenueAvarage = round(($customerRevenue * 100) / Auth::user()->domains()->sum('amount'), 2);
+        $revenueAvarage = 100;//round(($customerRevenue * 100) / Auth::user()->services()->sum('amount'), 2);
 
-        return view('customers.show', compact('customer', 'customerRevenue', 'customerDomainsCount', 'toPay', 'revenueAvarage'));
+        return view('customers.show', compact('customer', 'customerRevenue', 'customerServicesCount', 'toPay', 'revenueAvarage'));
 
     }
 
@@ -131,12 +131,13 @@ class CustomerController extends Controller
     public function destroy(Customer $customer)
     {
         $this->authorize('delete', $customer);
+        $customer->delete();
 
-        (bool) $res = $customer->delete();
+        if(request()->wantsJson() || request()->expectsJson()) {
+           return [
+                'message' => 'Customer eliminato con successo'
+            ];
+        }
 
-        return [
-            'message'   => $res ? 'Domain deleted' : 'Domain not deleted',
-            'status'    => $res
-        ];
     }
 }

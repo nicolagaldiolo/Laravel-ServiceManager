@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class ProviderRequest extends FormRequest
 {
@@ -24,19 +25,13 @@ class ProviderRequest extends FormRequest
     public function rules()
     {
 
-        if ($this->method() == 'PATCH') {
-            $provider = $this->route('provider');
-            $name_rule = 'required|string|max:255|unique:providers,name,'.$provider->id; // mi permette di ignorare i cambiamenti se il nome che stiamo passando appartiene al record corrent, se è cambiato allora scatta il controllo di validazione',
-            $website_rule = 'sometimes|url|max:255|unique:providers,website,'.$provider->id; // mi permette di ignorare i cambiamenti se l'url che stiamo passando appartiene al record corrent, se è cambiato allora scatta il controllo di validazione',
-        } else {
-            $name_rule = 'required|string|max:255|unique:providers,name';
-            $website_rule = 'sometimes|url|max:255|unique:providers,website';
-        }
+        $provider = $this->route('provider') ? $this->route('provider')->id : 'NULL';
+        //unique:table,column,except,idColumn
 
         return [
-            'name'      => $name_rule,
+            'name'      => 'required|unique:providers,name,' . $provider . ',id,user_id,' . Auth::user()->id,
+            'website'   => 'sometimes|nullable|url|max:255',
             'label'     => 'sometimes|max:7',
-            'website'    => $website_rule
         ];
     }
 }

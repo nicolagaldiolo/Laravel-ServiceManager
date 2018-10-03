@@ -28,10 +28,10 @@
 
 
         <div class="form-group m-form__group">
-            <label class="">{{__('messages.website')}} *</label>
+            <label class="">{{__('messages.website')}}</label>
 
                 <div class="m-input-icon m-input-icon--left">
-                    <input type="text" class="form-control m-input required" name="website" value="{{old('website', $provider->website)}}">
+                    <input type="text" class="form-control m-input" name="website" value="{{old('website', $provider->website)}}">
                     <span class="m-input-icon__icon m-input-icon__icon--left">
                                                         <span>
                                                             <i class="la la-globe"></i>
@@ -53,10 +53,10 @@
 
 
         <div class="form-group m-form__group">
-            <label class="">{{__('messages.label')}} *</label>
+            <label class="">{{__('messages.label')}}</label>
 
                 <div class="m-input-icon m-input-icon--left">
-                    <input type="text" class="form-control m-input required cp_colorpicker" name="label" value="{{old('label', $provider->label)}}" />
+                    <input type="text" class="form-control m-input cp_colorpicker" name="label" value="{{old('label', $provider->label)}}" />
                     <span class="m-input-icon__icon m-input-icon__icon--left">
                                                         <span>
                                                             <i class="la la-tint"></i>

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\NewUserRequest;
+use App\Enums\UserType;
 use App\Http\Requests\UserRequest;
 use App\User;
 use Illuminate\Support\Facades\Hash;
@@ -29,6 +29,8 @@ class UserController extends Controller
                     '<a href="' . route('users.edit', $user) . '" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill"><i class="la la-edit"></i></a>',
                     '<a href="' . route('users.destroy', $user) . '" class="delete btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill"><i class="la la-trash"></i></a>',
                 ]);
+            })->editColumn('role', function ($user) {
+                return UserType::getDescription($user->role);
             })->rawColumns(['actions'])->make(true);
         }
 
@@ -54,7 +56,7 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(NewUserRequest $request)
+    public function store(UserRequest $request)
     {
         $request->merge(['password' => Hash::make($request->password)]);
         User::create($request->validated());
@@ -118,11 +120,10 @@ class UserController extends Controller
 
         if(request()->wantsJson() || request()->expectsJson()) {
             $redirect = (Auth::user() == $user) ? route('login') : '';
-            (bool) $res = $user->delete();
+            $user->delete();
             return [
                 'redirect' => $redirect,
-                'message' => $res ? 'Domain deleted' : 'Domain not deleted',
-                'status' => $res
+                'message' => 'User eliminato con successo'
             ];
         }
 

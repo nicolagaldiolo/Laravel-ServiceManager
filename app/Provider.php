@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use File;
 
-class Providers extends Model
+class Provider extends Model
 {
     protected $guarded = [];
 
@@ -14,14 +14,9 @@ class Providers extends Model
         return $this->belongsTo(User::class);
     }
 
-    // Ha molti Domini
-    public function domains(){
-        return $this->hasMany(Domain::class, 'domain_id', 'id', 'providers');
-    }
-
-    // Ha molti Hosting
-    public function hostings(){
-        return $this->hasMany(Domain::class, 'hosting_id', 'id', 'providers');
+    // Ha molti services
+    public function services(){
+        return $this->hasMany(Service::class);
     }
 
 

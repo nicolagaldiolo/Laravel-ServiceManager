@@ -93,13 +93,13 @@
                             data: {
                                 '_token': $('meta[name="csrf-token"]').attr('content')
                             },
-                            success: function (data) {
-                                //console.log(data);
-                                swal('{{__('messages.deleted_title')}}', '{{__('messages.deleted_desc')}}', 'success')
+                            success: function(data) {
+                                toastr.success(data.message);
                                 dataTable.ajax.reload();
                             },
-                            error: function (xhr, status, error) {
-                                swal('{{__('messages.error_title')}}', '{{__('messages.error_desc')}}', 'error')
+                            error: function(resp, status, error) {
+                                resp = JSON.parse(resp.responseText);
+                                toastr.error(resp.message);
                             },
 
                         })

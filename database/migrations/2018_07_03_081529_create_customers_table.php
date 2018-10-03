@@ -22,7 +22,7 @@ class CreateCustomersTable extends Migration
             $table->unsignedInteger('user_id')->index();
             $table->timestamps();
 
-            //foreignkey
+            $table->unique( ['email','user_id'] );
             $table->foreign('user_id')->on('users')->references('id')->onDelete('cascade')->onUpdate('cascade');
         });
     }

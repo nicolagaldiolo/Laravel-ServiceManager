@@ -10,11 +10,8 @@
     <div class="m-portlet__head-tools">
         <ul class="m-portlet__nav">
             <li class="m-portlet__nav-item">
-                <a href="{{$url}}" class="btn btn-primary m-btn m-btn--pill m-btn--custom m-btn--icon">
-                    <span>
-                        <i class="la la-plus-circle"></i>
-                        <span>{{$button}}</span>
-                    </span>
+                <a href="{{$url}}" class="new-record btn btn-primary m-btn m-btn--icon btn-lg m-btn--icon-only m-btn--pill" data-toggle="m-tooltip" data-placement="left" title="" data-original-title="{{$button}}">
+                    <i class="la la-plus"></i>
                 </a>
             </li>
         </ul>

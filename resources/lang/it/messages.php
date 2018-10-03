@@ -9,7 +9,6 @@ return [
     |
     |
     */
-
     'selectLang' => 'Seleziona lingua',
     'password' => 'Password',
     'change_password' => 'Cambia password',
@@ -44,9 +43,13 @@ return [
     'enter_url' => 'Inserisci l\'URL del tuo sito web.',
     'choose_customer' => 'Si prega di scegliere un cliente',
     'choose_provider' => 'Si prega di scegliere un fornitore',
+    'choose_service_type' => 'Si prega di scegliere un tipo di servizio',
     'provider_name' => 'Si prega di inserire il nome del fornitore.',
     'note' => 'Note',
     'enter_note' => 'Si prega di inserire una nota.',
+    'enter_service_type_name' => 'Si prega di inserire il nome del tipo servizio',
+    'frequency_renewal' => 'Frequenza di rinnovo',
+    'choose_frequency_renewal' => 'Si prega di scegliere una frequenza dirinnovo',
     'payed' => 'Pagato',
     'not_payed' => 'Non pagato',
     'status_payment' => 'Si prega di impostare lo stato di pagamento.',
@@ -55,16 +58,14 @@ return [
     'are_sure' => 'Sei sicuro?',
     'are_sure_desc' => 'Non sarai in grado di ripristinare questo!',
     'confirm_delete' => 'Sì, cancellalo!',
-    'deleted_title' => 'Cancellato!',
-    'deleted_desc' => 'Il record è stato cancellato.',
     'confirm_title' => 'Grande!',
     'confirm_desc' => 'Operazione eseguita con successo.',
     'yes_procede' => 'Sì, naturalmente!',
-    'error_title' => 'Errore!',
-    'error_desc' => 'C\'è un problema.',
     'error_authorized' => 'Niente da fare qui.',
     'error_404_title' => 'Oops...',
     'error_404_desc' => 'Sembra che qualcosa sia andato storto. Ci stiamo lavorando',
+    'error_title' => 'Error!',
+    'error_desc' => 'There was a problem.',
     'edit' => 'Modifica',
     'total_revenue' => 'Cifre di vendita',
     'avarage_revenue' => 'Media delle vendite totali',
@@ -141,6 +142,17 @@ return [
     'site_screenshoot' => 'Screenshoot del sito',
     /*
     |--------------------------------------------------------------------------
+    | Service types
+    |--------------------------------------------------------------------------
+    |
+    |
+    */
+    'service_types' => 'Tipi di servizo',
+    'service_type' => 'Tipo di servizo',
+    'all_service_types' => 'Tutti i tipi di servizio',
+    'new_service_type' => 'Nuovo tipo di servizio',
+    /*
+    |--------------------------------------------------------------------------
     | Providers
     |--------------------------------------------------------------------------
     |
@@ -170,5 +182,6 @@ return [
     'drop_zone_avatar' => 'Trascina il file o clicca per caricare.',
     'drop_zone_avatar_desc' => 'Solo immagini sono permesse.',
     'avatar' => 'Avatar',
-    'role' => 'Ruolo',
+    'role' => 'Ruolo'
+
 ];

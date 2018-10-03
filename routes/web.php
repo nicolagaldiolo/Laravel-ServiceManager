@@ -27,12 +27,20 @@ Route::group(
     // Customers
     Route::resource('customers', 'CustomerController');
 
-    // Domains
-    Route::resource('domains', 'DomainsController')->except('show');
-    Route::patch('/domains/{domain}/payed', 'DomainsController@payedUpdate')->name('domains.payed.update');
+    // Services
+    Route::resource('services', 'ServicesController');
+
+    //Route::get('/services/renewal/{renewal}/', 'ServiceRenewalsController@show');
+    Route::resource('services.renewals', 'ServiceRenewalsController')->only('destroy');
+    Route::resource('services.renewals.transition', 'ServiceRenewalsController')->only('update');
+
+    //Route::patch('/domains/{domain}/payed', 'DomainsController@payedUpdate')->name('domains.payed.update');
+
+    // ServiceTypes
+    Route::resource('service-types', 'ServiceTypesController')->except('show', 'create');
 
     // Providers
-    Route::resource('providers', 'ProvidersController')->except('show');
+    Route::resource('providers', 'ProvidersController');
 
     // Users
     Route::resource('users', 'UserController')->except('show');
