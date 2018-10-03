@@ -23,6 +23,12 @@
     }
 }
 
+.custom_inline_datepicker{
+    .datepicker-inline{
+        width: 100%;
+    }
+}
+
 .progress{
     &.m-progress--sm{
         .progress-bar{
@@ -119,8 +125,6 @@
         }
     }
 }
-
-widget11__app
 
 .m-widget12{
     .m-widget12__item{

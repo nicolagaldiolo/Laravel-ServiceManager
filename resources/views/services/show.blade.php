@@ -133,31 +133,6 @@
                         </div>
                     </div>
 
-                    <div class="m-portlet__body">
-                        <div class="m-form__section m-form__section--first">
-                            <div class="form-group m-form__group">
-                                <label class="">{{__('messages.name')}} *</label>
-                                <div class="m-input-icon m-input-icon--left">
-                                    <input id="service-type-name" type="text" name="name" class="form-control m-input">
-                                    <span class="m-input-icon__icon m-input-icon__icon--left">
-                                                            <span>
-                                                                <i class="la la-tag"></i>
-                                                            </span>
-                                                        </span>
-                                </div>
-                                <span class="m-form__help">{{__('messages.enter_service_type_name')}}</span>
-
-
-                                <span data-field="name" class="invalid-feedback" role="alert">
-                                                    <strong>{{ $errors->first('name') }}</strong>
-                                                </span>
-
-
-                            </div>
-
-                        </div>
-                    </div>
-
                 </div>
 
                 <!--end:: Widgets/Company Summary-->
@@ -221,14 +196,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-
-
-
-                        <!-- QUI CI ANDRà il portlet -->
-
-
-
-
+                        @include('renewals.create')
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">{{__('messages.cancel')}}</button>
@@ -254,6 +222,51 @@
     <script>
 
         jQuery(document).ready( function () {
+
+            var serviceForm = $('#service-type-form');
+            var modalPanel = $('#m_modal_1');
+
+            modalPanel.on('hide.bs.modal', function (e) {
+                serviceForm.trigger('reset');
+                modalPanel.find("span[data-field]").html("");
+            });
+
+            $('.new-record').on('click', function (el) {
+                el.preventDefault();
+                modalPanel.modal('show');
+
+                $(serviceForm)
+                    .attr('action', '{{route('service-types.store')}}')
+                    .data('method', 'POST');
+            });
+
+            $(serviceForm).on('submit', function(el) {
+                el.preventDefault();
+
+                $.ajax(el.target.action, {
+                    method: $(el.target).data('method'),
+                    data: $(this).serialize(), // faccio la serializzazione dei dati per inviare tutti i campi del form
+                    success: function (data) {
+                        modalPanel.modal('hide');
+                        toastr.success(data.message);
+                        dataTable.ajax.reload();
+                    },
+                    error: function(resp) {
+                        resp = JSON.parse(resp.responseText);
+
+                        if(resp.errors) {
+                            jQuery.each(resp.errors, function (key, value) {
+                                modalPanel.find("span[data-field='" + key + "']").html('<strong>' + value + '</strong>');
+                            });
+                        }else{
+                            toastr.error(resp.message);
+                            modalPanel.modal('hide');
+                        }
+
+                    },
+                })
+            });
+
             var dataTable = jQuery('#m_table_1').DataTable({
                 processing: true,
                 serverSide: true,

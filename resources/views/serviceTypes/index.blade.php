@@ -90,24 +90,22 @@
 
         jQuery(document).ready( function () {
 
-            var modalPanel = $('#m_modal_1');
             var serviceForm = $('#service-type-form');
-
-            var dataTable = jQuery('#m_table_1').DataTable({
-                processing: true,
-                serverSide: true,
-                ajax: '{{route('service-types.index')}}',
-                columns: [
-                    { data: "name" },
-                    { data: "actions", name: 'action', orderable: false, searchable: false}
-                ],
-            });
+            var modalPanel = $('#m_modal_1');
 
             modalPanel.on('hide.bs.modal', function (e) {
                 serviceForm.trigger('reset');
                 modalPanel.find("span[data-field]").html("");
             });
 
+            $('.new-record').on('click', function (el) {
+                el.preventDefault();
+                modalPanel.modal('show');
+
+                $(serviceForm)
+                    .attr('action', '{{route('service-types.store')}}')
+                    .data('method', 'POST');
+            });
 
             $(serviceForm).on('submit', function(el) {
                 el.preventDefault();
@@ -136,13 +134,14 @@
                 })
             });
 
-            $('.new-record').on('click', function (el) {
-                el.preventDefault();
-                modalPanel.modal('show');
-
-                $(serviceForm)
-                    .attr('action', '{{route('service-types.store')}}')
-                    .data('method', 'POST');
+            var dataTable = jQuery('#m_table_1').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: '{{route('service-types.index')}}',
+                columns: [
+                    { data: "name" },
+                    { data: "actions", name: 'action', orderable: false, searchable: false}
+                ],
             });
 
             $('#m_table_1').on('click', '.edit', function (el) {

@@ -24,7 +24,23 @@ var HostingManager = function($) {
         $('.cp_colorpicker').colorpicker({
             format: 'hex'
         });
+
+        $('.custom_inline_datepicker').datepicker({
+            todayHighlight: true,
+            format: "dd-mm-yyyy",
+            templates: {
+                leftArrow: '<i class="la la-angle-left"></i>',
+                rightArrow: '<i class="la la-angle-right"></i>'
+            }
+        }).on('changeDate', function() {
+            $(this).find('.m_datepicker_hidden_input').val(
+                $(this).datepicker('getFormattedDate')
+            );
+        });
+
     }
+
+
 
     return {
         init: function() {
