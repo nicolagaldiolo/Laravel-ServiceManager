@@ -21,6 +21,7 @@ class CreateRenewalsTable extends Migration
             $table->tinyInteger('status')->unsigned()->default(RenewalSM::S_to_confirm);
             $table->timestamps();
 
+            $table->unique( ['deadline','service_id'] );
             $table->foreign('service_id')->on('services')->references('id')->onDelete('cascade')->onUpdate('cascade');
         });
     }

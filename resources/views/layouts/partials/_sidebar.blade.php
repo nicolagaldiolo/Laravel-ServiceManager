@@ -95,14 +95,6 @@
                                 <span class="m-menu__link-text">{{__('messages.new_domain')}}</span>
                             </a>
                         </li>
-                        <li class="m-menu__item " aria-haspopup="true">
-                            <a href="{{route('service-types.index')}}" class="m-menu__link ">
-                                <i class="m-menu__link-bullet m-menu__link-bullet--dot">
-                                    <span></span>
-                                </i>
-                                <span class="m-menu__link-text">{{__('messages.service_types')}}</span>
-                            </a>
-                        </li>
                     </ul>
                 </div>
             </li>
@@ -169,6 +161,23 @@
                     </div>
                 </li>
             @endif
+
+            <li class="m-menu__section ">
+                <h4 class="m-menu__section-text">Anagrafiche</h4>
+                <i class="m-menu__section-icon flaticon-more-v3"></i>
+            </li>
+
+            <li class="m-menu__item" aria-haspopup="true">
+                <a href="{{route('service-types.index')}}" class="m-menu__link ">
+                    <i class="m-menu__link-icon flaticon-interface-6"></i>
+                    <span class="m-menu__link-title">
+                        <span class="m-menu__link-wrap">
+                            <span class="m-menu__link-text">{{__('messages.service_types')}}</span>
+                        </span>
+                    </span>
+                </a>
+            </li>
+
         </ul>
     </div>
     <!-- END: Aside Menu -->

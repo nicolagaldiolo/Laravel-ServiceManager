@@ -88,32 +88,13 @@ return [
         // list of all callbacks
         'callbacks' => [
             // will be called when testing a transition
-            //'guard' => [
-            //    'guard_on_renews' => [
-            //        // call the callback on a specific transition
-            //        'on' => App\Enums\RenewalSM::T_renews,
-            //        // will call the method of this class
-            //        'do' => ['\App\Renewal', 'pippo'],
-            //        // arguments for the callback
-            //        'args' => ['object'],
-            //    ],
-            //],
+            'guard' => [],
 
             // will be called before applying a transition
             'before' => [],
 
             // will be called after applying a transition
-            'after' => [
-                'after_renews' => [
-                    // call the callback on a specific transition
-                    'on' => App\Enums\RenewalSM::T_renews,
-                    // will call the method of this class
-                    'do' => '\App\Renewal@pippo',
-                    //'do' => ['\App\Renewal', 'pippo'],
-                    // arguments for the callback
-                    'args' => ['object'],
-                ]
-            ],
+            'after' => [],
         ],
     ]
 ];

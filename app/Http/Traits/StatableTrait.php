@@ -2,6 +2,7 @@
 
 namespace App\Http\Traits;
 
+use App\Enums\RenewalSM;
 use App\Renewal;
 use App\Service;
 use SM\Factory\FactoryInterface;
@@ -28,12 +29,26 @@ trait StatableTrait {
         return $this->stateMachine()->getState();
     }
 
-    public function getStateAttribute(){
+    public function getStateAttribute()
+    {
+        if(is_null($this->stateIs()))
+            return null;
+
         $states = config('state-machine.' . self::SM_CONFIG . '.states_attribute');
         return array_filter($states, function($v, $k){
             return $k == $this->stateIs();
         }, ARRAY_FILTER_USE_BOTH);
+
     }
+
+
+    public function getStateAttributeVerbose()
+    {
+        $status = $this->getStateAttribute();
+        return $status ? '<span class="m-badge m-badge--' . $status[key($status)]['label'] . ' m-badge--wide">' . RenewalSM::getDescription(key($status)) . '</span>' : "";
+
+    }
+
 
     public function transition($transition)
     {
@@ -72,27 +87,6 @@ trait StatableTrait {
     public function getAllTransition()
     {
         return config('state-machine.' . self::SM_CONFIG . '.transitions');
-    }
-
-    public function pippo(Renewal $renewal)
-    {
-
-        //$renewal->service;
-        //dd($renewal);
-
-        $new = Renewal::create([
-            'service_id' =>  $renewal->service_id,
-            'deadline' => '05-11-2020',
-            'amount' => $renewal->amount,
-        ]);
-
-
-        //d-m-Y
-        //logger($renewal);
-        //return $a;
-        //$renewal->service()->create($renewal);
-        //dd($renewal);
-
     }
 
 }

@@ -27,7 +27,7 @@
             <!--begin::Form-->
             <form method="POST" action="{{route('services.store')}}" class="m-form m-form--fit m-form--label-align-right">
                 @csrf
-                @include('services._form', ['deadline' => true])
+                @include('services._form', ['all_field' => true])
             </form>
             <!--end::Form-->
         </div>

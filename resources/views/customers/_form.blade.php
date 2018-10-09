@@ -67,7 +67,7 @@
         <div class="row">
             <div class="col-lg-6">
                 <button type="submit" class="btn btn-primary">{{__('messages.save')}}</button>
-                <a href="{{route('customers.index')}}" class="btn btn-secondary">{{__('messages.cancel')}}</a>
+                <a href="{{route('customers.show', $customer)}}" class="btn btn-secondary">{{__('messages.cancel')}}</a>
             </div>
         </div>
     </div>

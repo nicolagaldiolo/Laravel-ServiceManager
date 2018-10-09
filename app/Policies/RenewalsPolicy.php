@@ -19,7 +19,7 @@ class RenewalsPolicy
      */
     public function view(User $user, Renewal $renewal)
     {
-        //
+        return $user->id === $renewal->user()->id;
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Enums\FrequencyRenewals;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use File;
@@ -35,6 +36,48 @@ class Service extends Model
     public function user(){
         return $this->customer->user;
     }
+
+    public function lastRenewalInsert(){
+        return $this->renewals()->orderBy('deadline', 'DESC')->firstOrNew([]);
+    }
+
+    public function calcNextDeadline()
+    {
+        $lastRenewal = $this->lastRenewalInsert();
+        $nextDeadline = null;
+        if(!is_null($lastRenewal->deadline)){
+            switch ($this->frequency) {
+                case FrequencyRenewals::Weekly:
+                    $nextDeadline = $lastRenewal->deadline->addWeek();
+                    break;
+                case FrequencyRenewals::Monthly:
+                    $nextDeadline = $lastRenewal->deadline->addMonth();
+                    break;
+                case FrequencyRenewals::HalfYearly:
+                    $nextDeadline = $lastRenewal->deadline->addMonths(6);
+                    break;
+                case FrequencyRenewals::Biennial:
+                    $nextDeadline = $lastRenewal->deadline->addYears(2);
+                    break;
+                case FrequencyRenewals::Triennial:
+                    $nextDeadline = $lastRenewal->deadline->addYears(3);
+                    break;
+                case FrequencyRenewals::Quadrennial:
+                    $nextDeadline = $lastRenewal->deadline->addYears(4);
+                    break;
+                case FrequencyRenewals::Quinquennial:
+                    $nextDeadline = $lastRenewal->deadline->addYears(5);
+                    break;
+                default:
+                case FrequencyRenewals::Annual:
+                    $nextDeadline = $lastRenewal->deadline->addYear();
+                    break;
+            }
+        }
+
+        return $nextDeadline;
+    }
+
 
     /*
     public function getDeadlineFormattedAttribute()

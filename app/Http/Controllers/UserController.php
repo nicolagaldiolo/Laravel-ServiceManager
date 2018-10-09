@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Enums\UserType;
 use App\Http\Requests\UserRequest;
+use App\Renewal;
 use App\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Auth;
 use Storage;
@@ -27,7 +29,7 @@ class UserController extends Controller
             return DataTables::of($users)->addColumn('actions', function($user){
                 return implode("", [
                     '<a href="' . route('users.edit', $user) . '" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill"><i class="la la-edit"></i></a>',
-                    '<a href="' . route('users.destroy', $user) . '" class="delete btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill"><i class="la la-trash"></i></a>',
+                    '<a href="' . route('users.destroy', $user) . '" class="deleteRecord btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill"><i class="la la-trash"></i></a>',
                 ]);
             })->editColumn('role', function ($user) {
                 return UserType::getDescription($user->role);
@@ -131,5 +133,21 @@ class UserController extends Controller
             $user->delete();
             return redirect()->route('login');
         }
+    }
+
+    public function destroyAll(Request $request)
+    {
+        $this->authorize('massiveDelete', Auth::user());
+
+        $ids = explode(",",$request->ids);
+        $redirect = (in_array(Auth::user()->id, $ids)) ? route('login') : '';
+
+        if($ids)
+            User::whereIn('id',$ids)->delete();
+
+        return [
+            'redirect' => $redirect,
+            'message' => 'Utenti eliminati con successo'
+        ];
     }
 }

@@ -16,7 +16,7 @@
                         <div class="m-portlet__head-caption">
                             <div class="m-portlet__head-title">
 												<span class="m-portlet__head-icon">
-                                    <i class="flaticon-browser"></i>
+                                    <i class="flaticon-responsive"></i>
                                 </span>
                                 <h3 class="m-portlet__head-text">
                                     {{__('messages.site_screenshoot')}}
@@ -63,7 +63,7 @@
                     <form method="POST" action="{{route('services.update', $service)}}" class="m-form m-form--fit">
                         @csrf
                         @method('PATCH')
-                        @include('services._form', ['deadline' => false])
+                        @include('services._form', ['all_field' => false])
                     </form>
 
                     <!--end::Form-->

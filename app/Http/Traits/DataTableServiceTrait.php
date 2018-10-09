@@ -15,23 +15,13 @@ trait DataTableServiceTrait {
                 return FrequencyRenewals::getDescription($service->frequency);
             })
             ->editColumn('deadline', function ($service) {
-                $renewal = $service->renewals->last();
-                if(is_null($renewal)) return;
-
-                //return $renewal->deadline ? with(new Carbon($renewal->deadline))->diffForHumans() : '';
-                return $renewal->deadlineFormatted;
+                return $service->renewals()->currentDeadline()->deadlineVerbose;
             })
             ->editColumn('amount', function ($service) {
-                $renewal = $service->renewals->last();
-                if(is_null($renewal)) return;
-
-                return $renewal->amountFormatted;
+                return $service->renewals()->currentDeadline()->amountVerbose;
             })
             ->editColumn('status', function ($service) {
-                $renewal = $service->renewals->last();
-                if(is_null($renewal)) return;
-
-                return $renewal->status;
+                return $service->renewals()->currentDeadline()->getStateAttributeVerbose();
             })
             //->editColumn('deadline', function ($domain) {
                 //return $domain->deadline ? with(new Carbon($domain->deadline))->diffForHumans() : '';
@@ -45,10 +35,9 @@ trait DataTableServiceTrait {
 
                 return implode("", [
                     '<a href="' . route('services.show', $service) . '" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill"><i class="la la-eye"></i></a>',
-                    '<a href="' . route('services.edit', $service) . '" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill"><i class="la la-edit"></i></a>',
                     '<a href="' . route('services.destroy', $service) . '" class="delete btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill"><i class="la la-trash"></i></a>',
                     //$button
                 ]);
-            })->rawColumns(['actions'])->make(true);
+            })->rawColumns(['status','actions'])->make(true);
     }
 }

@@ -24,6 +24,13 @@
                                 </h3>
                             </div>
                         </div>
+                        <div class="m-portlet__head-tools">
+                            <ul class="m-portlet__nav">
+                                <li class="m-portlet__nav-item">
+                                    <a class="btn m-btn--pill btn-secondary" href="{{route('customers.edit', $customer)}}">{{__('messages.edit')}}</a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                     <div class="m-portlet__body">
                         <div class="m-widget13">
@@ -42,10 +49,6 @@
                             <div class="m-widget13__item">
 				                <span class="m-widget13__desc">{{__('messages.address')}}</span>
                                 <span class="m-widget13__text">{{$customer->address}}</span>
-                            </div>
-
-                            <div class="m-widget13__action">
-                                <a class="btn m-btn--pill btn-secondary" href="{{route('customers.edit', $customer)}}">{{__('messages.edit')}}</a>
                             </div>
                         </div>
                     </div>

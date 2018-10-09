@@ -61,4 +61,9 @@ class UserPolicy
     {
         return $currentUser->id === $user->id || $currentUser->isAdmin();
     }
+
+    public function massiveDelete(User $currentUser)
+    {
+        return $currentUser->isAdmin();
+    }
 }

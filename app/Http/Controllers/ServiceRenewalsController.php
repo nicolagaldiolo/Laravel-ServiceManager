@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ServiceRenewalRequest;
 use App\Renewal;
 use App\Service;
-use Illuminate\Http\Request;
 
 class ServiceRenewalsController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -23,9 +24,17 @@ class ServiceRenewalsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Service $service)
     {
-        //
+        // Create a new renewal object
+        $renewal = new Renewal([
+            'deadline' => $service->calcNextDeadline(),
+            'amount' => $service->lastRenewalInsert()->amount
+        ]);
+
+        return [
+            'view' => view('renewals._form', compact('renewal'))->render()
+        ];
     }
 
     /**
@@ -34,9 +43,13 @@ class ServiceRenewalsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ServiceRenewalRequest $request, Service $service)
     {
-        //
+        $service->renewals()->create($request->validated());
+
+        return [
+            'message' => 'Nuova scadenza creata con successo'
+        ];
     }
 
     /**
@@ -56,10 +69,16 @@ class ServiceRenewalsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Service $service, Renewal $renewal)
     {
-        //
+        $this->authorize('view', $renewal);
+
+        return [
+            'view' => view('renewals._form', compact('renewal'))->render()
+        ];
+
     }
+
 
     /**
      * Update the specified resource in storage.
@@ -68,25 +87,15 @@ class ServiceRenewalsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Service $service, Renewal $renewal, $transition)
+
+    public function update(ServiceRenewalRequest $request, Service $service, Renewal $renewal)
     {
-
         $this->authorize('update', $renewal);
+        $renewal->update($request->validated());
 
-        try {
-            $renewal->transition($transition);
-
-            if(request()->wantsJson() || request()->expectsJson()) {
-                return [
-                    'message' => 'Cambio di stato effettuato con successo'
-                ];
-            }
-
-        } catch(\Exception $e) {
-            logger($e);
-            return abort(500, $e->getMessage());
-        }
-
+        return [
+            'message' => 'Rinnovo aggiornato con successo'
+        ];
     }
 
 
@@ -102,10 +111,27 @@ class ServiceRenewalsController extends Controller
         $this->authorize('delete', $renewal);
         $renewal->delete();
 
-        if(request()->wantsJson() || request()->expectsJson()) {
-            return [
-                'message' => 'Renewal eliminato con successo'
-            ];
-        }
+        return [
+            'message' => 'Renewal eliminato con successo'
+        ];
     }
+
+    public function transition(Service $service, Renewal $renewal, $transition)
+    {
+
+        $this->authorize('update', $renewal);
+
+        try {
+            $renewal->transition($transition);
+            return [
+                'message' => 'Cambio di stato effettuato con successo'
+            ];
+
+        } catch(\Exception $e) {
+            logger($e);
+            return abort(500, $e->getMessage());
+        }
+
+    }
+
 }

@@ -28,7 +28,6 @@ class CustomerController extends Controller
             return DataTables::of($customers)->addColumn('actions', function($customer){
                 return implode("", [
                     '<a href="' . route('customers.show', $customer) . '" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill"><i class="la la-eye"></i></a>',
-                    '<a href="' . route('customers.edit', $customer) . '" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill"><i class="la la-edit"></i></a>',
                     '<a href="' . route('customers.destroy', $customer) . '" class="delete btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill"><i class="la la-trash"></i></a>',
                 ]);
             })->rawColumns(['actions'])->make(true);

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\RenewalSM;
+use App\Renewal;
 use App\Service;
 use App\ExpiringDomain;
 use App\Http\Requests\ServiceRequest;
@@ -24,9 +25,6 @@ class ServicesController extends Controller
     public function index()
     {
 
-        //$pippo = Service::orderBy('created_at', 'desc')->first();
-        //dd($pippo);
-
         if(request()->wantsJson() || request()->expectsJson()) {
             $services = Auth::user()->services()->with('provider', 'customer', 'serviceType')->get();
             return $this->getServicesDataTablesTraits($services);
@@ -47,12 +45,13 @@ class ServicesController extends Controller
         $providers = Auth::user()->providers()->get();
         $service_types = Auth::user()->serviceTypes()->get();
         $service = new Service;
+        $renewal = new Renewal;
 
         if($req->has('cid')){
             $service->customer_id = $req->input('cid');
         }
 
-        return view('services.create', compact('service', 'providers', 'service_types', 'customers'));
+        return view('services.create', compact('service', 'renewal', 'providers', 'service_types', 'customers'));
     }
 
     /**
@@ -63,9 +62,30 @@ class ServicesController extends Controller
      */
     public function store(ServiceRequest $request)
     {
-        Service::create($request->validated());
+        $renewal_field = [
+            'amount',
+            'deadline',
+            'status'
+        ];
 
-        return redirect()->route('services.index')
+        // Create the service
+        $service = Service::create($request->except($renewal_field));
+
+        // Create the renewal
+        $current = $service->renewals()->create($request->only($renewal_field));
+
+        // Create the next renewal
+        if(
+            $current->stateIs() != RenewalSM::S_suspended &&
+            $current->stateIs() != RenewalSM::S_to_confirm
+        ) {
+            $service->renewals()->create([
+                'deadline' => $service->calcNextDeadline(),
+                'amount' => $current->amount
+            ]);
+        }
+
+        return redirect()->route('services.show', $service)
             ->with('status', 'Servizio creato con successo');
     }
 
@@ -77,41 +97,35 @@ class ServicesController extends Controller
      */
     public function show(Service $service)
     {
-
-        //$renewals = $service->renewals()->first();
-        //$data = $renewals->getStateAttribute();
-        //$data = $renewals->getPossibleTransitions();
-        //dd($data);
-
         if(request()->wantsJson() || request()->expectsJson()) {
             $renewals = $service->renewals()->orderBy('deadline', 'DESC')->get();
             return DataTables::of($renewals)
                 ->editColumn('amount', function ($renewal) {
-                    return $renewal->amountFormatted;
+                    return $renewal->amountVerbose;
                 })
-                //->editColumn('deadline', function ($renewal) {
-                    //return $renewal->deadline ? with(new Carbon($renewal->deadline))->diffForHumans() : '';
-                //    return $renewal->deadline ? $renewal->deadlineFormatted : '';
-                //})
+                ->editColumn('deadline', function ($renewal) {
+                    return $renewal->deadline ? $renewal->deadlineVerbose : '';
+                })
                 ->editColumn('status', function ($renewal){
-                    $status = $renewal->getStateAttribute();
-                    return '<span class="m-badge m-badge--' . $status[key($status)]['label'] . ' m-badge--wide">' . RenewalSM::getDescription(key($status)) . '</span>';
-
+                    return $renewal->getStateAttributeVerbose();
                 })
                 ->addColumn('actions', function($renewal) use($service){
 
                     $buttons = $renewal->getPossibleTransitions();
                     array_walk($buttons, function(&$k, $v) use($renewal, $service){
-                        $k = '<a href="' . route('services.renewals.transition.update', ['service'=>$service,'renewals'=>$renewal,'transition'=>$v]) . '" class="update-transition btn btn-sm m-btn m-btn--custom btn-' . $k['label'] . '"><i class="'. $k['icon'] . '"></i> ' . RenewalSM::getDescription($v) . '</a>';
+                        $k = '<a data-transition="' . $v . '" href="' . route('services.renewals.transition', ['service'=>$service,'renewals'=>$renewal,'transition'=>$v]) . '" class="update-transition btn btn-sm m-btn m-btn--custom btn-' . $k['label'] . '"><i class="'. $k['icon'] . '"></i> ' . RenewalSM::getDescription($v) . '</a>';
                     });
 
+                    $buttons[] = '<a href="' . route('services.renewals.edit', ['service'=>$service,'renewals'=>$renewal]) . '" data-update="' . route('services.renewals.update', ['service'=>$service,'renewals'=>$renewal]) . '" class="edit btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill"><i class="la la-edit"></i></a>';
                     $buttons[] = '<a href="' . route('services.renewals.destroy', ['service'=>$service,'renewals'=>$renewal]) . '" class="delete btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill"><i class="la la-trash"></i></a>';
 
                     return implode("", $buttons);
 
                 })->rawColumns(['status','actions'])->make(true);
         }else{
+
             $service->load('provider', 'customer', 'serviceType');
+
             return view('services.show', compact('service'));
         }
 
@@ -126,14 +140,14 @@ class ServicesController extends Controller
      */
     public function edit(Service $service)
     {
-
         $this->authorize('view', $service);
 
         $customers = Auth::user()->customers()->get();
         $providers = Auth::user()->providers()->get();
         $service_types = Auth::user()->serviceTypes()->get();
+        $renewal = new Renewal;
 
-        return view('services.edit', compact('service', 'providers', 'service_types', 'customers'));
+        return view('services.edit', compact('service', 'renewal', 'providers', 'service_types', 'customers'));
     }
 
     /**
@@ -146,10 +160,11 @@ class ServicesController extends Controller
     public function update(ServiceRequest $request, Service $service)
     {
         $this->authorize('update', $service);
+
         $service->update($request->validated());
 
-        return redirect()->route('services.index')
-            ->with('status', 'Dominio aggiornato con successo');
+        return redirect()->route('services.show', $service)
+            ->with('status', 'Servizio modificato con successo');
     }
 
     /**

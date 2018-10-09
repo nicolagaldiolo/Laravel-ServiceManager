@@ -13,9 +13,9 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    public function __construct()
-    {
-        Carbon::setLocale(App::getLocale());
-    }
+    //public function __construct()
+    //{
+    //    Carbon::setLocale(App::getLocale());
+    //}
 
 }

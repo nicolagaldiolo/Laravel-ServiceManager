@@ -32,7 +32,9 @@ class ServiceTypesController extends Controller
             })->rawColumns(['actions'])->make(true);
         }
 
-        return view('serviceTypes.index');
+        $serviceType = new ServiceType;
+
+        return view('serviceTypes.index', compact('serviceType'));
     }
 
     /**
@@ -42,7 +44,12 @@ class ServiceTypesController extends Controller
      */
     public function create()
     {
-        //
+
+        $serviceType = new ServiceType;
+
+        return [
+            'view' => view( 'serviceTypes._form', compact('serviceType'))->render(),
+        ];
     }
 
     /**
@@ -55,11 +62,9 @@ class ServiceTypesController extends Controller
     {
         auth()->user()->serviceTypes()->create($request->validated());
 
-        if(request()->wantsJson() || request()->expectsJson()) {
-            return [
-                'message' => 'Tipo di servizio creato con successo'
-            ];
-        }
+        return [
+            'message' => 'Tipo di servizio creato con successo'
+        ];
     }
 
     /**
@@ -83,11 +88,9 @@ class ServiceTypesController extends Controller
     {
         $this->authorize('view', $serviceType);
 
-        if(request()->wantsJson() || request()->expectsJson()) {
-            return $serviceType;
-        }
-
-        return $serviceType;
+        return [
+            'view' => view( 'serviceTypes._form', compact('serviceType'))->render(),
+        ];
 
     }
 
@@ -102,11 +105,9 @@ class ServiceTypesController extends Controller
     {
         $serviceType->update($request->validated());
 
-        if(request()->wantsJson() || request()->expectsJson()) {
-            return [
-                'message' => 'Tipo di servizio modificato con successo'
-            ];
-        }
+        return [
+            'message' => 'Tipo di servizio modificato con successo'
+        ];
     }
 
     /**

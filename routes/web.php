@@ -30,20 +30,25 @@ Route::group(
     // Services
     Route::resource('services', 'ServicesController');
 
-    //Route::get('/services/renewal/{renewal}/', 'ServiceRenewalsController@show');
-    Route::resource('services.renewals', 'ServiceRenewalsController')->only('destroy');
-    Route::resource('services.renewals.transition', 'ServiceRenewalsController')->only('update');
-
-    //Route::patch('/domains/{domain}/payed', 'DomainsController@payedUpdate')->name('domains.payed.update');
+    // ServiceRenewals
+    Route::group(
+        [
+            'middleware' => ['onlyAjax']
+        ], function(){
+            Route::resource('services.renewals', 'ServiceRenewalsController')->except('index', 'show');
+            Route::patch('services/{service}/renewals/{renewal}/{transition}', 'ServiceRenewalsController@transition')->name('services.renewals.transition');
+    });
 
     // ServiceTypes
-    Route::resource('service-types', 'ServiceTypesController')->except('show', 'create');
+    Route::resource('service-types', 'ServiceTypesController')->except('show');
 
     // Providers
     Route::resource('providers', 'ProvidersController');
 
     // Users
     Route::resource('users', 'UserController')->except('show');
+    //Route::get('users/delete-users', 'UserController@destroyAll')->name('users.destroy-all');
+    Route::get('users/delete-users', 'UserController@destroyAll')->name('users.destroy-all');
     Route::patch('/users/{user}/avatar', 'UserAvatarController@update')->name('users.avatar.update');
     Route::get('/users/{user}/changepassword', 'Auth\ChangePasswordController@edit')->name('change.password');
     Route::post('/users/{user}/updatepassword', 'Auth\ChangePasswordController@update')->name('update.password');

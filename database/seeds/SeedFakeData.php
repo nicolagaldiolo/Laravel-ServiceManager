@@ -54,7 +54,7 @@ class SeedFakeData extends Seeder
                     'provider_id' => collect($providers)->random()->id,
                     'service_type_id' => collect($seviceTypes)->random()->id,
                 ])->each(function ($service){
-                    factory(App\Renewal::class, 5)->create([
+                    factory(App\Renewal::class, 1)->create([
                         'service_id' => $service->id,
                     ]);
                 });

@@ -9,7 +9,7 @@
     <div class="m-content">
 
         <div class="m-portlet m-portlet--mobile">
-            @component('components.tableHeader', ['icon' => 'flaticon-interface-7', 'button' => __('messages.new_service_type'), 'url' => ''])
+            @component('components.tableHeader', ['icon' => 'flaticon-interface-6', 'button' => __('messages.new_service_type'), 'url' => route('service-types.create')])
                 {{__('messages.all_service_types')}}
             @endcomponent
             <div class="m-portlet__body">
@@ -42,34 +42,6 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                            <div class="m-portlet__body">
-                                <div class="m-form__section m-form__section--first">
-                                    <div class="form-group m-form__group">
-                                        <label class="">{{__('messages.name')}} *</label>
-                                        <div class="m-input-icon m-input-icon--left">
-                                            <input id="service-type-name" type="text" name="name" class="form-control m-input">
-                                            <span class="m-input-icon__icon m-input-icon__icon--left">
-                                                            <span>
-                                                                <i class="la la-tag"></i>
-                                                            </span>
-                                                        </span>
-                                        </div>
-                                        <span class="m-form__help">{{__('messages.enter_service_type_name')}}</span>
-
-
-                                            <span data-field="name" class="invalid-feedback" role="alert">
-                                                    <strong>{{ $errors->first('name') }}</strong>
-                                                </span>
-
-
-                                    </div>
-
-                                </div>
-                            </div>
-
-
-
-
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">{{__('messages.cancel')}}</button>
@@ -90,29 +62,39 @@
 
         jQuery(document).ready( function () {
 
-            var serviceForm = $('#service-type-form');
             var modalPanel = $('#m_modal_1');
-
-            modalPanel.on('hide.bs.modal', function (e) {
-                serviceForm.trigger('reset');
-                modalPanel.find("span[data-field]").html("");
-            });
 
             $('.new-record').on('click', function (el) {
                 el.preventDefault();
-                modalPanel.modal('show');
 
-                $(serviceForm)
-                    .attr('action', '{{route('service-types.store')}}')
-                    .data('method', 'POST');
+                _self = this;
+                $.ajax(_self.href, {
+                    method: "GET",
+                    data: {
+                        '_token': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function (data) {
+                        if(data.view){
+                            modalPanel.find('.modal-body').html(data.view);
+                        }
+
+                        $('#service-type-form')
+                            .attr('action', '{{route('service-types.store', $serviceType)}}')
+                            .data('method', 'POST');
+
+                        modalPanel.modal('show');
+                    },
+                })
             });
 
-            $(serviceForm).on('submit', function(el) {
+            $('.modal-submit').on('click', function(el) {
                 el.preventDefault();
 
-                $.ajax(el.target.action, {
-                    method: $(el.target).data('method'),
-                    data: $(this).serialize(), // faccio la serializzazione dei dati per inviare tutti i campi del form
+                var serviceForm = $('#service-type-form');
+
+                $.ajax(serviceForm.attr('action'), {
+                    method: serviceForm.data('method'),
+                    data: serviceForm.serialize(), // faccio la serializzazione dei dati per inviare tutti i campi del form
                     success: function (data) {
                         modalPanel.modal('hide');
                         toastr.success(data.message);
@@ -120,6 +102,7 @@
                     },
                     error: function(resp) {
                         resp = JSON.parse(resp.responseText);
+                        modalPanel.find("span[data-field]").html('');
 
                         if(resp.errors) {
                             jQuery.each(resp.errors, function (key, value) {
@@ -146,7 +129,6 @@
 
             $('#m_table_1').on('click', '.edit', function (el) {
                 el.preventDefault();
-
                 _self = this;
 
                 $.ajax(_self.href, {
@@ -155,13 +137,14 @@
                         '_token': $('meta[name="csrf-token"]').attr('content')
                     },
                     success: function (data) {
-                        $(serviceForm)
+                        if(data.view){
+                            modalPanel.find('.modal-body').html(data.view);
+                        }
+
+                        $('#service-type-form')
                             .attr('action', $(_self).data('update'))
                             .data('method', 'PATCH');
 
-                        jQuery.each(data, function (key, value) {
-                            modalPanel.find("input[name='"+key+"']").val(value);
-                        });
                         modalPanel.modal('show');
                     },
                 })

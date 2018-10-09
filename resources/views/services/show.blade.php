@@ -16,7 +16,7 @@
                         <div class="m-portlet__head-caption">
                             <div class="m-portlet__head-title">
 												<span class="m-portlet__head-icon">
-                                    <i class="flaticon-browser"></i>
+                                    <i class="flaticon-responsive"></i>
                                 </span>
                                 <h3 class="m-portlet__head-text">
                                     {{__('messages.site_screenshoot')}}
@@ -49,8 +49,11 @@
                     <div class="m-portlet__head">
                         <div class="m-portlet__head-caption">
                             <div class="m-portlet__head-title">
+                                <span class="m-portlet__head-icon">
+                                    <i class="flaticon-browser"></i>
+                                </span>
                                 <h3 class="m-portlet__head-text">
-                                    Company Summary
+                                    Informazioni sul servizio
                                 </h3>
                             </div>
                         </div>
@@ -101,41 +104,30 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="m-widget13__item">
-                                        <span class="m-widget13__desc">Scadenza</span>
-                                        <span class="m-widget13__text m-widget13__text-bolder">26 Settembre 2018</span>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="m-widget13__item">
                                         <span class="m-widget13__desc">Frequenza rinnovo</span>
-                                        <span class="m-widget13__text m-widget13__text-bolder">Annuale</span>
+                                        <span class="m-widget13__text m-widget13__text-bolder">{{\App\Enums\FrequencyRenewals::getDescription($service->frequency)}}</span>
                                     </div>
                                 </div>
 
                             </div>
 
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="m-widget13__item">
-                                        <span class="m-widget13__desc">Importo</span>
-                                        <span class="m-widget13__text m-widget13__text-bolder">&euro; 100,00</span>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="m-widget13__item">
-                                        <span class="m-widget13__desc">Note</span>
-                                        <span class="m-widget13__text m-widget13__text-bolder">{{$service->note}}</span>
-                                    </div>
-                                </div>
-                            </div>
 
                         </div>
+
+                        @if($service->note)
+                            <div class="m-alert m-alert--icon m-alert--air m-alert--square alert mt-4 mb-0" role="alert">
+                                <div class="m-alert__icon">
+                                    <i class="la la-warning"></i>
+                                </div>
+                                <div class="m-alert__text">
+                                    <strong>Note: </strong> {{$service->note}}
+                                </div>
+                            </div>
+                        @endif
+
                     </div>
 
                 </div>
-
-                <!--end:: Widgets/Company Summary-->
 
 
                 <!--end::Portlet-->
@@ -149,7 +141,7 @@
                 <!--begin:: Widgets/Sale Reports-->
                 <div class="m-portlet m-portlet--full-height ">
 
-                    @component('components.tableHeader', ['icon' => 'flaticon-layers', 'button' => __('Nuova scadenza'), 'url' => 'pippo'])
+                    @component('components.tableHeader', ['icon' => 'flaticon-layers', 'button' => __('Nuova scadenza'), 'url' => route('services.renewals.create', $service)])
                         Storico Rinnovi
                     @endcomponent
 
@@ -159,9 +151,9 @@
                         <table class="table table-striped- table-bordered table-hover table-checkable" id="m_table_1">
                             <thead>
                                 <tr>
-                                    <th>Data</th>
                                     <th>Importo</th>
                                     <th>Stato</th>
+                                    <th>Data</th>
                                     <th>Azione</th>
                                 </tr>
                             </thead>
@@ -178,43 +170,26 @@
 
     </div>
 
-
-
-
-
-
     <!--begin::Modal-->
-    <form id="service-type-form" class="m-form m-form--fit">
-        @csrf
-        <div class="modal fade" id="m_modal_1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">{{__('messages.service_type')}}</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        @include('renewals.create')
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{__('messages.cancel')}}</button>
-                        <button type="submit" class="modal-submit btn btn-primary">{{__('messages.save')}}</button>
-                    </div>
+    <div class="modal fade" id="m_modal_1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Aggiungi nuova scadenza</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{__('messages.cancel')}}</button>
+                    <button type="button" class="modal-submit btn btn-primary">{{__('messages.save')}}</button>
                 </div>
             </div>
         </div>
+    </div>
 
-        <!--end::Modal-->
-    </form>
-
-
-
-
-
-
-
+    <!--end::Modal-->
 @stop
 
 @section('scripts')
@@ -223,36 +198,57 @@
 
         jQuery(document).ready( function () {
 
-            var serviceForm = $('#service-type-form');
             var modalPanel = $('#m_modal_1');
-
-            modalPanel.on('hide.bs.modal', function (e) {
-                serviceForm.trigger('reset');
-                modalPanel.find("span[data-field]").html("");
-            });
 
             $('.new-record').on('click', function (el) {
                 el.preventDefault();
-                modalPanel.modal('show');
+                _self = this;
+                $.ajax(_self.href, {
+                    method: "GET",
+                    data: {
+                        '_token': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function (data) {
+                        if(data.view){
+                            modalPanel.find('.modal-body').html(data.view);
+                        }
 
-                $(serviceForm)
-                    .attr('action', '{{route('service-types.store')}}')
-                    .data('method', 'POST');
+                        $('#service-type-form')
+                            .attr('action', '{{route('services.renewals.store', $service)}}')
+                            .data('method', 'POST');
+
+                        $('.custom_inline_datepicker').datepicker({
+                            todayHighlight: true,
+                            format: "dd-mm-yyyy",
+                            templates: {
+                                leftArrow: '<i class="la la-angle-left"></i>',
+                                rightArrow: '<i class="la la-angle-right"></i>'
+                            }
+                        });
+
+                        modalPanel.modal('show');
+                    },
+                })
+
             });
 
-            $(serviceForm).on('submit', function(el) {
+            $('.modal-submit').on('click', function(el) {
                 el.preventDefault();
 
-                $.ajax(el.target.action, {
-                    method: $(el.target).data('method'),
-                    data: $(this).serialize(), // faccio la serializzazione dei dati per inviare tutti i campi del form
+                var serviceForm = $('#service-type-form');
+
+                $.ajax(serviceForm.attr('action'), {
+                    method: serviceForm.data('method'),
+                    data: serviceForm.serialize(), // faccio la serializzazione dei dati per inviare tutti i campi del form
                     success: function (data) {
                         modalPanel.modal('hide');
                         toastr.success(data.message);
                         dataTable.ajax.reload();
                     },
                     error: function(resp) {
+
                         resp = JSON.parse(resp.responseText);
+                        modalPanel.find("span[data-field]").html('');
 
                         if(resp.errors) {
                             jQuery.each(resp.errors, function (key, value) {
@@ -273,44 +269,83 @@
                 //ordering: false,
                 ajax: '{{route('services.show', $service)}}',
                 columns: [
-                    { data: "deadline" },
                     { data: "amount" },
                     { data: "status" },
+                    { data: "deadline" },
                     { data: "actions", name: 'action', orderable: false, searchable: false}
-                ],
-                columnDefs: [
-                    {
-                        targets: [1],
-                        render: function(data, type, full, meta){
-                            return (data !== null) ? '&euro; ' + data : '';
-                        }
-                    }
                 ]
-            });
-
-            dataTable.on('draw.dt', function() {
-                $('[data-toggle="m-tooltip"]').tooltip();
             });
 
             $('#m_table_1').on('click', '.update-transition', function (el) {
                 el.preventDefault();
 
-                $.ajax(this.href, {
+                var _self = this;
+                var _currentTransition = $(_self).data('transition');
+
+                $.ajax(_self.href, {
 
                     method: "PATCH",
                     data: {
                         '_token': $('meta[name="csrf-token"]').attr('content')
                     },
-                    success: function(data) {
+                    success: function (data) {
                         toastr.success(data.message);
                         dataTable.ajax.reload();
+
+                        if(_currentTransition == '{{App\Enums\RenewalSM::T_renews}}'){
+                            swal({
+                                title: 'Vuoi già creare la prossima scadenza?',
+                                text: 'Modifica scadenza e importo se lo desideri',
+                                type: 'warning',
+                                showCancelButton: true,
+                                confirmButtonText: 'Si, procedi'
+                            }).then(function(result) {
+                                if (result.value) {
+                                    $( ".new-record" ).trigger( "click" );
+                                }
+                            });
+                        }
+
                     },
-                    error: function(resp, status, error) {
+                    error: function (resp, status, error) {
                         resp = JSON.parse(resp.responseText);
                         toastr.error(resp.message);
                     },
-
                 });
+
+            });
+
+            $('#m_table_1').on('click', '.edit', function (el) {
+                el.preventDefault();
+
+                _self = this;
+
+                $.ajax(_self.href, {
+                    method: "GET",
+                    data: {
+                        '_token': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function (data) {
+                        if(data.view){
+                            modalPanel.find('.modal-body').html(data.view);
+                        }
+
+                        $('#service-type-form')
+                            .attr('action', $(_self).data('update'))
+                            .data('method', 'PATCH');
+
+                        $('.custom_inline_datepicker').datepicker({
+                            todayHighlight: true,
+                            format: "dd-mm-yyyy",
+                            templates: {
+                                leftArrow: '<i class="la la-angle-left"></i>',
+                                rightArrow: '<i class="la la-angle-right"></i>'
+                            }
+                        });
+
+                        modalPanel.modal('show');
+                    },
+                })
 
             });
 

@@ -20,7 +20,7 @@ class CreateServicesTable extends Migration
             $table->unsignedInteger('customer_id')->index();
             $table->unsignedInteger('provider_id')->index();
             $table->unsignedInteger('service_type_id')->index();
-            $table->tinyInteger('frequency')->unsigned()->default(FrequencyRenewals::Annual);
+            $table->tinyInteger('frequency')->unsigned();
             $table->string('screenshoot')->nullable();
             $table->boolean('health')->default(0);
             $table->string('note')->nullable();

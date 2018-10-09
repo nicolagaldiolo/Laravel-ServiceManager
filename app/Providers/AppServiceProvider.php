@@ -8,6 +8,7 @@ use App\User;
 use App\Observers\UserObserver;
 use App\Observers\DomainObserver;
 use App\Observers\ProviderObserver;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;

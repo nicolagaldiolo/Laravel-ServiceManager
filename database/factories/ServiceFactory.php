@@ -2,6 +2,7 @@
 
 use Faker\Generator as Faker;
 use Carbon\Carbon;
+use App\Enums\FrequencyRenewals;
 
 $factory->define(App\Service::class, function (Faker $faker) {
     return [
@@ -9,6 +10,7 @@ $factory->define(App\Service::class, function (Faker $faker) {
         'customer_id' => factory(App\Customer::class)->make(),
         'provider_id' => factory(App\Provider::class)->make(),
         'service_type_id' => factory(App\ServiceType::class)->make(),
+        'frequency' => FrequencyRenewals::Annual,
         'note' => $faker->text(255)
     ];
 });

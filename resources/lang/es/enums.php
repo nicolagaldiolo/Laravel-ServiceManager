@@ -2,14 +2,23 @@
 
 use App\Enums\FrequencyRenewals;
 use App\Enums\RenewalSM;
+use App\Enums\UserType;
 
 return [
 
+    UserType::class => [
+        UserType::User => 'Usuario',
+        UserType::Admin => 'Administrador',
+    ],
+
     FrequencyRenewals::class => [
+        FrequencyRenewals::Weekly => 'Semanal',
         FrequencyRenewals::Monthly => 'Mensual',
         FrequencyRenewals::HalfYearly => '6 meses',
         FrequencyRenewals::Annual => 'Anual',
         FrequencyRenewals::Biennial => '2 años',
+        FrequencyRenewals::Triennial => '3 años',
+        FrequencyRenewals::Quadrennial => '4 años',
         FrequencyRenewals::Quinquennial => '5 años',
     ],
 

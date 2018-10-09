@@ -26,8 +26,11 @@ class ServiceRequest extends FormRequest
      */
     public function rules()
     {
+        $formRequests = [
+            ServiceRenewalRequest::class
+        ];
 
-        return [
+        $rules = [
             'url'               => 'required|url|max:255',
             'customer_id'       => 'required|exists:customers,id,user_id,' . Auth::user()->id,
             'provider_id'       => 'required|exists:providers,id,user_id,' . Auth::user()->id,
@@ -35,5 +38,15 @@ class ServiceRequest extends FormRequest
             'frequency'         => ['required', new EnumValue(FrequencyRenewals::class, false)],
             'note'              => 'sometimes|max:255'
         ];
+
+        // Se sono in creazione quindi non ho passato il parametro service nella rotta
+        if(!$this->route('service')){
+            foreach ($formRequests as $source) {
+                $rules = array_merge($rules, (new $source)->rules()
+                );
+            }
+        }
+
+        return $rules;
     }
 }

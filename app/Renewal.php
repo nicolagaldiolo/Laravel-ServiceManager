@@ -33,9 +33,13 @@ class Renewal extends Model
 
     public function getDeadlineFormattedAttribute()
     {
-        $deadline = $this->deadline;
-        if(!is_null($deadline))
-            return $deadline->format('d-m-Y');
+        return is_null($this->deadline) ? $this->deadline : $this->deadline->format('d-m-Y');
+    }
+
+    public function getDeadlineVerboseAttribute()
+    {
+        return is_null($this->deadline) ? $this->deadline : $this->deadline->format('j F Y');
+
     }
 
     public function setDeadlineAttribute($deadline) {
@@ -45,8 +49,12 @@ class Renewal extends Model
 
     public function getAmountFormattedAttribute()
     {
-        $amount = $this->amount;
-        return number_format($amount, 2, ',', '');
+        return is_null($this->amount) ? $this->amount : number_format($this->amount, 2, ',', '');
+    }
+
+    public function getAmountVerboseAttribute()
+    {
+        return is_null($this->amount) ? $this->amount : '€ ' . number_format($this->amount, 2, ',', '');
     }
 
     public function setAmountAttribute($amount)
@@ -59,4 +67,11 @@ class Renewal extends Model
         $val = preg_replace('/\.(?=.*\.)/', '', $val);
         return floatval($val);
     }
+
+    public function scopeCurrentDeadline($query){
+        return $query->whereDate('deadline', '>=', Carbon::now())->first();
+    }
+
+
+
 }
