@@ -6,7 +6,10 @@ use App\Customer;
 use App\Service;
 use App\Http\Requests\CustomerRequest;
 use App\Http\Traits\DataTableServiceTrait;
+use App\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Yajra\DataTables\DataTables;
 
 class CustomerController extends Controller
@@ -21,6 +24,8 @@ class CustomerController extends Controller
      */
     public function index()
     {
+        //dd(Auth::User()->renewals()->get());
+
         if(request()->wantsJson() || request()->expectsJson()) {
 
             $customers = Auth::user()->customers()->get();
@@ -28,7 +33,7 @@ class CustomerController extends Controller
             return DataTables::of($customers)->addColumn('actions', function($customer){
                 return implode("", [
                     '<a href="' . route('customers.show', $customer) . '" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill"><i class="la la-eye"></i></a>',
-                    '<a href="' . route('customers.destroy', $customer) . '" class="delete btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill"><i class="la la-trash"></i></a>',
+                    '<a href="' . route('customers.destroy', $customer) . '" class="deleteDataTableRecord btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill"><i class="la la-trash"></i></a>',
                 ]);
             })->rawColumns(['actions'])->make(true);
         }
@@ -71,6 +76,7 @@ class CustomerController extends Controller
      */
     public function show(Customer $customer)
     {
+        $this->authorize('view', $customer);
 
         if(request()->wantsJson() || request()->expectsJson()) {
             $services = $customer->services()->with('provider', 'customer', 'serviceType')->get();
@@ -137,6 +143,40 @@ class CustomerController extends Controller
                 'message' => 'Customer eliminato con successo'
             ];
         }
+
+    }
+
+    /*public function destroyAll(Request $request)
+    {
+        $ids = explode(",",$request->ids);
+
+        Auth::user()->customers()->whereIn('customers.id',$ids)->delete();
+        return [
+            'message' => 'Customers eliminati con successo'
+        ];
+
+        //$this->authorize('massiveDelete', [$ids]);
+        if( Gate::allows('delete-all-customers', [$ids])){
+            Auth::user()->customers()->whereIn('customers.id',$ids)->delete();
+            return [
+                'message' => 'Customers eliminati con successo'
+            ];
+        }else{
+            abort(403, 'Non sei autorizzato ad accedere a questa risorsa.');
+        }
+
+
+    }*/
+
+    public function destroyAll(Request $request)
+    {
+        $ids = explode(",",$request->ids);
+
+        Auth::user()->customers()->whereIn('customers.id',$ids)->delete();
+
+        return [
+            'message' => 'Customers eliminati con successo'
+        ];
 
     }
 }

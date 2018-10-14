@@ -15,13 +15,16 @@ trait DataTableServiceTrait {
                 return FrequencyRenewals::getDescription($service->frequency);
             })
             ->editColumn('deadline', function ($service) {
-                return $service->renewals()->currentDeadline()->deadlineVerbose;
+                return $service->nextRenewal->deadlineVerbose;
+                //return $service->renewals;
             })
             ->editColumn('amount', function ($service) {
-                return $service->renewals()->currentDeadline()->amountVerbose;
+                return $service->nextRenewal->amountVerbose;
+                //return $service->renewals;
+                //return ($service->renewals->currentDeadline) ? $service->renewals->currentDeadline->amountVerbose : "";
             })
             ->editColumn('status', function ($service) {
-                return $service->renewals()->currentDeadline()->getStateAttributeVerbose();
+                return $service->nextRenewal->getStateAttributeVerbose();
             })
             //->editColumn('deadline', function ($domain) {
                 //return $domain->deadline ? with(new Carbon($domain->deadline))->diffForHumans() : '';
@@ -35,7 +38,7 @@ trait DataTableServiceTrait {
 
                 return implode("", [
                     '<a href="' . route('services.show', $service) . '" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill"><i class="la la-eye"></i></a>',
-                    '<a href="' . route('services.destroy', $service) . '" class="delete btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill"><i class="la la-trash"></i></a>',
+                    '<a href="' . route('services.destroy', $service) . '" class="deleteDataTableRecord btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill"><i class="la la-trash"></i></a>',
                     //$button
                 ]);
             })->rawColumns(['status','actions'])->make(true);

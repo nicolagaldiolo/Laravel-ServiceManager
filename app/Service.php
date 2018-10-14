@@ -32,6 +32,22 @@ class Service extends Model
         return $this->hasMany(Renewal::class);
     }
 
+    // Ha un NextRenewal
+    public function nextRenewal(){
+        return $this->hasOne(Renewal::class)
+            ->whereDate('deadline', '>=', Carbon::now()->startOfDay())
+            ->orderBy('deadline', 'ASC');
+    }
+
+    /*public function latestTwoComments()
+    {
+        return $this->hasMany('Comment', 'comment_parent_id')->latest()->nPerGroup('comment_parent_id', 2);
+    }*/
+
+//then
+//$comments = Comment::with('latestTwoComments')->get();
+
+
     //mi faccio tornare l'utente a cui appartiene indirettamente questo service
     public function user(){
         return $this->customer->user;

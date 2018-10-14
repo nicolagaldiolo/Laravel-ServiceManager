@@ -19,9 +19,9 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $dashboard = Auth()->user()->load('domains.customer', 'providers.domains', 'providers.hostings', 'customers.domains');
+        //$dashboard = Auth()->user()->load('domains.customer', 'providers.services', 'providers.hostings', 'customers.services');
 
-        $expiringDomains = $dashboard->domains->filter(function($item){
+        /*$expiringDomains = $dashboard->domains->filter(function($item){
             return ($item->deadline->month == Carbon::today()->month) && ($item->deadline->year == Carbon::today()->year);
         });
 
@@ -46,6 +46,9 @@ class DashboardController extends Controller
         });
 
         $dashboard['usersSummary'] = $usersSummary;
+        */
+
+        $dashboard = "";
 
         return view('dashboard.index', compact( 'dashboard'));
 

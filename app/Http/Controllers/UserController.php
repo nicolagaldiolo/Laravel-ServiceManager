@@ -29,7 +29,7 @@ class UserController extends Controller
             return DataTables::of($users)->addColumn('actions', function($user){
                 return implode("", [
                     '<a href="' . route('users.edit', $user) . '" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill"><i class="la la-edit"></i></a>',
-                    '<a href="' . route('users.destroy', $user) . '" class="deleteRecord btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill"><i class="la la-trash"></i></a>',
+                    '<a href="' . route('users.destroy', $user) . '" class="deleteDataTableRecord btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill"><i class="la la-trash"></i></a>',
                 ]);
             })->editColumn('role', function ($user) {
                 return UserType::getDescription($user->role);
@@ -121,7 +121,7 @@ class UserController extends Controller
         $this->authorize('delete', $user);
 
         if(request()->wantsJson() || request()->expectsJson()) {
-            $redirect = (Auth::user() == $user) ? route('login') : '';
+            $redirect = (Auth::user() == $user) ? route('login') : route('users.index');
             $user->delete();
             return [
                 'redirect' => $redirect,
@@ -142,8 +142,7 @@ class UserController extends Controller
         $ids = explode(",",$request->ids);
         $redirect = (in_array(Auth::user()->id, $ids)) ? route('login') : '';
 
-        if($ids)
-            User::whereIn('id',$ids)->delete();
+        User::whereIn('id',$ids)->delete();
 
         return [
             'redirect' => $redirect,

@@ -157,22 +157,18 @@
 
                 <!--end::Portlet-->
 
-                <form class="deleteUser" action="{{route('users.destroy', $user)}}" method="post">
-                    @csrf
-                    @method('DELETE')
-                    <div class="m-alert m-alert--icon m-alert--outline alert alert-danger no-bg" role="alert">
-                        <div class="m-alert__icon">
-                            <i class="la la-warning"></i>
-                        </div>
-                        <div class="m-alert__text">
-                            <strong>{{__('messages.delete_account')}}</strong><br>
-                            {{__('messages.delete_account_desc')}}
-                        </div>
-                        <div class="m-alert__actions" style="">
-                            <button type="submit" class="btn btn-danger btn-md m-btn m-btn--pill m-btn--wide">{{__('messages.delete_account')}}</button>
-                        </div>
+                <div class="m-alert m-alert--icon m-alert--outline alert alert-danger no-bg" role="alert">
+                    <div class="m-alert__icon">
+                        <i class="la la-warning"></i>
                     </div>
-                </form>
+                    <div class="m-alert__text">
+                        <strong>{{__('messages.delete_account')}}</strong><br>
+                        {{__('messages.delete_account_desc')}}
+                    </div>
+                    <div class="m-alert__actions" style="">
+                        <a class="deleteRecord btn btn-danger btn-md m-btn m-btn--pill m-btn--wide" href="{{route('users.destroy', $user)}}">{{__('messages.delete_account')}}</a>
+                    </div>
+                </div>
 
             </div>
         </div>
@@ -183,21 +179,7 @@
     @parent
     <script>
 
-        $('.deleteUser').submit(function (el) {
-            el.preventDefault();
 
-            var _self = this;
-
-            swal({
-                title: '{{__('messages.are_sure')}}',
-                text: "{{__('messages.are_sure_desc')}}",
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonText: '{{__('messages.confirm_delete')}}'
-            }).then(function(result) {
-                if (result.value) _self.submit();
-            });
-        });
 
         var DropzoneDemo = function () {
 
@@ -212,6 +194,7 @@
                     //addRemoveLinks: true,
                     acceptedFiles: "image/*",
                     accept: function(file, done) {
+                        console.log("Andata");
                         done();
                     }
                 };
@@ -224,6 +207,7 @@
                 }
             };
         }();
+
 
         DropzoneDemo.init();
 

@@ -100,7 +100,7 @@
 
                             <!-- BEGIN: Topbar -->
 
-                            {{--
+
 
                             <div id="m_header_topbar" class="m-topbar  m-stack m-stack--ver m-stack--general m-stack--fluid">
                                 <div class="m-stack__item m-topbar__nav-wrapper">
@@ -108,9 +108,10 @@
                                         <li class="m-nav__item m-topbar__notifications m-topbar__notifications--img m-dropdown m-dropdown--large m-dropdown--header-bg-fill m-dropdown--arrow m-dropdown--align-center 	m-dropdown--mobile-full-width"
                                             m-dropdown-toggle="click" m-dropdown-persistent="1">
                                             <a href="#" class="m-nav__link m-dropdown__toggle" id="m_topbar_notification_icon">
-                                                @if($domainsToPayCount > 0)
+                                                {{--@if($domainsToPayCount > 0)
                                                     <span class="m-nav__link-badge m-badge m-badge--dot m-badge--dot-small m-badge--danger"></span>
                                                 @endif
+                                                --}}
                                                 <span class="m-nav__link-icon">
                                                                 <i class="flaticon-alarm"></i>
                                                             </span>
@@ -127,16 +128,17 @@
                                                         <div class="m-dropdown__content">
 
 
-                                                            @if($domainsToPay->isEmpty())
+                                                            {{--@if($domainsToPay->isEmpty())
                                                                 <div class="alert alert-brand" role="alert">
                                                                     <strong>{{__('messages.fantastic')}}</strong> {{__('messages.no_other_domains')}}
                                                                 </div>
-                                                            @else
+                                                            @else--}}
 
                                                                 <div class="m-scrollable" data-scrollable="true"
                                                                      data-height="250" data-mobile-height="200">
                                                                     <div class="m-list-timeline m-list-timeline--skin-light">
                                                                         <div class="m-list-timeline__items">
+                                                                            {{--
                                                                             @foreach($domainsToPay as $domain)
                                                                                 <div class="m-list-timeline__item">
                                                                                     <span class="m-list-timeline__badge -m-list-timeline__badge--state-success"></span>
@@ -144,10 +146,11 @@
                                                                                     <span class="m-list-timeline__time">{{$domain->deadline->diffForHumans()}}</span>
                                                                                 </div>
                                                                             @endforeach
+                                                                            --}}
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                            @endif
+                                                            {{--@endif--}}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -290,7 +293,7 @@
                                 </div>
                             </div>
 
-                            --}}
+
 
                             <!-- END: Topbar -->
                         </div>

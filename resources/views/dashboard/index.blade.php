@@ -9,6 +9,7 @@
         <div class="m-portlet">
             <div class="m-portlet__body m-portlet__body--no-padding">
                 <div class="row m-row--no-padding m-row--col-separator-xl">
+                    {{--
                     <div class="col-md-12 col-lg-12 col-xl-3">
                         <!--begin:: Widgets/Stats2-1 -->
                         <div class="m-widget1">
@@ -27,6 +28,7 @@
                         </div>
                         <!--end:: Widgets/Stats2-1 -->
                     </div>
+                    --}}
                     <div class="col-md-12 col-lg-12 col-xl-3">
                         <!--begin:: Widgets/Stats2-1 -->
                         <div class="m-widget1">
@@ -35,11 +37,13 @@
                                     <div class="col">
                                         <h3 class="m-widget1__title">
                                             {{__('messages.revenues')}}  {{\Carbon\Carbon::now()->format('F Y')}}</h3>
+                                        {{--
                                         <span
                                             class="m-widget1__desc">{{__(trans('messages.obtained_from', [ 'attribute' => $dashboard->expiringDomains->count() ]))}}</span>
                                         <br>
                                         <span
                                             class="m-widget1__number m--font-info">&euro; {{$dashboard->expiringDomains->sum('amount')}}</span>
+                                            --}}
                                     </div>
                                 </div>
                             </div>
@@ -55,7 +59,7 @@
                                         <h3 class="m-widget1__title">{{__('messages.to_cash_in')}}</h3>
                                         <span class="m-widget1__desc">{{__('messages.pending_payment')}}</span>
                                         <br>
-                                        <span class="m-widget1__number m--font-danger">{{$domainsToPayCount}}</span>
+                                        <span class="m-widget1__number m--font-danger">{{--$domainsToPayCount--}}</span>
                                     </div>
                                 </div>
                             </div>
@@ -71,7 +75,7 @@
                                         <h3 class="m-widget1__title">{{__('messages.sales_impact')}}</h3>
                                         <span class="m-widget1__desc">{{__('messages.monthly_sales_amount')}}</span>
                                         <br>
-                                        <span class="m-widget1__number m--font-success">{{$dashboard->monthlyService_percent}}
+                                        <span class="m-widget1__number m--font-success">{{--$dashboard->monthlyService_percent--}}
                                             %</span>
                                     </div>
                                 </div>
@@ -106,7 +110,7 @@
                             <ul class="m-portlet__nav">
                                 <li class="m-portlet__nav-item m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push"
                                     m-dropdown-toggle="hover" aria-expanded="true">
-                                    <a href="{{route('domains.index')}}"
+                                    <a href="{{--route('domains.index')--}}"
                                        class="m-portlet__nav-link btn btn--sm m-btn--pill btn-brand m-btn">
                                         {{__('messages.all_domains')}}
                                     </a>
@@ -137,12 +141,13 @@
                                         </div>
                                     </div>
                                 </div>
-
+                                {{--
                                 @if($domainsToPay->isEmpty())
                                     <div class="alert alert-brand" role="alert">
                                         <strong>{{__('messages.fantastic')}}</strong> {{__('messages.no_other_domains')}}
                                     </div>
                                 @else
+
 
                                     <div class="table-responsive">
                                         <!--begin::Table-->
@@ -192,7 +197,7 @@
                                         <!--end::Table-->
                                     </div>
 
-                                @endif
+                                @endif--}}
                             </div>
                             <!--end::Widget 11-->
 
@@ -239,10 +244,12 @@
                                         <span class="m-widget17__subtitle">
 															{{__('messages.customers')}}
 														</span>
+                                        {{--
                                         <span class="m-widget17__desc">
 															@if($dashboard->customers->count() > 0){{$dashboard->customers->count()}}@endif
                                             {{trans_choice('messages.customers_active', $dashboard->customers->count())}}
 														</span>
+														--}}
                                     </div>
                                     <div class="m-widget17__item">
 														<span class="m-widget17__icon">
@@ -252,9 +259,11 @@
 															{{__('messages.providers')}}
 														</span>
                                         <span class="m-widget17__desc">
+                                            {{--
                                                             @if($dashboard->providers->count() > 0){{$dashboard->providers->count()}}@endif
                                             {{trans_choice('messages.providers_active', $dashboard->providers->count())}}
 														</span>
+														--}}
                                     </div>
                                 </div>
                                 <div class="m-widget17__items m-widget17__items-col2">
@@ -266,10 +275,11 @@
 															{{__('messages.domains')}}
 														</span>
                                         <span class="m-widget17__desc">
-                                                            @if($dashboard->domains->count() > 0){{$dashboard->domains->count()}}@endif
-                                            {{trans_choice('messages.domains_active', $dashboard->domains->count())}}
+                                                            {{--@if($dashboard->domains->count() > 0){{$dashboard->domains->count()}}@endif--}}
+    {{--{{trans_choice('messages.domains_active', $dashboard->domains->count())}}--}}
 														</span>
                                     </div>
+                                    {{--
                                     @if(Auth::user()->isAdmin())
                                         <div class="m-widget17__item">
                                             <span class="m-widget17__icon">
@@ -284,6 +294,7 @@
                                             </span>
                                         </div>
                                     @endif
+                                    --}}
                                 </div>
                             </div>
                         </div>
@@ -317,7 +328,7 @@
                         <div class="m-portlet__head-tools">
                             <ul class="m-portlet__nav">
                                 <li class="m-portlet__nav-item">
-                                    <a href="{{route('domains.create')}}"
+                                    <a href="{{--route('domains.create')--}}"
                                        class="btn btn-accent m-btn m-btn--custom m-btn--icon m-btn--pill">
 														<span>
 															<i class="la la-plus"></i>
@@ -353,14 +364,14 @@
                         </div>
                         <div class="m-portlet__head-tools">
                             <a class="btn m-btn--pill btn-secondary btn-sm m-btn"
-                               href="{{route('domains.index')}}">{{__('messages.all_domains')}}</a>
+                               href="{{--route('domains.index')--}}">{{__('messages.all_domains')}}</a>
                         </div>
                     </div>
                     <div class="m-portlet__body">
                         <div class="m-scrollable" data-scrollable="true" data-height="550" style="">
                             <div class="m-list-timeline m-list-timeline--skin-light">
                                 <div class="m-list-timeline__items">
-                                    @foreach($dashboard->domains as $domain)
+                                    {{--@foreach($dashboard->domains as $domain)
                                         <div class="m-list-timeline__item">
                                             <span
                                                 class="m-list-timeline__badge @if($domain->status == 1)m-list-timeline__badge--success @else m-list-timeline__badge--danger @endif"></span>
@@ -372,6 +383,7 @@
                                         </span>
                                         </div>
                                     @endforeach
+                                    --}}
                                 </div>
                             </div>
                         </div>
@@ -409,12 +421,12 @@
                                     </div>
                                     <div class="m-portlet__head-tools">
                                         <a class="btn m-btn--pill btn-secondary btn-sm m-btn"
-                                           href="{{route('providers.index')}}">{{__('messages.all_providers')}}</a>
+                                           href="{{--route('providers.index')--}}">{{__('messages.all_providers')}}</a>
                                     </div>
                                 </div>
                                 <div class="m-portlet__body">
                                     <div class="m-widget4">
-                                        @foreach($dashboard->providers as $provider)
+                                        {{--@foreach($dashboard->providers as $provider)
                                             <div class="m-widget4__item">
                                                 <div class="m-widget4__img m-widget4__img--logo">
                                                     <img src="{{$provider->screenshoot}}" alt="">
@@ -434,7 +446,7 @@
                                         </span>
                                                 </div>
                                             </div>
-                                        @endforeach
+                                        @endforeach--}}
 
                                     </div>
                                 </div>
@@ -469,7 +481,7 @@
                                             </div>
                                             <div class="m-portlet__body">
                                                 <div class="m-widget4">
-                                                    @foreach($dashboard->customers as $customer)
+                                                    {{--@foreach($dashboard->customers as $customer)
                                                         <div class="m-widget4__item">
                                                             <div class="m-widget4__info" style="padding-left: 0;">
                                                                 <span
@@ -486,6 +498,7 @@
                                     </span>
                                                         </div>
                                                     @endforeach
+                                                    --}}
 
                                                 </div>
                                             </div>
@@ -517,6 +530,7 @@
                                                 <div class="m-portlet__body">
 
                                                     <div class="m-widget4 m-widget4--progress">
+                                                        {{--
                                                         @foreach($dashboard->usersSummary as $user)
                                                             <div class="m-widget4__item">
                                                                 <div class="m-widget4__img m-widget4__img--pic">
@@ -546,7 +560,7 @@
                                                                 </div>
                                                             </div>
                                                         @endforeach
-
+--}}
 
                                                     </div>
                                                 </div>
@@ -582,9 +596,11 @@
                             gradient.addColorStop(1, Chart.helpers.color('#f2feff').alpha(0).rgbString());
 
                             var domainsData = [];
+                            {{--
                             @foreach($dashboard->domainsByMounth as $domain)
                             domainsData.push({{$domain}})
                                 @endforeach
+                                --}}
 
                             var config = {
                                     type: 'line',
@@ -701,16 +717,19 @@
                                 navLinks: true,
                                 //defaultDate: moment('2018-08-15'),
                                 events: [
-                                        @foreach ($dashboard->domains as $domain)
+                                    {{--@foreach ($dashboard->domains as $domain)--}}
+                                    /*
                                     {
-                                        title: '{{$domain->url}}',
-                                        url: '{{route('domains.edit', $domain)}}',
-                                        start: moment('{{$domain->deadline}}'),
-                                        description: '{{$domain->note}}',
+                                        title: '{{--$domain->url--}}',
+                                        url: '{{--route('domains.edit', $domain)--}}',
+                                        start: moment('{{--$domain->deadline--}}'),
+                                        description: '{{--$domain->note--}}',
                                         className: "m-fc-event--light m-fc-event--solid-primary",
                                         allDay: true,
                                     },
-                                    @endforeach
+                                    */
+                                    {{--@endforeach--}}
+
                                 ],
 
                                 eventRender: function (event, element) {

@@ -8,6 +8,7 @@ use App\Service;
 use App\ExpiringDomain;
 use App\Http\Requests\ServiceRequest;
 use App\Http\Traits\DataTableServiceTrait;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\DataTables;
@@ -26,7 +27,7 @@ class ServicesController extends Controller
     {
 
         if(request()->wantsJson() || request()->expectsJson()) {
-            $services = Auth::user()->services()->with('provider', 'customer', 'serviceType')->get();
+            $services = Auth::user()->services()->with(['nextRenewal', 'provider', 'customer', 'serviceType'])->get();
             return $this->getServicesDataTablesTraits($services);
         }
 
@@ -113,11 +114,11 @@ class ServicesController extends Controller
 
                     $buttons = $renewal->getPossibleTransitions();
                     array_walk($buttons, function(&$k, $v) use($renewal, $service){
-                        $k = '<a data-transition="' . $v . '" href="' . route('services.renewals.transition', ['service'=>$service,'renewals'=>$renewal,'transition'=>$v]) . '" class="update-transition btn btn-sm m-btn m-btn--custom btn-' . $k['label'] . '"><i class="'. $k['icon'] . '"></i> ' . RenewalSM::getDescription($v) . '</a>';
+                        $k = '<a data-transition-default="' . RenewalSM::T_renews. '" data-transition="' . $v . '" href="' . route('services.renewals.transition', ['service'=>$service,'renewals'=>$renewal,'transition'=>$v]) . '" class="update-transition btn btn-sm m-btn m-btn--custom btn-' . $k['label'] . '"><i class="'. $k['icon'] . '"></i> ' . RenewalSM::getDescription($v) . '</a>';
                     });
 
                     $buttons[] = '<a href="' . route('services.renewals.edit', ['service'=>$service,'renewals'=>$renewal]) . '" data-update="' . route('services.renewals.update', ['service'=>$service,'renewals'=>$renewal]) . '" class="edit btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill"><i class="la la-edit"></i></a>';
-                    $buttons[] = '<a href="' . route('services.renewals.destroy', ['service'=>$service,'renewals'=>$renewal]) . '" class="delete btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill"><i class="la la-trash"></i></a>';
+                    $buttons[] = '<a href="' . route('services.renewals.destroy', ['service'=>$service,'renewals'=>$renewal]) . '" class="deleteDataTableRecord btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill"><i class="la la-trash"></i></a>';
 
                     return implode("", $buttons);
 
@@ -125,6 +126,8 @@ class ServicesController extends Controller
         }else{
 
             $service->load('provider', 'customer', 'serviceType');
+
+            //dd($service);
 
             return view('services.show', compact('service'));
         }
@@ -186,14 +189,17 @@ class ServicesController extends Controller
         }
     }
 
-    /*public function payedUpdate(Request $request, Service $service){
-        $this->authorize('update', $service);
-        (bool) $res = $service->update(['payed' => $request->get('payed')]);
+    public function destroyAll(Request $request)
+    {
+
+        $ids = explode(",",$request->ids);
+
+         Auth::user()->services()->whereIn('services.id',$ids)->delete();
+
         return [
-            'message'   => $res ? 'Domain updated' : 'Domain not updated',
-            'status'    => $res
+            'message' => 'Services eliminati con successo'
         ];
-    }*/
+    }
 
 
 }

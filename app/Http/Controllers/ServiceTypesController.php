@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ServiceTypeRequest;
 use App\ServiceType;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\DataTables;
 
@@ -27,7 +28,7 @@ class ServiceTypesController extends Controller
             return DataTables::of($serviceTypes)->addColumn('actions', function($serviceType){
                 return implode("", [
                     '<a href="' . route('service-types.edit', $serviceType) . '" data-update="' . route('service-types.update', $serviceType) . '" class="edit btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill"><i class="la la-edit"></i></a>',
-                    '<a href="' . route('service-types.destroy', $serviceType) . '" class="delete btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill"><i class="la la-trash"></i></a>',
+                    '<a href="' . route('service-types.destroy', $serviceType) . '" class="deleteDataTableRecord btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill"><i class="la la-trash"></i></a>',
                 ]);
             })->rawColumns(['actions'])->make(true);
         }
@@ -124,5 +125,17 @@ class ServiceTypesController extends Controller
         return [
             'message' => 'Tipo di servizio eliminato con successo'
         ];
+    }
+
+    public function destroyAll(Request $request)
+    {
+        $ids = explode(",",$request->ids);
+
+        Auth::user()->serviceTypes()->whereIn('service_types.id',$ids)->delete();
+
+        return [
+            'message' => 'Service Type eliminati con successo'
+        ];
+
     }
 }

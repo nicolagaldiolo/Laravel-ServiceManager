@@ -104,7 +104,7 @@
         <!--End::Section-->
 
         @if($customerServicesCount > 0)
-            @include('services._dataTable', ['dataTableUrl' => route('customers.show', $customer), 'dataTableNewUrl' => route('services.create') . '?cid=' . $customer->id ])
+            @include('services._dataTable', ['dataTableUrl' => route('customers.show', $customer), 'dataTableNewUrl' => route('services.create') . '?cid=' . $customer->id, 'dataTableNewModal' => false, 'dataTableDeleteAll' => route('services.destroy-all') ])
         @endif
 
     </div>

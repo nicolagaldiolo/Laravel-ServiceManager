@@ -68,9 +68,9 @@ class Renewal extends Model
         return floatval($val);
     }
 
-    public function scopeCurrentDeadline($query){
-        return $query->whereDate('deadline', '>=', Carbon::now())->first();
-    }
+    //public function scopeCurrentDeadline($query){
+    //    return $query->whereDate('deadline', '>=', Carbon::now())->first();
+    //}
 
 
 

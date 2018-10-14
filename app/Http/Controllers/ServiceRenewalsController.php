@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ServiceRenewalRequest;
 use App\Renewal;
 use App\Service;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ServiceRenewalsController extends Controller
 {
@@ -33,7 +35,7 @@ class ServiceRenewalsController extends Controller
         ]);
 
         return [
-            'view' => view('renewals._form', compact('renewal'))->render()
+            'view' => view('renewals._form', compact('renewal', 'service'))->render()
         ];
     }
 
@@ -74,7 +76,7 @@ class ServiceRenewalsController extends Controller
         $this->authorize('view', $renewal);
 
         return [
-            'view' => view('renewals._form', compact('renewal'))->render()
+            'view' => view('renewals._form', compact('service', 'renewal'))->render()
         ];
 
     }
@@ -114,6 +116,18 @@ class ServiceRenewalsController extends Controller
         return [
             'message' => 'Renewal eliminato con successo'
         ];
+    }
+
+    public function destroyAll(Request $request, Service $service)
+    {
+        $ids = explode(",",$request->ids);
+
+        $service->renewals()->whereIn('renewals.id',$ids)->delete();
+
+        return [
+            'message' => 'Renewals eliminati con successo'
+        ];
+
     }
 
     public function transition(Service $service, Renewal $renewal, $transition)

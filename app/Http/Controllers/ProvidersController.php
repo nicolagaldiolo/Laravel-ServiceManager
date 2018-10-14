@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Provider;
 use App\Http\Requests\ProviderRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 
 class ProvidersController extends Controller
@@ -23,7 +24,7 @@ class ProvidersController extends Controller
             return DataTables::of($providers)->addColumn('actions', function($provider){
                 return implode("", [
                     '<a href="' . route('providers.edit', $provider) . '" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill"><i class="la la-edit"></i></a>',
-                    '<a href="' . route('providers.destroy', $provider) . '" class="delete btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill"><i class="la la-trash"></i></a>',
+                    '<a href="' . route('providers.destroy', $provider) . '" class="deleteDataTableRecord btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill"><i class="la la-trash"></i></a>',
                 ]);
             })->rawColumns(['actions'])->make(true);
         }
@@ -117,5 +118,16 @@ class ProvidersController extends Controller
                 'message' => 'Provider eliminato con successo'
             ];
         }
+    }
+
+    public function destroyAll(Request $request)
+    {
+        $ids = explode(",",$request->ids);
+
+        Auth::user()->providers()->whereIn('providers.id',$ids)->delete();
+
+        return [
+            'message' => 'Providers eliminati con successo'
+        ];
     }
 }

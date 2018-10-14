@@ -1,8 +1,7 @@
-<form id="service-type-form" class="m-form m-form--fit">
+<form action="{{route('services.renewals.store', $service)}}" class="m-form m-form--fit" method="POST">
     @csrf
     <div class="m-portlet__body">
         <div class="m-form__section m-form__section--first">
-
             <div class="form-group m-form__group">
                 <label class="">{{__('messages.deadline')}} *</label>
 
@@ -24,10 +23,10 @@
                 <div class="m-input-icon m-input-icon--left">
                     <input type='text' class="form-control required" name="amount" value="{{old('amount', $renewal->amountFormatted)}}"/>
                     <span class="m-input-icon__icon m-input-icon__icon--left">
-                                                            <span>
-                                                                <i class="la la-euro"></i>
-                                                            </span>
-                                                        </span>
+                                                                        <span>
+                                                                            <i class="la la-euro"></i>
+                                                                        </span>
+                                                                    </span>
 
                 </div>
                 <span class="m-form__help">{{__('messages.currency_format')}} <code>€ 1.234,56</code></span>
@@ -36,8 +35,6 @@
 
 
             </div>
-
-
         </div>
     </div>
 </form>
