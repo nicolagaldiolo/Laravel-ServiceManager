@@ -75,19 +75,18 @@ class Service extends Model
         $nextDeadline = null;
 
         if(!is_null($lastRenewal->deadline) && !is_null($renewalFrequency)){
-
             switch ($renewalFrequency->type) {
                 case RenewalFrequencies::Days:
-                    $nextDeadline->addDays($renewalFrequency->value);
+                    $nextDeadline = $lastRenewal->deadline->addDays($renewalFrequency->value);
                     break;
                 case RenewalFrequencies::Weeks:
-                    $nextDeadline->addWeeks($renewalFrequency->value);
+                    $nextDeadline = $lastRenewal->deadline->addWeeks($renewalFrequency->value);
                     break;
                 case RenewalFrequencies::Months:
-                    $nextDeadline->addMonths($renewalFrequency->value);
+                    $nextDeadline = $lastRenewal->deadline->addMonths($renewalFrequency->value);
                     break;
                 case RenewalFrequencies::Years:
-                    $nextDeadline->addYears($renewalFrequency->value);
+                    $nextDeadline = $lastRenewal->deadline->addYears($renewalFrequency->value);
                     break;
             }
         }
