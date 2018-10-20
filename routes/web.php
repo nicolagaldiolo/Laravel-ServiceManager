@@ -47,6 +47,10 @@ Route::group(
     Route::resource('service-types', 'ServiceTypesController')->except('show');
     Route::delete('service-types/delete/all', 'ServiceTypesController@destroyAll')->name('service-types.destroy-all');
 
+    // RenewalFrequencies
+    Route::resource('renewal-frequencies', 'RenewalFrequencyController')->except('show');
+    Route::delete('renewal-frequencies/delete/all', 'RenewalFrequencyController@destroyAll')->name('renewal-frequencies.destroy-all');
+
     // Providers
     Route::resource('providers', 'ProvidersController');
     Route::delete('providers/delete/all', 'ProvidersController@destroyAll')->name('providers.destroy-all');

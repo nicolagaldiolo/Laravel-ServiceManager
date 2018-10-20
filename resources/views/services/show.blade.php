@@ -123,7 +123,9 @@
                                 <div class="col-md-6">
                                     <div class="m-widget13__item">
                                         <span class="m-widget13__desc">Frequenza rinnovo</span>
-                                        <span class="m-widget13__text m-widget13__text-bolder">{{\App\Enums\FrequencyRenewals::getDescription($service->frequency)}}</span>
+                                        @if($service->renewalFrequency)
+                                            <span class="m-widget13__text m-widget13__text-bolder">{{$service->renewalFrequency->frequency}}</span>
+                                        @endif
                                     </div>
                                 </div>
 

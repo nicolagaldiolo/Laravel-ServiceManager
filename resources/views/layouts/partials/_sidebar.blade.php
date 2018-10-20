@@ -175,6 +175,17 @@
                 </a>
             </li>
 
+            <li class="m-menu__item" aria-haspopup="true">
+                <a href="{{route('renewal-frequencies.index')}}" class="m-menu__link ">
+                    <i class="m-menu__link-icon flaticon-calendar"></i>
+                    <span class="m-menu__link-title">
+                        <span class="m-menu__link-wrap">
+                            <span class="m-menu__link-text">Frequenze di rinnovo</span>
+                        </span>
+                    </span>
+                </a>
+            </li>
+
         </ul>
     </div>
     <!-- END: Aside Menu -->

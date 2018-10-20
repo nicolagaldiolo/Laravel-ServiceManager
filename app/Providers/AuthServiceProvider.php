@@ -15,12 +15,13 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        'App\Service'       => 'App\Policies\ServicesPolicy',
-        'App\ServiceType'   => 'App\Policies\ServiceTypesPolicy',
-        'App\Provider'      => 'App\Policies\ProvidersPolicy',
-        'App\Customer'      => 'App\Policies\CustomerPolicy',
-        'App\User'          => 'App\Policies\UserPolicy',
-        'App\Renewal'       => 'App\Policies\RenewalsPolicy',
+        'App\Service'           => 'App\Policies\ServicesPolicy',
+        'App\ServiceType'       => 'App\Policies\ServiceTypesPolicy',
+        'App\Provider'          => 'App\Policies\ProvidersPolicy',
+        'App\Customer'          => 'App\Policies\CustomerPolicy',
+        'App\User'              => 'App\Policies\UserPolicy',
+        'App\Renewal'           => 'App\Policies\RenewalsPolicy',
+        'App\RenewalFrequency'  => 'App\Policies\RenewalFrequencyPolicy'
     ];
 
     /**
@@ -31,10 +32,6 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
-
-        //Gate::define('delete-all-customers', function(User $user, $ids){
-        //    return count(array_intersect($ids, $user->customers()->pluck('id')->toArray() )) == count($ids);
-        //});
 
     }
 }

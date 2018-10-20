@@ -45,6 +45,7 @@ class ServicesController extends Controller
         $customers = Auth::user()->customers()->get();
         $providers = Auth::user()->providers()->get();
         $service_types = Auth::user()->serviceTypes()->get();
+        $renewal_frequencies = Auth::user()->renewalFrequencies()->get();
         $service = new Service;
         $renewal = new Renewal;
 
@@ -52,7 +53,7 @@ class ServicesController extends Controller
             $service->customer_id = $req->input('cid');
         }
 
-        return view('services.create', compact('service', 'renewal', 'providers', 'service_types', 'customers'));
+        return view('services.create', compact('service', 'renewal', 'providers', 'service_types', 'renewal_frequencies', 'customers'));
     }
 
     /**
@@ -125,7 +126,7 @@ class ServicesController extends Controller
                 })->rawColumns(['amount', 'status','actions'])->make(true);
         }else{
 
-            $service->load('renewalsUnresolved', 'provider', 'customer', 'serviceType');
+            $service->load('renewalsUnresolved', 'provider', 'customer', 'serviceType', 'renewalFrequency');
 
             return view('services.show', compact('service'));
         }
@@ -146,9 +147,10 @@ class ServicesController extends Controller
         $customers = Auth::user()->customers()->get();
         $providers = Auth::user()->providers()->get();
         $service_types = Auth::user()->serviceTypes()->get();
+        $renewal_frequencies = Auth::user()->renewalFrequencies()->get();
         $renewal = new Renewal;
 
-        return view('services.edit', compact('service', 'renewal', 'providers', 'service_types', 'customers'));
+        return view('services.edit', compact('service', 'renewal', 'providers', 'service_types', 'renewal_frequencies', 'customers'));
     }
 
     /**

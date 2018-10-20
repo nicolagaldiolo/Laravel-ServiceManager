@@ -85,20 +85,21 @@
                 @endif
 
             </div>
+
             <div class="col-lg-6">
 
                 <label class="">{{__('messages.frequency_renewal')}} *</label>
 
-                <select class="form-control m-select2 m_select2_4" name="frequency">
+                <select class="form-control m-select2 m_select2_4" name="renewal_frequency_id">
                     <option value="">{{__('messages.choose_frequency_renewal')}}</option>
-                    @foreach(\App\Enums\FrequencyRenewals::toSelectArray() as $key=>$value)
-                        <option value="{{$key}}" @if($key == old('frequency', !is_null($service->frequency) ? $service->frequency : -1)) selected @endif>{{\App\Enums\FrequencyRenewals::getDescription($key)}}</option>
+                    @foreach($renewal_frequencies as $renewal_frequency)
+                        <option value="{{$renewal_frequency->id}}" @if($renewal_frequency->id == old('renewal_frequency_id', $service->renewal_frequency_id)) selected @endif>{{$renewal_frequency->frequency}}</option>
                     @endforeach
                 </select>
                 <span class="m-form__help">{{__('messages.choose_frequency_renewal')}}.</span>
-                @if ($errors->has('frequency'))
+                @if ($errors->has('renewal_frequency_id'))
                     <span class="invalid-feedback" role="alert">
-                            <strong>{{ $errors->first('frequency') }}</strong>
+                            <strong>{{ $errors->first('renewal_frequency_id') }}</strong>
                         </span>
                 @endif
 

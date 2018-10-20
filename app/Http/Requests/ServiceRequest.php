@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use App\Enums\FrequencyRenewals;
-use BenSampo\Enum\Rules\EnumValue;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
@@ -31,12 +30,12 @@ class ServiceRequest extends FormRequest
         ];
 
         $rules = [
-            'url'               => 'required|url|max:255',
-            'customer_id'       => 'required|exists:customers,id,user_id,' . Auth::user()->id,
-            'provider_id'       => 'required|exists:providers,id,user_id,' . Auth::user()->id,
-            'service_type_id'   => 'required|exists:service_types,id,user_id,' . Auth::user()->id,
-            'frequency'         => ['required', new EnumValue(FrequencyRenewals::class, false)],
-            'note'              => 'sometimes|max:255'
+            'url'                   => 'required|url|max:255',
+            'customer_id'           => 'required|exists:customers,id,user_id,' . Auth::user()->id,
+            'provider_id'           => 'required|exists:providers,id,user_id,' . Auth::user()->id,
+            'service_type_id'       => 'required|exists:service_types,id,user_id,' . Auth::user()->id,
+            'renewal_frequency_id'  => 'required|exists:renewal_frequencies,id,user_id,' . Auth::user()->id,
+            'note'                  => 'sometimes|max:255'
         ];
 
         // Se sono in creazione quindi non ho passato il parametro service nella rotta

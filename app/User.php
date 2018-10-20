@@ -59,6 +59,13 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany(ServiceType::class);
     }
 
+    // ha molti renewalFrequencies
+    public function renewalFrequencies()
+    {
+        return $this->hasMany(RenewalFrequency::class)
+            ->orderBy('type')->orderBy('value');
+    }
+
     // ha molti socialAccount
     public function accounts(){
         return $this->hasMany(LinkedSocialAccount::class);

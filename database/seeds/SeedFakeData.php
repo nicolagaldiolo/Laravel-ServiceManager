@@ -37,6 +37,11 @@ class SeedFakeData extends Seeder
             $users->prepend($me);
 
             $users->each(function ($user) {
+
+                $RenewalFrequencies = factory(App\RenewalFrequency::class, 1)->create([
+                    'user_id' => $user->id
+                ]);
+
                 $customers = factory(App\Customer::class, 4)->create([
                     'user_id' => $user->id
                 ]);
@@ -53,6 +58,7 @@ class SeedFakeData extends Seeder
                     'customer_id' => collect($customers)->random()->id,
                     'provider_id' => collect($providers)->random()->id,
                     'service_type_id' => collect($seviceTypes)->random()->id,
+                    'renewal_frequency_id' => collect($RenewalFrequencies)->random()->id
                 ])->each(function ($service){
                     factory(App\Renewal::class, 1)->create([
                         'service_id' => $service->id,

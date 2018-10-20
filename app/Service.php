@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Enums\FrequencyRenewals;
+use App\Enums\RenewalFrequencies;
 use App\Enums\RenewalSM;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -23,9 +24,14 @@ class Service extends Model
         return $this->belongsTo(Provider::class);
     }
 
-    //appartiene ad un type
+    //appartiene ad un serviceType
     public function serviceType(){
         return $this->belongsTo(ServiceType::class);
+    }
+
+    //appartiene ad un type
+    public function renewalFrequency(){
+        return $this->belongsTo(RenewalFrequency::class);
     }
 
     // Ha molti Renewals
@@ -52,35 +58,6 @@ class Service extends Model
             ->whereYear('deadline', Carbon::now()->year);
     }
 
-    /*public function getTestAttribute()
-    {
-        return $this->renewals->sum('amount');
-    }
-    public function renewalsCount()
-    {
-        return $this->hasOne(Renewal::class)
-            ->selectRaw('service_id, count(*) as count, sum(amount) as sum')
-            ->groupBy('service_id');
-    }
-
-    public function getRenewalsCountAttribute()
-    {
-        // if relation is not loaded already, let's do it first
-        if ( ! array_key_exists('renewalsCount', $this->relations))
-            $this->load('renewalsCount');
-
-        $related = $this->getRelation('renewalsCount');
-
-        // then return the count directly
-        return ($related) ? collect(
-            [
-                'count' => $related->count,
-                'sum' => $related->sum
-            ]) : 0;
-    }
-    */
-
-
     //mi faccio tornare l'utente a cui appartiene indirettamente questo service
     public function user(){
         return $this->customer->user;
@@ -93,33 +70,24 @@ class Service extends Model
     public function calcNextDeadline()
     {
         $lastRenewal = $this->lastRenewalInsert();
+        $renewalFrequency = $this->renewalFrequency;
+
         $nextDeadline = null;
-        if(!is_null($lastRenewal->deadline)){
-            switch ($this->frequency) {
-                case FrequencyRenewals::Weekly:
-                    $nextDeadline = $lastRenewal->deadline->addWeek();
+
+        if(!is_null($lastRenewal->deadline) && !is_null($renewalFrequency)){
+
+            switch ($renewalFrequency->type) {
+                case RenewalFrequencies::Days:
+                    $nextDeadline->addDays($renewalFrequency->value);
                     break;
-                case FrequencyRenewals::Monthly:
-                    $nextDeadline = $lastRenewal->deadline->addMonth();
+                case RenewalFrequencies::Weeks:
+                    $nextDeadline->addWeeks($renewalFrequency->value);
                     break;
-                case FrequencyRenewals::HalfYearly:
-                    $nextDeadline = $lastRenewal->deadline->addMonths(6);
+                case RenewalFrequencies::Months:
+                    $nextDeadline->addMonths($renewalFrequency->value);
                     break;
-                case FrequencyRenewals::Biennial:
-                    $nextDeadline = $lastRenewal->deadline->addYears(2);
-                    break;
-                case FrequencyRenewals::Triennial:
-                    $nextDeadline = $lastRenewal->deadline->addYears(3);
-                    break;
-                case FrequencyRenewals::Quadrennial:
-                    $nextDeadline = $lastRenewal->deadline->addYears(4);
-                    break;
-                case FrequencyRenewals::Quinquennial:
-                    $nextDeadline = $lastRenewal->deadline->addYears(5);
-                    break;
-                default:
-                case FrequencyRenewals::Annual:
-                    $nextDeadline = $lastRenewal->deadline->addYear();
+                case RenewalFrequencies::Years:
+                    $nextDeadline->addYears($renewalFrequency->value);
                     break;
             }
         }

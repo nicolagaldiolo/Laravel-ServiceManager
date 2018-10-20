@@ -1,6 +1,6 @@
 <?php
 
-use App\Enums\FrequencyRenewals;
+use App\Enums\RenewalFrequencies;
 use App\Enums\RenewalSM;
 use App\Enums\UserType;
 
@@ -11,15 +11,11 @@ return [
         UserType::Admin => 'Admin',
     ],
 
-    FrequencyRenewals::class => [
-        FrequencyRenewals::Weekly => 'Weekly',
-        FrequencyRenewals::Monthly => 'Monthly',
-        FrequencyRenewals::HalfYearly => '6 months',
-        FrequencyRenewals::Annual => 'Annual',
-        FrequencyRenewals::Biennial => '2 years',
-        FrequencyRenewals::Triennial => '3 years',
-        FrequencyRenewals::Quadrennial => '4 years',
-        FrequencyRenewals::Quinquennial => '5 years',
+    RenewalFrequencies::class => [
+        RenewalFrequencies::Days => 'Days',
+        RenewalFrequencies::Weeks => 'Weeks',
+        RenewalFrequencies::Months => 'Months',
+        RenewalFrequencies::Years => 'Years'
     ],
 
     RenewalSM::class => [

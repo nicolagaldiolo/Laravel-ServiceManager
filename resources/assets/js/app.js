@@ -495,6 +495,64 @@ var HostingManager = function($) {
         editDataTableRecord(dataTable);
     };
 
+    var renewalFrequenciesDataTable = function(){
+        var obj = $('#renewalFrequencies_table');
+        var deleteAllRoute = obj.data("deleteall");
+        var dataTable = obj.DataTable({
+            responsive: true,
+            dom: `<'row'<'col-sm-6 text-left'f><'col-sm-6 text-right'B>>
+			            <'row'<'col-sm-12'tr>>
+			            <'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 dataTables_pager'lp>>`,
+            buttons: [
+                'print',
+                'copyHtml5',
+                'excelHtml5',
+                'csvHtml5',
+                'pdfHtml5',
+                {
+                    text: '<i class="m-nav__link-icon flaticon-delete-2"></i>',
+                    className: '',
+                    action: function ( e, dt, node, config ) {
+                        deleteAllDataTableRecord(dataTable, deleteAllRoute);
+                    }
+                }
+            ],
+            order: [[1, 'desc']],
+
+            headerCallback: dataTableHeaderCallback,
+
+            processing: true,
+            serverSide: true,
+            ajax: '',
+            columns: [
+                { data: "id" },
+                { data: "value" },
+                { data: "type" },
+                { data: "actions", name: 'action', orderable: false, searchable: false}
+            ],
+
+            columnDefs: [
+                {
+                    targets: [0],
+                    width: '30px',
+                    className: 'dt-right',
+                    orderable: false,
+                    render: function (data, type, full, meta) {
+                        return `
+                                <label class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--brand">
+                                    <input type="checkbox" name="delete_data[]" value="${data}" class="m-checkable">
+                                    <span></span>
+                                </label>`;
+                    }
+                }
+            ]
+        });
+
+        dataTableSelectAllSupport(dataTable);
+        deleteDataTableRecord(dataTable);
+        editDataTableRecord(dataTable);
+    };
+
     var userDataTable = function(){
         var obj = $('#users_table');
         var deleteAllRoute = obj.data("deleteall");
@@ -594,8 +652,6 @@ var HostingManager = function($) {
     var editDataTableRecord = function(dataTable){
         dataTable.on('click', '.edit', function (el) {
             el.preventDefault();
-
-            console.log("CI sono");
 
             _self = this;
 
@@ -774,6 +830,7 @@ var HostingManager = function($) {
             customersDataTable();
             userDataTable();
             serviceTypeDataTable();
+            renewalFrequenciesDataTable();
             servicesDataTable();
             deleteRecord();
         },
