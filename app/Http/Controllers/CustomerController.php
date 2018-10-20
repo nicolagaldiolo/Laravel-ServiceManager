@@ -7,6 +7,7 @@ use App\Service;
 use App\Http\Requests\CustomerRequest;
 use App\Http\Traits\DataTableServiceTrait;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -79,22 +80,27 @@ class CustomerController extends Controller
         $this->authorize('view', $customer);
 
         if(request()->wantsJson() || request()->expectsJson()) {
-            $services = $customer->services()->with('provider', 'customer', 'serviceType')->get();
-
+            $services = $customer->services()->with('nextRenewal', 'provider', 'customer', 'serviceType')->get();
             return $this->getServicesDataTablesTraits($services);
-
         }
 
-        $customerServices = $customer->load('services');
-        $customerServicesCount = $customerServices->services->count();
-        $customerRevenue = 0;//$customerServices->services->sum('amount');
-        $toPay = 0;//$customerServices->Services->filter(function($item){
-            //return $item->payed === 0;
-        //})->count();
+        $totalUserServices = Auth::user()->services()->with('renewalsCurrent')->get()
+            ->pluck('renewalsCurrent')->collapse()->sum('amount');
 
-        $revenueAvarage = 100;//round(($customerRevenue * 100) / Auth::user()->services()->sum('amount'), 2);
+        $customerServices = $customer->load('services.renewalsCurrent', 'services.renewalsUnresolved');
+        $renewals = $customerServices->services->pluck('renewalsCurrent')->collapse();
+        $renewalsUnresolved = $customerServices->services->pluck('renewalsUnresolved')->collapse();
 
-        return view('customers.show', compact('customer', 'customerRevenue', 'customerServicesCount', 'toPay', 'revenueAvarage'));
+        $renewalsThisMonth = $renewals->filter(function($item){
+            return $item->deadline->month == Carbon::now()->month;
+        });
+
+        $revenue = $renewals->sum('amount');
+        $revenueThisMonth= $renewalsThisMonth->sum('amount');
+        $renewalsUnresolved = $renewalsUnresolved->count();
+        $revenueAvarage = round(($revenue * 100) / $totalUserServices, 2);
+
+        return view('customers.show', compact('customer', 'revenue', 'revenueThisMonth', 'renewalsUnresolved', 'revenueAvarage'));
 
     }
 
@@ -143,30 +149,7 @@ class CustomerController extends Controller
                 'message' => 'Customer eliminato con successo'
             ];
         }
-
     }
-
-    /*public function destroyAll(Request $request)
-    {
-        $ids = explode(",",$request->ids);
-
-        Auth::user()->customers()->whereIn('customers.id',$ids)->delete();
-        return [
-            'message' => 'Customers eliminati con successo'
-        ];
-
-        //$this->authorize('massiveDelete', [$ids]);
-        if( Gate::allows('delete-all-customers', [$ids])){
-            Auth::user()->customers()->whereIn('customers.id',$ids)->delete();
-            return [
-                'message' => 'Customers eliminati con successo'
-            ];
-        }else{
-            abort(403, 'Non sei autorizzato ad accedere a questa risorsa.');
-        }
-
-
-    }*/
 
     public function destroyAll(Request $request)
     {

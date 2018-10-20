@@ -8,6 +8,18 @@
 
     <!-- END: Subheader -->
     <div class="m-content">
+
+        @if($service->renewalsUnresolved()->count() > 0)
+        <div class="m-alert m-alert--icon alert alert-danger m--margin-bottom-30" role="alert">
+            <div class="m-alert__icon">
+                <i class="flaticon-danger"></i>
+            </div>
+            <div class="m-alert__text">
+                <strong>Attenzione!</strong> Hai {{$service->renewalsUnresolved()->count()}} scadenze pendenti da risolvere.
+            </div>
+        </div>
+        @endif
+
         <div class="row">
             <div class="col-lg-4">
                 <!--begin::Portlet-->

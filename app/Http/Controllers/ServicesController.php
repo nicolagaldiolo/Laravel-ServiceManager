@@ -27,7 +27,7 @@ class ServicesController extends Controller
     {
 
         if(request()->wantsJson() || request()->expectsJson()) {
-            $services = Auth::user()->services()->with(['nextRenewal', 'provider', 'customer', 'serviceType'])->get();
+            $services = Auth::user()->services()->with('nextRenewal', 'provider', 'customer', 'serviceType')->get();
             return $this->getServicesDataTablesTraits($services);
         }
 
@@ -122,12 +122,10 @@ class ServicesController extends Controller
 
                     return implode("", $buttons);
 
-                })->rawColumns(['status','actions'])->make(true);
+                })->rawColumns(['amount', 'status','actions'])->make(true);
         }else{
 
-            $service->load('provider', 'customer', 'serviceType');
-
-            //dd($service);
+            $service->load('renewalsUnresolved', 'provider', 'customer', 'serviceType');
 
             return view('services.show', compact('service'));
         }

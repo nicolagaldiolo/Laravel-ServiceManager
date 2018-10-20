@@ -23,18 +23,23 @@ return [
 
         'states_attribute' => [
             App\Enums\RenewalSM::S_to_confirm => [
+                'attr' => App\Enums\RenewalSM::S_to_confirm,
                 'label' => 'pending'
             ],
             App\Enums\RenewalSM::S_to_bill => [
+                'attr' => App\Enums\RenewalSM::S_to_bill,
                 'label' => 'info'
             ],
             App\Enums\RenewalSM::S_to_cash => [
+                'attr' => App\Enums\RenewalSM::S_to_cash,
                 'label' => 'warning'
             ],
             App\Enums\RenewalSM::S_payed => [
+                'attr' => App\Enums\RenewalSM::S_payed,
                 'label' => 'success'
             ],
             App\Enums\RenewalSM::S_suspended => [
+                'attr' => App\Enums\RenewalSM::S_suspended,
                 'label' => 'danger'
             ]
         ],

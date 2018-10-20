@@ -49,12 +49,12 @@ class Renewal extends Model
 
     public function getAmountFormattedAttribute()
     {
-        return is_null($this->amount) ? $this->amount : number_format($this->amount, 2, ',', '');
+        return is_null($this->amount) ? $this->amount : number_format($this->amount, 2, ',', '.');
     }
 
     public function getAmountVerboseAttribute()
     {
-        return is_null($this->amount) ? $this->amount : '€ ' . number_format($this->amount, 2, ',', '');
+        return is_null($this->amount) ? $this->amount : '&euro; ' . number_format($this->amount, 2, ',', '.');
     }
 
     public function setAmountAttribute($amount)

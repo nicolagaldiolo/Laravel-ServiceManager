@@ -10,15 +10,14 @@
         <table id="services_table" data-deleteall="{{$dataTableDeleteAll}}" class="table table-striped- table-bordered table-hover table-checkable">
             <thead>
             <tr>
-                <th>Record ID</th>
+                <th>ID</th>
                 <th>{{__('messages.url')}}</th>
-                <th>{{__('messages.customer')}}</th>
                 <th>{{__('messages.provider')}}</th>
                 <th>{{__('messages.service_type')}}</th>
-                <th>{{__('messages.frequency_renewal')}}</th>
                 <th>Scadenza</th>
                 <th>Importo</th>
                 <th>Stato</th>
+                <th>Unresolved</th>
                 <th>{{__('messages.actions')}}</th>
             </tr>
             </thead>

@@ -35,18 +35,16 @@ trait StatableTrait {
             return null;
 
         $states = config('state-machine.' . self::SM_CONFIG . '.states_attribute');
-        return array_filter($states, function($v, $k){
+        return array_values(array_filter($states, function($v, $k){
             return $k == $this->stateIs();
-        }, ARRAY_FILTER_USE_BOTH);
+        }, ARRAY_FILTER_USE_BOTH))[0];
 
     }
-
 
     public function getStateAttributeVerbose()
     {
         $status = $this->getStateAttribute();
-        return $status ? '<span class="m-badge m-badge--' . $status[key($status)]['label'] . ' m-badge--wide">' . RenewalSM::getDescription(key($status)) . '</span>' : "";
-
+        return $status ? '<span class="m-badge m-badge--' . $status['label'] . ' m-badge--wide">' . RenewalSM::getDescription($status['attr']) . '</span>' : "";
     }
 
 

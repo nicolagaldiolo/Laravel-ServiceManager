@@ -358,13 +358,12 @@ var HostingManager = function($) {
             columns: [
                 {data: "id"},
                 {data: "url"},
-                {data: "customer"},
                 {data: "provider"},
                 {data: "service_type"},
-                {data: "frequency"},
                 {data: "deadline"},
                 {data: "amount"},
                 {data: "status"},
+                {data: "unresolved"},
                 {data: "actions", name: 'action', orderable: false, searchable: false}
             ],
             columnDefs: [
@@ -411,13 +410,6 @@ var HostingManager = function($) {
                 {
                     targets: [2],
                     render: function (data, type, full, meta) {
-                        return data == null ? '' : data.name;
-                    },
-                },
-
-                {
-                    targets: [3],
-                    render: function (data, type, full, meta) {
                         if (data == null) return '';
                         var color = (typeof data.label !== 'undefined') ? 'style="background:' + data.label + '"' : '';
                         return '<span class="m-badge m-badge--brand m-badge--wide" ' + color + '>' + data.name + '</span>';
@@ -425,11 +417,18 @@ var HostingManager = function($) {
                 },
 
                 {
-                    targets: [4],
+                    targets: [3],
                     render: function (data, type, full, meta) {
                         return data == null ? '' : data.name;
                     },
                 },
+                {
+                    targets: [7],
+                    render: function (data, type, full, meta){
+                        var label = (data > 0) ? 'danger' : 'secondary';
+                        return '<span class="m-badge m-badge--' + label + '">' + data + '</span>';
+                    }
+                }
             ]
 
         });
@@ -645,7 +644,6 @@ var HostingManager = function($) {
 
                 if (result.value) {
                     var action = _self.href;
-                    //var action = "https://hostingmanager.app/it/services/40";
                     $.ajax(action, {
 
                         method: "DELETE",

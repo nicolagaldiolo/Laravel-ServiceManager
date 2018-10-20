@@ -73,7 +73,10 @@
                     <div class="m-portlet__body">
                         <div class="m-widget12">
                             <div class="m-widget12__item">
-                                <span class="m-widget12__text1">{{__('messages.total_revenue')}}<br><span>€ {{$customerRevenue}}</span></span>
+                                <span class="m-widget12__text1">
+                                    {{__('messages.total_revenue')}} {{\Carbon\Carbon::now()->year}}<br>
+                                    <span>@amount($revenue)</span>
+                                </span>
                                 <div class="m-widget12__text2">
                                     <div class="m-widget12__desc">{{__('messages.avarage_revenue')}}</div>
                                     <br>
@@ -87,8 +90,10 @@
                             </div>
 
                             <div class="m-widget12__item">
-                                <span class="m-widget12__text1">{{__('messages.domains_active_')}}<br><span>{{$customerServicesCount}}</span></span>
-                                <span class="m-widget12__text2">{{__('messages.domains_deadline')}}<br><span>{{$toPay}}</span></span>
+                                <span class="m-widget12__text1">{{__('messages.revenues')}}  {{\Carbon\Carbon::now()->format('F Y')}}<br>
+                                    <span>@amount($revenueThisMonth)</span>
+                                </span>
+                                <span class="m-widget12__text2">Ancora da incassare <br><span>{{$renewalsUnresolved}}</span></span>
                             </div>
 
                         </div>
@@ -103,9 +108,9 @@
         </div>
         <!--End::Section-->
 
-        @if($customerServicesCount > 0)
+        {{--@if($customerServicesCount > 0)--}}
             @include('services._dataTable', ['dataTableUrl' => route('customers.show', $customer), 'dataTableNewUrl' => route('services.create') . '?cid=' . $customer->id, 'dataTableNewModal' => false, 'dataTableDeleteAll' => route('services.destroy-all') ])
-        @endif
+        {{--@endif--}}
 
     </div>
 @stop

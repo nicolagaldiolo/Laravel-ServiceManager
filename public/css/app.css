@@ -58987,23 +58987,54 @@ table.dataTable tbody tr.selected a, table.dataTable tbody th.selected a, table.
   margin-top: 0;
 }
 
-.m-widget11 .table tbody > tr > td .m-widget11__info_domain {
+.m-widget11 .m-widget11__info_content {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+}
+
+.m-widget11 .m-widget11__info_content:not(:last-child) {
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #ebedf2;
+}
+
+.m-widget11 .m-widget11__info_content img {
+  width: 3.5rem;
+  margin-right: 12px;
+  border-radius: 50%;
+}
+
+.m-widget11 .m-widget11__info_content .m-widget11__item_info {
+  width: 100%;
+  padding-top: 6px;
+}
+
+.m-widget11 .m-widget11__info_content .m-widget11__item_info .m-widget11__item_info_top {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
 }
 
-.m-widget11 .table tbody > tr > td .m-widget11__info_domain img {
-  width: 3.5rem;
-  margin-right: 12px;
-  border-radius: 50%;
+.m-widget11 .m-widget11__info_content .m-widget11__item_info .m-widget11__item_info_top .m-widget11__title {
+  color: #575962;
+  font-size: 1.1rem;
+  font-weight: 500;
+  display: block;
 }
 
-.m-widget11 .table tbody > tr > td.amount {
-  font-weight: 600;
+.m-widget11 .m-widget11__info_content .m-widget11__item_info .m-widget11__item_info_top .m-widget11__sub {
+  display: block;
+  font-size: 0.85rem;
 }
 
 .m-widget12 .m-widget12__item .m-widget12__text1 > span,

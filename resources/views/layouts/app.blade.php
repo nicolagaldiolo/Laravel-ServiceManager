@@ -108,10 +108,9 @@
                                         <li class="m-nav__item m-topbar__notifications m-topbar__notifications--img m-dropdown m-dropdown--large m-dropdown--header-bg-fill m-dropdown--arrow m-dropdown--align-center 	m-dropdown--mobile-full-width"
                                             m-dropdown-toggle="click" m-dropdown-persistent="1">
                                             <a href="#" class="m-nav__link m-dropdown__toggle" id="m_topbar_notification_icon">
-                                                {{--@if($domainsToPayCount > 0)
+                                                @if($servicesToPayCount > 0)
                                                     <span class="m-nav__link-badge m-badge m-badge--dot m-badge--dot-small m-badge--danger"></span>
                                                 @endif
-                                                --}}
                                                 <span class="m-nav__link-icon">
                                                                 <i class="flaticon-alarm"></i>
                                                             </span>
@@ -128,29 +127,41 @@
                                                         <div class="m-dropdown__content">
 
 
-                                                            {{--@if($domainsToPay->isEmpty())
+                                                            @if($servicesToPay->isEmpty())
                                                                 <div class="alert alert-brand" role="alert">
                                                                     <strong>{{__('messages.fantastic')}}</strong> {{__('messages.no_other_domains')}}
                                                                 </div>
-                                                            @else--}}
+                                                            @else
 
                                                                 <div class="m-scrollable" data-scrollable="true"
                                                                      data-height="250" data-mobile-height="200">
                                                                     <div class="m-list-timeline m-list-timeline--skin-light">
                                                                         <div class="m-list-timeline__items">
-                                                                            {{--
-                                                                            @foreach($domainsToPay as $domain)
+
+                                                                            @foreach($servicesToPay as $service)
                                                                                 <div class="m-list-timeline__item">
                                                                                     <span class="m-list-timeline__badge -m-list-timeline__badge--state-success"></span>
-                                                                                    <span class="m-list-timeline__text">{{$domain->url}}</span>
-                                                                                    <span class="m-list-timeline__time">{{$domain->deadline->diffForHumans()}}</span>
+                                                                                    <span class="m-list-timeline__text">
+                                                                                        {{$service->url}}
+                                                                                        @foreach($service->renewalsUnresolved as $renewal)
+                                                                                            <div class="m-widget6__item">
+                                                                                                <span class="m-widget6__text">
+                                                                                                    <span class="m--font-boldest">{{$renewal->deadline->diffForHumans()}}</span> ({{$renewal->deadlineVerbose}})
+                                                                                                </span>
+                                                                                                <span class="m-widget6__text m--align-right m--font-boldest m--font-brand">
+                                                                                                    @amount($renewal->amount)
+                                                                                                </span>
+                                                                                            </div>
+                                                                                        @endforeach
+                                                                                    </span>
+
                                                                                 </div>
                                                                             @endforeach
-                                                                            --}}
+
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                            {{--@endif--}}
+                                                            @endif
                                                         </div>
                                                     </div>
                                                 </div>
