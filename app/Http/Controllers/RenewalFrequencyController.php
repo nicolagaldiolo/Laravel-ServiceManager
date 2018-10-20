@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Enums\RenewalFrequencies;
 use App\Http\Requests\RenewalFrequencyRequest;
 use App\RenewalFrequency;
-use App\ServiceType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\DataTables;

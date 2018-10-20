@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Traits;
-use App\Enums\FrequencyRenewals;
 use Carbon\Carbon;
 use http\Env\Request;
 use Yajra\DataTables\DataTables;
@@ -11,9 +10,6 @@ trait DataTableServiceTrait {
     public function getServicesDataTablesTraits($services) {
 
         return DataTables::of($services)
-            ->editColumn('frequency', function ($service) {
-                return FrequencyRenewals::getDescription($service->frequency);
-            })
             ->editColumn('deadline', function ($service) {
                 if($service->nextRenewal)
                 return $service->nextRenewal->deadlineVerbose;
