@@ -33,21 +33,6 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
 
-        /*$schedule->call(function () {
-
-            // Incremento la data di un anno dei servizi pagati
-            Service::updateDeadlineNextYear()->each(function($item){
-                $years_gap = Carbon::now()->endOfMonth()->diffInYears($item->deadline->endOfMonth());
-                $item->update(['deadline' => $item->deadline->addYear($years_gap + 1)]);
-            });
-
-            // Aggiorno la tabella domains settando i servizi da pagare
-            Service::expiring()->update(['payed' => 0]);
-
-        })->everyMinute();
-        */
-
-
         /*
         $schedule->call(function(){
             Service::get()->each(function($item){
