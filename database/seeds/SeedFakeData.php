@@ -19,22 +19,20 @@ class SeedFakeData extends Seeder
         Storage::deleteDirectory(config('custompath.services'));
         Storage::deleteDirectory(config('custompath.providers'));
 
-        $me = App\User::create(
-            [
-                'name' => env('DEMOUSER', 'Demo'),
-                'email' => env('DEMOEMAIL', 'demouser@example.com'),
-                'password' => bcrypt(env('DEMOPASS', 'password')),
-                'role' => UserType::Admin,
-            ]
-        );
+        $me = factory(App\User::class, 1)->create([
+            'name' => env('DEMOUSER', 'Demo'),
+            'email' => env('DEMOEMAIL', 'demouser@example.com'),
+            'password' => bcrypt(env('DEMOPASS', 'password')),
+            'role' => UserType::Admin,
+        ]);
 
         if(config('app.env') !== 'production') {
 
-            $users = factory(App\User::class, 10)->create([
+            $otherUsers = factory(App\User::class, 10)->create([
                 'password' => bcrypt(env('DEMOPASS', 'password')),
             ]);
 
-            $users->prepend($me);
+            $users = $me->merge($otherUsers);
 
             $users->each(function ($user) {
 
