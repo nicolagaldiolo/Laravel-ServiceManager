@@ -107,18 +107,17 @@ class User extends Authenticatable implements MustVerifyEmail
         return $query->where('role', UserType::Admin);
     }
 
-    /*public function scopeDomainsExpiring($query)
+    public function scopeServicesExpiring($query)
     {
-        return $query->whereHas('customers.domains', function ($q) {
-            $q->toPay();
-        })->with([
-            'customers' => function ($q) {
-                $q->whereHas('domains');
-            },
-            'customers.domains' => function ($q) {
-                $q->toPay();
-            },
-        ]);
-    }*/
+        return $query->whereHas('customers.services.renewalsUnresolved')->with(
+            [
+                'customers' => function ($q) {
+                    $q->whereHas('services.renewalsUnresolved');
+                },
+                'customers.services' => function ($q) {
+                    $q->whereHas('renewalsUnresolved')->with('provider', 'serviceType', 'renewalsUnresolved');
+                }
+            ])->get();
+    }
 
 }

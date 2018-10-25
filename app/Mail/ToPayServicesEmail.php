@@ -9,7 +9,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class ToPayDomainsEmail extends Mailable
+class ToPayServicesEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -33,6 +33,6 @@ class ToPayDomainsEmail extends Mailable
      */
     public function build()
     {
-      return $this->subject(config('app.name') . ' - Domini in scadenza - ' . Carbon::now()->format('F Y') )->markdown('emails.users.topay-domains');
+      return $this->subject(config('app.name') . ' - Servizi in scadenza fino a ' . Carbon::now()->format('F Y') )->markdown('emails.users.topay-services');
     }
 }

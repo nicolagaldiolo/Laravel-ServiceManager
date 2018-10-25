@@ -3,11 +3,11 @@
 namespace App\Console;
 
 use App\Service;
-use App\Events\ToPayDomainsAlert;
+use App\Events\ToPayServicesAlert;
 use App\Events\GenerateScreen;
 use App\Events\UserRegister;
 use App\Events\CheckServiceStatus;
-use App\Jobs\ToPayDomains;
+use App\Jobs\ToPayServices;
 use App\Provider;
 use Carbon\Carbon;
 use Illuminate\Console\Scheduling\Schedule;

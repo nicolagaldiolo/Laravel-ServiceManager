@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Enums\RenewalSM;
+use App\Events\ToPayServicesAlert;
 use App\Renewal;
 use App\Service;
 use App\ExpiringDomain;
 use App\Http\Requests\ServiceRequest;
 use App\Http\Traits\DataTableServiceTrait;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -27,7 +29,9 @@ class ServicesController extends Controller
     {
 
         //per testare
-        //event(new ToPayDomainsAlert());
+
+        //User::servicesExpiring();
+        //event(new ToPayServicesAlert());
 
         if(request()->wantsJson() || request()->expectsJson()) {
             $services = Auth::user()->services()->with('nextRenewal', 'provider', 'customer', 'serviceType')->get();

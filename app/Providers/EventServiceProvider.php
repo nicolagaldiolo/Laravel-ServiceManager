@@ -29,8 +29,8 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\CheckServiceStatus' => [
             'App\Listeners\CheckServiceStatusListener',
         ],
-        'App\Events\ToPayDomainsAlert' => [
-            'App\Listeners\ToPayDomainsAlertListener',
+        'App\Events\ToPayServicesAlert' => [
+            'App\Listeners\ToPayServicesAlertListener',
         ],
         SMEvents::POST_TRANSITION => [
             'App\Listeners\StateHistoryManager@postTransition'

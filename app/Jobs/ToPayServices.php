@@ -3,7 +3,7 @@
 namespace App\Jobs;
 
 use App\User;
-use App\Mail\ToPayDomainsEmail;
+use App\Mail\ToPayServicesEmail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
@@ -11,7 +11,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Support\Facades\Mail;
 
-class ToPayDomains implements ShouldQueue
+class ToPayServices implements ShouldQueue
 {
     //use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
     use Dispatchable, InteractsWithQueue, Queueable;
@@ -38,7 +38,7 @@ class ToPayDomains implements ShouldQueue
     {
 
         if(!is_null($this->user->email)){
-            Mail::to($this->user->email)->send(new ToPayDomainsEmail($this->user));
+            Mail::to($this->user->email)->send(new ToPayServicesEmail($this->user));
         }
     }
 }
