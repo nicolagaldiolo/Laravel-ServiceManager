@@ -6,7 +6,7 @@
 
 ## Customer: {{$customer->name}}
 @foreach($customer->services as $service)
-### Service: {{$service->url}} ({{$service->serviceType->name}}) - <span style="padding: 1px 10px; border-radius: 10px; color:#fff; background: @if($service->provider->label) {{$service->provider->label}} @else #716aca @endif; ">{{$service->provider->name}}</span>
+### {{$service->url}} ({{$service->serviceType->name}}) - <span style="padding: 1px 10px; border-radius: 10px; color:#fff; background: @if($service->provider->label) {{$service->provider->label}} @else #716aca @endif; ">{{$service->provider->name}}</span>
 <table>
     <tr>
         <th>Deadline</th>

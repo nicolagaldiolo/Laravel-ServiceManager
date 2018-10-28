@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Enums\RenewalSM;
 use App\Http\Traits\StatableTrait;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -62,15 +63,21 @@ class Renewal extends Model
         $this->attributes['amount'] = $this->floatvalue($amount);
     }
 
+    public function getUnsolvedAttribute()
+    {
+        return $this->deadline < Carbon::now()->startOfDay() && $this->stateIs() < RenewalSM::S_payed;
+    }
+
     public function floatvalue($val){
         $val = str_replace(",",".",$val);
         $val = preg_replace('/\.(?=.*\.)/', '', $val);
         return floatval($val);
     }
 
-    //public function scopeCurrentDeadline($query){
-    //    return $query->whereDate('deadline', '>=', Carbon::now())->first();
-    //}
+    public function scopeAllNextFromDate($query, Renewal $renewal)
+    {
+        return $query->whereDate('deadline', '>', $renewal->deadline);
+    }
 
 
 

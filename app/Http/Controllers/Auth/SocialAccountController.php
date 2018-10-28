@@ -34,7 +34,7 @@ class SocialAccountController extends Controller
             return redirect()->route('login');
         }
 
-        $account = LinkedSocialAccount::whereProviderName($socialProvider)->whereProviderId($socialUser->getId())->first(); // cerco se le info tornare appartengono ad un utente
+        $account = LinkedSocialAccount::whereSocialProviderName($socialProvider)->whereSocialProviderId($socialUser->getId())->first(); // cerco se le info tornare appartengono ad un utente
         if ($account) {
             $user = $account->user; // se trovo corrispondenza torna l'utente
         } else {

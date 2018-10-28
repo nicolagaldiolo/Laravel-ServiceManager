@@ -32,6 +32,9 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\ToPayServicesAlert' => [
             'App\Listeners\ToPayServicesAlertListener',
         ],
+        'App\Events\CustomerRenewalReminder' => [
+            'App\Listeners\CustomerRenewalReminderListener',
+        ],
         SMEvents::POST_TRANSITION => [
             'App\Listeners\StateHistoryManager@postTransition'
         ]

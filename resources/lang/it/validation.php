@@ -131,6 +131,9 @@ return [
         'current_password' => [
             'password_check' => 'La password è errata',
         ],
+        'renewal_id.*' => [
+            'required' => 'Scelta obbligatoria',
+        ],
     ],
 
     /*

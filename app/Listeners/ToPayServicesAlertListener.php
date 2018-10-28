@@ -28,7 +28,7 @@ class ToPayServicesAlertListener
      */
     public function handle(ToPayServicesAlert $event)
     {
-        User::servicesExpiring()->each(function($item){
+        User::servicesExpiring()->get()->each(function($item){
             ToPayServices::dispatch($item);
         });
     }

@@ -58,9 +58,8 @@ class CustomerPolicy
         return $user->id === $customer->user_id;
     }
 
-    public function massiveDelete(User $user, $ids)
+    public function manageRenewal(User $user, Customer $customer, $token)
     {
-        return true;
-        //return count(array_intersect($ids, $user->customers()->pluck('id')->toArray() )) == count($ids);
+        return $customer->token === $token;
     }
 }

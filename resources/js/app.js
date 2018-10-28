@@ -822,6 +822,78 @@ var HostingManager = function($) {
         });
     };
 
+    var customerRenewalManager = function(){
+
+        $(".renewal-service-row input[name^=tmp_renewal_id]").on('change', function(e){
+            $(this).closest('.m-radio-inline').find('input[name^=renewal_id]').val($(this).val());
+        });
+
+        $('.renewal-service-row .suspend').on('change', function(e){
+            var renewal_service_row = $(this).closest('.renewal-service-row');
+            renewal_service_row.nextAll().find('input[name^=tmp_renewal_id]').prop("disabled", true);
+            if(renewal_service_row.nextAll().find('.suspend:not(:checked)').length > 0){
+                swal({
+                    title: "Verranno sospese tutte le scadenze successive",
+                    text: "Sicuro di voler procedere?",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: "Si, procedi"
+                }).then(function(result) {
+                    if(result.value){
+                        renewal_service_row.nextAll().find('.suspend').prop("checked", true).trigger('change');
+                    }else{
+                        renewal_service_row.nextAll().find('.renew:checked').prop("disabled", false);
+                        renewal_service_row.find('.renew').prop("checked", true).trigger('change');
+                    }
+                });
+            }
+        });
+
+        $('.renewal-service-row .renew').on('change', function(e){
+            $(this).closest('.renewal-service-row')
+                .next().find('input[name^=tmp_renewal_id]').prop("disabled", false);
+        });
+
+    };
+
+    var sendCustomerReminder = function(){
+        $('.sendCustomerReminder').on('click', function(e){
+            e.preventDefault();
+            var _self = this;
+            swal({
+                title: Lang.get('messages.are_sure'),
+                text: "Verrà inviato un promemoria al cliente con l'elenco di tutti i suoi servizi in scadenza",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonText: "Si procedi"
+            }).then(function(result) {
+
+                if (result.value) {
+                    var action = _self.href;
+                    $.ajax(action, {
+
+                        method: "GET",
+                        data: {
+                            '_token': $('meta[name="csrf-token"]').attr('content')
+                        },
+
+                        success: function(data) {
+                            (data.type == 'warning') ?
+                                toastr.warning(data.message) :
+                                toastr.success(data.message);
+                        },
+                        error: function(resp, status, error) {
+                            resp = JSON.parse(resp.responseText);
+                            toastr.error(resp.message);
+                        },
+
+                    })
+                }
+            });
+
+        });
+    };
+
     return {
         init: function() {
             general();
@@ -833,6 +905,8 @@ var HostingManager = function($) {
             renewalFrequenciesDataTable();
             servicesDataTable();
             deleteRecord();
+            customerRenewalManager();
+            sendCustomerReminder();
         },
     };
 

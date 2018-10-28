@@ -2,7 +2,7 @@
 
 @section('content')
 
-    @component('components.title')
+    @component('components.title', ['back_url' => route('customers.index')])
         {{__('messages.customers')}}
     @endcomponent
     <div class="m-content">
@@ -108,9 +108,26 @@
         </div>
         <!--End::Section-->
 
-        {{--@if($customerServicesCount > 0)--}}
-            @include('services._dataTable', ['dataTableUrl' => route('customers.show', $customer), 'dataTableNewUrl' => route('services.create') . '?cid=' . $customer->id, 'dataTableNewModal' => false, 'dataTableDeleteAll' => route('services.destroy-all') ])
-        {{--@endif--}}
+        @if($customerServicesCount > 0)
+            <div class="m-portlet m-portlet--mobile">
+                @component('components.tableHeader', [
+                    'title' => __('messages.all_domains'),
+                    'icon' => 'flaticon-layers',
+                    'button' => __('messages.new_domain'),
+                    'newModal' => false,
+                    'url' => route('services.create') . '?cid=' . $customer->id,
+                    'newModal' => false,
+                    'moreAction' => true,
+                ])
+                    @include('customers._dataTableMoreAction')
+                @endcomponent
+
+                <div class="m-portlet__body">
+                    @include('services._dataTable', ['dataTableDeleteAll' => route('services.destroy-all')])
+                </div>
+            </div>
+
+        @endif
 
     </div>
 @stop

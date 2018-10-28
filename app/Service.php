@@ -46,11 +46,24 @@ class Service extends Model
             ->orderBy('deadline', 'ASC');
     }
 
+    // Ha molte NextRenewals
+    /*public function allNextRenewals(Renewal $renewal){
+        return $this->hasMany(Renewal::class)
+            ->whereDate('deadline', '>=', $renewal->deadline);
+    }*/
+
     // Ha molti RenewalsUnresolved
     public function renewalsUnresolved(){
         return $this->hasMany(Renewal::class)
             ->where('status', '<', RenewalSM::S_payed)
             ->whereDate('deadline', '<', Carbon::now()->startOfDay());
+    }
+
+    // Ha molti RenewalsExpiring
+    public function renewalsExpiring(){
+        return $this->hasMany(Renewal::class)
+            ->where('status', RenewalSM::S_to_confirm)
+            ->whereDate('deadline', '<=', Carbon::now()->addMonth()->endOfMonth());
     }
 
     public function renewalsCurrent(){

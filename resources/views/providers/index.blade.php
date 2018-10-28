@@ -1,20 +1,26 @@
 @extends('layouts.app')
 
 @section('content')
-    @component('components.title')
+    @component('components.title', ['back_url' => route('dashboard')])
         {{__('messages.providers')}}
     @endcomponent
 
     <!-- END: Subheader -->
     <div class="m-content">
         <div class="m-portlet m-portlet--mobile">
-            @component('components.tableHeader', ['icon' => 'flaticon-interface-7', 'button' => __('messages.new_provider'), 'url' => route('providers.create'), 'newModal' => false])
-                {{__('messages.all_providers')}}
+            @component('components.tableHeader', [
+                'title' => __('messages.all_providers'),
+                'icon' => 'flaticon-interface-7',
+                'button' => __('messages.new_provider'),
+                'url' => route('providers.create'),
+                'newModal' => false,
+                'moreAction' => false,
+            ])
             @endcomponent
             <div class="m-portlet__body">
 
                 <!--begin: Datatable -->
-                <table id="providers_table" data-deleteall="{{route('providers.destroy-all')}}" class="table table-striped- table-bordered table-hover table-checkable">
+                <table id="providers_table" data-deleteall="{{route('providers.destroy-all')}}" class="table m-table table-striped- table-bordered table-hover table-checkable">
                     <thead>
                     <tr>
                         <th>Id</th>

@@ -15,6 +15,10 @@ Auth::routes(['verify' => true]);
 Route::get('login/{provider}',          'Auth\SocialAccountController@redirectToProvider')->name('social.login');
 Route::get('login/{provider}/callback', 'Auth\SocialAccountController@handleProviderCallback')->name('social.login.callback');
 
+Route::get('customers/{customer}/manage-renewals/{verification_code}', 'CustomerManageRenewalsController@edit')->name('manage-renewals');
+Route::patch('customers/{customer}/manage-renewals/{verification_code}', 'CustomerManageRenewalsController@update')->name('manage-renewals.update');
+Route::get('customers/{customer}/send-reminder', 'CustomerManageRenewalsController@sendManualReminder')->name('manage-renewals.sendReminder')->middleware('onlyAjax');
+
 Route::group(
     [
         'prefix' => LaravelLocalization::setLocale(),

@@ -24,7 +24,7 @@ return [
     'save' => 'Save',
     'cancel' => 'Cancel',
     'dashboard' => 'Dashboard',
-    'back_to_dashboard' => 'Back to dashboard',
+    'back' => 'Back',
     'full_name' => 'Full name',
     'enter_full_name' => 'Please enter your full name',
     'email' => 'Email',

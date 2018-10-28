@@ -88,6 +88,7 @@ class CustomerController extends Controller
             ->pluck('renewalsCurrent')->collapse()->sum('amount');
 
         $customerServices = $customer->load('services.renewalsCurrent', 'services.renewalsUnresolved');
+        $customerServicesCount = $customerServices->services->count();
         $renewals = $customerServices->services->pluck('renewalsCurrent')->collapse();
         $renewalsUnresolved = $customerServices->services->pluck('renewalsUnresolved')->collapse();
 
@@ -98,9 +99,9 @@ class CustomerController extends Controller
         $revenue = $renewals->sum('amount');
         $revenueThisMonth= $renewalsThisMonth->sum('amount');
         $renewalsUnresolved = $renewalsUnresolved->count();
-        $revenueAvarage = round(($revenue * 100) / $totalUserServices, 2);
+        $revenueAvarage = round($totalUserServices > 0 ? (($revenue * 100) / $totalUserServices) : 0, 2);
 
-        return view('customers.show', compact('customer', 'revenue', 'revenueThisMonth', 'renewalsUnresolved', 'revenueAvarage'));
+        return view('customers.show', compact('customer', 'customerServicesCount', 'revenue', 'revenueThisMonth', 'renewalsUnresolved', 'revenueAvarage'));
 
     }
 

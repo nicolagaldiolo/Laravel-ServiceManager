@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Events\CustomerRenewalReminder;
 use App\Service;
 use App\Events\ToPayServicesAlert;
 use App\Events\GenerateScreen;
@@ -56,9 +57,16 @@ class Kernel extends ConsoleKernel
 
         /*
         $schedule->call(function(){
-            event(new ToPayDomainsAlert());
+            event(new ToPayServicesAlert());
         })->everyTenMinutes();
         */
+
+        /*
+        $schedule->call(function(){
+            event(new CustomerRenewalReminder());
+        })->everyTenMinutes();
+        */
+
 
     }
 

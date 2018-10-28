@@ -14,10 +14,10 @@
                                 <div class="row m-row--no-padding align-items-center">
                                     <div class="col">
                                         <h3 class="m-widget1__title">{{__('messages.total_revenue')}} {{\Carbon\Carbon::now()->year}}</h3>
-                                        <span class="m-widget1__desc">{{__(trans('messages.obtained_from', [ 'attribute' => $data->services->count() ]))}}</span>
+                                        <span class="m-widget1__desc">{{__(trans('messages.obtained_from', [ 'attribute' => $dashboard['servicesThisYearCount']]))}}</span>
                                         <br>
                                         <span class="m-widget1__number m--font-brand">
-                                            @amount($dashboard['servicesThisYear']->sum(), true)
+                                            @amount($dashboard['servicesThisYearSum'], true)
                                         </span>
                                     </div>
                                 </div>
@@ -32,10 +32,10 @@
                                 <div class="row m-row--no-padding align-items-center">
                                     <div class="col">
                                         <h3 class="m-widget1__title">{{__('messages.revenues')}}  {{\Carbon\Carbon::now()->format('F Y')}}</h3>
-                                        <span class="m-widget1__desc">{{__(trans('messages.obtained_from', [ 'attribute' => $dashboard['servicesThisMonth']->count() ]))}}</span>
+                                        <span class="m-widget1__desc">{{__(trans('messages.obtained_from', [ 'attribute' => $dashboard['servicesThisMonthCount']]))}}</span>
                                         <br>
                                         <span class="m-widget1__number m--font-info">
-                                            @amount($dashboard['servicesThisMonth']->sum(), true)
+                                            @amount($dashboard['servicesThisMonthSum'], true)
                                         </span>
                                     </div>
                                 </div>

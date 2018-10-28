@@ -1,18 +1,24 @@
 @extends('layouts.app')
 
 @section('content')
-    @component('components.title')
+    @component('components.title', ['back_url' => route('dashboard')])
         {{__('messages.customers')}}
     @endcomponent
     <div class="m-content">
         <div class="m-portlet m-portlet--mobile">
-            @component('components.tableHeader', ['icon' => 'flaticon-users', 'button' => __('messages.new_customer'), 'url' => route('customers.create'), 'newModal' => false])
-                {{__('messages.all_customers')}}
+            @component('components.tableHeader', [
+                'title' => __('messages.all_customers'),
+                'icon' => 'flaticon-users',
+                'button' => __('messages.new_customer'),
+                'url' => route('customers.create'),
+                'newModal' => false,
+                'moreAction' => false,
+            ])
             @endcomponent
             <div class="m-portlet__body">
 
                 <!--begin: Datatable -->
-                <table id="customers_table" data-deleteall="{{route('customers.destroy-all')}}" class="table table-striped- table-bordered table-hover table-checkable">
+                <table id="customers_table" data-deleteall="{{route('customers.destroy-all')}}" class="table m-table table-striped- table-bordered table-hover table-checkable">
                     <thead>
                     <tr>
                         <th>Record ID</th>

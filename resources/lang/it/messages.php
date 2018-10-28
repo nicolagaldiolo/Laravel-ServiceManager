@@ -23,7 +23,7 @@ return [
     'save' => 'Salva',
     'cancel' => 'Cancella',
     'dashboard' => 'Dashboard',
-    'back_to_dashboard' => 'Torna alla dashboard',
+    'back' => 'Torna indietro',
     'full_name' => 'Nome e cognome',
     'enter_full_name' => 'Inserisci il tuo nome e cognome',
     'email' => 'Email',

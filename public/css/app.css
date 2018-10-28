@@ -58948,6 +58948,44 @@ table.dataTable tbody tr.selected a, table.dataTable tbody th.selected a, table.
   margin-bottom: 2rem;
 }
 
+.m-table tr.m-table__row--danger th .btn.m-btn--hover-brand:not(.btn-secondary):not(.btn-outline-light) i,
+.m-table tr.m-table__row--danger td .btn.m-btn--hover-brand:not(.btn-secondary):not(.btn-outline-light) i {
+  color: #fff;
+}
+
+.m-table tr.m-table__row--danger th .btn.m-btn--hover-brand:hover,
+.m-table tr.m-table__row--danger th .btn.m-btn--hover-brand.active,
+.m-table tr.m-table__row--danger th .btn.m-btn--hover-brand:active,
+.m-table tr.m-table__row--danger th .btn.m-btn--hover-brand:focus,
+.m-table tr.m-table__row--danger th .show > .btn.m-btn--hover-brand.dropdown-toggle,
+.m-table tr.m-table__row--danger td .btn.m-btn--hover-brand:hover,
+.m-table tr.m-table__row--danger td .btn.m-btn--hover-brand.active,
+.m-table tr.m-table__row--danger td .btn.m-btn--hover-brand:active,
+.m-table tr.m-table__row--danger td .btn.m-btn--hover-brand:focus,
+.m-table tr.m-table__row--danger td .show > .btn.m-btn--hover-brand.dropdown-toggle {
+  background: #fff !important;
+  border-color: #fff !important;
+  color: #f4516c !important;
+}
+
+.m-table tr.m-table__row--danger th .btn.m-btn--hover-brand:hover i,
+.m-table tr.m-table__row--danger th .btn.m-btn--hover-brand.active i,
+.m-table tr.m-table__row--danger th .btn.m-btn--hover-brand:active i,
+.m-table tr.m-table__row--danger th .btn.m-btn--hover-brand:focus i,
+.m-table tr.m-table__row--danger th .show > .btn.m-btn--hover-brand.dropdown-toggle i,
+.m-table tr.m-table__row--danger td .btn.m-btn--hover-brand:hover i,
+.m-table tr.m-table__row--danger td .btn.m-btn--hover-brand.active i,
+.m-table tr.m-table__row--danger td .btn.m-btn--hover-brand:active i,
+.m-table tr.m-table__row--danger td .btn.m-btn--hover-brand:focus i,
+.m-table tr.m-table__row--danger td .show > .btn.m-btn--hover-brand.dropdown-toggle i {
+  color: #f4516c !important;
+}
+
+.m-table tr th .btn:not(:last-child),
+.m-table tr td .btn:not(:last-child) {
+  margin-right: 10px;
+}
+
 .m-widget1 .m-widget1__item .m-widget1__number {
   font-size: 2rem;
 }
@@ -59053,6 +59091,17 @@ table.dataTable tbody tr.selected a, table.dataTable tbody th.selected a, table.
 
 .m-widget17 .m-widget17__stats .m-widget17__items .m-widget17__item .m-widget17__desc {
   font-size: 1rem;
+}
+
+.m-login.m-login--6 .m-login__aside .m-grid__item .m-grid__item .m-login__title {
+  font-size: 2.7rem;
+  line-height: 1.5;
+}
+
+.m-login.m-login--6 .m-login__aside .m-grid__item .m-grid__item .m-login__subtitle {
+  font-size: 1.6rem;
+  margin-top: 1rem;
+  font-weight: 100;
 }
 
 .m-social-link {

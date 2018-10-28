@@ -2,23 +2,12 @@
 
 @section('content')
 
-    @component('components.title')
+    @component('components.title', ['back_url' => route('services.index')])
         {{__('messages.domains')}}
     @endcomponent
 
     <!-- END: Subheader -->
     <div class="m-content">
-
-        @if($service->renewalsUnresolved()->count() > 0)
-        <div class="m-alert m-alert--icon alert alert-danger m--margin-bottom-30" role="alert">
-            <div class="m-alert__icon">
-                <i class="flaticon-danger"></i>
-            </div>
-            <div class="m-alert__text">
-                <strong>Attenzione!</strong> Hai {{$service->renewalsUnresolved()->count()}} scadenze pendenti da risolvere.
-            </div>
-        </div>
-        @endif
 
         <div class="row">
             <div class="col-lg-4">
@@ -161,14 +150,22 @@
                 <!--begin:: Widgets/Sale Reports-->
                 <div class="m-portlet m-portlet--full-height ">
 
-                    @component('components.tableHeader', ['icon' => 'flaticon-layers', 'button' => __('Nuova scadenza'), 'url' => route('services.renewals.create', $service), 'newModal' => true, 'deleteAll' => route('services.destroy-all')])
-                        Storico Rinnovi
+                    @component('components.tableHeader', [
+                        'title' => 'Storico Rinnovi',
+                        'icon' => 'flaticon-layers',
+                        'button' => __('Nuova scadenza'),
+                        'url' => route('services.renewals.create', $service),
+                        'newModal' => true,
+                        'deleteAll' => route('services.destroy-all'),
+                        'moreAction' => true
+                    ])
+                        @include('services._dataTableMoreAction')
                     @endcomponent
 
                     <div class="m-portlet__body">
 
                         <!--begin: Datatable -->
-                        <table id="service_renewals_table" data-deleteall="{{route('services.renewals.destroy-all', $service)}}" class="table table-striped- table-bordered table-hover table-checkable">
+                        <table id="service_renewals_table" data-deleteall="{{route('services.renewals.destroy-all', $service)}}" class="table m-table table-striped- table-bordered table-hover table-checkable">
                             <thead>
                             <tr>
                                 <th>Id</th>

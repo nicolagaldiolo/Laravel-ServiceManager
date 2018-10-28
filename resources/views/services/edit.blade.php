@@ -2,7 +2,7 @@
 
 @section('content')
 
-    @component('components.title')
+    @component('components.title', ['back_url' => route('services.index')])
         {{__('messages.domains')}}
     @endcomponent
 

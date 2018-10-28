@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    @component('components.title')
+    @component('components.title', ['back_url' => route('dashboard')])
         {{__('messages.service_types')}}
     @endcomponent
 
@@ -9,13 +9,20 @@
     <div class="m-content">
 
         <div class="m-portlet m-portlet--mobile">
-            @component('components.tableHeader', ['icon' => 'flaticon-interface-6', 'button' => __('messages.new_service_type'), 'url' => route('service-types.create'), 'newModal' => true])
-                {{__('messages.all_service_types')}}
+            @component('components.tableHeader', [
+                'title' => __('messages.all_service_types'),
+                'icon' => 'flaticon-interface-6',
+                'button' => __('messages.new_service_type'),
+                'url' => route('service-types.create'),
+                'newModal' => true,
+                'moreAction' => false,
+            ])
+
             @endcomponent
             <div class="m-portlet__body">
 
                 <!--begin: Datatable -->
-                <table id="serviceType_table" data-deleteall="{{route('service-types.destroy-all')}}" class="table table-striped- table-bordered table-hover table-checkable">
+                <table id="serviceType_table" data-deleteall="{{route('service-types.destroy-all')}}" class="table m-table table-striped- table-bordered table-hover table-checkable">
                     <thead>
                     <tr>
                         <th>Id</th>

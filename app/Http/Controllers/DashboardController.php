@@ -20,24 +20,28 @@ class DashboardController extends Controller
     public function index()
     {
         $data = Auth()->user()->load('providers.services', 'customers.services.renewalsCurrent', 'services.renewals', 'services.renewalsCurrent');
-
         $data->customers->each(function ($item){
             $item['services_total_amount'] = $item->services->pluck('renewalsCurrent')->collapse()->sum('amount');
         });
 
-        $servicesThisYear = collect(array_fill(1, 12, 0));
-        $data->services->pluck('renewalsCurrent')->collapse()
-            ->each(function($item) use($servicesThisYear){
-                $servicesThisYear[$item->deadline->month] += $item->amount;
+        $servicesThisYearArr = collect(array_fill(1, 12, 0));
+        $servicesThisYear = $data->services->pluck('renewalsCurrent')->collapse()
+            ->each(function($item) use($servicesThisYearArr){
+                $servicesThisYearArr[$item->deadline->month] += $item->amount;
             });
+        $servicesThisMonth = $servicesThisYear->filter(function($item){
+            return $item->deadline->month == Carbon::now()->month;
+        });
 
-        $servicesThisMonth = collect($servicesThisYear[Carbon::now()->month]);
-        $monthlyService_percent = $servicesThisYear->sum() > 0 ? ($servicesThisMonth->sum() * 100) / $servicesThisYear->sum() : 0;
+        $servicesThisYearSum = $servicesThisYearArr->sum();
+        $servicesThisMonthSum = $servicesThisMonth->pluck('amount')->sum();
 
-        $dashboard['servicesThisMonth'] = $servicesThisMonth;
-        $dashboard['servicesThisMonth'] = $servicesThisMonth;
-        $dashboard['servicesThisYear'] = $servicesThisYear;
-        $dashboard['monthlyService_percent'] = round($monthlyService_percent, 2);
+        $dashboard['servicesThisYear'] = $servicesThisYearArr;
+        $dashboard['servicesThisYearCount'] = $servicesThisYear->count();
+        $dashboard['servicesThisMonthCount'] = $servicesThisMonth->count();
+        $dashboard['servicesThisYearSum'] = $servicesThisYearSum;
+        $dashboard['servicesThisMonthSum'] = $servicesThisMonthSum;
+        $dashboard['monthlyService_percent'] = round($servicesThisYearSum > 0 ? ($servicesThisMonthSum * 100) / $servicesThisYearSum : 0, 2);
 
         $dashboard['usersSummary'] = "";
         if(Auth::user()->isAdmin()){
@@ -49,8 +53,6 @@ class DashboardController extends Controller
                 $item['services_total_amount'] = $item->services->pluck('renewalsCurrent')->collapse()->sum('amount');
             });
         }
-
-        //dd($dashboard);
 
         return view('dashboard.index', compact( 'data', 'dashboard'));
     }

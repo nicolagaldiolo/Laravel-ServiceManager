@@ -49,25 +49,25 @@ return [
             App\Enums\RenewalSM::T_back_to_bill => [
                 'from' => [App\Enums\RenewalSM::S_to_cash],
                 'to' => App\Enums\RenewalSM::S_to_bill,
-                'icon' => 'la la-mail-reply-all',
+                'icon' => 'la la-undo',
                 'label' => 'secondary'
             ],
             App\Enums\RenewalSM::T_back_to_cash => [
                 'from' => [App\Enums\RenewalSM::S_payed],
                 'to' => App\Enums\RenewalSM::S_to_cash,
-                'icon' => 'la la-mail-reply-all',
+                'icon' => 'la la-undo',
                 'label' => 'secondary'
             ],
             App\Enums\RenewalSM::T_back_to_confirm => [
                 'from' => [App\Enums\RenewalSM::S_to_bill, App\Enums\RenewalSM::S_suspended],
                 'to' => App\Enums\RenewalSM::S_to_confirm,
-                'icon' => 'la la-mail-reply-all',
+                'icon' => 'la la-undo',
                 'label' => 'secondary'
             ],
             App\Enums\RenewalSM::T_suspend => [
                 'from' =>  [App\Enums\RenewalSM::S_to_confirm],
                 'to' => App\Enums\RenewalSM::S_suspended,
-                'icon' => 'la la-lock',
+                'icon' => 'la la-close',
                 'label' => 'secondary'
             ],
             App\Enums\RenewalSM::T_renews => [

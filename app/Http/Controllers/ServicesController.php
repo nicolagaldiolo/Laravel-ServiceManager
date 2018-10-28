@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Customer;
 use App\Enums\RenewalSM;
+use App\Events\CustomerRenewalReminder;
 use App\Events\ToPayServicesAlert;
+use App\Mail\CustomerRenewalsReminder;
 use App\Renewal;
 use App\Service;
 use App\ExpiringDomain;
@@ -13,6 +16,7 @@ use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Yajra\DataTables\DataTables;
 
 class ServicesController extends Controller
@@ -27,11 +31,6 @@ class ServicesController extends Controller
      */
     public function index()
     {
-
-        //per testare
-
-        //User::servicesExpiring();
-        //event(new ToPayServicesAlert());
 
         if(request()->wantsJson() || request()->expectsJson()) {
             $services = Auth::user()->services()->with('nextRenewal', 'provider', 'customer', 'serviceType')->get();
@@ -111,7 +110,11 @@ class ServicesController extends Controller
             return DataTables::of($renewals)
                 ->editColumn('amount', function ($renewal) {
                     return $renewal->amountVerbose;
-                })
+                })->setRowAttr([
+                    'class' => function($renewal) {
+                        return $renewal->unsolved ? "m-table__row--danger" : "";
+                    },
+                ])
                 ->editColumn('deadline', function ($renewal) {
                     return $renewal->deadline ? $renewal->deadlineVerbose : '';
                 })

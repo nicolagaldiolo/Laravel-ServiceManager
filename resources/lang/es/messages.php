@@ -24,7 +24,7 @@ return [
     'save' => 'Salvar',
     'cancel' => 'Cancelar',
     'dashboard' => 'Tablero',
-    'back_to_dashboard' => 'De vuelta al tablero',
+    'back' => 'Volver atrás',
     'full_name' => 'Nombre completo',
     'enter_full_name' => 'Por favor ingresa tu nombre completo',
     'email' => 'Email',

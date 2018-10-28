@@ -19,6 +19,7 @@ class CreateCustomersTable extends Migration
             $table->string('email');
             $table->string('phone')->nullable();
             $table->string('address')->nullable();
+            $table->string('token')->nullable();
             $table->unsignedInteger('user_id')->index();
             $table->timestamps();
 

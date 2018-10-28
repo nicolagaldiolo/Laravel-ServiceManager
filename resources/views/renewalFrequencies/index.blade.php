@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    @component('components.title')
+    @component('components.title', ['back_url' => route('dashboard')])
         Frequenze di rinnovo
     @endcomponent
 
@@ -9,13 +9,19 @@
     <div class="m-content">
 
         <div class="m-portlet m-portlet--mobile">
-            @component('components.tableHeader', ['icon' => 'flaticon-calendar', 'button' => 'Nuova frequenza di rinnovo', 'url' => route('renewal-frequencies.create'), 'newModal' => true])
-                Tutte le frequenze di rinnovo
+            @component('components.tableHeader', [
+                'title' => 'Tutte le frequenze di rinnovo',
+                'icon' => 'flaticon-calendar',
+                'button' => 'Nuova frequenza di rinnovo',
+                'url' => route('renewal-frequencies.create'),
+                'newModal' => true,
+                'moreAction' => false,
+            ])
             @endcomponent
             <div class="m-portlet__body">
 
                 <!--begin: Datatable -->
-                <table id="renewalFrequencies_table" data-deleteall="{{route('renewal-frequencies.destroy-all')}}" class="table table-striped- table-bordered table-hover table-checkable">
+                <table id="renewalFrequencies_table" data-deleteall="{{route('renewal-frequencies.destroy-all')}}" class="table m-table table-striped- table-bordered table-hover table-checkable">
                     <thead>
                     <tr>
                         <th>Id</th>

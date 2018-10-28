@@ -57,6 +57,41 @@
     }
 }
 
+.m-table {
+    tr{
+        &.m-table__row--danger{
+            th,
+            td{
+                .btn.m-btn--hover-brand:not(.btn-secondary):not(.btn-outline-light) i {
+                    color: #fff;
+                }
+                .btn.m-btn--hover-brand:hover,
+                .btn.m-btn--hover-brand.active,
+                .btn.m-btn--hover-brand:active,
+                .btn.m-btn--hover-brand:focus,
+                .show > .btn.m-btn--hover-brand.dropdown-toggle{
+                    background: #fff !important;
+                    border-color: #fff !important;
+                    color:#f4516c !important;
+                }
+
+                .btn.m-btn--hover-brand:hover i,
+                .btn.m-btn--hover-brand.active i,
+                .btn.m-btn--hover-brand:active i,
+                .btn.m-btn--hover-brand:focus i,
+                .show > .btn.m-btn--hover-brand.dropdown-toggle i{
+                    color:#f4516c !important;
+                }
+            }
+        }
+        th,
+        td{
+            .btn:not(:last-child){
+                margin-right: 10px;
+            }
+        }
+    }
+}
 
 .m-widget1{
     .m-widget1__item{
@@ -171,6 +206,26 @@
                 }
                 .m-widget17__desc{
                     font-size:1rem;
+                }
+            }
+        }
+    }
+}
+
+.m-login {
+    &.m-login--6 {
+        .m-login__aside {
+            .m-grid__item {
+                .m-grid__item {
+                    .m-login__title {
+                        font-size: 2.7rem;
+                        line-height: 1.5;
+                    }
+                    .m-login__subtitle{
+                        font-size: 1.6rem;
+                        margin-top: 1rem;
+                        font-weight: 100;
+                    }
                 }
             }
         }

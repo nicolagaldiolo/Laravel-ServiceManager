@@ -117,7 +117,7 @@ class User extends Authenticatable implements MustVerifyEmail
                 'customers.services' => function ($q) {
                     $q->whereHas('renewalsUnresolved')->with('provider', 'serviceType', 'renewalsUnresolved');
                 }
-            ])->get();
+            ]);
     }
 
 }

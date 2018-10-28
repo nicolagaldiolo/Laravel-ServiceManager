@@ -2,7 +2,7 @@
 
 @section('content')
 
-    @component('components.title')
+    @component('components.title', ['back_url' => route('customers.index')])
         {{__('messages.customers')}}
     @endcomponent
     <div class="m-content">
