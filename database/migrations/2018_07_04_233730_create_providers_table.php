@@ -15,14 +15,14 @@ class CreateProvidersTable extends Migration
     {
         Schema::create('providers', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name')->unique();
+            $table->string('name');
             $table->string('screenshoot')->nullable();
             $table->char('label', 7)->nullable();
-            $table->string('website')->nullable()->unique();
+            $table->string('website')->nullable();
             $table->unsignedInteger('user_id')->index();
             $table->timestamps();
 
-            //foreignkey
+            $table->unique( ['name','user_id']);
             $table->foreign('user_id')->on('users')->references('id')->onDelete('cascade')->onUpdate('cascade');
         });
     }

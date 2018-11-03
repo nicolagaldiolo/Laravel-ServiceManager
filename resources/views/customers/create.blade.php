@@ -2,7 +2,7 @@
 
 @section('content')
 
-    @component('components.title')
+    @component('components.title', ['back_url' => route('customers.index')])
         {{__('messages.customers')}}
     @endcomponent
     <div class="m-content">
@@ -21,17 +21,9 @@
                     </div>
                 </div>
             </div>
-
-            <!--begin::Form-->
-            <form method="POST" action="{{route('customers.store')}}" class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed">
-                @csrf
-                @include('customers._form')
-            </form>
-
+            @include('customers.create_form')
             <!--end::Form-->
         </div>
-
         <!--end::Portlet-->
-
     </div>
 @stop

@@ -2,9 +2,10 @@
 
 namespace App\Providers;
 
+use App\User;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Auth;
-use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
+use Illuminate\Support\Facades\Gate;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -14,10 +15,13 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        'App\Domain' => 'App\Policies\DomainsPolicy',
-        'App\Providers' => 'App\Policies\ProvidersPolicy',
-        'App\Customer'  => 'App\Policies\CustomerPolicy',
-        'App\User'      => 'App\Policies\UserPolicy',
+        'App\Service'           => 'App\Policies\ServicesPolicy',
+        'App\ServiceType'       => 'App\Policies\ServiceTypesPolicy',
+        'App\Provider'          => 'App\Policies\ProvidersPolicy',
+        'App\Customer'          => 'App\Policies\CustomerPolicy',
+        'App\User'              => 'App\Policies\UserPolicy',
+        'App\Renewal'           => 'App\Policies\RenewalsPolicy',
+        'App\RenewalFrequency'  => 'App\Policies\RenewalFrequencyPolicy'
     ];
 
     /**

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    @component('components.title')
+    @component('components.title', ['back_url' => route('users.index')])
         {{ __('messages.users') }}
     @endcomponent
 

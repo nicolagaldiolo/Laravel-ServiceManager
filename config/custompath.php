@@ -10,6 +10,6 @@ return [
     */
 
     'avatars' => env('AVATARS_PATH', 'avatars'),
-    'domains' => env('DOMAINS_PATH', 'domains'),
+    'services' => env('SERVICES_PATH', 'services'),
     'providers' => env('PROVIDERS_PATH', 'providers'),
 ];

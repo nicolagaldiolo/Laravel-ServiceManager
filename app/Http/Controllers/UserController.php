@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\NewUserRequest;
+use App\Enums\UserType;
 use App\Http\Requests\UserRequest;
+use App\Renewal;
 use App\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Auth;
 use Storage;
@@ -27,8 +29,10 @@ class UserController extends Controller
             return DataTables::of($users)->addColumn('actions', function($user){
                 return implode("", [
                     '<a href="' . route('users.edit', $user) . '" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill"><i class="la la-edit"></i></a>',
-                    '<a href="' . route('users.destroy', $user) . '" class="delete btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill"><i class="la la-trash"></i></a>',
+                    '<a href="' . route('users.destroy', $user) . '" class="deleteDataTableRecord btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill"><i class="la la-trash"></i></a>',
                 ]);
+            })->editColumn('role', function ($user) {
+                return UserType::getDescription($user->role);
             })->rawColumns(['actions'])->make(true);
         }
 
@@ -43,9 +47,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        $this->authorize('create', Auth::user());
-
-        return view('users.new');
+        //
     }
 
     /**
@@ -54,13 +56,9 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(NewUserRequest $request)
+    public function store(UserRequest $request)
     {
-        $request->merge(['password' => Hash::make($request->password)]);
-        User::create($request->validated());
-
-        return redirect()->route('users.index')
-            ->with('status', 'User creato con successo');;
+        //
     }
 
     /**
@@ -96,14 +94,16 @@ class UserController extends Controller
      */
     public function update(UserRequest $request, User $user)
     {
+
         $this->authorize('update', $user);
 
         $user->update($request->validated());
 
         $redirect = (Auth::user()->id == $user->id && !$user->isAdmin()) ? 'dashboard' : 'users.index';
 
-        return redirect()->route($redirect)
-            ->with('status', 'User aggiornato con successo');
+        $path = redirect_user_lang($user->lang, $redirect);
+
+        return redirect($path)->with('status', __('messages.user_update_status'));
     }
 
     /**
@@ -117,12 +117,11 @@ class UserController extends Controller
         $this->authorize('delete', $user);
 
         if(request()->wantsJson() || request()->expectsJson()) {
-            $redirect = (Auth::user() == $user) ? route('login') : '';
-            (bool) $res = $user->delete();
+            $redirect = (Auth::user() == $user) ? route('login') : route('users.index');
+            $user->delete();
             return [
                 'redirect' => $redirect,
-                'message' => $res ? 'Domain deleted' : 'Domain not deleted',
-                'status' => $res
+                'message' => trans_choice('messages.user_delete_status', 1)
             ];
         }
 
@@ -130,5 +129,20 @@ class UserController extends Controller
             $user->delete();
             return redirect()->route('login');
         }
+    }
+
+    public function destroyAll(Request $request)
+    {
+        $this->authorize('massiveDelete', Auth::user());
+
+        $ids = explode(",",$request->ids);
+        $redirect = (in_array(Auth::user()->id, $ids)) ? route('login') : '';
+
+        User::whereIn('id',$ids)->delete();
+
+        return [
+            'redirect' => $redirect,
+            'message' => trans_choice('messages.user_delete_status', count($ids))
+        ];
     }
 }

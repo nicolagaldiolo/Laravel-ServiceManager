@@ -2,7 +2,7 @@
 
 namespace App\Events;
 
-use App\Domain;
+use App\Service;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
@@ -23,7 +23,7 @@ class CheckServiceStatus
 
     public $domains;
 
-    public function __construct(Domain $domains)
+    public function __construct(Service $domains)
     {
         $this->domains = $domains;
     }

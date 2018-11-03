@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Providers;
+use App\Provider;
 use App\Http\Requests\ProviderRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 
 class ProvidersController extends Controller
@@ -16,13 +17,14 @@ class ProvidersController extends Controller
      */
     public function index()
     {
+
         if(request()->wantsJson() || request()->expectsJson()) {
             $providers = Auth::user()->providers()->get();
 
             return DataTables::of($providers)->addColumn('actions', function($provider){
                 return implode("", [
                     '<a href="' . route('providers.edit', $provider) . '" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill"><i class="la la-edit"></i></a>',
-                    '<a href="' . route('providers.destroy', $provider) . '" class="delete btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill"><i class="la la-trash"></i></a>',
+                    '<a href="' . route('providers.destroy', $provider) . '" class="deleteDataTableRecord btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill"><i class="la la-trash"></i></a>',
                 ]);
             })->rawColumns(['actions'])->make(true);
         }
@@ -39,7 +41,13 @@ class ProvidersController extends Controller
     public function create()
     {
 
-        $provider = new Providers;
+        $provider = new Provider;
+
+        if(request()->wantsJson() || request()->expectsJson()) {
+            return [
+                'view' => view('providers.create_form', compact('provider'))->render(),
+            ];
+        }
 
         return view('providers.create', compact('provider'));
     }
@@ -52,10 +60,18 @@ class ProvidersController extends Controller
      */
     public function store(ProviderRequest $request)
     {
-        Auth()->user()->providers()->create($request->validated());
+        $provider = Auth()->user()->providers()->create($request->validated());
+        $message = __('messages.provider_created_status');
+
+        if(request()->wantsJson() || request()->expectsJson()) {
+            return [
+                'object' => $provider,
+                'message' => $message
+            ];
+        }
 
         return redirect()->route('providers.index')
-            ->with('status', 'Provider creato con successo');
+            ->with('status', $message);
     }
 
     /**
@@ -64,7 +80,7 @@ class ProvidersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Providers $provider)
+    public function show(Provider $provider)
     {
 
     }
@@ -75,7 +91,7 @@ class ProvidersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Providers $provider)
+    public function edit(Provider $provider)
     {
         $this->authorize('view', $provider);
 
@@ -89,13 +105,13 @@ class ProvidersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(ProviderRequest $request, Providers $provider)
+    public function update(ProviderRequest $request, Provider $provider)
     {
         $this->authorize('update', $provider);
         $provider->update($request->validated());
 
         return redirect()->route('providers.index')
-            ->with('status', 'Provider aggiornato con successo');
+            ->with('status', __('messages.provider_update_status'));
 
     }
 
@@ -105,15 +121,27 @@ class ProvidersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Providers $provider)
+    public function destroy(Provider $provider)
     {
         $this->authorize('delete', $provider);
 
-        (bool) $res = $provider->delete();
+        $provider->delete();
+
+        if(request()->wantsJson() || request()->expectsJson()) {
+            return [
+                'message' => trans_choice('messages.provider_delete_status', 1)
+            ];
+        }
+    }
+
+    public function destroyAll(Request $request)
+    {
+        $ids = explode(",",$request->ids);
+
+        Auth::user()->providers()->whereIn('providers.id',$ids)->delete();
 
         return [
-            'message'   => $res ? 'Provider deleted' : 'Provider not deleted',
-            'status'    => $res
+            'message' => trans_choice('messages.provider_delete_status', count($ids))
         ];
     }
 }

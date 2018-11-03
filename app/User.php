@@ -2,17 +2,17 @@
 
 namespace App;
 
+use App\Enums\UserType;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 use Laravolt\Avatar\Facade as Avatar;
-use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\Hash;
 use File;
 
-use Illuminate\Foundation\Auth\User as Authenticatable;
-
-class User extends Authenticatable implements JWTSubject
+class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable;
 
@@ -22,7 +22,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'is_verified', 'avatar', 'custom_avatar', 'role'
+        'name', 'email', 'password', 'is_verified', 'avatar', 'custom_avatar', 'role', 'lang'
     ];
 
     /**
@@ -40,16 +40,29 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany(Customer::class);
     }
 
-    // ha molti domains
-    public function domains()
+    // ha molti services attraverso i customers
+    public function services()
     {
-        return $this->hasMany(Domain::class);
+        return $this->hasManyThrough(Service::class, Customer::class);
     }
 
     // ha molti providers
     public function providers()
     {
-        return $this->hasMany(Providers::class);
+        return $this->hasMany(Provider::class);
+    }
+
+    // ha molti types
+    public function serviceTypes()
+    {
+        return $this->hasMany(ServiceType::class);
+    }
+
+    // ha molti renewalFrequencies
+    public function renewalFrequencies()
+    {
+        return $this->hasMany(RenewalFrequency::class)
+            ->orderBy('type')->orderBy('value');
     }
 
     // ha molti socialAccount
@@ -57,28 +70,8 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany(LinkedSocialAccount::class);
     }
 
-    /**
-     * Get the identifier that will be stored in the subject claim of the JWT.
-     *
-     * @return mixed
-     */
-    public function getJWTIdentifier()
-    {
-        return $this->getKey(); // mi torna la chiave primaria dell'utente, id
-    }
-
-    /**
-     * Return a key value array, containing any custom claims to be added to the JWT.
-     *
-     * @return array
-     */
-    public function getJWTCustomClaims()
-    {
-        return [];
-    }
-
     public function isAdmin(){
-        return $this->role == config('userrole.admin');
+        return $this->role == UserType::Admin;
     }
 
 
@@ -111,21 +104,20 @@ class User extends Authenticatable implements JWTSubject
 
     public function scopeAdmin($query)
     {
-        return $query->where('role', config('userrole.admin'));
+        return $query->where('role', UserType::Admin);
     }
 
-    public function scopeDomainsExpiring($query)
+    public function scopeServicesExpiring($query)
     {
-        return $query->whereHas('customers.domains', function ($q) {
-            $q->toPay();
-        })->with([
-            'customers' => function ($q) {
-                $q->whereHas('domains');
-            },
-            'customers.domains' => function ($q) {
-                $q->toPay();
-            },
-        ]);
+        return $query->whereHas('customers.services.renewalsUnresolved')->with(
+            [
+                'customers' => function ($q) {
+                    $q->whereHas('services.renewalsUnresolved');
+                },
+                'customers.services' => function ($q) {
+                    $q->whereHas('renewalsUnresolved')->with('provider', 'serviceType', 'renewalsUnresolved');
+                }
+            ]);
     }
 
 }

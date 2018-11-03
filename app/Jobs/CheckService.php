@@ -2,7 +2,7 @@
 
 namespace App\Jobs;
 
-use App\Domain;
+use App\Service;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
@@ -22,7 +22,7 @@ class CheckService implements ShouldQueue
 
     public $domain;
 
-    public function __construct(Domain $domain)
+    public function __construct(Service $domain)
     {
         $this->domain = $domain;
     }

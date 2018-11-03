@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    @component('components.title')
+    @component('components.title', ['back_url' => route('users.index')])
         {{__('messages.users')}}
     @endcomponent
 
@@ -63,79 +63,107 @@
                     </div>
 
                     <!--begin::Form-->
-                    <form class="m-form m-form--fit" action="{{route('users.update', $user)}}" method="post" enctype="multipart/form-data">
+                    <form class="m-form m-form--fit m-form--label-align-right" action="{{route('users.update', $user)}}" method="post" enctype="multipart/form-data">
                         @csrf
                         @method('PATCH')
 
                         <div class="m-portlet__body">
                             <div class="m-form__section m-form__section--first">
-                                <div class="form-group m-form__group">
-                                    <label class="">{{__('messages.name')}} *</label>
-                                    <div class="m-input-icon m-input-icon--left">
-                                        <input type="text" name="name" class="form-control m-input required" value="{{old('name', $user->name)}}">
-                                        <span class="m-input-icon__icon m-input-icon__icon--left">
-                                                        <span>
-                                                            <i class="la la-user"></i>
+
+                                <div class="form-group m-form__group row">
+                                    <div class="col-lg-12">
+                                        <label class="">{{__('messages.name')}} *</label>
+                                        <div class="m-input-icon m-input-icon--left">
+                                            <input type="text" name="name" class="form-control m-input required" value="{{old('name', $user->name)}}">
+                                            <span class="m-input-icon__icon m-input-icon__icon--left">
+                                                            <span>
+                                                                <i class="la la-user"></i>
+                                                            </span>
                                                         </span>
-                                                    </span>
+                                        </div>
+                                        <span class="m-form__help">{{__('messages.enter_full_name')}}</span>
+
+                                        @if ($errors->has('name'))
+                                            <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $errors->first('name') }}</strong>
+                                                </span>
+                                        @endif
                                     </div>
-                                    <span class="m-form__help">{{__('messages.enter_full_name')}}</span>
-
-                                    @if ($errors->has('name'))
-                                        <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('name') }}</strong>
-                                            </span>
-                                    @endif
-
                                 </div>
+
                                 <div class="m-form__seperator m-form__seperator--dashed"></div>
 
-                                <div class="form-group m-form__group">
-
-                                    <label class="">{{__('messages.email')}} *</label>
-                                    <div class="m-input-icon m-input-icon--left">
-                                        <input type="email" name="email" class="form-control m-input required email" value="{{old('email', $user->email)}}">
-                                        <span class="m-input-icon__icon m-input-icon__icon--left">
-                                                        <span>
-                                                            <i class="la la-at"></i>
+                                <div class="form-group m-form__group row">
+                                    <div class="col-lg-12">
+                                        <label class="">{{__('messages.email')}} *</label>
+                                        <div class="m-input-icon m-input-icon--left">
+                                            <input type="email" name="email" class="form-control m-input required email" value="{{old('email', $user->email)}}">
+                                            <span class="m-input-icon__icon m-input-icon__icon--left">
+                                                            <span>
+                                                                <i class="la la-at"></i>
+                                                            </span>
                                                         </span>
-                                                    </span>
+                                        </div>
+                                        <span class="m-form__help">{{__('messages.enter_email')}}</span>
+
+                                        @if ($errors->has('email'))
+                                            <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $errors->first('email') }}</strong>
+                                                </span>
+                                        @endif
                                     </div>
-                                    <span class="m-form__help">{{__('messages.enter_email')}}</span>
+                                </div>
 
-                                    @if ($errors->has('email'))
-                                        <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('email') }}</strong>
+                                <div class="m-form__seperator m-form__seperator--dashed"></div>
+
+                                <div class="form-group m-form__group row">
+                                    <div class="col-lg-12">
+                                        <label class="">{{__('messages.language')}}</label>
+                                        <div class="m-radio-inline user-lang">
+                                            @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+                                                <label class="m-radio">
+                                                    <input type="radio" name="lang" value="{{$localeCode}}" @if($user->lang == $localeCode) checked @endif>
+                                                    <img class="language-img" src="{{ asset('images/flags') .  "/" . $localeCode . ".svg" }}">
+                                                    {{ $properties['native'] }}
+                                                    <span></span>
+                                                </label>
+                                            @endforeach
+                                        </div>
+                                        <span class="m-form__help">{{__('messages.select_language')}}</span>
+
+                                        @if ($errors->has('lang'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('lang') }}</strong>
                                             </span>
-                                    @endif
-
+                                        @endif
+                                    </div>
                                 </div>
 
                                 @if (Auth::user()->isAdmin())
                                     <div class="m-form__seperator m-form__seperator--dashed"></div>
-                                    <div class="form-group m-form__group">
-                                        <label class="">{{__('messages.admin')}}</label>
-                                        <div>
+                                    <div class="form-group m-form__group row">
+                                        <div class="col-lg-12">
+                                            <label class="">{{__('messages.admin')}}</label>
+                                            <div>
+                                                <span class="m-switch m-switch--lg m-switch--icon m-switch--success">
+                                                    <label>
+                                                        <input type="hidden" checked="checked" value="{{\App\Enums\UserType::User}}" name="role">
+                                                        <input class="required" type="checkbox" @if(old('role', $user->role) == \App\Enums\UserType::Admin)checked="checked" @endif value="{{\App\Enums\UserType::Admin}}" name="role">
+                                                        <span></span>
+                                                    </label>
+                                                </span>
+                                            </div>
 
-                                            <span class="m-switch m-switch--lg m-switch--icon m-switch--success">
-                                                <label>
-                                                    <input type="hidden" checked="checked" value="{{config('userrole.user')}}" name="role">
-                                                    <input class="required" type="checkbox" @if(old('role', $user->role) == config('userrole.admin'))checked="checked" @endif value="{{config('userrole.admin')}}" name="role">
-                                                    <span></span>
-                                                </label>
-                                            </span>
-                                        </div>
-
-                                        <span class="m-form__help">{{__('messages.set_admin')}}</span>
-
-                                        @if ($errors->has('role'))
-                                            <span class="invalid-feedback" role="alert">
+                                            <span class="m-form__help">{{__('messages.set_admin')}}</span>
+                                            @if ($errors->has('role'))
+                                                <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $errors->first('role') }}</strong>
                                                 </span>
-                                        @endif
-
+                                            @endif
+                                        </div>
                                     </div>
                                 @endif
+
                             </div>
                         </div>
                         <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
@@ -157,22 +185,18 @@
 
                 <!--end::Portlet-->
 
-                <form class="deleteUser" action="{{route('users.destroy', $user)}}" method="post">
-                    @csrf
-                    @method('DELETE')
-                    <div class="m-alert m-alert--icon m-alert--outline alert alert-danger no-bg" role="alert">
-                        <div class="m-alert__icon">
-                            <i class="la la-warning"></i>
-                        </div>
-                        <div class="m-alert__text">
-                            <strong>{{__('messages.delete_account')}}</strong><br>
-                            {{__('messages.delete_account_desc')}}
-                        </div>
-                        <div class="m-alert__actions" style="">
-                            <button type="submit" class="btn btn-danger btn-md m-btn m-btn--pill m-btn--wide">{{__('messages.delete_account')}}</button>
-                        </div>
+                <div class="m-alert m-alert--icon m-alert--outline alert alert-danger no-bg" role="alert">
+                    <div class="m-alert__icon">
+                        <i class="la la-warning"></i>
                     </div>
-                </form>
+                    <div class="m-alert__text">
+                        <strong>{{__('messages.delete_account')}}</strong><br>
+                        {{__('messages.delete_account_desc')}}
+                    </div>
+                    <div class="m-alert__actions" style="">
+                        <a class="deleteRecord btn btn-danger btn-md m-btn m-btn--pill m-btn--wide" href="{{route('users.destroy', $user)}}">{{__('messages.delete_account')}}</a>
+                    </div>
+                </div>
 
             </div>
         </div>
@@ -183,21 +207,7 @@
     @parent
     <script>
 
-        $('.deleteUser').submit(function (el) {
-            el.preventDefault();
 
-            var _self = this;
-
-            swal({
-                title: '{{__('messages.are_sure')}}',
-                text: "{{__('messages.are_sure_desc')}}",
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonText: '{{__('messages.confirm_delete')}}'
-            }).then(function(result) {
-                if (result.value) _self.submit();
-            });
-        });
 
         var DropzoneDemo = function () {
 
@@ -212,6 +222,7 @@
                     //addRemoveLinks: true,
                     acceptedFiles: "image/*",
                     accept: function(file, done) {
+                        console.log("Andata");
                         done();
                     }
                 };
@@ -224,6 +235,7 @@
                 }
             };
         }();
+
 
         DropzoneDemo.init();
 

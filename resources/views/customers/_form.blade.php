@@ -8,11 +8,9 @@
             </div>
             <span class="m-form__help">{{__('messages.enter_full_name')}}</span>
 
-            @if ($errors->has('name'))
-                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $errors->first('name') }}</strong>
-                                </span>
-            @endif
+            <span data-field="name" class="invalid-feedback" role="alert">
+                @if ($errors->has('name'))<strong>{{ $errors->first('name') }}</strong>@endif
+            </span>
 
         </div>
         <div class="col-lg-6">
@@ -23,11 +21,10 @@
             </div>
             <span class="m-form__help">{{__('messages.enter_email')}}</span>
 
-            @if ($errors->has('email'))
-                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $errors->first('email') }}</strong>
-                                </span>
-            @endif
+            <span data-field="email" class="invalid-feedback" role="alert">
+                @if ($errors->has('email'))<strong>{{ $errors->first('email') }}</strong>@endif
+            </span>
+
 
         </div>
     </div>
@@ -39,12 +36,9 @@
                 <span class="m-input-icon__icon m-input-icon__icon--left"><span><i class="la la-phone"></i></span></span>
             </div>
             <span class="m-form__help">{{__('messages.enter_phone')}}</span>
-
-            @if ($errors->has('phone'))
-                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $errors->first('phone') }}</strong>
-                                </span>
-            @endif
+            <span data-field="phone" class="invalid-feedback" role="alert">
+                @if ($errors->has('phone'))<strong>{{ $errors->first('phone') }}</strong>@endif
+            </span>
         </div>
         <div class="col-lg-6">
             <label class="">{{__('messages.address')}}</label>
@@ -54,11 +48,10 @@
             </div>
             <span class="m-form__help">{{__('messages.enter_address')}}</span>
 
-            @if ($errors->has('address'))
-                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $errors->first('address') }}</strong>
-                                </span>
-            @endif
+            <span data-field="address" class="invalid-feedback" role="alert">
+                @if ($errors->has('address'))<strong>{{ $errors->first('address') }}</strong>@endif
+            </span>
+
         </div>
     </div>
 </div>
@@ -67,7 +60,7 @@
         <div class="row">
             <div class="col-lg-6">
                 <button type="submit" class="btn btn-primary">{{__('messages.save')}}</button>
-                <a href="{{route('customers.index')}}" class="btn btn-secondary">{{__('messages.cancel')}}</a>
+                <a href="{{route('customers.show', $customer)}}" class="btn btn-secondary cancel">{{__('messages.cancel')}}</a>
             </div>
         </div>
     </div>

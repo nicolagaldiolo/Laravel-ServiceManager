@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Domain;
+use App\Service;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -19,36 +19,42 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $dashboard = Auth()->user()->load('domains.customer', 'providers.domains', 'providers.hostings', 'customers.domains');
-
-        $expiringDomains = $dashboard->domains->filter(function($item){
-            return ($item->deadline->month == Carbon::today()->month) && ($item->deadline->year == Carbon::today()->year);
+        $data = Auth()->user()->load('providers.services', 'customers.services.renewalsCurrent', 'services.renewals', 'services.renewalsCurrent');
+        $data->customers->each(function ($item){
+            $item['services_total_amount'] = $item->services->pluck('renewalsCurrent')->collapse()->sum('amount');
         });
 
-        $dashboard['expiringDomains'] = $expiringDomains;
-
-        $monthlyService_percent = $dashboard->domains->sum('amount') > 0 ? ($expiringDomains->sum('amount') * 100) / $dashboard->domains->sum('amount') : 0;
-
-        $dashboard['monthlyService_percent'] = round($monthlyService_percent, 2);
-        $domainsByMounth = collect(array_fill(1, 12, 0));
-
-        $dashboard->domains->each(function($item) use($domainsByMounth){
-            $domainsByMounth[$item->deadline->month] += $item->amount;
-        });
-        $dashboard['domainsByMounth'] = $domainsByMounth;
-
-        $totalDomain = Domain::count();
-
-        $usersSummary = User::with('domains')->get();
-        $usersSummary->each(function($item) use($totalDomain){
-            $domains_total_perc = $totalDomain > 0 ? ($item->domains->count() * 100) / $totalDomain : 0;
-            $item['domains_total_perc'] = round($domains_total_perc, 2);
+        $servicesThisYearArr = collect(array_fill(1, 12, 0));
+        $servicesThisYear = $data->services->pluck('renewalsCurrent')->collapse()
+            ->each(function($item) use($servicesThisYearArr){
+                $servicesThisYearArr[$item->deadline->month] += $item->amount;
+            });
+        $servicesThisMonth = $servicesThisYear->filter(function($item){
+            return $item->deadline->month == Carbon::now()->month;
         });
 
-        $dashboard['usersSummary'] = $usersSummary;
+        $servicesThisYearSum = $servicesThisYearArr->sum();
+        $servicesThisMonthSum = $servicesThisMonth->pluck('amount')->sum();
 
-        return view('dashboard.index', compact( 'dashboard'));
+        $dashboard['servicesThisYear'] = $servicesThisYearArr;
+        $dashboard['servicesThisYearCount'] = $servicesThisYear->count();
+        $dashboard['servicesThisMonthCount'] = $servicesThisMonth->count();
+        $dashboard['servicesThisYearSum'] = $servicesThisYearSum;
+        $dashboard['servicesThisMonthSum'] = $servicesThisMonthSum;
+        $dashboard['monthlyService_percent'] = round($servicesThisYearSum > 0 ? ($servicesThisMonthSum * 100) / $servicesThisYearSum : 0, 2);
 
+        $dashboard['usersSummary'] = "";
+        if(Auth::user()->isAdmin()){
+            $allUsers = User::with('services.renewalsCurrent')->get();
+            $totalService = $allUsers->pluck('services')->collapse()->count();
+            $dashboard['usersSummary'] = $allUsers->each(function ($item) use ($totalService) {
+                $services_total_perc = $totalService > 0 ? (($item->services->count() * 100) / $totalService) : 0;
+                $item['services_total_perc'] = round($services_total_perc, 2);
+                $item['services_total_amount'] = $item->services->pluck('renewalsCurrent')->collapse()->sum('amount');
+            });
+        }
+
+        return view('dashboard.index', compact( 'data', 'dashboard'));
     }
 
     /**

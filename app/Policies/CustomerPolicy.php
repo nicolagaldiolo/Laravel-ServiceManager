@@ -5,6 +5,7 @@ namespace App\Policies;
 use App\User;
 use App\Customer;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Http\Request;
 
 class CustomerPolicy
 {
@@ -55,5 +56,10 @@ class CustomerPolicy
     public function delete(User $user, Customer $customer)
     {
         return $user->id === $customer->user_id;
+    }
+
+    public function manageRenewal(User $user, Customer $customer, $token)
+    {
+        return $customer->token === $token;
     }
 }

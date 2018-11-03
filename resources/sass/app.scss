@@ -1,0 +1,285 @@
+@import "../../node_modules/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.css";
+@import "../metronic/vendors/base/vendors.bundle.css";
+@import "../metronic/demo/default/base/style.bundle.css";
+@import "../metronic/vendors/custom/fullcalendar/fullcalendar.bundle.css";
+@import "../metronic/vendors/custom/datatables/datatables.bundle.css";
+
+.invalid-feedback{
+    display: block;
+}
+
+.m-btn--icon.m-btn--icon-only.btn-sm.open-modal{
+    width: 18px;
+    height: 18px;
+    margin-left: 4px;
+}
+
+.no-bg,
+.alert.m-alert--outline.alert-danger.no-bg{
+    background: transparent;
+}
+
+#toast-container{
+    &.toast-top-full-width{
+        & > div{
+            opacity: 1;
+            box-shadow: none;
+            margin-top: 6px;
+        }
+    }
+}
+
+.custom_inline_datepicker{
+    .datepicker-inline{
+        width: 100%;
+    }
+}
+
+.progress{
+    &.m-progress--sm{
+        .progress-bar{
+            height: 100%;
+        }
+    }
+}
+
+.m--margin-0{
+    margin:0 !important;
+}
+
+.m--padding-0{
+    padding:0 !important;
+}
+
+.m-login{
+    &.m-login--2{
+        .m-login__wrapper{
+            .m-login__container{
+                .m-login__logo{
+                    margin-bottom: 2rem;
+                }
+            }
+        }
+    }
+}
+
+.m-table {
+    tr{
+        &.m-table__row--danger{
+            th,
+            td{
+                .btn.m-btn--hover-brand:not(.btn-secondary):not(.btn-outline-light) i {
+                    color: #fff;
+                }
+                .btn.m-btn--hover-brand:hover,
+                .btn.m-btn--hover-brand.active,
+                .btn.m-btn--hover-brand:active,
+                .btn.m-btn--hover-brand:focus,
+                .show > .btn.m-btn--hover-brand.dropdown-toggle{
+                    background: #fff !important;
+                    border-color: #fff !important;
+                    color:#f4516c !important;
+                }
+
+                .btn.m-btn--hover-brand:hover i,
+                .btn.m-btn--hover-brand.active i,
+                .btn.m-btn--hover-brand:active i,
+                .btn.m-btn--hover-brand:focus i,
+                .show > .btn.m-btn--hover-brand.dropdown-toggle i{
+                    color:#f4516c !important;
+                }
+            }
+        }
+        th,
+        td{
+            .btn:not(:last-child){
+                margin-right: 10px;
+            }
+        }
+    }
+}
+
+.m-widget1{
+    .m-widget1__item{
+        .m-widget1__number{
+            font-size: 2rem;
+        }
+    }
+}
+.m-widget4{
+    .m-widget4__item{
+        &:first-child{
+            padding-top:0;
+        }
+        width: 100%;
+        .m-widget4__img{
+            &.m-widget4__img--pic,
+            &.m-widget4__img--logo{
+                img {
+                    width: 3.5rem;
+                    margin-right: 12px;
+                }
+            }
+        }
+
+        .m-widget4__ext{
+            .m-widget4__number{
+                white-space: nowrap;
+            }
+        }
+        .m-widget4__info{
+            padding: 0;
+            .m-widget4__sub{
+                white-space: nowrap;
+            }
+        }
+
+    }
+    &.m-widget4--progress{
+        .m-widget4__progress{
+            padding-left: 12px;
+            padding-right: 0;
+            .m-widget4__progress-wrapper{
+                .progress{
+                    margin-top: 0;
+                }
+            }
+        }
+    }
+}
+
+.m-widget11{
+    .m-widget11__info_content {
+        &:not(:last-child){
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ebedf2;
+        }
+        display: flex;
+        align-items: flex-start;
+        img {
+            width: 3.5rem;
+            margin-right: 12px;
+            border-radius: 50%;
+        }
+
+        .m-widget11__item_info{
+            width: 100%;
+            padding-top: 6px;
+
+            .m-widget11__item_info_top{
+
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+
+                .m-widget11__title {
+                    color: #575962;
+                    font-size: 1.1rem;
+                    font-weight: 500;
+                    display: block;
+                }
+
+                .m-widget11__sub {
+                    display: block;
+                    font-size: 0.85rem;
+                }
+            }
+
+        }
+    }
+}
+
+.m-widget12{
+    .m-widget12__item{
+        .m-widget12__text1 > span,
+        .m-widget12__text2 > span{
+            font-size:3rem;
+        }
+    }
+}
+
+.m-widget17{
+    .m-widget17__stats{
+        .m-widget17__items{
+            .m-widget17__item{
+                .m-widget17__icon > i{
+                    font-size: 2.8rem;
+                }
+                .m-widget17__subtitle{
+                    margin-top:0;
+                    font-size:1.3rem;
+                }
+                .m-widget17__desc{
+                    font-size:1rem;
+                }
+            }
+        }
+    }
+}
+
+.m-login {
+    &.m-login--6 {
+        .m-login__aside {
+            .m-grid__item {
+                .m-grid__item {
+                    .m-login__title {
+                        font-size: 2.7rem;
+                        line-height: 1.5;
+                    }
+                    .m-login__subtitle{
+                        font-size: 1.6rem;
+                        margin-top: 1rem;
+                        font-weight: 100;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.m-social-link{
+    margin-top: 30px;
+    display:flex;
+    justify-content: space-between;
+}
+
+.user-lang{
+    padding-top: 5px;
+    .language-img{
+        width: 26px;
+        border-radius: 50%;
+        margin-right: 5px;
+    }
+    .m-radio,
+    .m-checkbox{
+        margin-right: 25px;
+    }
+    .m-radio > span,
+    .m-checkbox > span{
+        top: 4px;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .m-login{
+        &.m-login--2{
+            .m-login__wrapper{
+                .m-login__container{
+                    .m-login__form{
+                        margin-bottom: 4rem;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .m-social-link{
+        flex-direction: column;
+        a:not(:first-child){
+            margin-top: 10px;
+        }
+    }
+}

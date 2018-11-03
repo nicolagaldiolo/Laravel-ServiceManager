@@ -13,11 +13,10 @@
                 </div>
                 <span class="m-form__help">{{__('messages.provider_name')}}</span>
 
-                @if ($errors->has('name'))
-                    <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $errors->first('name') }}</strong>
-                                </span>
-                @endif
+                <span data-field="name" class="invalid-feedback" role="alert">
+                    @if ($errors->has('name'))<strong>{{ $errors->first('name') }}</strong>@endif
+                </span>
+
 
 
 
@@ -28,10 +27,10 @@
 
 
         <div class="form-group m-form__group">
-            <label class="">{{__('messages.website')}} *</label>
+            <label class="">{{__('messages.website')}}</label>
 
                 <div class="m-input-icon m-input-icon--left">
-                    <input type="text" class="form-control m-input required" name="website" value="{{old('website', $provider->website)}}">
+                    <input type="text" class="form-control m-input" name="website" value="{{old('website', $provider->website)}}">
                     <span class="m-input-icon__icon m-input-icon__icon--left">
                                                         <span>
                                                             <i class="la la-globe"></i>
@@ -39,11 +38,10 @@
                                                     </span>
                 </div>
                 <span class="m-form__help">{{__('messages.enter_url')}}</span>
-                @if ($errors->has('website'))
-                    <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $errors->first('website') }}</strong>
-                                </span>
-                @endif
+                <span data-field="website" class="invalid-feedback" role="alert">
+                    @if ($errors->has('website'))<strong>{{ $errors->first('website') }}</strong>@endif
+                </span>
+
             
 
 
@@ -53,25 +51,20 @@
 
 
         <div class="form-group m-form__group">
-            <label class="">{{__('messages.label')}} *</label>
+            <label class="">{{__('messages.label')}}</label>
 
-                <div class="m-input-icon m-input-icon--left">
-                    <input type="text" class="form-control m-input required cp_colorpicker" name="label" value="{{old('label', $provider->label)}}" />
-                    <span class="m-input-icon__icon m-input-icon__icon--left">
-                                                        <span>
-                                                            <i class="la la-tint"></i>
-                                                        </span>
+            <div class="m-input-icon m-input-icon--left">
+                <input type="text" class="form-control m-input cp_colorpicker" name="label" value="{{old('label', $provider->label)}}" />
+                <span class="m-input-icon__icon m-input-icon__icon--left">
+                                                    <span>
+                                                        <i class="la la-tint"></i>
                                                     </span>
-                </div>
-                <span class="m-form__help">{{__('messages.enter_label')}}</span>
-                @if ($errors->has('label'))
-                    <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $errors->first('label') }}</strong>
-                                </span>
-                @endif
-
-
-
+                                                </span>
+            </div>
+            <span class="m-form__help">{{__('messages.enter_label')}}</span>
+            <span data-field="label" class="invalid-feedback" role="alert">
+                @if ($errors->has('label'))<strong>{{ $errors->first('label') }}</strong>@endif
+            </span>
         </div>
 
     </div>
@@ -81,6 +74,6 @@
 <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
     <div class="m-form__actions m-form__actions--solid">
         <button type="submit" class="btn btn-primary">{{__('messages.save')}}</button>
-        <a href="{{route('providers.index')}}" class="btn btn-secondary">{{__('messages.cancel')}}</a>
+        <a href="{{route('providers.index')}}" class="btn btn-secondary cancel">{{__('messages.cancel')}}</a>
     </div>
 </div>

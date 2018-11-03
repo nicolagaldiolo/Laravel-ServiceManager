@@ -76,9 +76,9 @@
                                         </a>
                                     </li>
                                     <li class="m-menu__item m-menu__item--rel">
-                                        <a href="{{route('domains.create')}}" class="m-menu__link">
+                                        <a href="{{route('services.create')}}" class="m-menu__link">
                                             <i class="m-menu__link-icon flaticon-add"></i>
-                                            <span class="m-menu__link-text">{{__('messages.domain')}}</span>
+                                            <span class="m-menu__link-text">{{__('messages.service')}}</span>
                                         </a>
                                     </li>
                                     <li class="m-menu__item m-menu__item--rel">
@@ -87,25 +87,22 @@
                                             <span class="m-menu__link-text">{{__('messages.provider')}}</span>
                                         </a>
                                     </li>
-                                    <li class="m-menu__item m-menu__item--rel">
-                                        <a href="{{route('users.create')}}" class="m-menu__link">
-                                            <i class="m-menu__link-icon flaticon-user"></i>
-                                            <span class="m-menu__link-text">{{__('messages.user')}}</span>
-                                        </a>
-                                    </li>
                                 </ul>
                             </div>
 
                             <!-- END: Horizontal Menu -->
 
                             <!-- BEGIN: Topbar -->
+
+
+
                             <div id="m_header_topbar" class="m-topbar  m-stack m-stack--ver m-stack--general m-stack--fluid">
                                 <div class="m-stack__item m-topbar__nav-wrapper">
                                     <ul class="m-topbar__nav m-nav m-nav--inline">
                                         <li class="m-nav__item m-topbar__notifications m-topbar__notifications--img m-dropdown m-dropdown--large m-dropdown--header-bg-fill m-dropdown--arrow m-dropdown--align-center 	m-dropdown--mobile-full-width"
                                             m-dropdown-toggle="click" m-dropdown-persistent="1">
                                             <a href="#" class="m-nav__link m-dropdown__toggle" id="m_topbar_notification_icon">
-                                                @if($domainsToPayCount > 0)
+                                                @if($servicesToPayCount > 0)
                                                     <span class="m-nav__link-badge m-badge m-badge--dot m-badge--dot-small m-badge--danger"></span>
                                                 @endif
                                                 <span class="m-nav__link-icon">
@@ -124,9 +121,9 @@
                                                         <div class="m-dropdown__content">
 
 
-                                                            @if($domainsToPay->isEmpty())
+                                                            @if($servicesToPay->isEmpty())
                                                                 <div class="alert alert-brand" role="alert">
-                                                                    <strong>{{__('messages.fantastic')}}</strong> {{__('messages.no_other_domains')}}
+                                                                    <strong>{{__('messages.fantastic')}}</strong> {{__('messages.no_other_services')}}
                                                                 </div>
                                                             @else
 
@@ -134,13 +131,27 @@
                                                                      data-height="250" data-mobile-height="200">
                                                                     <div class="m-list-timeline m-list-timeline--skin-light">
                                                                         <div class="m-list-timeline__items">
-                                                                            @foreach($domainsToPay as $domain)
+
+                                                                            @foreach($servicesToPay as $service)
                                                                                 <div class="m-list-timeline__item">
                                                                                     <span class="m-list-timeline__badge -m-list-timeline__badge--state-success"></span>
-                                                                                    <span class="m-list-timeline__text">{{$domain->url}}</span>
-                                                                                    <span class="m-list-timeline__time">{{$domain->deadline->diffForHumans()}}</span>
+                                                                                    <span class="m-list-timeline__text">
+                                                                                        {{$service->url}}
+                                                                                        @foreach($service->renewalsUnresolved as $renewal)
+                                                                                            <div class="m-widget6__item">
+                                                                                                <span class="m-widget6__text">
+                                                                                                    <span class="m--font-boldest">{{$renewal->deadline->diffForHumans()}}</span> ({{$renewal->deadlineVerbose}})
+                                                                                                </span>
+                                                                                                <span class="m-widget6__text m--align-right m--font-boldest m--font-brand">
+                                                                                                    {{amount_format($renewal->amount)}}
+                                                                                                </span>
+                                                                                            </div>
+                                                                                        @endforeach
+                                                                                    </span>
+
                                                                                 </div>
                                                                             @endforeach
+
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -153,41 +164,11 @@
 
                                         <li class="m-nav__item m-topbar__languages m-dropdown m-dropdown--small m-dropdown--arrow m-dropdown--align-right m-dropdown--mobile-full-width"
                                             m-dropdown-toggle="click" aria-expanded="true">
-                                            <a href="#" class="m-nav__link m-dropdown__toggle">
+                                            <a href="{{route('users.edit', Auth::user()->id)}}" class="m-nav__link">
                                                 <span class="m-nav__link-text">
                                                     <img class="m-topbar__language-selected-img" src="{{ asset('images/flags') .  "/" . App::getLocale() . ".svg" }}">
                                                 </span>
                                             </a>
-                                            <div class="m-dropdown__wrapper" style="z-index: 101;">
-                                                <span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"
-                                                      style="left: auto; right: 5px;"></span>
-                                                <div class="m-dropdown__inner">
-                                                    <div class="m-dropdown__header m--align-center"
-                                                         style="background: url('images/misc/flagsquick_actions_bg.jpg'); background-size: cover;">
-                                                        <span class="m-dropdown__header-subtitle">{{ __('messages.selectLang') }}</span>
-                                                    </div>
-                                                    <div class="m-dropdown__body">
-                                                        <div class="m-dropdown__content">
-                                                            <ul class="m-nav m-nav--skin-light">
-                                                            @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
-                                                                <!-- m-nav__item--active -->
-                                                                    <li class="m-nav__item">
-                                                                        <a hreflang="{{ $localeCode }}"
-                                                                           class="m-nav__link @if(App::getLocale() == $localeCode) m-nav__link--active @endif"
-                                                                           href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
-                                                                            <span class="m-nav__link-icon"><img
-                                                                                        class="m-topbar__language-img"
-                                                                                        src="{{ asset('images/flags') .  "/" . $localeCode . ".svg" }}"></span>
-                                                                            <span class="m-nav__link-title m-topbar__language-text m-nav__link-text">{{ $properties['native'] }}</span>
-                                                                        </a>
-                                                                    </li>
-                                                                @endforeach
-
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
                                         </li>
 
 
@@ -287,6 +268,8 @@
                                 </div>
                             </div>
 
+
+
                             <!-- END: Topbar -->
                         </div>
                     </div>
@@ -310,7 +293,7 @@
                     <div class="m-stack m-stack--flex-tablet-and-mobile m-stack--ver m-stack--desktop">
                         <div class="m-stack__item m-stack__item--left m-stack__item--middle m-stack__item--last">
                                         <span class="m-footer__copyright">
-                                            {{\Carbon\Carbon::now()::now()->year}} &copy; {{ config('app.name') }} {{__('messages.copy')}} <a class="m-link" target="_blank" href="https://github.com/nicolagaldiolo">Nicola Galdiolo</a>
+                                            @include('layouts.partials._copy')
                                         </span>
                         </div>
                         <div class="m-stack__item m-stack__item--right m-stack__item--middle m-stack__item--first">

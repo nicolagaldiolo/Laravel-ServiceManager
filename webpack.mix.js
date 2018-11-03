@@ -1,4 +1,5 @@
 let mix = require('laravel-mix');
+const WebpackShellPlugin = require('webpack-shell-plugin');
 
 /*
  |--------------------------------------------------------------------------
@@ -16,14 +17,27 @@ mix.js('resources/assets/js/app.js', 'public/js')
     .sass('resources/assets/sass/app.scss', 'public/css');
 */
 
-mix.scripts(
+// Add shell command plugin configured to create JavaScript language file
+mix.webpackConfig({
+    plugins:
+        [
+            new WebpackShellPlugin({onBuildStart:['php artisan lang:js -c --quiet'], onBuildEnd:[]})
+        ]
+});
+
+
+// i don't use mix.scripts() because has some problems with `` characters.
+//mix.scripts(
+
+mix.babel(
     [
-        'resources/assets/metronic/vendors/base/vendors.bundle.js',
-        'resources/assets/metronic/demo/default/base/scripts.bundle.js',
-        'resources/assets/metronic/vendors/custom/fullcalendar/fullcalendar.bundle.js',
-        'resources/assets/metronic/vendors/custom/datatables/datatables.bundle.js',
-        'resources/assets/metronic/demo/default/custom/components/base/toastr.js',
+        'resources/metronic/vendors/base/vendors.bundle.js',
+        'resources/metronic/demo/default/base/scripts.bundle.js',
+        'resources/metronic/vendors/custom/fullcalendar/fullcalendar.bundle.js',
+        'resources/metronic/vendors/custom/datatables/datatables.bundle.js',
+        'resources/metronic/demo/default/custom/components/base/toastr.js',
         'node_modules/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.js',
-        'resources/assets/js/app.js',
+        'resources/messages/messages.js',
+        'resources/js/app.js',
     ], 'public/js/app.js')
-    .sass('resources/assets/sass/app.scss', 'public/css');
+    .sass('resources/sass/app.scss', 'public/css');

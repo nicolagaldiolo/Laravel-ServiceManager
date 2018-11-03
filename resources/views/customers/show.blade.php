@@ -2,7 +2,7 @@
 
 @section('content')
 
-    @component('components.title')
+    @component('components.title', ['back_url' => route('customers.index')])
         {{__('messages.customers')}}
     @endcomponent
     <div class="m-content">
@@ -24,6 +24,13 @@
                                 </h3>
                             </div>
                         </div>
+                        <div class="m-portlet__head-tools">
+                            <ul class="m-portlet__nav">
+                                <li class="m-portlet__nav-item">
+                                    <a class="btn m-btn--pill btn-secondary" href="{{route('customers.edit', $customer)}}">{{__('messages.edit')}}</a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                     <div class="m-portlet__body">
                         <div class="m-widget13">
@@ -42,10 +49,6 @@
                             <div class="m-widget13__item">
 				                <span class="m-widget13__desc">{{__('messages.address')}}</span>
                                 <span class="m-widget13__text">{{$customer->address}}</span>
-                            </div>
-
-                            <div class="m-widget13__action">
-                                <a class="btn m-btn--pill btn-secondary" href="{{route('customers.edit', $customer)}}">{{__('messages.edit')}}</a>
                             </div>
                         </div>
                     </div>
@@ -70,7 +73,10 @@
                     <div class="m-portlet__body">
                         <div class="m-widget12">
                             <div class="m-widget12__item">
-                                <span class="m-widget12__text1">{{__('messages.total_revenue')}}<br><span>€ {{$customerRevenue}}</span></span>
+                                <span class="m-widget12__text1">
+                                    {{__('messages.total_revenue')}} {{\Carbon\Carbon::now()->year}}<br>
+                                    <span>{{amount_format($revenue)}}</span>
+                                </span>
                                 <div class="m-widget12__text2">
                                     <div class="m-widget12__desc">{{__('messages.avarage_revenue')}}</div>
                                     <br>
@@ -84,8 +90,10 @@
                             </div>
 
                             <div class="m-widget12__item">
-                                <span class="m-widget12__text1">{{__('messages.domains_active_')}}<br><span>{{$customerDomainsCount}}</span></span>
-                                <span class="m-widget12__text2">{{__('messages.domains_deadline')}}<br><span>{{$toPay}}</span></span>
+                                <span class="m-widget12__text1">{{__('messages.revenues')}}  {{\Carbon\Carbon::now()->format('F Y')}}<br>
+                                    <span>{{amount_format($revenueThisMonth)}}</span>
+                                </span>
+                                <span class="m-widget12__text2">{{__('messages.to_cash_in')}}<br><span>{{$renewalsUnresolved}}</span></span>
                             </div>
 
                         </div>
@@ -100,9 +108,26 @@
         </div>
         <!--End::Section-->
 
-    </div>
+        @if($customerServicesCount > 0)
+            <div class="m-portlet m-portlet--mobile">
+                @component('components.tableHeader', [
+                    'title' => __('messages.all_services'),
+                    'icon' => 'flaticon-layers',
+                    'button' => __('messages.new_service'),
+                    'url' => route('services.create') . '?cid=' . $customer->id,
+                    'newModal' => false,
+                    'dataTarget' => '',
+                    'moreAction' => true,
+                ])
+                    @include('customers._dataTableMoreAction')
+                @endcomponent
 
-    @if($customerDomainsCount > 0)
-        @include('domains._dataTable', ['dataTableUrl' => route('customers.show', $customer), 'dataTableNewUrl' => route('domains.create') . '?cid=' . $customer->id ])
-    @endif
+                <div class="m-portlet__body">
+                    @include('services._dataTable', ['dataTableDeleteAll' => route('services.destroy-all')])
+                </div>
+            </div>
+
+        @endif
+
+    </div>
 @stop
