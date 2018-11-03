@@ -14,10 +14,10 @@
                                 <div class="row m-row--no-padding align-items-center">
                                     <div class="col">
                                         <h3 class="m-widget1__title">{{__('messages.total_revenue')}} {{\Carbon\Carbon::now()->year}}</h3>
-                                        <span class="m-widget1__desc">{{__(trans('messages.obtained_from', [ 'attribute' => $dashboard['servicesThisYearCount']]))}}</span>
+                                        <span class="m-widget1__desc">{{__(trans_choice('messages.obtained_from', $dashboard['servicesThisYearCount'], [ 'attribute' => $dashboard['servicesThisYearCount']]))}}</span>
                                         <br>
                                         <span class="m-widget1__number m--font-brand">
-                                            @amount($dashboard['servicesThisYearSum'], true)
+                                            {{amount_format($dashboard['servicesThisYearSum'])}}
                                         </span>
                                     </div>
                                 </div>
@@ -32,10 +32,10 @@
                                 <div class="row m-row--no-padding align-items-center">
                                     <div class="col">
                                         <h3 class="m-widget1__title">{{__('messages.revenues')}}  {{\Carbon\Carbon::now()->format('F Y')}}</h3>
-                                        <span class="m-widget1__desc">{{__(trans('messages.obtained_from', [ 'attribute' => $dashboard['servicesThisMonthCount']]))}}</span>
+                                        <span class="m-widget1__desc">{{__(trans_choice('messages.obtained_from', $dashboard['servicesThisMonthCount'], [ 'attribute' => $dashboard['servicesThisMonthCount']]))}}</span>
                                         <br>
                                         <span class="m-widget1__number m--font-info">
-                                            @amount($dashboard['servicesThisMonthSum'], true)
+                                            {{amount_format($dashboard['servicesThisMonthSum'])}}
                                         </span>
                                     </div>
                                 </div>
@@ -49,10 +49,10 @@
                             <div class="m-widget1__item">
                                 <div class="row m-row--no-padding align-items-center">
                                     <div class="col">
-                                        <h3 class="m-widget1__title">Ancora da incassare {{__('messages.to_cash_in')}}</h3>
-                                        <span class="m-widget1__desc">Ottenuto da {{$feesToPayCount}} quote su {{$servicesToPayCount}} Domini - {{__('messages.pending_payment')}}</span>
+                                        <h3 class="m-widget1__title">{{__('messages.to_cash_in')}}</h3>
+                                        <span class="m-widget1__desc">{{__(trans_choice('messages.obtained_from', $servicesToPayCount, [ 'attribute' => $servicesToPayCount]))}}</span>
                                         <br>
-                                        <span class="m-widget1__number m--font-danger">@amount($feesToPayAmount, true)</span>
+                                        <span class="m-widget1__number m--font-danger">{{amount_format($feesToPayAmount)}}</span>
                                     </div>
                                 </div>
                             </div>
@@ -95,8 +95,7 @@
                                     <i class="flaticon-line-graph"></i>
                                 </span>
                                 <h3 class="m-portlet__head-text">
-                                    Trends {{\Carbon\Carbon::now()->year}}
-                                    {{__('messages.annual_trend')}}
+                                    {{__('messages.trend')}} {{\Carbon\Carbon::now()->year}}
                                 </h3>
                             </div>
                         </div>
@@ -106,7 +105,7 @@
                                     m-dropdown-toggle="hover" aria-expanded="true">
                                     <a href="{{route('services.index')}}"
                                        class="m-portlet__nav-link btn btn--sm m-btn--pill btn-brand m-btn">
-                                        {{__('messages.all_domains')}}
+                                        {{__('messages.all_services')}}
                                     </a>
                                 </li>
                             </ul>
@@ -130,7 +129,6 @@
                                                 <i class="flaticon-piggy-bank"></i>
                                             </span>
                                             <h3 class="m-portlet__head-text">
-                                                Unresolved |
                                                 {{__('messages.to_cash_in')}}
                                             </h3>
                                         </div>
@@ -139,7 +137,7 @@
 
                                 @if($servicesToPay->isEmpty())
                                     <div class="alert alert-brand" role="alert">
-                                        <strong>{{__('messages.fantastic')}}</strong> {{__('messages.no_other_domains')}}
+                                        <strong>{{__('messages.fantastic')}}</strong> {{__('messages.no_other_services')}}
                                     </div>
                                 @else
                                     <div class="m-widget11__service_list">
@@ -163,7 +161,7 @@
                                                                         <span class="m--font-boldest">{{$renewal->deadline->diffForHumans()}}</span> ({{$renewal->deadlineVerbose}})
                                                                     </span>
                                                                     <span class="m-widget6__text m--align-right m--font-boldest m--font-brand">
-                                                                        @amount($renewal->amount)
+                                                                        {{amount_format($renewal->amount)}}
                                                                     </span>
                                                                 </div>
                                                             @endforeach
@@ -239,11 +237,11 @@
                                             <i class="flaticon-layers m--font-success"></i>
                                         </span>
                                         <span class="m-widget17__subtitle">
-                                            {{__('messages.domains')}}
+                                            {{__('messages.services')}}
                                         </span>
                                         <span class="m-widget17__desc">
                                             @if($data->services->count() > 0){{$data->services->count()}}@endif
-                                            {{trans_choice('messages.domains_active', $data->services->count())}}
+                                            {{trans_choice('messages.services_active', $data->services->count())}}
                                         </span>
                                     </div>
                                     @if($dashboard['usersSummary'])
@@ -297,7 +295,7 @@
                                        class="btn btn-accent m-btn m-btn--custom m-btn--icon m-btn--pill">
 														<span>
 															<i class="la la-plus"></i>
-															<span>{{__('messages.new_domain')}}</span>
+															<span>{{__('messages.new_service')}}</span>
 														</span>
                                     </a>
                                 </li>
@@ -323,13 +321,13 @@
                                     <i class="flaticon-network"></i>
                                 </span>
                                 <h3 class="m-portlet__head-text">
-                                    {{__('messages.domains_status')}}
+                                    {{__('messages.services_status')}}
                                 </h3>
                             </div>
                         </div>
                         <div class="m-portlet__head-tools">
                             <a class="btn m-btn--pill btn-secondary btn-sm m-btn"
-                               href="{{route('services.index')}}">{{__('messages.all_domains')}}</a>
+                               href="{{route('services.index')}}">{{__('messages.all_services')}}</a>
                         </div>
                     </div>
                     <div class="m-portlet__body">
@@ -399,15 +397,17 @@
                                             </div>
                                             <div class="m-widget4__info">
                                                 <span class="m-widget4__title">
-                                                    {{$provider->name}}<br>
-                                                    <a target="_blank" href="{{$provider->website}}">{{$provider->website}}</a>
+                                                    {{$provider->name}}
+                                                    @if($provider->website)
+                                                        <br><a target="_blank" href="{{$provider->website}}">{{$provider->website}}</a>
+                                                    @endif
                                                 </span>
                                                 <br>
                                                 <span class="m-widget4__sub">
                                                     @if($provider->services->count() > 0)
                                                         {{$provider->services->count()}}
                                                     @endif
-                                                    {{trans_choice('messages.domains_active', $provider->services->count())}}
+                                                    {{trans_choice('messages.services_active', $provider->services->count())}}
                                                 </span>
                                             </div>
                                         </div>
@@ -452,11 +452,11 @@
                                             <br>
                                             <span class="m-widget4__sub">
                                                 @if($customer->services->count() > 0){{$customer->services->count()}}@endif
-                                                {{trans_choice('messages.domains_active', $customer->services->count())}}
+                                                {{trans_choice('messages.services_active', $customer->services->count())}}
                                             </span>
                                         </div>
                                         <span class="m-widget4__ext">
-                                            <span class="m-widget4__number m--font-brand">@amount($customer->services_total_amount)</span>
+                                            <span class="m-widget4__number m--font-brand">{{amount_format($customer->services_total_amount)}}</span>
                                         </span>
                                     </div>
                                 @endforeach
@@ -475,9 +475,9 @@
                                     <div class="m-portlet__head">
                                         <div class="m-portlet__head-caption">
                                             <div class="m-portlet__head-title">
-                    <span class="m-portlet__head-icon">
-                        <i class="flaticon-profile"></i>
-                    </span>
+                                                <span class="m-portlet__head-icon">
+                                                    <i class="flaticon-profile"></i>
+                                                </span>
                                                 <h3 class="m-portlet__head-text">
                                                     {{__('messages.users')}}
                                                 </h3>
@@ -502,8 +502,8 @@
                                                             class="m-widget4__title">{{$user->name}}</span><br>
                                                         <span class="m-widget4__sub">
                                                             @if($user->services->count() > 0){{$user->services->count()}}@endif
-                                                            {{trans_choice('messages.domains_active', $user->services->count())}}
-                                                            <span class="m--font-boldest">(@amount($user->services_total_amount))</span>
+                                                            {{trans_choice('messages.services_active', $user->services->count())}}
+                                                            <span class="m--font-boldest">({{amount_format($user->services_total_amount)}})</span>
                                                         </span>
                                                     </div>
                                                     <div class="m-widget4__progress">
@@ -533,176 +533,28 @@
                 <!--End::Section-->
 
             </div>
-            @stop
+@stop
 
-            @section('scripts')
-                @parent
+@section('scripts')
+    @parent
+    <script>
+        var dashboardServicesDataChart = [];
+        @foreach($dashboard['servicesThisYear'] as $service)
+            dashboardServicesDataChart.push({{$service}})
+        @endforeach
 
-                <script>
-                    jQuery(document).ready(function () {
-
-                        //== Activities Charts.
-                        //** Based on Chartjs plugin - http://www.chartjs.org/
-                        var activitiesChart = function activitiesChart($) {
-                            if ($('#m_chart_activities').length == 0) {
-                                return;
-                            }
-
-                            var ctx = document.getElementById("m_chart_activities").getContext("2d");
-
-                            var gradient = ctx.createLinearGradient(0, 0, 0, 240);
-                            gradient.addColorStop(0, Chart.helpers.color('#00c5dc').alpha(0.7).rgbString());
-                            gradient.addColorStop(1, Chart.helpers.color('#f2feff').alpha(0).rgbString());
-
-                            var servicesData = [];
-                            @foreach($dashboard['servicesThisYear'] as $service)
-                                servicesData.push({{$service}})
-                            @endforeach
-
-
-                            var config = {
-                                    type: 'line',
-                                    data: {
-                                        labels: [
-                                            "{{__('messages.january')}}",
-                                            "{{__('messages.february')}}",
-                                            "{{__('messages.march')}}",
-                                            "{{__('messages.april')}}",
-                                            "{{__('messages.may')}}",
-                                            "{{__('messages.june')}}",
-                                            "{{__('messages.july')}}",
-                                            "{{__('messages.august')}}",
-                                            "{{__('messages.september')}}",
-                                            "{{__('messages.october')}}",
-                                            "{{__('messages.november')}}",
-                                            "{{__('messages.december')}}"
-                                        ],
-                                        datasets: [{
-                                            label: "{{__('messages.total_earning')}}",
-                                            backgroundColor: gradient, // Put the gradient here as a fill color
-                                            borderColor: '#0dc8de',
-
-                                            pointBackgroundColor: Chart.helpers.color('#ffffff').alpha(0).rgbString(),
-                                            pointBorderColor: Chart.helpers.color('#ffffff').alpha(0).rgbString(),
-                                            pointHoverBackgroundColor: mApp.getColor('danger'),
-                                            pointHoverBorderColor: Chart.helpers.color('#000000').alpha(0.2).rgbString(),
-
-                                            //fill: 'start',
-                                            data: servicesData
-                                        }]
-                                    },
-                                    options: {
-                                        title: {
-                                            display: false
-                                        },
-                                        tooltips: {
-                                            mode: 'nearest',
-                                            intersect: false,
-                                            position: 'nearest',
-                                            xPadding: 10,
-                                            yPadding: 10,
-                                            caretPadding: 10
-                                        },
-                                        legend: {
-                                            display: false
-                                        },
-                                        responsive: true,
-                                        maintainAspectRatio: false,
-                                        scales: {
-                                            xAxes: [{
-                                                display: false,
-                                                gridLines: false,
-                                                scaleLabel: {
-                                                    display: true,
-                                                    labelString: 'Month'
-                                                }
-                                            }],
-                                            yAxes: [{
-                                                display: false,
-                                                gridLines: false,
-                                                scaleLabel: {
-                                                    display: true,
-                                                    labelString: 'Value'
-                                                },
-                                                ticks: {
-                                                    beginAtZero: true
-                                                }
-                                            }]
-                                        },
-                                        elements: {
-                                            line: {
-                                                tension: 0.0000001
-                                            },
-                                            point: {
-                                                radius: 4,
-                                                borderWidth: 12
-                                            }
-                                        },
-                                        layout: {
-                                            padding: {
-                                                left: 0,
-                                                right: 0,
-                                                top: 10,
-                                                bottom: 0
-                                            }
-                                        }
-                                    }
-                                };
-
-                            var chart = new Chart(ctx, config);
-                        }(jQuery);
-
-                        var calendarInit = function ($) {
-                            if ($('#m_calendar').length === 0) {
-                                return;
-                            }
-
-                            var todayDate = moment().startOf('day');
-                            var YM = todayDate.format('YYYY-MM');
-                            var YESTERDAY = todayDate.clone().subtract(1, 'day').format('YYYY-MM-DD');
-                            var TODAY = todayDate.format('YYYY-MM-DD');
-                            var TOMORROW = todayDate.clone().add(1, 'day').format('YYYY-MM-DD');
-
-                            $('#m_calendar').fullCalendar({
-                                isRTL: mUtil.isRTL(),
-                                header: {
-                                    left: 'prev,next today',
-                                    center: 'title',
-                                    right: 'month,agendaWeek,agendaDay,listWeek'
-                                },
-                                editable: true,
-                                eventLimit: true, // allow "more" link when too many events
-                                navLinks: true,
-                                //defaultDate: moment('2018-08-15'),
-                                events: [
-                                    @foreach ($data->services as $service)
-                                        @foreach ($service->renewals as $renewal)
-                                            {
-                                                title: '{{$service->url}}',
-                                                url: '{{route('services.show', $service)}}',
-                                                start: moment('{{$renewal->deadline}}'),
-                                                description: '{{\App\Enums\RenewalSM::getDescription($renewal->getStateAttribute()['attr'])}}',
-                                                className: "m-fc-event--light m-fc-event--solid-{{$renewal->getStateAttribute()['label']}}",
-                                                allDay: true,
-                                            },
-                                        @endforeach
-                                    @endforeach
-                                ],
-
-                                eventRender: function (event, element) {
-                                    if (element.hasClass('fc-day-grid-event')) {
-                                        element.data('content', event.description);
-                                        element.data('placement', 'top');
-                                        mApp.initPopover(element);
-                                    } else if (element.hasClass('fc-time-grid-event')) {
-                                        element.find('.fc-title').append('<div class="fc-description">' + event.description + '</div>');
-                                    } else if (element.find('.fc-list-item-title').lenght !== 0) {
-                                        element.find('.fc-list-item-title').append('<div class="fc-description">' + event.description + '</div>');
-                                    }
-                                }
-                            });
-                        }(jQuery);
-
-                    });
-                </script>
+        var dashboardEvents = [];
+        @foreach ($data->services as $service)
+            @foreach ($service->renewals as $renewal)
+                dashboardEvents.push({
+                    title: '{{$service->url}}',
+                    url: '{{route('services.show', $service)}}',
+                    start: moment('{{$renewal->deadline}}'),
+                    description: '{{\App\Enums\RenewalSM::getDescription($renewal->getStateAttribute()['attr'])}}',
+                    className: "m-fc-event--light m-fc-event--solid-{{$renewal->getStateAttribute()['label']}}",
+                    allDay: true,
+                });
+            @endforeach
+        @endforeach
+    </script>
 @stop

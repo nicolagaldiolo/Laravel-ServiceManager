@@ -1,7 +1,6 @@
 @section('scripts')
     <script src="{{ asset('js/app.js') }}"></script>
 @show
-
 <script>
     toastr.options = {
         "closeButton": true,

@@ -47,9 +47,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        $this->authorize('create', Auth::user());
-
-        return view('users.new');
+        //
     }
 
     /**
@@ -60,11 +58,7 @@ class UserController extends Controller
      */
     public function store(UserRequest $request)
     {
-        $request->merge(['password' => Hash::make($request->password)]);
-        User::create($request->validated());
-
-        return redirect()->route('users.index')
-            ->with('status', 'User creato con successo');;
+        //
     }
 
     /**
@@ -100,14 +94,16 @@ class UserController extends Controller
      */
     public function update(UserRequest $request, User $user)
     {
+
         $this->authorize('update', $user);
 
         $user->update($request->validated());
 
         $redirect = (Auth::user()->id == $user->id && !$user->isAdmin()) ? 'dashboard' : 'users.index';
 
-        return redirect()->route($redirect)
-            ->with('status', 'User aggiornato con successo');
+        $path = redirect_user_lang($user->lang, $redirect);
+
+        return redirect($path)->with('status', __('messages.user_update_status'));
     }
 
     /**
@@ -125,7 +121,7 @@ class UserController extends Controller
             $user->delete();
             return [
                 'redirect' => $redirect,
-                'message' => 'User eliminato con successo'
+                'message' => trans_choice('messages.user_delete_status', 1)
             ];
         }
 
@@ -146,7 +142,7 @@ class UserController extends Controller
 
         return [
             'redirect' => $redirect,
-            'message' => 'Utenti eliminati con successo'
+            'message' => trans_choice('messages.user_delete_status', count($ids))
         ];
     }
 }

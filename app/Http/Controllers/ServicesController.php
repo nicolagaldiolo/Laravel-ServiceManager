@@ -17,6 +17,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use Yajra\DataTables\DataTables;
 
 class ServicesController extends Controller
@@ -35,7 +36,9 @@ class ServicesController extends Controller
         if(request()->wantsJson() || request()->expectsJson()) {
             $services = Auth::user()->services()->with('nextRenewal', 'provider', 'customer', 'serviceType')->get();
             return $this->getServicesDataTablesTraits($services);
-        }
+        }//else{
+        //    event(new ToPayServicesAlert()); // da eliminare
+        //}
 
         return view('services.index');
 
@@ -94,7 +97,7 @@ class ServicesController extends Controller
         }
 
         return redirect()->route('services.show', $service)
-            ->with('status', 'Servizio creato con successo');
+            ->with('status', __('messages.service_created_status'));
     }
 
     /**
@@ -109,7 +112,7 @@ class ServicesController extends Controller
             $renewals = $service->renewals()->orderBy('deadline', 'DESC')->get();
             return DataTables::of($renewals)
                 ->editColumn('amount', function ($renewal) {
-                    return $renewal->amountVerbose;
+                    return amount_format($renewal->amount);
                 })->setRowAttr([
                     'class' => function($renewal) {
                         return $renewal->unsolved ? "m-table__row--danger" : "";
@@ -128,7 +131,7 @@ class ServicesController extends Controller
                         $k = '<a data-transition-default="' . RenewalSM::T_renews. '" data-transition="' . $v . '" href="' . route('services.renewals.transition', ['service'=>$service,'renewals'=>$renewal,'transition'=>$v]) . '" class="update-transition btn btn-sm m-btn m-btn--custom btn-' . $k['label'] . '"><i class="'. $k['icon'] . '"></i> ' . RenewalSM::getDescription($v) . '</a>';
                     });
 
-                    $buttons[] = '<a href="' . route('services.renewals.edit', ['service'=>$service,'renewals'=>$renewal]) . '" data-update="' . route('services.renewals.update', ['service'=>$service,'renewals'=>$renewal]) . '" class="edit btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill"><i class="la la-edit"></i></a>';
+                    $buttons[] = '<a href="' . route('services.renewals.edit', ['service'=>$service,'renewals'=>$renewal]) . '" data-original-title="' . __('messages.edit_renewal') . '" class="edit btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill"><i class="la la-edit"></i></a>';
                     $buttons[] = '<a href="' . route('services.renewals.destroy', ['service'=>$service,'renewals'=>$renewal]) . '" class="deleteDataTableRecord btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill"><i class="la la-trash"></i></a>';
 
                     return implode("", $buttons);
@@ -177,7 +180,7 @@ class ServicesController extends Controller
         $service->update($request->validated());
 
         return redirect()->route('services.show', $service)
-            ->with('status', 'Servizio modificato con successo');
+            ->with('status', __('messages.service_update_status'));
     }
 
     /**
@@ -194,7 +197,7 @@ class ServicesController extends Controller
 
         if(request()->wantsJson() || request()->expectsJson()) {
             return [
-                'message' => 'Service eliminato con successo'
+                'message' => trans_choice('messages.service_delete_status', 1)
             ];
         }
     }
@@ -207,9 +210,8 @@ class ServicesController extends Controller
          Auth::user()->services()->whereIn('services.id',$ids)->delete();
 
         return [
-            'message' => 'Services eliminati con successo'
+            'message' => trans_choice('messages.service_delete_status', count($ids))
         ];
     }
-
 
 }

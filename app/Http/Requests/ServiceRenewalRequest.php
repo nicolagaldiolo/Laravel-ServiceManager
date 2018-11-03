@@ -26,11 +26,14 @@ class ServiceRenewalRequest extends FormRequest
     public function rules()
     {
 
-        //$service = $this->route('service') ? $this->route('service')->id : 'NULL';
+        $renewal = $this->route('renewal') ? $this->route('renewal')->id : 'NULL';
+        $service = $this->route('service') ? $this->route('service')->id : 'NULL';
         //unique:table,column,except,idColumn
+
         return [
             'amount'        => 'sometimes|regex:/[0-9]+[.,]?[0-9]*/|max:8',
-            'deadline'      => 'required|date|',
+            'deadline'      => 'required|date|date_format:d-m-Y|unique:renewals,deadline,' . $renewal . ',id,service_id,' . $service,
+            //'deadline'      => 'date_format:Y-m-d|required|date|unique:renewals,deadline',
             'status'        => ['sometimes', 'required', new EnumValue(RenewalSM::class, false)],
         ];
     }

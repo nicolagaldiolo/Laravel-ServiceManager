@@ -35,7 +35,7 @@ class ServiceRenewalsController extends Controller
         ]);
 
         return [
-            'view' => view('renewals._form', compact('renewal', 'service'))->render()
+            'view' => view('renewals.create', compact('renewal', 'service'))->render()
         ];
     }
 
@@ -50,7 +50,7 @@ class ServiceRenewalsController extends Controller
         $service->renewals()->create($request->validated());
 
         return [
-            'message' => 'Nuova scadenza creata con successo'
+            'message' => __('messages.renewal_created_status')
         ];
     }
 
@@ -76,7 +76,7 @@ class ServiceRenewalsController extends Controller
         $this->authorize('view', $renewal);
 
         return [
-            'view' => view('renewals._form', compact('service', 'renewal'))->render()
+            'view' => view('renewals.edit', compact('service', 'renewal'))->render()
         ];
 
     }
@@ -96,7 +96,7 @@ class ServiceRenewalsController extends Controller
         $renewal->update($request->validated());
 
         return [
-            'message' => 'Rinnovo aggiornato con successo'
+            'message' => __('messages.renewal_update_status')
         ];
     }
 
@@ -114,7 +114,7 @@ class ServiceRenewalsController extends Controller
         $renewal->delete();
 
         return [
-            'message' => 'Renewal eliminato con successo'
+            'message' => trans_choice('messages.renewal_delete_status', 1)
         ];
     }
 
@@ -125,7 +125,7 @@ class ServiceRenewalsController extends Controller
         $service->renewals()->whereIn('renewals.id',$ids)->delete();
 
         return [
-            'message' => 'Renewals eliminati con successo'
+            'message' => trans_choice('messages.renewal_delete_status', count($ids))
         ];
 
     }
@@ -138,11 +138,10 @@ class ServiceRenewalsController extends Controller
         try {
             $renewal->transition($transition);
             return [
-                'message' => 'Cambio di stato effettuato con successo'
+                'message' => __('messages.renewal_transition_status')
             ];
 
         } catch(\Exception $e) {
-            logger($e);
             return abort(500, $e->getMessage());
         }
 

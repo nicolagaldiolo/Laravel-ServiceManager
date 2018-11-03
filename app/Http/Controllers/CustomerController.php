@@ -25,8 +25,6 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        //dd(Auth::User()->renewals()->get());
-
         if(request()->wantsJson() || request()->expectsJson()) {
 
             $customers = Auth::user()->customers()->get();
@@ -52,7 +50,15 @@ class CustomerController extends Controller
     {
         $customer = new Customer;
         $domain = new Service;
+
+        if(request()->wantsJson() || request()->expectsJson()) {
+            return [
+                'view' => view('customers.create_form', compact('customer', 'domain'))->render(),
+            ];
+        }
+
         return view('customers.create', compact('customer', 'domain'));
+
     }
 
     /**
@@ -63,10 +69,17 @@ class CustomerController extends Controller
      */
     public function store(CustomerRequest $request)
     {
-        Auth::user()->customers()->create($request->validated());
+        $customer = Auth::user()->customers()->create($request->validated());
+        $message = __('messages.customer_created_status');
+        if(request()->wantsJson() || request()->expectsJson()) {
+            return [
+                'object' => $customer,
+                'message' => $message
+            ];
+        }
 
         return redirect()->route('customers.index')
-            ->with('status', 'Customer creato con successo');
+            ->with('status', $message);
     }
 
     /**
@@ -131,7 +144,7 @@ class CustomerController extends Controller
         $customer->update($request->validated());
 
         return redirect()->route('customers.index')
-            ->with('status', 'Customer aggiornato con successo');
+            ->with('status', __('messages.customer_update_status'));
     }
 
     /**
@@ -147,7 +160,7 @@ class CustomerController extends Controller
 
         if(request()->wantsJson() || request()->expectsJson()) {
            return [
-                'message' => 'Customer eliminato con successo'
+                'message' => trans_choice('messages.customer_delete_status', 1),
             ];
         }
     }
@@ -159,7 +172,7 @@ class CustomerController extends Controller
         Auth::user()->customers()->whereIn('customers.id',$ids)->delete();
 
         return [
-            'message' => 'Customers eliminati con successo'
+            'message' => trans_choice('messages.customer_delete_status', count($ids)),
         ];
 
     }

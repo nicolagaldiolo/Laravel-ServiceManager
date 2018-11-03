@@ -9,6 +9,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
 class ToPayServices implements ShouldQueue
@@ -38,7 +39,7 @@ class ToPayServices implements ShouldQueue
     {
 
         if(!is_null($this->user->email)){
-            Mail::to($this->user->email)->send(new ToPayServicesEmail($this->user));
+            Mail::to($this->user->email)->locale($this->user->lang)->send(new ToPayServicesEmail($this->user));
         }
     }
 }

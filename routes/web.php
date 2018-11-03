@@ -12,6 +12,7 @@
 */
 
 Auth::routes(['verify' => true]);
+
 Route::get('login/{provider}',          'Auth\SocialAccountController@redirectToProvider')->name('social.login');
 Route::get('login/{provider}/callback', 'Auth\SocialAccountController@handleProviderCallback')->name('social.login.callback');
 
@@ -60,7 +61,7 @@ Route::group(
     Route::delete('providers/delete/all', 'ProvidersController@destroyAll')->name('providers.destroy-all');
 
     // Users
-    Route::resource('users', 'UserController')->except('show');
+    Route::resource('users', 'UserController')->except('show', 'create');
     Route::patch('/users/{user}/avatar', 'UserAvatarController@update')->name('users.avatar.update');
     Route::get('/users/{user}/changepassword', 'Auth\ChangePasswordController@edit')->name('change.password');
     Route::post('/users/{user}/updatepassword', 'Auth\ChangePasswordController@update')->name('update.password');

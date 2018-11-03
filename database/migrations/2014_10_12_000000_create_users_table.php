@@ -22,7 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('avatar')->nullable();
             $table->boolean('custom_avatar')->default(0);
             $table->tinyInteger('role')->unsigned()->default(UserType::User);
-            $table->string('lang', 2)->nullable();
+            $table->string('lang', 10)->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
             $table->timestamps();

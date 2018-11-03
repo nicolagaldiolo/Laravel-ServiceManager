@@ -27,7 +27,7 @@ class ServiceTypesController extends Controller
             $serviceTypes = Auth::user()->serviceTypes()->get();
             return DataTables::of($serviceTypes)->addColumn('actions', function($serviceType){
                 return implode("", [
-                    '<a href="' . route('service-types.edit', $serviceType) . '" data-update="' . route('service-types.update', $serviceType) . '" class="edit btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill"><i class="la la-edit"></i></a>',
+                    '<a href="' . route('service-types.edit', $serviceType) . '" data-original-title="' . __('messages.edit_service_type') . '" class="edit btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill"><i class="la la-edit"></i></a>',
                     '<a href="' . route('service-types.destroy', $serviceType) . '" class="deleteDataTableRecord btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill"><i class="la la-trash"></i></a>',
                 ]);
             })->rawColumns(['actions'])->make(true);
@@ -47,9 +47,8 @@ class ServiceTypesController extends Controller
     {
 
         $serviceType = new ServiceType;
-
         return [
-            'view' => view( 'serviceTypes._form', compact('serviceType'))->render(),
+            'view' => view( 'serviceTypes.create', compact('serviceType'))->render(),
         ];
     }
 
@@ -61,10 +60,11 @@ class ServiceTypesController extends Controller
      */
     public function store(ServiceTypeRequest $request)
     {
-        auth()->user()->serviceTypes()->create($request->validated());
+        $serviceType = auth()->user()->serviceTypes()->create($request->validated());
 
         return [
-            'message' => 'Tipo di servizio creato con successo'
+            'object' => $serviceType,
+            'message' => __('messages.service_types_created_status')
         ];
     }
 
@@ -90,7 +90,7 @@ class ServiceTypesController extends Controller
         $this->authorize('view', $serviceType);
 
         return [
-            'view' => view( 'serviceTypes._form', compact('serviceType'))->render(),
+            'view' => view( 'serviceTypes.edit', compact('serviceType'))->render(),
         ];
 
     }
@@ -107,7 +107,7 @@ class ServiceTypesController extends Controller
         $serviceType->update($request->validated());
 
         return [
-            'message' => 'Tipo di servizio modificato con successo'
+            'message' => __('messages.service_types_update_status')
         ];
     }
 
@@ -123,7 +123,7 @@ class ServiceTypesController extends Controller
         $serviceType->delete();
 
         return [
-            'message' => 'Tipo di servizio eliminato con successo'
+            'message' => trans_choice('messages.service_types_delete_status', 1)
         ];
     }
 
@@ -134,7 +134,7 @@ class ServiceTypesController extends Controller
         Auth::user()->serviceTypes()->whereIn('service_types.id',$ids)->delete();
 
         return [
-            'message' => 'Service Type eliminati con successo'
+            'message' => trans_choice('messages.service_types_delete_status', count($ids))
         ];
 
     }

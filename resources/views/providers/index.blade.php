@@ -14,6 +14,7 @@
                 'button' => __('messages.new_provider'),
                 'url' => route('providers.create'),
                 'newModal' => false,
+                'dataTarget' => '',
                 'moreAction' => false,
             ])
             @endcomponent

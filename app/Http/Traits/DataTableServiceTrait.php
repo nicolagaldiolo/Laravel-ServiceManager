@@ -16,7 +16,7 @@ trait DataTableServiceTrait {
             })
             ->editColumn('amount', function ($service) {
                 if($service->nextRenewal)
-                return $service->nextRenewal->amountVerbose;
+                return amount_format($service->nextRenewal->amount);
             })
             ->editColumn('status', function ($service) {
                 if($service->nextRenewal)

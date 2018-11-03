@@ -27,7 +27,6 @@ class ServiceTypeRequest extends FormRequest
 
         $serviceType = $this->route('service_type') ? $this->route('service_type')->id : 'NULL';
         //unique:table,column,except,idColumn
-
         return [
             'name' => 'required|unique:service_types,name,' . $serviceType . ',id,user_id,' . Auth::user()->id
         ];

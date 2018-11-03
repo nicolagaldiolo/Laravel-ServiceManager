@@ -63,7 +63,8 @@ class Service extends Model
     public function renewalsExpiring(){
         return $this->hasMany(Renewal::class)
             ->where('status', RenewalSM::S_to_confirm)
-            ->whereDate('deadline', '<=', Carbon::now()->addMonth()->endOfMonth());
+            ->whereDate('deadline', '<=', Carbon::now()->addMonth()->endOfMonth())
+            ->orderBy('deadline');
     }
 
     public function renewalsCurrent(){

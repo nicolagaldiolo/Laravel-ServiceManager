@@ -2,17 +2,17 @@
 
 @section('content')
     @component('components.title', ['back_url' => route('dashboard')])
-        {{__('messages.domains')}}
+        {{__('messages.services')}}
     @endcomponent
     <div class="m-content">
         <div class="m-portlet m-portlet--mobile">
             @component('components.tableHeader', [
-                'title' => __('messages.all_domains'),
+                'title' => __('messages.all_services'),
                 'icon' => 'flaticon-layers',
-                'button' => __('messages.new_domain'),
-                'newModal' => true,
+                'button' => __('messages.new_service'),
                 'url' => route('services.create'),
                 'newModal' => false,
+                'dataTarget' => '',
                 'moreAction' => false,
             ])
             @endcomponent

@@ -12,8 +12,9 @@
                 'title' => __('messages.all_users'),
                 'icon' => 'flaticon-profile',
                 'button' => __('messages.new_user'),
-                'url' => route('users.create'),
+                'url' => '',
                 'newModal' => false,
+                'dataTarget' => '',
                 'moreAction' => false,
             ])
 

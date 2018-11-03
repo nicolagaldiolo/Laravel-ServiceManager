@@ -4,8 +4,10 @@
         <div class="form-group m-form__group row">
             <div class="col-lg-12">
                 <label class="">{{__('messages.customer')}} *</label>
-
-                <select class="form-control m-select2 m_select2_4" name="customer_id">
+                <a href="{{route('customers.create')}}" data-target="customer_id" data-original-title="{{__('messages.new_customer')}}" class="open-modal btn btn-metal m-btn btn-sm m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="m-tooltip" data-placement="right">
+                    <i class="la la-plus"></i>
+                </a>
+                <select name="customer_id" class="form-control m-select2 m_select2_4">
                     <option value="">{{__('messages.choose_customer')}}</option>
                     @foreach($customers as $customer)
                         <option value="{{$customer->id}}" @if($customer->id == old('customer_id', $service->customer_id)) selected @endif>{{$customer->name}}</option>
@@ -27,6 +29,10 @@
             <div class="col-lg-6">
                 <label class="">{{__('messages.provider')}} *</label>
 
+                <a href="{{route('providers.create')}}" data-target="provider_id" data-original-title="{{__('messages.new_provider')}}" class="open-modal btn btn-metal m-btn btn-sm m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="m-tooltip" data-placement="right">
+                    <i class="la la-plus"></i>
+                </a>
+
                 <select class="form-control m-select2 m_select2_4" name="provider_id">
                     <option value="">{{__('messages.choose_provider')}}</option>
                     @foreach($providers as $provider)
@@ -43,6 +49,10 @@
             </div>
             <div class="col-lg-6">
                 <label class="">{{__('messages.service_type')}} *</label>
+
+                <a href="{{route('service-types.create')}}" data-target="service_type_id" data-original-title="{{__('messages.new_service_type')}}" class="open-modal btn btn-metal m-btn btn-sm m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="m-tooltip" data-placement="right">
+                    <i class="la la-plus"></i>
+                </a>
 
                 <select class="form-control m-select2 m_select2_4" name="service_type_id">
                     <option value="">{{__('messages.choose_service_type')}}</option>
@@ -89,6 +99,10 @@
             <div class="col-lg-6">
 
                 <label class="">{{__('messages.frequency_renewal')}} *</label>
+
+                <a href="{{route('renewal-frequencies.create')}}" data-target="renewal_frequency_id" data-original-title="{{__('messages.new_renewal_frequency')}}" class="open-modal btn btn-metal m-btn btn-sm m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="m-tooltip" data-placement="right">
+                    <i class="la la-plus"></i>
+                </a>
 
                 <select class="form-control m-select2 m_select2_4" name="renewal_frequency_id">
                     <option value="">{{__('messages.choose_frequency_renewal')}}</option>
@@ -164,15 +178,14 @@
             <div class="form-group m-form__group row">
                 <div class="col-lg-12">
 
-                    <label class="">Stato del servizio *</label>
-
+                    <label class="">{{__('messages.service_status')}} *</label>
                     <select class="form-control m-select2 m_select2_4" name="status">
-                        <option value="">Si prega di scegliere uno stato</option>
+                        <option value="">{{__('messages.choose_service_status')}}</option>
                         @foreach(config('state-machine.renewal.states') as $value)
                             <option value="{{$value}}" @if($value == old('status', !is_null($service->status) ? $service->status : -1)) selected @endif>{{\App\Enums\RenewalSM::getDescription($value)}}</option>
                         @endforeach
                     </select>
-                    <span class="m-form__help">Si prega di scegliere uno stato.</span>
+                    <span class="m-form__help">{{__('messages.choose_service_status')}}</span>
                     @if ($errors->has('status'))
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $errors->first('status') }}</strong>

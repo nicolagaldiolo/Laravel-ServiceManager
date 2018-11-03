@@ -64,6 +64,7 @@ class Kernel extends HttpKernel
         'localizationRedirect' => \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationRedirectFilter::class,
         'localeSessionRedirect' => \Mcamara\LaravelLocalization\Middleware\LocaleSessionRedirect::class,
         'localeViewPath' => \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationViewPath::class,
+        'setUserLang' => \App\Http\Middleware\SetUserLang::class,
         'onlyAjax' => \App\Http\Middleware\OnlyAjax::class,
     ];
 }

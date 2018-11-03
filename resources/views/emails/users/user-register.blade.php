@@ -1,14 +1,14 @@
 @component('mail::message')
-# Hi, {{$admin->name}}
+# {{trans('messages.user_registered_title', ['attribute' => $admin->name])}}
 
-A new user registered {{$user->created_at->diffForHumans()}}!
+{{trans('messages.user_registered_desc', ['attribute' => $user->created_at->diffForHumans()])}}
 
 ## {{$user->name}} <br> {{$user->email}}
 
 @component('mail::button', ['url' => route('dashboard')])
-    Go to App
+    {{__('messages.accedi')}}
 @endcomponent
 
-Thanks,<br>
+{{__('messages.thanks_signature')}},<br>
 {{ config('app.name') }}
 @endcomponent

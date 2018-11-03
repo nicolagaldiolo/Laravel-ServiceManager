@@ -37,6 +37,6 @@ class CustomerReminder implements ShouldQueue
     public function handle()
     {
         $this->customer->update(['token' => str_random(60)]);
-        Mail::to($this->customer->email)->send(new CustomerRenewalsReminder($this->customer));
+        Mail::to($this->customer->email)->locale($this->customer->user->lang)->send(new CustomerRenewalsReminder($this->customer));
     }
 }

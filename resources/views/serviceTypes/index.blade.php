@@ -15,9 +15,9 @@
                 'button' => __('messages.new_service_type'),
                 'url' => route('service-types.create'),
                 'newModal' => true,
+                'dataTarget' => '',
                 'moreAction' => false,
             ])
-
             @endcomponent
             <div class="m-portlet__body">
 
@@ -37,8 +37,6 @@
         <!-- END EXAMPLE TABLE PORTLET-->
     </div>
 
-    @component('components.modal', ['ref_datatable_id' => 'serviceType_table'])
-        {{__('messages.service_type')}}
-    @endcomponent
+    @include('layouts.partials._modal')
 
 @stop

@@ -5,8 +5,8 @@
 @section('title')
     <div class="m-grid__item m-grid__item--fluid m-grid m-grid--ver">
         <div class="m-grid__item m-grid__item--middle">
-            <span class="m-login__title">Ciao, {{$customer->name}}</span>
-            <span class="m-login__subtitle m--marginless">Decidi i servizi che vuoi rinnovare o disdire</span>
+            <span class="m-login__title">{{trans('messages.customer_reminder_name', ['attribute' => $customer->name])}}</span>
+            <span class="m-login__subtitle m--marginless">{{__('messages.customer_reminder_desc')}}</span>
         </div>
     </div>
 @stop
@@ -16,8 +16,8 @@
     @if($customer->services->isEmpty())
         <div class="m--align-center">
             <i class="m--font-metal la la-hand-spock-o" style="font-size: 20rem;"></i>
-            <h4 class="h1 m--padding-top-20">Fantastico</h4>
-            <span class="h4 m--font-metal">Non ci sono altri servizi da rinnovare</span>
+            <h4 class="h1 m--padding-top-20">{{__('messages.customer_reminder_no_action_title')}}</h4>
+            <span class="h4 m--font-metal">{{__('messages.customer_reminder_no_action_desc')}}</span>
         </div>
     @else
 
@@ -65,9 +65,9 @@
                                             <!--begin::Thead-->
                                             <thead>
                                             <tr>
-                                                <td class="m-widget11__app">Deadline</td>
-                                                <td class="m-widget11__total m--align-right">Total</td>
-                                                <td class="m-widget11__label m--align-right" style="width:17%;">Azione</td>
+                                                <td class="m-widget11__app">{{__('messages.deadline')}}</td>
+                                                <td class="m-widget11__total m--align-right">{{__('messages.amount')}}</td>
+                                                <td class="m-widget11__label m--align-right" style="width:17%;">{{__('messages.action')}}</td>
                                             </tr>
                                             </thead>
 
@@ -81,7 +81,7 @@
                                                         <span class="m-widget11__title">{{$renewal->deadline->diffForHumans()}}</span>
                                                         <span class="m-widget11__sub">{{$renewal->deadlineVerbose}}</span>
                                                     </td>
-                                                    <td class="m--align-right m--font-brand">@amount($renewal->amount)</td>
+                                                    <td class="m--align-right m--font-brand">{{amount_format($renewal->amount)}}</td>
                                                     <td class="m--align-right">
                                                         <div class="m-radio-inline">
                                                             <label class="m-radio">
@@ -126,7 +126,7 @@
             @endforeach
 
             <div class="m--align-right">
-                <button type="submit" class="btn m-btn--pill btn-brand btn-lg">Conferma</button>
+                <button type="submit" class="btn m-btn--pill btn-brand btn-lg">{{__('messages.confirm')}}</button>
             </div>
 
         </form>

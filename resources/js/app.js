@@ -20,15 +20,18 @@ var HostingManager = function($) {
                 rightArrow: '<i class="la la-angle-right"></i>'
             }
         });
-    }
+    };
+
+    var colorpicker = function(){
+        $('.cp_colorpicker').colorpicker({
+            format: 'hex'
+        });
+    };
 
     var general = function(){
 
         custom_inline_datepicker();
-
-        $('#m_inputmask_7').change(function(i){
-            console.log(i);
-        });
+        colorpicker();
 
         $('.m_select2_4').select2();
 
@@ -38,52 +41,30 @@ var HostingManager = function($) {
             format: "dd-mm-yyyy"
         });
 
-        $('.cp_colorpicker').colorpicker({
-            format: 'hex'
-        });
-
         openModalBtn.on('click', function (el) {
             el.preventDefault();
-
-            _self = this;
-            $.ajax(_self.href, {
-                method: "GET",
-                data: {
-                    '_token': $('meta[name="csrf-token"]').attr('content')
-                },
-                success: function (data) {
-
-                    if(data.view){
-                        modalPanel.find('.modal-body').html(data.view);
-                    }
-
-                    custom_inline_datepicker();
-
-                    modalPanel.modal('show');
-                },
-                error: function(resp, status, error) {
-                    resp = JSON.parse(resp.responseText);
-                    toastr.error(resp.message);
-                },
-            })
-
+            openModalAction(this);
         });
 
-        $('.modal-submit').on('click', function(el) {
+        modalPanel.on('click', 'button[type="submit"]', function(el){
             el.preventDefault();
+            var dataTarget = $('[name="' + modalPanel.attr('data-target') + '"]');
+            var dataTableRef = $('.dataTable');
 
-            var btnDataTableId = $(this).attr('data-tableid');
-            var dataTableRef = $('#' + btnDataTableId);
+            var serviceForm = $(el.target.closest('form'));
 
-            var serviceForm = $(el.target.closest('.modal-content')).find('form');
             $.ajax(serviceForm.attr('action'), {
                 method: serviceForm.attr('method'),
                 data: serviceForm.serialize(), // faccio la serializzazione dei dati per inviare tutti i campi del form
                 success: function (data) {
+
                     modalPanel.modal('hide');
                     toastr.success(data.message);
 
-                    if(dataTableRef.length ) {
+                    if(dataTarget.length) {
+                        dataTarget.append('<option value="' + data.object.id + '" selected="selected">' + data.object.name + '</option>');
+                    }
+                    if(dataTableRef.length ){
                         dataTableRef.DataTable().ajax.reload();
                     }
                 },
@@ -103,8 +84,182 @@ var HostingManager = function($) {
 
                 },
             })
+        }).on('click', '.cancel', function(el){
+            el.preventDefault();
+            modalPanel.modal('toggle');
         });
 
+    };
+
+    var openModalAction = function(obj){
+        modalPanel.attr('data-target', '');
+        var modalTitle = $(obj).attr('data-original-title') || '';
+        $.ajax(obj.href, {
+            method: "GET",
+            data: {
+                '_token': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (data) {
+
+                if(data.view){
+                    modalPanel.find('.modal-title').html(modalTitle);
+                    modalPanel.find('.modal-body').html(data.view);
+                    modalPanel.attr('data-target', $(obj).attr('data-target'));
+                }
+
+                custom_inline_datepicker();
+                colorpicker();
+
+                modalPanel.modal('show');
+            },
+            error: function(resp, status, error) {
+                resp = JSON.parse(resp.responseText);
+                toastr.error(resp.message);
+            },
+        })
+    };
+
+    var dashboardChart = function(){
+        //== Activities Charts.
+        //** Based on Chartjs plugin - http://www.chartjs.org/
+            if ($('#m_chart_activities').length == 0) {
+                return;
+            }
+
+            var ctx = document.getElementById("m_chart_activities").getContext("2d");
+
+            var gradient = ctx.createLinearGradient(0, 0, 0, 240);
+            gradient.addColorStop(0, Chart.helpers.color('#00c5dc').alpha(0.7).rgbString());
+            gradient.addColorStop(1, Chart.helpers.color('#f2feff').alpha(0).rgbString());
+
+            var config = {
+                type: 'line',
+                data: {
+                    labels: [
+                        Lang.get('messages.january'),
+                        Lang.get('messages.february'),
+                        Lang.get('messages.march'),
+                        Lang.get('messages.april'),
+                        Lang.get('messages.may'),
+                        Lang.get('messages.june'),
+                        Lang.get('messages.july'),
+                        Lang.get('messages.august'),
+                        Lang.get('messages.september'),
+                        Lang.get('messages.october'),
+                        Lang.get('messages.november'),
+                        Lang.get('messages.december')
+                    ],
+                    datasets: [{
+                        label: Lang.get('messages.total_earning'),
+                        backgroundColor: gradient, // Put the gradient here as a fill color
+                        borderColor: '#0dc8de',
+
+                        pointBackgroundColor: Chart.helpers.color('#ffffff').alpha(0).rgbString(),
+                        pointBorderColor: Chart.helpers.color('#ffffff').alpha(0).rgbString(),
+                        pointHoverBackgroundColor: mApp.getColor('danger'),
+                        pointHoverBorderColor: Chart.helpers.color('#000000').alpha(0.2).rgbString(),
+
+                        //fill: 'start',
+                        data: dashboardServicesDataChart
+                    }]
+                },
+                options: {
+                    title: {
+                        display: false
+                    },
+                    tooltips: {
+                        mode: 'nearest',
+                        intersect: false,
+                        position: 'nearest',
+                        xPadding: 10,
+                        yPadding: 10,
+                        caretPadding: 10
+                    },
+                    legend: {
+                        display: false
+                    },
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        xAxes: [{
+                            display: false,
+                            gridLines: false,
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'Month'
+                            }
+                        }],
+                        yAxes: [{
+                            display: false,
+                            gridLines: false,
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'Value'
+                            },
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    },
+                    elements: {
+                        line: {
+                            tension: 0.0000001
+                        },
+                        point: {
+                            radius: 4,
+                            borderWidth: 12
+                        }
+                    },
+                    layout: {
+                        padding: {
+                            left: 0,
+                            right: 0,
+                            top: 10,
+                            bottom: 0
+                        }
+                    }
+                }
+            };
+
+            var chart = new Chart(ctx, config);
+    };
+
+    var dashboardCalendar = function(){
+        if ($('#m_calendar').length === 0) {
+            return;
+        }
+
+        var todayDate = moment().startOf('day');
+        var YM = todayDate.format('YYYY-MM');
+        var YESTERDAY = todayDate.clone().subtract(1, 'day').format('YYYY-MM-DD');
+        var TODAY = todayDate.format('YYYY-MM-DD');
+        var TOMORROW = todayDate.clone().add(1, 'day').format('YYYY-MM-DD');
+
+        $('#m_calendar').fullCalendar({
+            isRTL: mUtil.isRTL(),
+            header: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'month,agendaWeek,agendaDay,listWeek'
+            },
+            editable: true,
+            eventLimit: true, // allow "more" link when too many events
+            navLinks: true,
+            //defaultDate: moment('2018-08-15'),
+            events: dashboardEvents,
+
+            eventRender: function (event, element) {
+                if (element.hasClass('fc-day-grid-event')) {
+                    element.data('content', event.description);
+                    element.data('placement', 'top');
+                    mApp.initPopover(element);
+                } else if (element.hasClass('fc-time-grid-event')) {
+                    element.find('.fc-title').append('<div class="fc-description">' + event.description + '</div>');
+                } else if (element.find('.fc-list-item-title').lenght !== 0) {
+                    element.find('.fc-list-item-title').append('<div class="fc-description">' + event.description + '</div>');
+                }
+            }
+        });
     };
 
     var serviceRenewalsDataTable = function() {
@@ -181,11 +336,11 @@ var HostingManager = function($) {
 
                     if(_currentTransition == _defaultTransition){
                         swal({
-                            title: 'Vuoi già creare la prossima scadenza?',
-                            text: 'Modifica scadenza e importo se lo desideri',
+                            title: Lang.get('messages.renewal_create_next_title'),
+                            text: Lang.get('messages.renewal_create_next_desc'),
                             type: 'warning',
                             showCancelButton: true,
-                            confirmButtonText: 'Si, procedi'
+                            confirmButtonText: Lang.get('messages.yes_procede'),
                         }).then(function(result) {
                             if (result.value) {
                                 openModalBtn.trigger( "click" );
@@ -255,7 +410,14 @@ var HostingManager = function($) {
                                     <input type="checkbox" name="delete_data[]" value="${data}" class="m-checkable">
                                     <span></span>
                                 </label>`;
-                    }
+                    },
+                },{
+                    targets: [2],
+                    render: function (data, type, full, meta) {
+                        if (data == null) return '';
+                        var color = (typeof data !== 'undefined') ? 'style="background:' + data + '"' : '';
+                        return '<span class="m-badge m-badge--brand m-badge--wide" ' + color + '>' + data + '</span>';
+                    },
                 }
             ]
 
@@ -653,37 +815,11 @@ var HostingManager = function($) {
         dataTable.on('click', '.edit', function (el) {
             el.preventDefault();
 
-            _self = this;
-
-            $.ajax(_self.href, {
-                method: "GET",
-                data: {
-                    '_token': $('meta[name="csrf-token"]').attr('content')
-                },
-                success: function (data) {
-                    if(data.view){
-                        modalPanel.find('.modal-body').html(data.view);
-                    }
-
-                    modalPanel.find('form')
-                        .attr('action', $(_self).data('update'))
-                        .attr('method', 'PATCH');
-
-                    $('.custom_inline_datepicker').datepicker({
-                        todayHighlight: true,
-                        format: "dd-mm-yyyy",
-                        templates: {
-                            leftArrow: '<i class="la la-angle-left"></i>',
-                            rightArrow: '<i class="la la-angle-right"></i>'
-                        }
-                    });
-
-                    modalPanel.modal('show');
-                },
-            })
+            openModalAction(this);
 
         });
-    }
+    };
+
 
     var deleteDataTableRecord = function(dataTable){
 
@@ -708,9 +844,6 @@ var HostingManager = function($) {
                         },
 
                         success: function(data) {
-
-                            console.log(data.redirect, window.location.href);
-
                             if (data.redirect &&
                                 data.redirect != '' &&
                                 data.redirect != window.location.href)
@@ -750,8 +883,6 @@ var HostingManager = function($) {
                 confirmButtonText: Lang.get('messages.confirm_delete')
             }).then(function(result) {
                 var join_selected_values = ids.join(",");
-
-                //console.log(join_selected_values);
 
                 if (result.value) {
                     $.ajax(deleteAllRoute, {
@@ -833,11 +964,11 @@ var HostingManager = function($) {
             renewal_service_row.nextAll().find('input[name^=tmp_renewal_id]').prop("disabled", true);
             if(renewal_service_row.nextAll().find('.suspend:not(:checked)').length > 0){
                 swal({
-                    title: "Verranno sospese tutte le scadenze successive",
-                    text: "Sicuro di voler procedere?",
+                    title: Lang.get('messages.customer_renewal_manager_title'),
+                    text: Lang.get('messages.customer_renewal_manager_desc'),
                     type: 'warning',
                     showCancelButton: true,
-                    confirmButtonText: "Si, procedi"
+                    confirmButtonText: Lang.get('messages.yes_procede')
                 }).then(function(result) {
                     if(result.value){
                         renewal_service_row.nextAll().find('.suspend').prop("checked", true).trigger('change');
@@ -862,10 +993,10 @@ var HostingManager = function($) {
             var _self = this;
             swal({
                 title: Lang.get('messages.are_sure'),
-                text: "Verrà inviato un promemoria al cliente con l'elenco di tutti i suoi servizi in scadenza",
+                text: Lang.get('messages.customer_reminder_alert_status'),
                 type: 'warning',
                 showCancelButton: true,
-                confirmButtonText: "Si procedi"
+                confirmButtonText: Lang.get('messages.yes_procede')
             }).then(function(result) {
 
                 if (result.value) {
@@ -896,6 +1027,8 @@ var HostingManager = function($) {
 
     return {
         init: function() {
+            dashboardChart();
+            dashboardCalendar();
             general();
             serviceRenewalsDataTable();
             providersDataTable();
@@ -913,6 +1046,7 @@ var HostingManager = function($) {
 }(jQuery);
 
 //== Class Initialization
+
 jQuery(document).ready(function() {
     HostingManager.init();
 });

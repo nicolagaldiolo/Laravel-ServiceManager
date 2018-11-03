@@ -32,23 +32,18 @@
             <li class="m-menu__item  m-menu__item--submenu {{ Active::checkRoute('services.*') }}" aria-haspopup="true" m-menu-submenu-toggle="hover">
                 <a href="javascript:;" class="m-menu__link m-menu__toggle">
                     <i class="m-menu__link-icon flaticon-layers"></i>
-                    <span class="m-menu__link-text">{{__('messages.domains')}}</span>
+                    <span class="m-menu__link-text">{{__('messages.services')}}</span>
                     <i class="m-menu__ver-arrow la la-angle-right"></i>
                 </a>
                 <div class="m-menu__submenu ">
                     <span class="m-menu__arrow"></span>
                     <ul class="m-menu__subnav">
-                        <li class="m-menu__item  m-menu__item--parent" aria-haspopup="true">
-                                            <span class="m-menu__link">
-                                                <span class="m-menu__link-text">{{__('messages.domains')}}</span>
-                                            </span>
-                        </li>
                         <li class="m-menu__item " aria-haspopup="true">
                             <a href="{{route('services.index')}}" class="m-menu__link ">
                                 <i class="m-menu__link-bullet m-menu__link-bullet--dot">
                                     <span></span>
                                 </i>
-                                <span class="m-menu__link-text">{{__('messages.all_domains')}}</span>
+                                <span class="m-menu__link-text">{{__('messages.all_services')}}</span>
                             </a>
                         </li>
                         <li class="m-menu__item " aria-haspopup="true">
@@ -56,7 +51,7 @@
                                 <i class="m-menu__link-bullet m-menu__link-bullet--dot">
                                     <span></span>
                                 </i>
-                                <span class="m-menu__link-text">{{__('messages.new_domain')}}</span>
+                                <span class="m-menu__link-text">{{__('messages.new_service')}}</span>
                             </a>
                         </li>
                     </ul>
@@ -125,42 +120,20 @@
             </li>
             @if (Auth::user()->isAdmin())
                 <li class="m-menu__item  m-menu__item--submenu {{ Active::checkRoute('users.*') }}" aria-haspopup="true" m-menu-submenu-toggle="hover">
-                    <a href="javascript:;" class="m-menu__link m-menu__toggle">
+
+                    <a href="{{route('users.index')}}" class="m-menu__link ">
                         <i class="m-menu__link-icon flaticon-profile"></i>
-                        <span class="m-menu__link-text">{{__('messages.users')}}</span>
-                        <i class="m-menu__ver-arrow la la-angle-right"></i>
+                        <span class="m-menu__link-title">
+                            <span class="m-menu__link-wrap">
+                                <span class="m-menu__link-text">{{__('messages.users')}}</span>
+                            </span>
+                        </span>
                     </a>
-                    <div class="m-menu__submenu ">
-                        <span class="m-menu__arrow"></span>
-                        <ul class="m-menu__subnav">
-                            <li class="m-menu__item  m-menu__item--parent" aria-haspopup="true">
-                                            <span class="m-menu__link">
-                                                <span class="m-menu__link-text">{{__('messages.users')}}</span>
-                                            </span>
-                            </li>
-                            <li class="m-menu__item " aria-haspopup="true">
-                                <a href="{{route('users.index')}}" class="m-menu__link ">
-                                    <i class="m-menu__link-bullet m-menu__link-bullet--dot">
-                                        <span></span>
-                                    </i>
-                                    <span class="m-menu__link-text">{{__('messages.all_users')}}</span>
-                                </a>
-                            </li>
-                            <li class="m-menu__item" aria-haspopup="true">
-                                <a href="{{route('users.create')}}" class="m-menu__link ">
-                                    <i class="m-menu__link-bullet m-menu__link-bullet--dot">
-                                        <span></span>
-                                    </i>
-                                    <span class="m-menu__link-text">{{__('messages.new_user')}}</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
                 </li>
             @endif
 
             <li class="m-menu__section ">
-                <h4 class="m-menu__section-text">Anagrafiche</h4>
+                <h4 class="m-menu__section-text">{{__('messages.registries')}}</h4>
                 <i class="m-menu__section-icon flaticon-more-v3"></i>
             </li>
 
@@ -180,7 +153,7 @@
                     <i class="m-menu__link-icon flaticon-calendar"></i>
                     <span class="m-menu__link-title">
                         <span class="m-menu__link-wrap">
-                            <span class="m-menu__link-text">Frequenze di rinnovo</span>
+                            <span class="m-menu__link-text">{{__('messages.renewal_frequencies')}}</span>
                         </span>
                     </span>
                 </a>

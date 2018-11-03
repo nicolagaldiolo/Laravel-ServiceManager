@@ -18,5 +18,5 @@ return [
     /*
      * The default path to use for the generated javascript.
      */
-    'path' => resource_path('assets/messages/messages.js'),
+    'path' => resource_path('messages/messages.js'),
 ];

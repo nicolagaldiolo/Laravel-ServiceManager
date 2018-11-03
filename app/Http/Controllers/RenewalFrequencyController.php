@@ -31,7 +31,7 @@ class RenewalFrequencyController extends Controller
                     return RenewalFrequencies::getDescription($renewal->type);
                 })->addColumn('actions', function($renewalFrequency){
                     return implode("", [
-                        '<a href="' . route('renewal-frequencies.edit', $renewalFrequency) . '" data-update="' . route('renewal-frequencies.update', $renewalFrequency) . '" class="edit btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill"><i class="la la-edit"></i></a>',
+                        '<a href="' . route('renewal-frequencies.edit', $renewalFrequency) . '" data-original-title="' . __('messages.edit_renewal_frequency') . '" class="edit btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill"><i class="la la-edit"></i></a>',
                         '<a href="' . route('renewal-frequencies.destroy', $renewalFrequency) . '" class="deleteDataTableRecord btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill"><i class="la la-trash"></i></a>',
                     ]);
                 })->rawColumns(['actions'])->make(true);
@@ -53,7 +53,7 @@ class RenewalFrequencyController extends Controller
         $renewalFrequency = new RenewalFrequency;
 
         return [
-            'view' => view( 'renewalFrequencies._form', compact('renewalFrequency'))->render(),
+            'view' => view( 'renewalFrequencies.create', compact('renewalFrequency'))->render(),
         ];
     }
 
@@ -65,10 +65,14 @@ class RenewalFrequencyController extends Controller
      */
     public function store(RenewalFrequencyRequest $request)
     {
-        auth()->user()->renewalFrequencies()->create($request->validated());
+        $renewal_frequency = auth()->user()->renewalFrequencies()->create($request->validated());
 
         return [
-            'message' => 'Frequenza di rinnovo creata con successo'
+            'object' => [
+                'id' => $renewal_frequency->id,
+                'name' => $renewal_frequency->frequency
+            ],
+            'message' => __('messages.renewal_frequency_created_status')
         ];
     }
 
@@ -94,7 +98,7 @@ class RenewalFrequencyController extends Controller
         $this->authorize('view', $renewalFrequency);
 
         return [
-            'view' => view( 'renewalFrequencies._form', compact('renewalFrequency'))->render(),
+            'view' => view( 'renewalFrequencies.edit', compact('renewalFrequency'))->render(),
         ];
 
     }
@@ -111,7 +115,7 @@ class RenewalFrequencyController extends Controller
         $renewalFrequency->update($request->validated());
 
         return [
-            'message' => 'Frequenza di rinnovo modificata con successo'
+            'message' => __('messages.renewal_frequency_update_status')
         ];
     }
 
@@ -127,7 +131,7 @@ class RenewalFrequencyController extends Controller
         $renewalFrequency->delete();
 
         return [
-            'message' => 'Frequenza di rinnovo eliminata con successo'
+            'message' => trans_choice('messages.renewal_frequency_delete_status', 1)
         ];
     }
 
@@ -138,7 +142,7 @@ class RenewalFrequencyController extends Controller
         Auth::user()->renewalFrequencies()->whereIn('renewal_frequencies.id',$ids)->delete();
 
         return [
-            'message' => 'Frequenze di rinnovo eliminate con successo'
+            'message' => trans_choice('messages.renewal_frequency_delete_status', count($ids))
         ];
 
     }

@@ -25,7 +25,11 @@ mix.webpackConfig({
         ]
 });
 
-mix.scripts(
+
+// i don't use mix.scripts() because has some problems with `` characters.
+//mix.scripts(
+
+mix.babel(
     [
         'resources/metronic/vendors/base/vendors.bundle.js',
         'resources/metronic/demo/default/base/scripts.bundle.js',

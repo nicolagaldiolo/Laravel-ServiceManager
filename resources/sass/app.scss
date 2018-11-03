@@ -8,6 +8,12 @@
     display: block;
 }
 
+.m-btn--icon.m-btn--icon-only.btn-sm.open-modal{
+    width: 18px;
+    height: 18px;
+    margin-left: 4px;
+}
+
 .no-bg,
 .alert.m-alert--outline.alert-danger.no-bg{
     background: transparent;
@@ -236,6 +242,23 @@
     margin-top: 30px;
     display:flex;
     justify-content: space-between;
+}
+
+.user-lang{
+    padding-top: 5px;
+    .language-img{
+        width: 26px;
+        border-radius: 50%;
+        margin-right: 5px;
+    }
+    .m-radio,
+    .m-checkbox{
+        margin-right: 25px;
+    }
+    .m-radio > span,
+    .m-checkbox > span{
+        top: 4px;
+    }
 }
 
 @media screen and (max-width: 767px) {

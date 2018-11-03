@@ -12,11 +12,11 @@
                 'button' => __('messages.new_customer'),
                 'url' => route('customers.create'),
                 'newModal' => false,
+                'dataTarget' => '',
                 'moreAction' => false,
             ])
             @endcomponent
             <div class="m-portlet__body">
-
                 <!--begin: Datatable -->
                 <table id="customers_table" data-deleteall="{{route('customers.destroy-all')}}" class="table m-table table-striped- table-bordered table-hover table-checkable">
                     <thead>

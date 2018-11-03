@@ -32,10 +32,12 @@ class LoginController extends Controller
 
     protected function authenticated(Request $request, $user)
     {
-        $locale = $user->lang;
-        $routeName = 'dashboard';
 
-        $path = array_key_exists($locale,LaravelLocalization::getSupportedLocales()) ? LaravelLocalization::getLocalizedURL($locale, route($routeName)) : route($routeName);
+        if(is_null($user->lang)){
+            $user->update(['lang' => LaravelLocalization::getCurrentLocale()]);
+        }
+
+        $path = redirect_user_lang($user->lang, 'dashboard');
 
         return redirect($path);
     }

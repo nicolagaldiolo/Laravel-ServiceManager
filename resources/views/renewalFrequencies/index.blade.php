@@ -2,19 +2,21 @@
 
 @section('content')
     @component('components.title', ['back_url' => route('dashboard')])
-        Frequenze di rinnovo
+        {{__('messages.renewal_frequencies')}}
     @endcomponent
 
     <!-- END: Subheader -->
     <div class="m-content">
 
         <div class="m-portlet m-portlet--mobile">
+
             @component('components.tableHeader', [
-                'title' => 'Tutte le frequenze di rinnovo',
+                'title' => __('messages.all_renewal_frequencies'),
                 'icon' => 'flaticon-calendar',
-                'button' => 'Nuova frequenza di rinnovo',
+                'button' => __('messages.new_renewal_frequency'),
                 'url' => route('renewal-frequencies.create'),
                 'newModal' => true,
+                'dataTarget' => '',
                 'moreAction' => false,
             ])
             @endcomponent
@@ -25,8 +27,8 @@
                     <thead>
                     <tr>
                         <th>Id</th>
-                        <th>Valore</th>
-                        <th>Tipo</th>
+                        <th>{{__('messages.renewal_frequencies_value')}}</th>
+                        <th>{{__('messages.renewal_frequencies_type')}}</th>
                         <th>{{__('messages.actions')}}</th>
                     </tr>
                     </thead>
@@ -37,8 +39,6 @@
         <!-- END EXAMPLE TABLE PORTLET-->
     </div>
 
-    @component('components.modal', ['ref_datatable_id' => 'renewalFrequencies_table'])
-        Frequenza di rinnovo
-    @endcomponent
+    @include('layouts.partials._modal')
 
 @stop

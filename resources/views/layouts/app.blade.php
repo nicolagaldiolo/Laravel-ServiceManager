@@ -78,19 +78,13 @@
                                     <li class="m-menu__item m-menu__item--rel">
                                         <a href="{{route('services.create')}}" class="m-menu__link">
                                             <i class="m-menu__link-icon flaticon-add"></i>
-                                            <span class="m-menu__link-text">{{__('messages.domain')}}</span>
+                                            <span class="m-menu__link-text">{{__('messages.service')}}</span>
                                         </a>
                                     </li>
                                     <li class="m-menu__item m-menu__item--rel">
                                         <a href="{{route('providers.create')}}" class="m-menu__link">
                                             <i class="m-menu__link-icon flaticon-app"></i>
                                             <span class="m-menu__link-text">{{__('messages.provider')}}</span>
-                                        </a>
-                                    </li>
-                                    <li class="m-menu__item m-menu__item--rel">
-                                        <a href="{{route('users.create')}}" class="m-menu__link">
-                                            <i class="m-menu__link-icon flaticon-user"></i>
-                                            <span class="m-menu__link-text">{{__('messages.user')}}</span>
                                         </a>
                                     </li>
                                 </ul>
@@ -129,7 +123,7 @@
 
                                                             @if($servicesToPay->isEmpty())
                                                                 <div class="alert alert-brand" role="alert">
-                                                                    <strong>{{__('messages.fantastic')}}</strong> {{__('messages.no_other_domains')}}
+                                                                    <strong>{{__('messages.fantastic')}}</strong> {{__('messages.no_other_services')}}
                                                                 </div>
                                                             @else
 
@@ -149,7 +143,7 @@
                                                                                                     <span class="m--font-boldest">{{$renewal->deadline->diffForHumans()}}</span> ({{$renewal->deadlineVerbose}})
                                                                                                 </span>
                                                                                                 <span class="m-widget6__text m--align-right m--font-boldest m--font-brand">
-                                                                                                    @amount($renewal->amount)
+                                                                                                    {{amount_format($renewal->amount)}}
                                                                                                 </span>
                                                                                             </div>
                                                                                         @endforeach
@@ -170,41 +164,11 @@
 
                                         <li class="m-nav__item m-topbar__languages m-dropdown m-dropdown--small m-dropdown--arrow m-dropdown--align-right m-dropdown--mobile-full-width"
                                             m-dropdown-toggle="click" aria-expanded="true">
-                                            <a href="#" class="m-nav__link m-dropdown__toggle">
+                                            <a href="{{route('users.edit', Auth::user()->id)}}" class="m-nav__link">
                                                 <span class="m-nav__link-text">
                                                     <img class="m-topbar__language-selected-img" src="{{ asset('images/flags') .  "/" . App::getLocale() . ".svg" }}">
                                                 </span>
                                             </a>
-                                            <div class="m-dropdown__wrapper" style="z-index: 101;">
-                                                <span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"
-                                                      style="left: auto; right: 5px;"></span>
-                                                <div class="m-dropdown__inner">
-                                                    <div class="m-dropdown__header m--align-center"
-                                                         style="background: url('images/misc/flagsquick_actions_bg.jpg'); background-size: cover;">
-                                                        <span class="m-dropdown__header-subtitle">{{ __('messages.selectLang') }}</span>
-                                                    </div>
-                                                    <div class="m-dropdown__body">
-                                                        <div class="m-dropdown__content">
-                                                            <ul class="m-nav m-nav--skin-light">
-                                                            @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
-                                                                <!-- m-nav__item--active -->
-                                                                    <li class="m-nav__item">
-                                                                        <a hreflang="{{ $localeCode }}"
-                                                                           class="m-nav__link @if(App::getLocale() == $localeCode) m-nav__link--active @endif"
-                                                                           href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
-                                                                            <span class="m-nav__link-icon"><img
-                                                                                        class="m-topbar__language-img"
-                                                                                        src="{{ asset('images/flags') .  "/" . $localeCode . ".svg" }}"></span>
-                                                                            <span class="m-nav__link-title m-topbar__language-text m-nav__link-text">{{ $properties['native'] }}</span>
-                                                                        </a>
-                                                                    </li>
-                                                                @endforeach
-
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
                                         </li>
 
 

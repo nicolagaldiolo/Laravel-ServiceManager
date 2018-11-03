@@ -8,6 +8,8 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Str;
 
 class ToPayServicesEmail extends Mailable
 {
@@ -33,6 +35,6 @@ class ToPayServicesEmail extends Mailable
      */
     public function build()
     {
-      return $this->subject(config('app.name') . ' - Servizi in scadenza fino a ' . Carbon::now()->format('F Y') )->markdown('emails.users.topay-services');
+        return $this->subject(config('app.name') . ' - ' . __('messages.services_expiring') . ' ' . Str::lower(Carbon::now()->addMonth()->format('F Y')))->markdown('emails.users.topay-services');
     }
 }

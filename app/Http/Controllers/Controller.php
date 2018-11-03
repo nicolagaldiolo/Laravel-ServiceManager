@@ -12,10 +12,4 @@ use Illuminate\Support\Facades\App;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
-
-    //public function __construct()
-    //{
-    //    Carbon::setLocale(App::getLocale());
-    //}
-
 }

@@ -6,10 +6,10 @@
         <th>{{__('messages.url')}}</th>
         <th>{{__('messages.provider')}}</th>
         <th>{{__('messages.service_type')}}</th>
-        <th>Scadenza</th>
-        <th>Importo</th>
-        <th>Stato</th>
-        <th>Unresolved</th>
+        <th>{{__('messages.deadline')}}</th>
+        <th>{{__('messages.amount')}}</th>
+        <th>{{__('messages.status')}}</th>
+        <th>{{__('messages.to_solve')}}</th>
         <th>{{__('messages.actions')}}</th>
     </tr>
     </thead>

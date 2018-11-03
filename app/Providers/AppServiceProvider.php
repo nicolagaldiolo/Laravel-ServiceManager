@@ -28,12 +28,6 @@ class AppServiceProvider extends ServiceProvider
         Service::observe(DomainObserver::class);
         Provider::observe(ProviderObserver::class);
 
-        Blade::directive('amount', function ($arguments) {
-            list($money, $currency) = array_pad(explode(',', str_replace(" ", '', $arguments), 2), 2, null);
-            $currency = ($currency == null || filter_var($currency,FILTER_VALIDATE_BOOLEAN)) ? "'&euro; '" : "''";
-            return "<?php echo $currency . number_format($money, 2, ',', '.'); ?>";
-        });
-
         \View::composer(['layouts.app', 'dashboard.index'], function ($view){
 
             $servicesToPay = Auth::user()->services()->has('renewalsUnresolved')->with('renewalsUnresolved')->get();

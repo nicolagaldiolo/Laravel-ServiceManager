@@ -43,6 +43,12 @@ class ProvidersController extends Controller
 
         $provider = new Provider;
 
+        if(request()->wantsJson() || request()->expectsJson()) {
+            return [
+                'view' => view('providers.create_form', compact('provider'))->render(),
+            ];
+        }
+
         return view('providers.create', compact('provider'));
     }
 
@@ -54,10 +60,18 @@ class ProvidersController extends Controller
      */
     public function store(ProviderRequest $request)
     {
-        Auth()->user()->providers()->create($request->validated());
+        $provider = Auth()->user()->providers()->create($request->validated());
+        $message = __('messages.provider_created_status');
+
+        if(request()->wantsJson() || request()->expectsJson()) {
+            return [
+                'object' => $provider,
+                'message' => $message
+            ];
+        }
 
         return redirect()->route('providers.index')
-            ->with('status', 'Provider creato con successo');
+            ->with('status', $message);
     }
 
     /**
@@ -97,7 +111,7 @@ class ProvidersController extends Controller
         $provider->update($request->validated());
 
         return redirect()->route('providers.index')
-            ->with('status', 'Provider aggiornato con successo');
+            ->with('status', __('messages.provider_update_status'));
 
     }
 
@@ -115,7 +129,7 @@ class ProvidersController extends Controller
 
         if(request()->wantsJson() || request()->expectsJson()) {
             return [
-                'message' => 'Provider eliminato con successo'
+                'message' => trans_choice('messages.provider_delete_status', 1)
             ];
         }
     }
@@ -127,7 +141,7 @@ class ProvidersController extends Controller
         Auth::user()->providers()->whereIn('providers.id',$ids)->delete();
 
         return [
-            'message' => 'Providers eliminati con successo'
+            'message' => trans_choice('messages.provider_delete_status', count($ids))
         ];
     }
 }

@@ -101,7 +101,6 @@ class CustomerManageRenewalsController extends Controller
                     $renewal->stateIs() == RenewalSM::S_to_bill &&
                     ($service->lastRenewalInsert()->deadline == $renewal->deadline)
                 ){
-                    logger("lo stato è da fatturare, provo a creare la nuova transazione");
                     $service->renewals()->create([
                         'deadline' => $service->calcNextDeadline(),
                         'amount' => $renewal->amount
@@ -152,12 +151,13 @@ class CustomerManageRenewalsController extends Controller
 
         $message = [
             'type' => 'warning',
-            'message' => 'Spiacenti, questo cliente non ha nessun servizio in scadenza',
+            'message' => __('messages.customer_reminder_warning_status')
         ];
+
         if($customer->services->isNotEmpty()){
             event(new CustomerRenewalReminder($customer));
             $message = [
-                'message' => 'Promemoria inviato con successo',
+                'message' => __('messages.customer_reminder_success_status')
             ];
         }
 

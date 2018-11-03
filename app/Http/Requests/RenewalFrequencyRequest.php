@@ -33,5 +33,26 @@ class RenewalFrequencyRequest extends FormRequest
             'value' => 'required|numeric|min:1',
             'type' => 'required|numeric'
         ];
+
+        /*
+         *
+         * $messages = [
+    'data.ip.unique' = 'Given ip and hostname are not unique',
+];
+
+Validator::make($data, [
+    'data.ip' => [
+        'required',
+        Rule::unique('servers')->where(function ($query) use($ip,$hostname) {
+            return $query->where('ip', $ip)
+            ->where('hostname', $hostname);
+        }),
+    ],
+],
+$messages
+);
+         *
+         */
+
     }
 }

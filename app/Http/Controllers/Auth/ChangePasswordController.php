@@ -25,6 +25,6 @@ class ChangePasswordController extends Controller
         $redirect = Auth::user()->isAdmin() ? 'users.index' : 'dashboard';
 
         return redirect()->route($redirect)
-            ->with('status', 'Password aggiornata con successo');
+            ->with('status', __('messages.password_change_status'));
     }
 }

@@ -3,7 +3,7 @@
 @section('content')
 
     @component('components.title', ['back_url' => route('services.index')])
-        {{__('messages.domains')}}
+        {{__('messages.services')}}
     @endcomponent
 
     <!-- END: Subheader -->
@@ -18,7 +18,7 @@
                             <i class="flaticon-plus"></i>
                         </span>
                         <h3 class="m-portlet__head-text">
-                            {{__('messages.new_domain')}}
+                            {{__('messages.new_service')}}
                         </h3>
                     </div>
                 </div>
@@ -34,4 +34,6 @@
         <!--end::Portlet-->
 
     </div>
+
+    @include('layouts.partials._modal')
 @stop

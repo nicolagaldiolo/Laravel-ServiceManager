@@ -9,14 +9,16 @@
     </div>
     <div class="m-portlet__head-tools">
         <ul class="m-portlet__nav">
+            @if($url)
             <li class="m-portlet__nav-item">
-                <a href="{{$url}}" class="@if($newModal)open-modal @endif btn btn-primary m-btn m-btn--custom m-btn--icon m-btn--air">
+                <a href="{{$url}}" data-target="{{$dataTarget}}" data-original-title="{{$button}}" class="@if($newModal)open-modal @endif btn btn-primary m-btn m-btn--custom m-btn--icon m-btn--air">
                     <span>
                         <i class="la la-plus"></i>
                         <span>{{$button}}</span>
                     </span>
                 </a>
             </li>
+            @endif
             @if($moreAction)
                 <li class="m-portlet__nav-item"></li>
                 <li class="m-portlet__nav-item">
@@ -31,7 +33,7 @@
                                     <div class="m-dropdown__content">
                                         <ul class="m-nav">
                                             <li class="m-nav__section m-nav__section--first">
-                                                <span class="m-nav__section-text">Quick Actions</span>
+                                                <span class="m-nav__section-text">{{__('messages.quick_actions')}}</span>
                                             </li>
                                             {{$slot}}
                                         </ul>

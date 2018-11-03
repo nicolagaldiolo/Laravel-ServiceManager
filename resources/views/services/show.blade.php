@@ -3,7 +3,7 @@
 @section('content')
 
     @component('components.title', ['back_url' => route('services.index')])
-        {{__('messages.domains')}}
+        {{__('messages.services')}}
     @endcomponent
 
     <!-- END: Subheader -->
@@ -16,7 +16,7 @@
                     <div class="m-portlet__head">
                         <div class="m-portlet__head-caption">
                             <div class="m-portlet__head-title">
-												<span class="m-portlet__head-icon">
+                                <span class="m-portlet__head-icon">
                                     <i class="flaticon-responsive"></i>
                                 </span>
                                 <h3 class="m-portlet__head-text">
@@ -54,14 +54,14 @@
                                     <i class="flaticon-browser"></i>
                                 </span>
                                 <h3 class="m-portlet__head-text">
-                                    Informazioni sul servizio
+                                    {{__('messages.service_info')}}
                                 </h3>
                             </div>
                         </div>
                         <div class="m-portlet__head-tools">
                             <ul class="m-portlet__nav">
                                 <li class="m-portlet__nav-item">
-                                    <a class="btn m-btn--pill btn-secondary" href="{{route('services.edit', $service)}}">Modifica</a>
+                                    <a class="btn m-btn--pill btn-secondary" href="{{route('services.edit', $service)}}">{{__('messages.edit')}}</a>
                                 </li>
                             </ul>
                         </div>
@@ -71,7 +71,7 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="m-widget13__item">
-                                        <span class="m-widget13__desc">Cliente</span>
+                                        <span class="m-widget13__desc">{{__('messages.customer')}}</span>
                                         @if($service->customer)
                                             <span class="m-widget13__text m-widget13__text-bolder">{{$service->customer->name}}</span>
                                         @endif
@@ -80,7 +80,7 @@
 
                                 <div class="col-md-6">
                                     <div class="m-widget13__item">
-                                        <span class="m-widget13__desc">Url</span>
+                                        <span class="m-widget13__desc">{{__('messages.url')}}</span>
                                         <span class="m-widget13__text">
                                             <a href="{{$service->url}}" target="_blank">{{$service->url}}</a>
                                         </span>
@@ -90,7 +90,7 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="m-widget13__item">
-                                        <span class="m-widget13__desc">Tipo di servizio</span>
+                                        <span class="m-widget13__desc">{{__('messages.service_type')}}</span>
                                         @if($service->serviceType)
                                             <span class="m-widget13__text m-widget13__text-bolder">{{$service->serviceType->name}}</span>
                                         @endif
@@ -99,7 +99,7 @@
 
                                 <div class="col-md-6">
                                     <div class="m-widget13__item">
-                                        <span class="m-widget13__desc">Fornitore</span>
+                                        <span class="m-widget13__desc">{{__('messages.provider')}}</span>
                                         @if($service->provider)
                                             <span class="m-widget13__text m-widget13__text-bolder">
                                                 <span class="m-badge m-badge--brand m-badge--wide" style="background:{{$service->provider->label}};">{{$service->provider->name}}</span>
@@ -111,7 +111,7 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="m-widget13__item">
-                                        <span class="m-widget13__desc">Frequenza rinnovo</span>
+                                        <span class="m-widget13__desc">{{__('messages.frequency_renewal')}}</span>
                                         @if($service->renewalFrequency)
                                             <span class="m-widget13__text m-widget13__text-bolder">{{$service->renewalFrequency->frequency}}</span>
                                         @endif
@@ -129,7 +129,7 @@
                                     <i class="la la-warning"></i>
                                 </div>
                                 <div class="m-alert__text">
-                                    <strong>Note: </strong> {{$service->note}}
+                                    <strong>{{__('messages.note')}}: </strong> {{$service->note}}
                                 </div>
                             </div>
                         @endif
@@ -151,13 +151,14 @@
                 <div class="m-portlet m-portlet--full-height ">
 
                     @component('components.tableHeader', [
-                        'title' => 'Storico Rinnovi',
+                        'title' => __('messages.renewals_history'),
                         'icon' => 'flaticon-layers',
-                        'button' => __('Nuova scadenza'),
+                        'button' => __('messages.new_renewal'),
+                        'deleteAll' => route('services.destroy-all'),
                         'url' => route('services.renewals.create', $service),
                         'newModal' => true,
-                        'deleteAll' => route('services.destroy-all'),
-                        'moreAction' => true
+                        'dataTarget' => '',
+                        'moreAction' => true,
                     ])
                         @include('services._dataTableMoreAction')
                     @endcomponent
@@ -167,13 +168,13 @@
                         <!--begin: Datatable -->
                         <table id="service_renewals_table" data-deleteall="{{route('services.renewals.destroy-all', $service)}}" class="table m-table table-striped- table-bordered table-hover table-checkable">
                             <thead>
-                            <tr>
-                                <th>Id</th>
-                                <th>Importo</th>
-                                <th>Stato</th>
-                                <th>Data</th>
-                                <th>Azione</th>
-                            </tr>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>{{__('messages.amount')}}</th>
+                                    <th>{{__('messages.status')}}</th>
+                                    <th>{{__('messages.deadline')}}</th>
+                                    <th>{{__('messages.action')}}</th>
+                                </tr>
                             </thead>
                         </table>
 
@@ -188,7 +189,5 @@
 
     </div>
 
-    @component('components.modal', ['ref_datatable_id' => 'service_renewals_table'])
-        Aggiungi nuova scadenza
-    @endcomponent
+    @include('layouts.partials._modal')
 @stop
