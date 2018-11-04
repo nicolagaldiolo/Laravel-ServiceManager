@@ -40,6 +40,17 @@ class ServicesController extends Controller
             $services = Auth::user()->services()->with('nextRenewal', 'provider', 'customer', 'serviceType')->get();
             return $this->getServicesDataTablesTraits($services);
         }
+        /*else{
+            Carbon::setLocale('fr');
+            echo Carbon::now()->format('j F Y');
+
+            setlocale(LC_TIME, 'French');
+            echo Carbon::now()->formatLocalized('%d %B %Y');
+            echo Carbon::now()->format('d MM Y');
+
+            die(Carbon::now()->formatLocalized('%A, %d. %B %Y'));
+        //    event(new ToPayServicesAlert()); // da eliminare
+        }*/
 
         return view('services.index');
 
