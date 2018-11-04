@@ -39,8 +39,7 @@ class Renewal extends Model
 
     public function getDeadlineVerboseAttribute()
     {
-        return is_null($this->deadline) ? $this->deadline : $this->deadline->format('j F Y');
-
+        return is_null($this->deadline) ? $this->deadline : $this->deadline->formatLocalized('%d %B %Y');
     }
 
     public function setDeadlineAttribute($deadline) {

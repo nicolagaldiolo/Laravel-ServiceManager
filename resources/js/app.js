@@ -912,6 +912,25 @@ var HostingManager = function($) {
         }
     };
 
+    var openAlertBeforeSubmit = function(){
+        $('.openAlertBeforeSubmit').on('click', function(el){
+            el.preventDefault();
+            var _self = this;
+
+            swal({
+                title: Lang.get('messages.are_sure'),
+                text: Lang.get('messages.are_sure_desc'),
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonText: Lang.get('messages.yes_procede')
+            }).then(function(result) {
+                if (result.value) {
+                    $(_self).closest('form').submit();
+                }
+            })
+        })
+    };
+
     var deleteRecord = function(){
 
         $('.deleteRecord').on('click', function (el) {
@@ -1038,6 +1057,7 @@ var HostingManager = function($) {
             renewalFrequenciesDataTable();
             servicesDataTable();
             deleteRecord();
+            openAlertBeforeSubmit();
             customerRenewalManager();
             sendCustomerReminder();
         },

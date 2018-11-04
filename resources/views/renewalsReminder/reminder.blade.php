@@ -126,7 +126,7 @@
             @endforeach
 
             <div class="m--align-right">
-                <button type="submit" class="btn m-btn--pill btn-brand btn-lg">{{__('messages.confirm')}}</button>
+                <button type="submit" class="openAlertBeforeSubmit btn m-btn--pill btn-brand btn-lg">{{__('messages.confirm')}}</button>
             </div>
 
         </form>

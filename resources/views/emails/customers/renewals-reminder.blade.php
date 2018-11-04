@@ -2,28 +2,15 @@
 # {{trans('messages.customer_reminder_title', ['attribute' => $customer->name])}}
 
 @foreach($customer->services as $service)
-## {{$service->url}}
-@if($service->serviceType)
-### {{$service->serviceType->name}}
-@endif
-<table>
-    <tr>
-        <th>{{__('messages.deadline')}}</th>
-        <th>{{__('messages.amount')}}</th>
-        <th>{{__('messages.status')}}</th>
-    </tr>
+### {{$service->url}} @if($service->serviceType) <span>{{$service->serviceType->name}}</span> @endif
+
+@component('mail::table')
+    | {{__('messages.deadline')}} | {{__('messages.status')}} | {{__('messages.amount')}} |
+    | :- |::| -: |
     @foreach($service->renewalsExpiring as $renewal)
-        <tr>
-            <td>
-                <strong>{{$renewal->deadline->diffForHumans()}}</strong><br>
-                <small>({{$renewal->deadlineVerbose}})</small>
-            </td>
-            <td>{{amount_format($renewal->amount)}}</td>
-            <td>{{\App\Enums\RenewalSM::getDescription($renewal->getStateAttribute()['attr'])}}</td>
-        </tr>
+        | <strong>{{$renewal->deadline->diffForHumans()}}</strong><br><small>({{$renewal->deadlineVerbose}})</small> | {{\App\Enums\RenewalSM::getDescription($renewal->getStateAttribute()['attr'])}} | {{amount_format($renewal->amount)}} |
     @endforeach
-</table>
-<hr>
+@endcomponent
 @endforeach
 
 @component('mail::button', ['url' => route('manage-renewals', ['customer'=>$customer,'token'=>$customer->token])])

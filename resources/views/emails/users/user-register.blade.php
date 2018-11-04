@@ -3,7 +3,7 @@
 
 {{trans('messages.user_registered_desc', ['attribute' => $user->created_at->diffForHumans()])}}
 
-## {{$user->name}} <br> {{$user->email}}
+## {{$user->name}} <span> {{$user->email}} </span>
 
 @component('mail::button', ['url' => route('dashboard')])
     {{__('messages.accedi')}}

@@ -33,12 +33,13 @@ class ServicesController extends Controller
     public function index()
     {
 
+
+
+
         if(request()->wantsJson() || request()->expectsJson()) {
             $services = Auth::user()->services()->with('nextRenewal', 'provider', 'customer', 'serviceType')->get();
             return $this->getServicesDataTablesTraits($services);
-        }//else{
-        //    event(new ToPayServicesAlert()); // da eliminare
-        //}
+        }
 
         return view('services.index');
 
