@@ -9,8 +9,9 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Mail;
+use Jenssegers\Date\Date;
 
 class ToPayServices implements ShouldQueue
 {
@@ -39,6 +40,7 @@ class ToPayServices implements ShouldQueue
     {
 
         if(!is_null($this->user->email)){
+            Date::setLocale($this->user->lang ?? App::getLocale()); // forzo la lingua di default in caso qualche utente abbia la lingua settata a NULL perchè altrimenti Date mi torna l'inglese
             Mail::to($this->user->email)->locale($this->user->lang)->send(new ToPayServicesEmail($this->user));
         }
     }

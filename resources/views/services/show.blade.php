@@ -170,9 +170,9 @@
                             <thead>
                                 <tr>
                                     <th>Id</th>
-                                    <th>{{__('messages.amount')}}</th>
-                                    <th>{{__('messages.status')}}</th>
                                     <th>{{__('messages.deadline')}}</th>
+                                    <th>{{__('messages.status')}}</th>
+                                    <th>{{__('messages.amount')}}</th>
                                     <th>{{__('messages.action')}}</th>
                                 </tr>
                             </thead>

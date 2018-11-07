@@ -31,7 +31,7 @@
                             <div class="m-widget1__item">
                                 <div class="row m-row--no-padding align-items-center">
                                     <div class="col">
-                                        <h3 class="m-widget1__title">{{__('messages.revenues')}}  {{\Carbon\Carbon::now()->format('F Y')}}</h3>
+                                        <h3 class="m-widget1__title">{{__('messages.revenues')}}  {{\Jenssegers\Date\Date::now()->format('F Y')}}</h3>
                                         <span class="m-widget1__desc">{{__(trans_choice('messages.obtained_from', $dashboard['servicesThisMonthCount'], [ 'attribute' => $dashboard['servicesThisMonthCount']]))}}</span>
                                         <br>
                                         <span class="m-widget1__number m--font-info">

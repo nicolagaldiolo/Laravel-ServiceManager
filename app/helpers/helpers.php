@@ -5,9 +5,11 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 if (! function_exists('redirect_user_lang')) {
     function redirect_user_lang($locale, $redirectUrl)
     {
-        $path = array_key_exists($locale,LaravelLocalization::getSupportedLocales()) ?
-            LaravelLocalization::getLocalizedURL($locale, route($redirectUrl)) :
-            route($redirectUrl);
+        $path = route($redirectUrl);
+        if(array_key_exists($locale,LaravelLocalization::getSupportedLocales())){
+            //\Illuminate\Support\Facades\App::setLocale($locale);
+            $path = LaravelLocalization::getLocalizedURL($locale, route($redirectUrl));
+        }
 
         return $path;
     }

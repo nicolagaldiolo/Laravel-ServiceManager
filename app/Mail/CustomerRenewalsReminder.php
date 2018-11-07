@@ -3,13 +3,13 @@
 namespace App\Mail;
 
 use App\Customer;
-use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Str;
+use Jenssegers\Date\Date;
 
 class CustomerRenewalsReminder extends Mailable
 {
@@ -35,7 +35,7 @@ class CustomerRenewalsReminder extends Mailable
      */
     public function build()
     {
-        return $this->subject(config('app.name') . ' - ' . __('messages.services_expiring') . ' ' . Str::lower(Carbon::now()->addMonth()->formatLocalized('%B %Y')))
+        return $this->subject(config('app.name') . ' - ' . __('messages.services_expiring') . ' ' . Str::lower(Date::now()->addMonth()->format('F Y')))
             ->markdown('emails.customers.renewals-reminder');
     }
 }

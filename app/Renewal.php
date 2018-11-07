@@ -6,6 +6,8 @@ use App\Enums\RenewalSM;
 use App\Http\Traits\StatableTrait;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\App;
+use Jenssegers\Date\Date;
 
 class Renewal extends Model
 {
@@ -39,7 +41,7 @@ class Renewal extends Model
 
     public function getDeadlineVerboseAttribute()
     {
-        return is_null($this->deadline) ? $this->deadline : $this->deadline->formatLocalized('%d %B %Y');
+        return is_null($this->deadline) ? $this->deadline : Date::parse($this->deadline)->format('j F Y');
     }
 
     public function setDeadlineAttribute($deadline) {

@@ -285,17 +285,15 @@ var HostingManager = function($) {
                 }
             ],
             order: [[1, 'desc']],
-
             headerCallback: dataTableHeaderCallback,
-
             processing: true,
             serverSide: true,
             ajax: '',
             columns: [
                 {data: "id"},
-                { data: "amount" },
-                { data: "status" },
                 { data: "deadline" },
+                { data: "status" },
+                { data: "amount" },
                 { data: "actions", name: 'action', orderable: false, searchable: false}
             ],
 
@@ -313,7 +311,11 @@ var HostingManager = function($) {
                                 </label>`;
                     }
                 }
-            ]
+            ],
+            "language": {
+                "decimal": ",",
+                "thousands": "."
+            }
 
         });
 

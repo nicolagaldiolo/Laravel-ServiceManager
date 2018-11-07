@@ -15,8 +15,10 @@ use App\Http\Traits\DataTableServiceTrait;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Jenssegers\Date\Date;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use Yajra\DataTables\DataTables;
 
@@ -33,24 +35,10 @@ class ServicesController extends Controller
     public function index()
     {
 
-
-
-
         if(request()->wantsJson() || request()->expectsJson()) {
             $services = Auth::user()->services()->with('nextRenewal', 'provider', 'customer', 'serviceType')->get();
             return $this->getServicesDataTablesTraits($services);
         }
-        /*else{
-            Carbon::setLocale('fr');
-            echo Carbon::now()->format('j F Y');
-
-            setlocale(LC_TIME, 'French');
-            echo Carbon::now()->formatLocalized('%d %B %Y');
-            echo Carbon::now()->format('d MM Y');
-
-            die(Carbon::now()->formatLocalized('%A, %d. %B %Y'));
-        //    event(new ToPayServicesAlert()); // da eliminare
-        }*/
 
         return view('services.index');
 
@@ -120,22 +108,25 @@ class ServicesController extends Controller
      */
     public function show(Service $service)
     {
+
         if(request()->wantsJson() || request()->expectsJson()) {
             $renewals = $service->renewals()->orderBy('deadline', 'DESC')->get();
+
             return DataTables::of($renewals)
                 ->editColumn('amount', function ($renewal) {
                     return amount_format($renewal->amount);
-                })->setRowAttr([
-                    'class' => function($renewal) {
-                        return $renewal->unsolved ? "m-table__row--danger" : "";
-                    },
-                ])
+                })
                 ->editColumn('deadline', function ($renewal) {
                     return $renewal->deadline ? $renewal->deadlineVerbose : '';
                 })
                 ->editColumn('status', function ($renewal){
                     return $renewal->getStateAttributeVerbose();
                 })
+                ->setRowAttr([
+                    'class' => function($renewal) {
+                        return $renewal->unsolved ? "m-table__row--danger" : "";
+                    },
+                ])
                 ->addColumn('actions', function($renewal) use($service){
 
                     $buttons = $renewal->getPossibleTransitions();

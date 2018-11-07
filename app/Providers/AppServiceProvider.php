@@ -8,10 +8,12 @@ use App\User;
 use App\Observers\UserObserver;
 use App\Observers\DomainObserver;
 use App\Observers\ProviderObserver;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
+use Jenssegers\Date\Date;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 class AppServiceProvider extends ServiceProvider

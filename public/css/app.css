@@ -58954,6 +58954,10 @@ table.dataTable tbody tr.selected a, table.dataTable tbody th.selected a, table.
   margin-bottom: 2rem;
 }
 
+.m-login.m-login--2 .m-login__wrapper .m-login__container .m-login__logo img {
+  max-width: 90px;
+}
+
 .m-table tr.m-table__row--danger th .btn.m-btn--hover-brand:not(.btn-secondary):not(.btn-outline-light) i,
 .m-table tr.m-table__row--danger td .btn.m-btn--hover-brand:not(.btn-secondary):not(.btn-outline-light) i {
   color: #fff;

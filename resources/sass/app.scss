@@ -57,6 +57,9 @@
             .m-login__container{
                 .m-login__logo{
                     margin-bottom: 2rem;
+                    img{
+                        max-width: 90px;
+                    }
                 }
             }
         }

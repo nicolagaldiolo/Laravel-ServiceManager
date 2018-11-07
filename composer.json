@@ -9,6 +9,7 @@
         "bensampo/laravel-enum": "^1.14",
         "doctrine/dbal": "^2.8",
         "fideloper/proxy": "^4.0",
+        "jenssegers/date": "^3.4",
         "karlmonson/laravel-ping": "^1.0",
         "laravel/framework": "5.7.*",
         "laravel/horizon": "^1.3",

@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class RenewalFrequencyRequest extends FormRequest
@@ -27,32 +28,11 @@ class RenewalFrequencyRequest extends FormRequest
 
         $renewalFrequency = $this->route('renewal_frequency') ? $this->route('renewal_frequency')->id : 'NULL';
         //unique:table,column,except,idColumn
+        $type = $this->request->get('type');
 
         return [
-            //'name' => 'required|unique:service_types,name,' . $serviceType . ',id,user_id,' . Auth::user()->id
-            'value' => 'required|numeric|min:1',
+            'value' => 'required|numeric|min:1|unique:renewal_frequencies,value,' . $renewalFrequency . ',id,type,' . $type . ',user_id,' . Auth::user()->id,
             'type' => 'required|numeric'
         ];
-
-        /*
-         *
-         * $messages = [
-    'data.ip.unique' = 'Given ip and hostname are not unique',
-];
-
-Validator::make($data, [
-    'data.ip' => [
-        'required',
-        Rule::unique('servers')->where(function ($query) use($ip,$hostname) {
-            return $query->where('ip', $ip)
-            ->where('hostname', $hostname);
-        }),
-    ],
-],
-$messages
-);
-         *
-         */
-
     }
 }

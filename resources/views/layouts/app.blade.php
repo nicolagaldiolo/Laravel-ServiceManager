@@ -17,7 +17,7 @@
                         <div class="m-stack__item m-brand  m-brand--skin-dark ">
                             <div class="m-stack m-stack--ver m-stack--general">
                                 <div class="m-stack__item m-stack__item--middle m-brand__logo">
-                                    <a href="{{ url('/') }}" class="m-brand__logo-wrapper">
+                                    <a href="/" class="m-brand__logo-wrapper">
                                         <img alt="{{ config('app.name') }}" src="{{ asset('images/logo/logo_default_dark.png')}}">
                                     </a>
                                 </div>
@@ -93,9 +93,6 @@
                             <!-- END: Horizontal Menu -->
 
                             <!-- BEGIN: Topbar -->
-
-
-
                             <div id="m_header_topbar" class="m-topbar  m-stack m-stack--ver m-stack--general m-stack--fluid">
                                 <div class="m-stack__item m-topbar__nav-wrapper">
                                     <ul class="m-topbar__nav m-nav m-nav--inline">

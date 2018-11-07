@@ -39,7 +39,7 @@ class Kernel extends ConsoleKernel
             Service::get()->each(function($item){
                 event(new CheckServiceStatus($item));
             });
-        })->everyTenMinutes();
+        })->everyThirtyMinutes();
         */
 
         /*
@@ -52,21 +52,11 @@ class Kernel extends ConsoleKernel
                 event(new GenerateScreen($item));
             });
 
-        })->everyThirtyMinutes();
-        */
-
-        /*
-        $schedule->call(function(){
             event(new ToPayServicesAlert());
-        })->everyTenMinutes();
-        */
-
-        /*
-        $schedule->call(function(){
             event(new CustomerRenewalReminder());
-        })->everyTenMinutes();
-        */
 
+        })->weekly();
+        */
 
     }
 
