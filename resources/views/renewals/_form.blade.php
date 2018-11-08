@@ -3,7 +3,7 @@
         <div class="form-group m-form__group">
             <label class="">{{__('messages.deadline')}} *</label>
             <div class="custom_inline_datepicker">
-                <input type="text" class="m_datepicker_hidden_input" name="deadline" value="{{old('deadline', $renewal->deadlineFormatted)}}">
+                <input type="hidden" class="m_datepicker_hidden_input" name="deadline" value="{{old('deadline', $renewal->deadlineFormatted)}}">
             </div>
             <span class="m-form__help">{{__('messages.enter_deadline')}}</span>
             <span data-field="deadline" class="invalid-feedback" role="alert"></span>

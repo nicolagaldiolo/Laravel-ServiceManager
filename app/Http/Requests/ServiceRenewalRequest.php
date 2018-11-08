@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use App\Enums\RenewalSM;
 use BenSampo\Enum\Rules\EnumValue;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class ServiceRenewalRequest extends FormRequest
 {
@@ -25,15 +26,15 @@ class ServiceRenewalRequest extends FormRequest
      */
     public function rules()
     {
-        $renewal = $this->route('renewal') ? $this->route('renewal')->id : 'NULL';
-        $service = $this->route('service') ? $this->route('service')->id : 'NULL';
+        $renewal = $this->route('renewal') ? $this->route('renewal')->id : NULL;
+        $service = $this->route('service') ? $this->route('service')->id : NULL;
         //unique:table,column,except,idColumn
 
         return [
             'amount'        => 'sometimes|regex:/[0-9]+[.,]?[0-9]*/|max:8',
-            //'deadline'      => 'required|date|date_format:d-m-Y|unique:renewals,deadline,' . $renewal . ',id,service_id,' . $service,
-            'deadline'      => 'required|date',
+            'deadline'      => 'required|date|unique_date_custom:renewals,deadline,' . $renewal . ',id,service_id,' . $service,
             'status'        => ['sometimes', 'required', new EnumValue(RenewalSM::class, false)],
+
         ];
     }
 }

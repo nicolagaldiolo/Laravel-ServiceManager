@@ -123,6 +123,8 @@ return [
     |
     */
 
+    'unique_date_custom'   => ':attribute ya ha sido registrado.',
+
     'custom' => [
         'password' => [
             'min' => 'La :attribute debe contener más de :min caracteres',
