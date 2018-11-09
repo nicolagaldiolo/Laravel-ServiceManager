@@ -337,11 +337,11 @@
                                     @foreach($data->services as $service)
                                         <div class="m-list-timeline__item">
                                             <span
-                                                class="m-list-timeline__badge @if($service->status == 1)m-list-timeline__badge--success @else m-list-timeline__badge--danger @endif"></span>
+                                                class="m-list-timeline__badge @if($service->health == 1)m-list-timeline__badge--success @else m-list-timeline__badge--danger @endif"></span>
                                             <span class="m-list-timeline__text">{{$service->url}}</span>
                                             <span class="m-list-timeline__time">
                                             <span
-                                                class="m-badge m-badge--wide @if($service->status == 1) m-badge--success @else m-badge--danger @endif">@if($service->status == 1)
+                                                class="m-badge m-badge--wide @if($service->health == 1) m-badge--success @else m-badge--danger @endif">@if($service->health == 1)
                                                     {{__('messages.online')}} @else {{__('messages.offline')}} @endif</span>
                                         </span>
                                         </div>
