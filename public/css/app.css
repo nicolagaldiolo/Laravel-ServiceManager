@@ -59163,3 +59163,28 @@ table.dataTable tbody tr.selected a, table.dataTable tbody th.selected a, table.
   }
 }
 
+@media screen and (min-width: 1025px) {
+  .renewal-reminder-container {
+    height: 100%;
+    position: relative;
+  }
+
+  .renewal-reminder-container .renewal-reminder-content {
+    overflow: auto;
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    height: 100%;
+  }
+
+  .renewal-reminder-container .renewal-reminder-content form {
+    width: 100%;
+    margin: auto;
+  }
+}
+

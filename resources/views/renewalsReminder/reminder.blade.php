@@ -21,9 +21,9 @@
         </div>
     @else
 
-        <div class="renewal-reminder-container" style="height: 100%; position: relative; background:green;">
-            <div class="renewal-reminder-content" style="background: red; overflow: auto; position: absolute; left: 0; top: 0; right: 0; bottom: 0; display: flex; height: 100%;">
-                <form method="POST" action="{{route('manage-renewals.update', ['customer'=>$customer, 'token'=>$token])}}" style="width: 100%; margin:auto;">
+        <div class="renewal-reminder-container">
+            <div class="renewal-reminder-content">
+                <form method="POST" action="{{route('manage-renewals.update', ['customer'=>$customer, 'token'=>$token])}}">
                     @csrf
                     @method('PATCH')
                     @foreach($customer->services as $service)

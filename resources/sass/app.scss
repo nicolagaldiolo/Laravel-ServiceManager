@@ -264,12 +264,6 @@
     }
 }
 
-.renewal-reminder-container{
-    height: 100%; 
-    position: relative; 
-    background:green;
-}
-
 @media screen and (max-width: 767px) {
     .m-login{
         &.m-login--2{
@@ -289,6 +283,27 @@
         flex-direction: column;
         a:not(:first-child){
             margin-top: 10px;
+        }
+    }
+}
+
+@media screen and (min-width: 1025px) {
+    .renewal-reminder-container{
+        height: 100%;
+        position: relative;
+        .renewal-reminder-content{
+            overflow: auto;
+            position: absolute;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            height: 100%;
+            form{
+                width: 100%;
+                margin:auto;
+            }
         }
     }
 }
