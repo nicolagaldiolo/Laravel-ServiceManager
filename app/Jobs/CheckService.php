@@ -20,11 +20,11 @@ class CheckService implements ShouldQueue
      * @return void
      */
 
-    public $domain;
+    public $service;
 
-    public function __construct(Service $domain)
+    public function __construct(Service $service)
     {
-        $this->domain = $domain;
+        $this->service = $service;
     }
 
     /**
@@ -36,12 +36,12 @@ class CheckService implements ShouldQueue
     {
         $health = 0;
         try {
-            $health = Ping::check($this->domain->url);
+            $health = Ping::check($this->service->url);
         }catch (\Exception $e){
-            //logger('Errore Check dominio: ' . $e);
+            //logger('Errore Check servizio: ' . $e);
         }
         $status = ($health == 200) ? true : false;
-        $this->domain->update( ['status' => $status]);
+        $this->service->update( ['health' => $status]);
 
     }
 }

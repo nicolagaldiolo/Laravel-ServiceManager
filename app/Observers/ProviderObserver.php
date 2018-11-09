@@ -28,7 +28,7 @@ class ProviderObserver
      */
     public function created(Provider $providers)
     {
-        //event(new GenerateScreen($providers));
+        event(new GenerateScreen($providers));
     }
 
     /**

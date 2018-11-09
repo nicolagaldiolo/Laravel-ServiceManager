@@ -38,7 +38,7 @@ class GetScreenshoot implements ShouldQueue
         try {
 
             if($this->object instanceof Service){
-                $folder = config('custompath.domains');
+                $folder = config('custompath.services');
                 $url = $this->object->url;
             }
 
