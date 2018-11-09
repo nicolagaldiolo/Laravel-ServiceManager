@@ -310,13 +310,19 @@ var HostingManager = function($) {
                                     <span></span>
                                 </label>`;
                     }
-                }
+                },
+                {
+                    targets: [1],
+                    render: function (data, type, full, meta) {
+                        if (data == null) return '';
+                        return moment(data).format('DD-MM-YYYY');
+                    }
+                },
+                {
+                    targets: [3],
+                    render: $.fn.dataTable.render.number( '.', ',', 2, '&euro; ' )
+                },
             ],
-            "language": {
-                "decimal": ",",
-                "thousands": "."
-            }
-
         });
 
         dataTable.on('click', '.update-transition', function (el) {
@@ -512,7 +518,7 @@ var HostingManager = function($) {
                     }
                 }
             ],
-            order: [[1, 'desc']],
+            order: [[4, 'desc']],
 
             headerCallback: dataTableHeaderCallback,
 
@@ -522,8 +528,8 @@ var HostingManager = function($) {
             columns: [
                 {data: "id"},
                 {data: "url"},
-                {data: "provider"},
-                {data: "service_type"},
+                {data: "provider", orderable: false},
+                {data: "service_type", orderable: false},
                 {data: "deadline"},
                 {data: "amount"},
                 {data: "status"},
@@ -585,6 +591,17 @@ var HostingManager = function($) {
                     render: function (data, type, full, meta) {
                         return data == null ? '' : data.name;
                     },
+                },
+                {
+                    targets: [4],
+                    render: function (data, type, full, meta) {
+                        if (data == null) return '';
+                        return moment(data).format('DD-MM-YYYY');
+                    }
+                },
+                {
+                    targets: [5],
+                    render: $.fn.dataTable.render.number( '.', ',', 2, '&euro; ' )
                 },
                 {
                     targets: [7],

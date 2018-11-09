@@ -113,12 +113,6 @@ class ServicesController extends Controller
             $renewals = $service->renewals()->orderBy('deadline', 'DESC')->get();
 
             return DataTables::of($renewals)
-                ->editColumn('amount', function ($renewal) {
-                    return amount_format($renewal->amount);
-                })
-                ->editColumn('deadline', function ($renewal) {
-                    return $renewal->deadline ? $renewal->deadlineVerbose : '';
-                })
                 ->editColumn('status', function ($renewal){
                     return $renewal->getStateAttributeVerbose();
                 })

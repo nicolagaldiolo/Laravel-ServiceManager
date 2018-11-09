@@ -13,12 +13,11 @@ trait DataTableServiceTrait {
         return DataTables::of($services)
             ->editColumn('deadline', function ($service) {
                 if($service->nextRenewal)
-                    return $service->nextRenewal->deadlineVerbose;
+                    return $service->nextRenewal->deadline;
             })
             ->editColumn('amount', function ($service) {
                 if($service->nextRenewal)
                 return $service->nextRenewal->amount;
-                //return amount_format($service->nextRenewal->amount);
             })
             ->editColumn('status', function ($service) {
                 if($service->nextRenewal)

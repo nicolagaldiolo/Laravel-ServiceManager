@@ -93,7 +93,7 @@ class CustomerController extends Controller
         $this->authorize('view', $customer);
 
         if(request()->wantsJson() || request()->expectsJson()) {
-            $services = $customer->services()->with('nextRenewal', 'provider', 'customer', 'serviceType')->get();
+            $services = $customer->services()->with('renewalsUnresolved', 'nextRenewal', 'provider', 'customer', 'serviceType')->get();
             return $this->getServicesDataTablesTraits($services);
         }
 
