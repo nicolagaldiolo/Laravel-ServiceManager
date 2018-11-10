@@ -34,15 +34,13 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
 
-        /*
+
         $schedule->call(function(){
             Service::get()->each(function($item){
                 event(new CheckServiceStatus($item));
             });
         })->everyThirtyMinutes();
-        */
 
-        /*
         $schedule->call(function(){
             Service::get()->each(function($item){
                 event(new GenerateScreen($item));
@@ -56,7 +54,6 @@ class Kernel extends ConsoleKernel
             event(new CustomerRenewalReminder());
 
         })->weekly();
-        */
 
     }
 
