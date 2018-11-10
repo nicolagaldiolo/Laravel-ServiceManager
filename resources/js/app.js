@@ -555,13 +555,13 @@ var HostingManager = function($) {
                     render: function (data, type, full, meta) {
                         var image = (full.screenshoot !== null) ? '<img src="' + full.screenshoot + '">' : '';
 
-                        var label, status;
-                        if (full.status == 1) {
+                        var label, health;
+                        if (full.health == 1) {
                             label = "success";
-                            status = Lang.get('messages.online');
+                            health = Lang.get('messages.online');
                         } else {
                             label = "danger";
-                            status = Lang.get('messages.offline');
+                            health = Lang.get('messages.offline');
                         }
 
                         var html = '<div class="m-card-user m-card-user--sm">' +
@@ -570,7 +570,7 @@ var HostingManager = function($) {
                             '  </div>' +
                             '  <div class="m-card-user__details">' +
                             '    <span class="m-card-user__name">' + data + '</span>' +
-                            '    <span class="m-badge m-badge--' + label + ' m-badge--dot"></span>&nbsp;<span class="m--font-bold m--font-' + label + '">' + status + '</span>' +
+                            '    <span class="m-badge m-badge--' + label + ' m-badge--dot"></span>&nbsp;<span class="m--font-bold m--font-' + label + '">' + health + '</span>' +
                             '  </div>' +
                             '</div>';
                         return html;

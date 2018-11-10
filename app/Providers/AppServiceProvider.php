@@ -54,7 +54,7 @@ class AppServiceProvider extends ServiceProvider
 
             $query = DB::table($table)->whereDate($field, $value);
             if($field2Value && $field2) $query->where($field2, '<>', $field2Value);
-            if($field3 && $field3Value) $query->where($field3, $field3Value);
+            $query->where($field3, $field3Value);
             return $query->count() == 0;
         });
 
