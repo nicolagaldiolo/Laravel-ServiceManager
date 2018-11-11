@@ -1,4 +1,5 @@
 @section('scripts')
+    <script src="{{ asset('js/vendors.js') }}"></script>
     <script src="{{ asset('js/app.js') }}"></script>
 @show
 <script>

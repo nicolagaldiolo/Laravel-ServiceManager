@@ -36,7 +36,7 @@ mix.scripts(
         'resources/metronic/vendors/custom/datatables/datatables.bundle.js',
         'resources/metronic/demo/default/custom/components/base/toastr.js',
         'node_modules/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.js',
-    ], 'public/js/vendor.js')
+    ], 'public/js/vendors.js')
     .babel(
         [
             'resources/messages/messages.js',
