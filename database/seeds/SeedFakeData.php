@@ -28,7 +28,7 @@ class SeedFakeData extends Seeder
 
         if(config('app.env') !== 'production') {
 
-            $otherUsers = factory(App\User::class, 10)->create([
+            $otherUsers = factory(App\User::class, 4)->create([
                 'password' => bcrypt(env('DEMOPASS', 'password')),
             ]);
 
@@ -40,19 +40,19 @@ class SeedFakeData extends Seeder
                     'user_id' => $user->id
                 ]);
 
-                $customers = factory(App\Customer::class, 4)->create([
+                $customers = factory(App\Customer::class, 3)->create([
                     'user_id' => $user->id
                 ]);
 
-                $providers = factory(App\Provider::class, 4)->create([
+                $providers = factory(App\Provider::class, 3)->create([
                     'user_id' => $user->id
                 ]);
 
-                $seviceTypes = factory(App\ServiceType::class, 4)->create([
+                $seviceTypes = factory(App\ServiceType::class, 3)->create([
                     'user_id' => $user->id
                 ]);
 
-                factory(App\Service::class, 6)->create([
+                factory(App\Service::class, 5)->create([
                     'customer_id' => collect($customers)->random()->id,
                     'provider_id' => collect($providers)->random()->id,
                     'service_type_id' => collect($seviceTypes)->random()->id,

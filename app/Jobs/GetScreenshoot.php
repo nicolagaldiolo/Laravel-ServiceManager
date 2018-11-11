@@ -5,6 +5,7 @@ namespace App\Jobs;
 use App\Service;
 use App\Provider;
 use Illuminate\Bus\Queueable;
+use Illuminate\Http\File;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -33,7 +34,7 @@ class GetScreenshoot implements ShouldQueue
      *
      * @return void
      */
-    public function handle() // ho un unico Job che uso per il modello Domains e Providers
+    public function handle() // ho un unico Job che uso per il modello Services e Providers
     {
         try {
 
@@ -46,7 +47,6 @@ class GetScreenshoot implements ShouldQueue
                 $folder = config('custompath.providers');
                 $url = $this->object->website;
             }
-
             if(!Storage::exists($folder)) Storage::makeDirectory($folder);
 
             $path = $folder . '/' . uniqid() . ".png";
