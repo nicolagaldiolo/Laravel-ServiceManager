@@ -27,9 +27,8 @@ mix.webpackConfig({
 
 
 // i don't use mix.scripts() because has some problems with `` characters.
-//mix.scripts(
 
-mix.babel(
+mix.scripts(
     [
         'resources/metronic/vendors/base/vendors.bundle.js',
         'resources/metronic/demo/default/base/scripts.bundle.js',
@@ -37,7 +36,10 @@ mix.babel(
         'resources/metronic/vendors/custom/datatables/datatables.bundle.js',
         'resources/metronic/demo/default/custom/components/base/toastr.js',
         'node_modules/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.js',
-        'resources/messages/messages.js',
-        'resources/js/app.js',
-    ], 'public/js/app.js')
+    ], 'public/js/vendor.js')
+    .babel(
+        [
+            'resources/messages/messages.js',
+            'resources/js/app.js',
+        ], 'public/js/app.js')
     .sass('resources/sass/app.scss', 'public/css');
