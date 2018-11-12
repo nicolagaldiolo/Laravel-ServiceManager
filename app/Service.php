@@ -46,12 +46,6 @@ class Service extends Model
             ->orderBy('deadline', 'ASC');
     }
 
-    // Ha molte NextRenewals
-    /*public function allNextRenewals(Renewal $renewal){
-        return $this->hasMany(Renewal::class)
-            ->whereDate('deadline', '>=', $renewal->deadline);
-    }*/
-
     // Ha molti RenewalsUnresolved
     public function renewalsUnresolved(){
         return $this->hasMany(Renewal::class)
@@ -110,7 +104,7 @@ class Service extends Model
 
     public function getScreenshootAttribute($screenshoot)
     {
-        return ($screenshoot) ? '/storage/' . $screenshoot : '';
+        return ($screenshoot) ? '/storage/' . $screenshoot : asset('images/default.png');
     }
 
     public function setScreenshootAttribute($screenshoot)

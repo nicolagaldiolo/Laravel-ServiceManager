@@ -52,14 +52,16 @@ class GetScreenshoot implements ShouldQueue
             $path = $folder . '/' . uniqid() . ".png";
             //"Fit should be one of `contain`, `max`, `fill`, `stretch`, `crop`"
 
-            Browsershot::url($url)
-                ->dismissDialogs()
-                ->waitUntilNetworkIdle()
-                ->windowSize(1080, 1080)
-                ->fit('fill', 640, 640)
-                ->save(public_path() . '/storage/' . $path);
+            if($url) {
+                Browsershot::url($url)
+                    ->dismissDialogs()
+                    ->waitUntilNetworkIdle()
+                    ->windowSize(1080, 1080)
+                    ->fit('fill', 640, 640)
+                    ->save(public_path() . '/storage/' . $path);
 
-            $this->object->update(['screenshoot' => $path]); // setto il nuovo path a db
+                $this->object->update(['screenshoot' => $path]); // setto il nuovo path a db
+            }
 
         }catch (\Exception $e){
             logger('Errore creazione screenshoot: ' . $e);

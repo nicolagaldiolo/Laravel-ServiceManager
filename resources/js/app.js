@@ -527,7 +527,7 @@ var HostingManager = function($) {
             ajax: '',
             columns: [
                 {data: "id"},
-                {data: "url"},
+                {data: "name"},
                 {data: "provider", orderable: false},
                 {data: "service_type", orderable: false},
                 {data: "deadline"},
@@ -563,6 +563,7 @@ var HostingManager = function($) {
                             label = "danger";
                             health = Lang.get('messages.offline');
                         }
+                        var health_html = (full.url) ? '<span class="m-badge m-badge--' + label + ' m-badge--dot"></span>&nbsp;<span class="m--font-bold m--font-' + label + '">' + health + '</span>' : '';
 
                         var html = '<div class="m-card-user m-card-user--sm">' +
                             '  <div class="m-card-user__pic">' +
@@ -570,8 +571,8 @@ var HostingManager = function($) {
                             '  </div>' +
                             '  <div class="m-card-user__details">' +
                             '    <span class="m-card-user__name">' + data + '</span>' +
-                            '    <span class="m-badge m-badge--' + label + ' m-badge--dot"></span>&nbsp;<span class="m--font-bold m--font-' + label + '">' + health + '</span>' +
-                            '  </div>' +
+                            '    ' + health_html +
+                            '  </div>'
                             '</div>';
                         return html;
                     },

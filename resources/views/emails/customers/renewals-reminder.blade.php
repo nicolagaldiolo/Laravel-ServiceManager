@@ -2,7 +2,7 @@
 # {{trans('messages.customer_reminder_title', ['attribute' => $customer->name])}}
 
 @foreach($customer->services as $service)
-### {{$service->url}} @if($service->serviceType) <span>{{$service->serviceType->name}}</span> @endif
+### {{$service->name}} @if($service->serviceType) <span>{{$service->serviceType->name}}</span> @endif
 
 @component('mail::table')
     | {{__('messages.deadline')}} | {{__('messages.status')}} | {{__('messages.amount')}} |

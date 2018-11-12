@@ -3,7 +3,7 @@
     <thead>
     <tr>
         <th>ID</th>
-        <th>{{__('messages.url')}}</th>
+        <th>{{__('messages.service')}}</th>
         <th>{{__('messages.provider')}}</th>
         <th>{{__('messages.service_type')}}</th>
         <th>{{__('messages.deadline')}}</th>

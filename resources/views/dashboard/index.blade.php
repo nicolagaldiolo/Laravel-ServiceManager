@@ -148,7 +148,7 @@
                                                 <div class="m-widget11__item_info">
                                                     <div class="m-widget11__item_info_top">
                                                         <div>
-                                                            <span class="m-widget11__title">{{$service->url}}</span>
+                                                            <span class="m-widget11__title">{{$service->name}}</span>
                                                             <span class="m-widget11__sub">{{$service->customer->name}}</span>
                                                         </div>
                                                         <a href="{{route('services.show', $service)}}"  class="btn m-btn--pill btn-outline-brand m-btn btn-sm">{{__('messages.edit')}}</a>
@@ -335,16 +335,18 @@
                             <div class="m-list-timeline m-list-timeline--skin-light">
                                 <div class="m-list-timeline__items">
                                     @foreach($data->services as $service)
-                                        <div class="m-list-timeline__item">
-                                            <span
-                                                class="m-list-timeline__badge @if($service->health == 1)m-list-timeline__badge--success @else m-list-timeline__badge--danger @endif"></span>
-                                            <span class="m-list-timeline__text">{{$service->url}}</span>
-                                            <span class="m-list-timeline__time">
-                                            <span
-                                                class="m-badge m-badge--wide @if($service->health == 1) m-badge--success @else m-badge--danger @endif">@if($service->health == 1)
-                                                    {{__('messages.online')}} @else {{__('messages.offline')}} @endif</span>
-                                        </span>
-                                        </div>
+                                        @if($service->url)
+                                            <div class="m-list-timeline__item">
+                                                <span
+                                                    class="m-list-timeline__badge @if($service->health == 1)m-list-timeline__badge--success @else m-list-timeline__badge--danger @endif"></span>
+                                                <span class="m-list-timeline__text">{{$service->url}}</span>
+                                                <span class="m-list-timeline__time">
+                                                <span
+                                                    class="m-badge m-badge--wide @if($service->health == 1) m-badge--success @else m-badge--danger @endif">@if($service->health == 1)
+                                                        {{__('messages.online')}} @else {{__('messages.offline')}} @endif</span>
+                                            </span>
+                                            </div>
+                                        @endif
                                     @endforeach
                                 </div>
                             </div>
@@ -547,7 +549,7 @@
         @foreach ($data->services as $service)
             @foreach ($service->renewals as $renewal)
                 dashboardEvents.push({
-                    title: '{{$service->url}}',
+                    title: '{{$service->name}}',
                     url: '{{route('services.show', $service)}}',
                     start: moment('{{$renewal->deadline}}'),
                     description: '{{\App\Enums\RenewalSM::getDescription($renewal->getStateAttribute()['attr'])}}',

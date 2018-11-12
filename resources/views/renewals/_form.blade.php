@@ -9,7 +9,7 @@
             <span data-field="deadline" class="invalid-feedback" role="alert"></span>
         </div>
         <div class="form-group m-form__group">
-            <label class="">{{__('messages.amount')}} *</label>
+            <label class="">{{__('messages.amount')}}</label>
             <div class="m-input-icon m-input-icon--left">
                 <input type='text' class="form-control required" name="amount" value="{{old('amount', amount_format($renewal->amount, false))}}"/>
                 <span class="m-input-icon__icon m-input-icon__icon--left">
@@ -18,7 +18,7 @@
                         </span>
                     </span>
             </div>
-            <span class="m-form__help">{{__('messages.currency_format')}} <code>€ 1.234,56</code></span>
+            <span class="m-form__help">{{__('messages.currency_format')}}</span>
             <span data-field="amount" class="invalid-feedback" role="alert"></span>
         </div>
     </div>

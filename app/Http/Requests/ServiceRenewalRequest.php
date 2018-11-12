@@ -31,7 +31,7 @@ class ServiceRenewalRequest extends FormRequest
         //unique:table,column,except,idColumn
 
         return [
-            'amount'        => 'sometimes|regex:/[0-9]+[.,]?[0-9]*/|max:8',
+            'amount'        => 'sometimes|nullable|regex:/[0-9]+[.,]?[0-9]*/|max:8',
             'deadline'      => 'required|date|unique_date_custom:renewals,deadline,' . $renewal . ',id,service_id,' . $service,
             'status'        => ['sometimes', 'required', new EnumValue(RenewalSM::class, false)],
 

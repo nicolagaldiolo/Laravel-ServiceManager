@@ -5,7 +5,7 @@
 
 ## {{__('messages.customer')}}: {{$customer->name}}
 @foreach($customer->services as $service)
-### {{$service->url}} @if($service->serviceType) <span>{{$service->serviceType->name}}</span> @endif @if($service->provider) <small style="padding: 1px 10px; border-radius: 10px; color:#fff; background: @if($service->provider->label) {{$service->provider->label}} @else #716aca @endif; ">{{$service->provider->name}}</small> @endif
+### {{$service->name}} @if($service->serviceType) <span>{{$service->serviceType->name}}</span> @endif @if($service->provider) <small style="padding: 1px 10px; border-radius: 10px; color:#fff; background: @if($service->provider->label) {{$service->provider->label}} @else #716aca @endif; ">{{$service->provider->name}}</small> @endif
 
 @component('mail::table')
     | {{__('messages.deadline')}} | {{__('messages.status')}} | {{__('messages.amount')}} |

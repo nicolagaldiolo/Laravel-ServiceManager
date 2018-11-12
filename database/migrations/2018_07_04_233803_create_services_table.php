@@ -16,7 +16,8 @@ class CreateServicesTable extends Migration
     {
         Schema::create('services', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('url');
+            $table->string('name');
+            $table->string('url')->nullable();
             $table->unsignedInteger('customer_id')->index();
             $table->unsignedInteger('provider_id')->index();
             $table->unsignedInteger('service_type_id')->index();

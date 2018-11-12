@@ -2,7 +2,55 @@
     <div class="m-form__section m-form__section--first">
 
         <div class="form-group m-form__group row">
-            <div class="col-lg-12">
+            <div class="col-lg-6">
+
+                <label class="">{{__('messages.service_name')}}</label>
+
+                <div class="m-input-icon m-input-icon--left">
+                    <input type="text" class="form-control m-input required" name="name" value="{{old('name', $service->name)}}">
+                    <span class="m-input-icon__icon m-input-icon__icon--left">
+                                                    <span>
+                                                        <i class="la la-tags"></i>
+                                                    </span>
+                                                </span>
+                </div>
+                <span class="m-form__help">{{__('messages.enter_service_name')}}</span>
+                @if ($errors->has('name'))
+                    <span class="invalid-feedback" role="alert">
+                                <strong>{{ $errors->first('name') }}</strong>
+                            </span>
+                @endif
+
+            </div>
+
+            <div class="col-lg-6">
+
+                <label class="">{{__('messages.url')}}</label>
+
+                <div class="m-input-icon m-input-icon--left">
+                    <input type="text" class="form-control m-input required" name="url" value="{{old('url', $service->url)}}">
+                    <span class="m-input-icon__icon m-input-icon__icon--left">
+                                                    <span>
+                                                        <i class="la la-globe"></i>
+                                                    </span>
+                                                </span>
+                </div>
+                <span class="m-form__help">{{__('messages.enter_url')}}</span>
+                @if ($errors->has('url'))
+                    <span class="invalid-feedback" role="alert">
+                                <strong>{{ $errors->first('url') }}</strong>
+                            </span>
+                @endif
+
+            </div>
+
+
+        </div>
+
+        <div class="m-form__seperator m-form__seperator--dashed"></div>
+
+        <div class="form-group m-form__group row">
+            <div class="col-lg-6">
                 <label class="">{{__('messages.customer')}} *</label>
                 <a href="{{route('customers.create')}}" data-target="customer_id" data-original-title="{{__('messages.new_customer')}}" class="open-modal btn btn-metal m-btn btn-sm m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="m-tooltip" data-placement="right">
                     <i class="la la-plus"></i>
@@ -21,11 +69,7 @@
                             </span>
                 @endif
             </div>
-        </div>
 
-        <div class="m-form__seperator m-form__seperator--dashed"></div>
-
-        <div class="form-group m-form__group row">
             <div class="col-lg-6">
                 <label class="">{{__('messages.provider')}} *</label>
 
@@ -47,6 +91,12 @@
                             </span>
                 @endif
             </div>
+        </div>
+
+        <div class="m-form__seperator m-form__seperator--dashed"></div>
+
+        <div class="form-group m-form__group row">
+
             <div class="col-lg-6">
                 <label class="">{{__('messages.service_type')}} *</label>
 
@@ -67,33 +117,6 @@
                                 <strong>{{ $errors->first('service_type_id') }}</strong>
                             </span>
                 @endif
-            </div>
-
-
-        </div>
-
-        <div class="m-form__seperator m-form__seperator--dashed"></div>
-
-        <div class="form-group m-form__group row">
-            <div class="col-lg-6">
-
-                <label class="">{{__('messages.url')}} *</label>
-
-                <div class="m-input-icon m-input-icon--left">
-                    <input type="text" class="form-control m-input required" name="url" value="{{old('url', $service->url)}}">
-                    <span class="m-input-icon__icon m-input-icon__icon--left">
-                                                    <span>
-                                                        <i class="la la-globe"></i>
-                                                    </span>
-                                                </span>
-                </div>
-                <span class="m-form__help">{{__('messages.enter_url')}}</span>
-                @if ($errors->has('url'))
-                    <span class="invalid-feedback" role="alert">
-                                <strong>{{ $errors->first('url') }}</strong>
-                            </span>
-                @endif
-
             </div>
 
             <div class="col-lg-6">
@@ -149,11 +172,10 @@
                 </div>
                 <div class="col-lg-6">
 
-                    <label class="">{{__('messages.amount')}} *</label>
+                    <label class="">{{__('messages.amount')}}</label>
 
                     <div class="m-input-icon m-input-icon--left">
-                        <input type='text' class="form-control required" name="amount"
-                               value="{{old('amount', $renewal->amountFormatted)}}"/>
+                        <input type='text' class="form-control required" name="amount" value="{{old('amount', amount_format($renewal->amount, false))}}"/>
                         <span class="m-input-icon__icon m-input-icon__icon--left">
                                                         <span>
                                                             <i class="la la-euro"></i>
@@ -161,7 +183,7 @@
                                                     </span>
 
                     </div>
-                    <span class="m-form__help">{{__('messages.currency_format')}} <code>€ 1.234,56</code></span>
+                    <span class="m-form__help">{{__('messages.currency_format')}}</span>
                     @if ($errors->has('amount'))
                         <span class="invalid-feedback" role="alert">
                                     <strong>{{ $errors->first('amount') }}</strong>

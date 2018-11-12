@@ -71,17 +71,14 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="m-widget13__item">
-                                        <span class="m-widget13__desc">{{__('messages.customer')}}</span>
-                                        @if($service->customer)
-                                            <span class="m-widget13__text m-widget13__text-bolder">{{$service->customer->name}}</span>
-                                        @endif
+                                        <span class="m-widget13__desc">{{__('messages.service_name')}}</span>
+                                        <span class="m-widget13__text m-widget13__text-bolder">{{$service->name}}</span>
                                     </div>
                                 </div>
-
                                 <div class="col-md-6">
                                     <div class="m-widget13__item">
                                         <span class="m-widget13__desc">{{__('messages.url')}}</span>
-                                        <span class="m-widget13__text">
+                                        <span class="m-widget13__text m-widget13__text-bolder">
                                             <a href="{{$service->url}}" target="_blank">{{$service->url}}</a>
                                         </span>
                                     </div>
@@ -90,13 +87,12 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="m-widget13__item">
-                                        <span class="m-widget13__desc">{{__('messages.service_type')}}</span>
-                                        @if($service->serviceType)
-                                            <span class="m-widget13__text m-widget13__text-bolder">{{$service->serviceType->name}}</span>
+                                        <span class="m-widget13__desc">{{__('messages.customer')}}</span>
+                                        @if($service->customer)
+                                            <span class="m-widget13__text m-widget13__text-bolder">{{$service->customer->name}}</span>
                                         @endif
                                     </div>
                                 </div>
-
                                 <div class="col-md-6">
                                     <div class="m-widget13__item">
                                         <span class="m-widget13__desc">{{__('messages.provider')}}</span>
@@ -114,6 +110,14 @@
                                         <span class="m-widget13__desc">{{__('messages.frequency_renewal')}}</span>
                                         @if($service->renewalFrequency)
                                             <span class="m-widget13__text m-widget13__text-bolder">{{$service->renewalFrequency->frequency}}</span>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="m-widget13__item">
+                                        <span class="m-widget13__desc">{{__('messages.service_type')}}</span>
+                                        @if($service->serviceType)
+                                            <span class="m-widget13__text m-widget13__text-bolder">{{$service->serviceType->name}}</span>
                                         @endif
                                     </div>
                                 </div>

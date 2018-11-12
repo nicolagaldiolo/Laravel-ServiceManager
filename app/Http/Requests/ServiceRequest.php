@@ -30,7 +30,8 @@ class ServiceRequest extends FormRequest
         ];
 
         $rules = [
-            'url'                   => 'required|url|max:255',
+            'name'                  => 'required|string|max:255',
+            'url'                   => 'sometimes|nullable|url|max:255',
             'customer_id'           => 'required|exists:customers,id,user_id,' . Auth::user()->id,
             'provider_id'           => 'required|exists:providers,id,user_id,' . Auth::user()->id,
             'service_type_id'       => 'required|exists:service_types,id,user_id,' . Auth::user()->id,

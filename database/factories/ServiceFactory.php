@@ -6,6 +6,7 @@ use App\Enums\FrequencyRenewals;
 
 $factory->define(App\Service::class, function (Faker $faker) {
     return [
+        'name' => $faker->unique()->domainName,
         'url' => 'http://' . $faker->domainName,
         'customer_id' => factory(App\Customer::class)->make(),
         'provider_id' => factory(App\Provider::class)->make(),
