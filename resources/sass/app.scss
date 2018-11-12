@@ -8,6 +8,23 @@
     display: block;
 }
 
+.m-brand{
+    .m-brand__logo{
+        .m-brand__logo-wrapper{
+            .m-menu__link-icon{
+                font-size: 1.9rem;
+                padding-right: 5px;
+                vertical-align:middle;
+            }
+            color: #fff;
+            font-weight: 600;
+            font-size: rem;
+            white-space: nowrap;
+            text-decoration:none;
+        }
+    }
+}
+
 .m-btn--icon.m-btn--icon-only.btn-sm.open-modal{
     width: 18px;
     height: 18px;
@@ -62,6 +79,14 @@
                     }
                 }
             }
+        }
+    }
+}
+
+.m-card-user{
+    &.m-card-user--sm{
+        .m-card-user__details{
+            padding-top: 0;
         }
     }
 }

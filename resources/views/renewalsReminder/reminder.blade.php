@@ -34,7 +34,12 @@
                                 <span class="m-portlet__head-icon">
                                     <i class="flaticon-layers"></i>
                                 </span>
-                                        <h3 class="m-portlet__head-text">{{$service->url}}</h3>
+                                        <h3 class="m-portlet__head-text">
+                                            {{$service->name}}
+                                            @if($service->url)
+                                                <small>{{$service->url}}</small>
+                                            @endif
+                                        </h3>
                                     </div>
                                 </div>
                                 <div class="m-portlet__head-tools">

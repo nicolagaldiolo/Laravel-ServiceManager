@@ -18,7 +18,9 @@
                             <div class="m-stack m-stack--ver m-stack--general">
                                 <div class="m-stack__item m-stack__item--middle m-brand__logo">
                                     <a href="/" class="m-brand__logo-wrapper">
-                                        <img alt="{{ config('app.name') }}" src="{{ asset('images/logo/logo_default_dark.png')}}">
+                                        <i class="m-menu__link-icon flaticon-layers"></i>
+                                        {{ config('app.name') }}
+                                        {{--<img alt="{{ config('app.name') }}" src="{{ asset('images/logo/logo_default_dark.png')}}">--}}
                                     </a>
                                 </div>
                                 <div class="m-stack__item m-stack__item--middle m-brand__tools">

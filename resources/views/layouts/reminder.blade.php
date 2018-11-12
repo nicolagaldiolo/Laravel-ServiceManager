@@ -13,7 +13,7 @@
             <div class="m-grid__item">
                 <div class="m-login__logo">
                     <a href="#">
-                        <img width="70" src="{{ asset('images/logo/logo_large.png')}}">
+                        <img width="70" src="{{ asset('images/logo/logo_large_white.png')}}">
                     </a>
                 </div>
             </div>
