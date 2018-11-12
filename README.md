@@ -1,4 +1,4 @@
-# Laravel-HostingManager
+# Laravel-ServiceManager
 
 ## About
 Coming soon
