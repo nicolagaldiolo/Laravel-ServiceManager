@@ -17,6 +17,7 @@ use App\Http\Requests\ServiceRequest;
 use App\Http\Traits\DataTableServiceTrait;
 use App\User;
 use Carbon\Carbon;
+use Faker\Factory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
@@ -24,6 +25,7 @@ use Illuminate\Support\Facades\Mail;
 use Jenssegers\Date\Date;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use Yajra\DataTables\DataTables;
+
 
 class ServicesController extends Controller
 {
@@ -37,12 +39,10 @@ class ServicesController extends Controller
      */
     public function index()
     {
-
         if(request()->wantsJson() || request()->expectsJson()) {
             $services = Auth::user()->services()->with('renewalsUnresolved','nextRenewal', 'provider', 'customer', 'serviceType')->get();
             return $this->getServicesDataTablesTraits($services);
         }
-
         return view('services.index');
 
     }

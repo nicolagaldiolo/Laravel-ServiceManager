@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\CustomLibs\FactoryJob;
 use Laravolt\Avatar\Facade as Avatar;
 use App\Events\UserRegister;
 use App\User;
@@ -30,6 +31,10 @@ class UserObserver
     public function created(User $user)
     {
         event(new UserRegister($user));
+
+        $factoryJob = new FactoryJob($user, true);
+        $factoryJob->run();
+
     }
 
     /**

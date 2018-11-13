@@ -19,7 +19,7 @@ class SeedFakeData extends Seeder
         Storage::deleteDirectory(config('custompath.services'));
         Storage::deleteDirectory(config('custompath.providers'));
 
-        $me = factory(App\User::class, 1)->create([
+        factory(App\User::class, 1)->create([
             'name' => env('DEMOUSER', 'Demo'),
             'email' => env('DEMOEMAIL', 'demouser@example.com'),
             'password' => bcrypt(env('DEMOPASS', 'password')),
@@ -27,43 +27,9 @@ class SeedFakeData extends Seeder
         ]);
 
         if(config('app.env') !== 'production') {
-
-            $otherUsers = factory(App\User::class, 4)->create([
+            factory(App\User::class, 4)->create([
                 'password' => bcrypt(env('DEMOPASS', 'password')),
             ]);
-
-            $users = $me->merge($otherUsers);
-
-            $users->each(function ($user) {
-
-                $RenewalFrequencies = factory(App\RenewalFrequency::class, 1)->create([
-                    'user_id' => $user->id
-                ]);
-
-                $customers = factory(App\Customer::class, 3)->create([
-                    'user_id' => $user->id
-                ]);
-
-                $providers = factory(App\Provider::class, 3)->create([
-                    'user_id' => $user->id
-                ]);
-
-                $seviceTypes = factory(App\ServiceType::class, 3)->create([
-                    'user_id' => $user->id
-                ]);
-
-                factory(App\Service::class, 5)->create([
-                    'customer_id' => collect($customers)->random()->id,
-                    'provider_id' => collect($providers)->random()->id,
-                    'service_type_id' => collect($seviceTypes)->random()->id,
-                    'renewal_frequency_id' => collect($RenewalFrequencies)->random()->id
-                ])->each(function ($service){
-                    factory(App\Renewal::class, 1)->create([
-                        'service_id' => $service->id,
-                    ]);
-                });
-
-            });
         }
     }
 }
