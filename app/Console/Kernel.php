@@ -39,7 +39,7 @@ class Kernel extends ConsoleKernel
             Service::get()->each(function($item){
                 event(new CheckServiceStatus($item));
             });
-        })->everyThirtyMinutes();
+        })->hourly();
 
         $schedule->call(function(){
             Service::get()->each(function($item){
