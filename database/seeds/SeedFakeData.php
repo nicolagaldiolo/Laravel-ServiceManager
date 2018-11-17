@@ -15,7 +15,7 @@ class SeedFakeData extends Seeder
     {
         DB::statement('SET FOREIGN_KEY_CHECKS=0');
 
-        Storage::deleteDirectory(config('custompath.avatars'));
+        Storage::deleteDirectory(config('custompath.users'));
         Storage::deleteDirectory(config('custompath.services'));
         Storage::deleteDirectory(config('custompath.providers'));
 
