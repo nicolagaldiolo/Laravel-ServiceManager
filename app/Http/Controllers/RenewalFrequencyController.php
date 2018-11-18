@@ -139,7 +139,9 @@ class RenewalFrequencyController extends Controller
     {
         $ids = explode(",",$request->ids);
 
-        Auth::user()->renewalFrequencies()->whereIn('renewal_frequencies.id',$ids)->delete();
+        foreach ($ids as $id){
+            Auth::user()->renewalFrequencies()->findOrFail($id)->delete();
+        }
 
         return [
             'message' => trans_choice('messages.renewal_frequency_delete_status', count($ids))

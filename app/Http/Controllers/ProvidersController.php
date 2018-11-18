@@ -138,7 +138,9 @@ class ProvidersController extends Controller
     {
         $ids = explode(",",$request->ids);
 
-        Auth::user()->providers()->whereIn('providers.id',$ids)->delete();
+        foreach ($ids as $id){
+            Auth::user()->providers()->findOrFail($id)->delete();
+        }
 
         return [
             'message' => trans_choice('messages.provider_delete_status', count($ids))

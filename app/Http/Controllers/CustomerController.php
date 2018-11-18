@@ -169,7 +169,9 @@ class CustomerController extends Controller
     {
         $ids = explode(",",$request->ids);
 
-        Auth::user()->customers()->whereIn('customers.id',$ids)->delete();
+        foreach ($ids as $id){
+            Auth::user()->customers()->findOrFail($id)->delete();
+        }
 
         return [
             'message' => trans_choice('messages.customer_delete_status', count($ids)),

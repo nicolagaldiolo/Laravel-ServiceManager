@@ -122,7 +122,9 @@ class ServiceRenewalsController extends Controller
     {
         $ids = explode(",",$request->ids);
 
-        $service->renewals()->whereIn('renewals.id',$ids)->delete();
+        foreach ($ids as $id){
+            $service->renewals()->findOrFail($id)->delete();
+        }
 
         return [
             'message' => trans_choice('messages.renewal_delete_status', count($ids))

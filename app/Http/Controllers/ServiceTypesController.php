@@ -131,7 +131,9 @@ class ServiceTypesController extends Controller
     {
         $ids = explode(",",$request->ids);
 
-        Auth::user()->serviceTypes()->whereIn('service_types.id',$ids)->delete();
+        foreach ($ids as $id){
+            Auth::user()->serviceTypes()->findOrFail($id)->delete();
+        }
 
         return [
             'message' => trans_choice('messages.service_types_delete_status', count($ids))

@@ -138,7 +138,9 @@ class UserController extends Controller
         $ids = explode(",",$request->ids);
         $redirect = (in_array(Auth::user()->id, $ids)) ? route('login') : '';
 
-        User::whereIn('id',$ids)->delete();
+        foreach ($ids as $id){
+            Auth::user()->findOrFail($id)->delete();
+        }
 
         return [
             'redirect' => $redirect,
