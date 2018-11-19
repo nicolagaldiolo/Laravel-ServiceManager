@@ -111,4 +111,4 @@ sudo find /path/to/your/laravel/root/directory -type d -exec chmod 775 {} \;
 sudo chgrp -R www-data storage bootstrap/cache
 sudo chmod -R ug+rwx storage bootstrap/cache
 ```
-[Setup apllication](#installation)
+[Setup application](#installation)
