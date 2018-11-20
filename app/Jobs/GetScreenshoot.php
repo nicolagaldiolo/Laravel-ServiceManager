@@ -39,32 +39,32 @@ class GetScreenshoot implements ShouldQueue
         try {
 
             if($this->object instanceof Service){
-                $folder = config('custompath.services');
+                $folder = config('custompath.users') . '/' . $this->object->user()->id . '/' . config('custompath.services');
                 $url = $this->object->url;
             }
 
             if($this->object instanceof Provider){
-                $folder = config('custompath.providers');
+                $folder = config('custompath.users') . '/' . $this->object->user->id . '/' . config('custompath.providers');
                 $url = $this->object->website;
             }
+
             if(!Storage::exists($folder)) Storage::makeDirectory($folder);
 
-            $path = $folder . '/' . uniqid() . ".png";
+            $file = uniqid() . ".png";
             //"Fit should be one of `contain`, `max`, `fill`, `stretch`, `crop`"
-
             if($url) {
                 Browsershot::url($url)
                     ->dismissDialogs()
                     ->waitUntilNetworkIdle()
                     ->windowSize(1080, 1080)
                     ->fit('fill', 640, 640)
-                    ->save(public_path() . '/storage/' . $path);
+                    ->save(public_path() . '/storage/' . $folder . '/' . $file);
 
-                $this->object->update(['screenshoot' => $path]); // setto il nuovo path a db
+                $this->object->update(['screenshoot' => $file]); // setto il nuovo path a db
             }
 
         }catch (\Exception $e){
-            logger('Errore creazione screenshoot: ' . $e);
+            //logger('Errore creazione screenshoot: ' . $e);
         }
     }
 }

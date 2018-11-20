@@ -17,7 +17,6 @@ class ProvidersController extends Controller
      */
     public function index()
     {
-
         if(request()->wantsJson() || request()->expectsJson()) {
             $providers = Auth::user()->providers()->get();
 

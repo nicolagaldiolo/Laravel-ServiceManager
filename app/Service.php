@@ -104,7 +104,9 @@ class Service extends Model
 
     public function getScreenshootAttribute($screenshoot)
     {
-        return ($screenshoot) ? '/storage/' . $screenshoot : asset('images/default.png');
+        return ($screenshoot) ?
+            '/storage/' . config('custompath.users') . '/' . $this->user()->id . '/' . config('custompath.services') . '/' .  $screenshoot :
+            asset('images/default.png');
     }
 
     public function setScreenshootAttribute($screenshoot)

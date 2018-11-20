@@ -6,7 +6,7 @@ use App\Service;
 use App\Provider;
 use App\User;
 use App\Observers\UserObserver;
-use App\Observers\DomainObserver;
+use App\Observers\ServiceObserver;
 use App\Observers\ProviderObserver;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\App;
@@ -29,7 +29,7 @@ class AppServiceProvider extends ServiceProvider
     {
 
         User::observe(UserObserver::class);
-        Service::observe(DomainObserver::class);
+        Service::observe(ServiceObserver::class);
         Provider::observe(ProviderObserver::class);
 
         \View::composer(['layouts.app', 'dashboard.index'], function ($view){

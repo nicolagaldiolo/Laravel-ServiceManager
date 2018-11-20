@@ -90,10 +90,10 @@ class User extends Authenticatable implements MustVerifyEmail
             if(is_string($avatar)){
                 throw new \Exception('Avatar is a string');
             }else{
-                $path = $avatar->hashName(config('custompath.users'));
+                $path = $avatar->hashName(config('custompath.users') . '/' . $this->id . '/' . uniqid() .".png");
             }
         }catch (\Exception $e){
-            $path = config('custompath.users') . '/' . uniqid() .".png";
+            $path = config('custompath.users') . '/' . $this->id . '/' . uniqid() .".png";
         }
 
         $image = Image::make($avatar)->fit(200);

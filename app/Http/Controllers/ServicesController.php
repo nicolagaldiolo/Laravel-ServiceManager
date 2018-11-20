@@ -43,6 +43,7 @@ class ServicesController extends Controller
             $services = Auth::user()->services()->with('renewalsUnresolved','nextRenewal', 'provider', 'customer', 'serviceType')->get();
             return $this->getServicesDataTablesTraits($services);
         }
+
         return view('services.index');
 
     }

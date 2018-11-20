@@ -22,7 +22,9 @@ class Provider extends Model
 
     public function getScreenshootAttribute($screenshoot)
     {
-        return ($screenshoot) ? '/storage/' . $screenshoot : '';
+        return ($screenshoot) ?
+            '/storage/' . config('custompath.users') . '/' . $this->user->id . '/' . config('custompath.providers') . '/' .  $screenshoot :
+            asset('images/default.png');
     }
 
     public function setScreenshootAttribute($screenshoot)

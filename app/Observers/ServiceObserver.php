@@ -7,7 +7,7 @@ use App\Events\CheckServiceStatus;
 use App\Events\GenerateScreen;
 use File;
 
-class DomainObserver
+class ServiceObserver
 {
 
     /**
