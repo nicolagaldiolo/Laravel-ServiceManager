@@ -518,7 +518,7 @@ var HostingManager = function($) {
                     }
                 }
             ],
-            order: [[4, 'desc']],
+            order: [[4, 'asc']],
 
             headerCallback: dataTableHeaderCallback,
 
@@ -757,7 +757,7 @@ var HostingManager = function($) {
                     }
                 }
             ],
-            order: [[1, 'desc']],
+            order: [[2, 'asc']],
 
             headerCallback: dataTableHeaderCallback,
 

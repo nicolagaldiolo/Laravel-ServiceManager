@@ -42,6 +42,13 @@ class Kernel extends ConsoleKernel
         })->hourly();
 
         $schedule->call(function(){
+
+            event(new ToPayServicesAlert());
+            event(new CustomerRenewalReminder());
+
+        })->weeklyOn(1, '1:00');
+
+        $schedule->call(function(){
             Service::get()->each(function($item){
                 event(new GenerateScreen($item));
             });
@@ -50,10 +57,7 @@ class Kernel extends ConsoleKernel
                 event(new GenerateScreen($item));
             });
 
-            event(new ToPayServicesAlert());
-            event(new CustomerRenewalReminder());
-
-        })->weekly();
+        })->weeklyOn(1, '3:00');
 
     }
 
