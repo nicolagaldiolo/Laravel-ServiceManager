@@ -85,6 +85,7 @@ stderr_logfile=/PATH-TO-FOLDER/storage/logs/laravel.log
 
 ### Supervisor Command
 ```
+$ php artisan queue:restart
 $ sudo supervisorctl reread
 $ sudo supervisorctl update
 $ sudo supervisorctl start laravel-worker:*
