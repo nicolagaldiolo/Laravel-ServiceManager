@@ -31,6 +31,7 @@ class SocialAccountController extends Controller
         try {
             $socialUser = Socialite::driver($socialProvider)->user();
         } catch (\Exception $e) {
+            logger("Social Login Fallito: " . $e);
             return redirect()->route('login');
         }
 

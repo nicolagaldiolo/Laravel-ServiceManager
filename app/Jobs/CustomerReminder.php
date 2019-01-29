@@ -38,7 +38,8 @@ class CustomerReminder implements ShouldQueue
      */
     public function handle()
     {
-        $this->customer->update(['token' => str_random(60)]);
+        if(is_null($this->customer->token)) $this->customer->update(['token' => str_random(60)]);
+
         Date::setLocale($this->customer->user->lang ?? App::getLocale()); // forzo la lingua di default in caso qualche utente abbia la lingua settata a NULL perchè altrimenti Date mi torna l'inglese
         Mail::to($this->customer->email)->locale($this->customer->user->lang)->send(new CustomerRenewalsReminder($this->customer));
     }

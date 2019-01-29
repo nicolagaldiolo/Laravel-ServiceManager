@@ -518,7 +518,10 @@ var HostingManager = function($) {
                     }
                 }
             ],
-            order: [[4, 'asc']],
+            order: [
+                [7, 'desc'],
+                [4, 'asc']
+            ],
 
             headerCallback: dataTableHeaderCallback,
 
