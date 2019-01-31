@@ -9,6 +9,7 @@ return [
     |
     |
     */
+    'pippo' => 'Pippo pluto paperino',
     'quick_actions' => 'Azioni rapide',
     'selectLang' => 'Seleziona lingua',
     'confirm' => 'Conferma',

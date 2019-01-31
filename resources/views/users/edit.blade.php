@@ -222,7 +222,6 @@
                     //addRemoveLinks: true,
                     acceptedFiles: "image/*",
                     accept: function(file, done) {
-                        console.log("Andata");
                         done();
                     }
                 };

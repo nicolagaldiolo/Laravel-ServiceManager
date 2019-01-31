@@ -277,7 +277,7 @@ var HostingManager = function($) {
                 'csvHtml5',
                 'pdfHtml5',
                 {
-                    text: '<i class="m-nav__link-icon flaticon-delete-2"></i>',
+                    text: '<i class="m-nav__link-icon flaticon-delete"></i>',
                     className: '',
                     action: function ( e, dt, node, config ) {
                         deleteAllDataTableRecord(dataTable, deleteAllRoute);
@@ -386,7 +386,7 @@ var HostingManager = function($) {
                 'csvHtml5',
                 'pdfHtml5',
                 {
-                    text: '<i class="m-nav__link-icon flaticon-delete-2"></i>',
+                    text: '<i class="m-nav__link-icon flaticon-delete"></i>',
                     className: '',
                     action: function ( e, dt, node, config ) {
                         deleteAllDataTableRecord(dataTable, deleteAllRoute);
@@ -451,7 +451,7 @@ var HostingManager = function($) {
                 'csvHtml5',
                 'pdfHtml5',
                 {
-                    text: '<i class="m-nav__link-icon flaticon-delete-2"></i>',
+                    text: '<i class="m-nav__link-icon flaticon-delete"></i>',
                     className: '',
                     action: function ( e, dt, node, config ) {
                         deleteAllDataTableRecord(dataTable, deleteAllRoute);
@@ -511,7 +511,7 @@ var HostingManager = function($) {
                 'csvHtml5',
                 'pdfHtml5',
                 {
-                    text: '<i class="m-nav__link-icon flaticon-delete-2"></i>',
+                    text: '<i class="m-nav__link-icon flaticon-delete"></i>',
                     className: '',
                     action: function ( e, dt, node, config ) {
                         deleteAllDataTableRecord(dataTable, deleteAllRoute);
@@ -638,7 +638,7 @@ var HostingManager = function($) {
                 'csvHtml5',
                 'pdfHtml5',
                 {
-                    text: '<i class="m-nav__link-icon flaticon-delete-2"></i>',
+                    text: '<i class="m-nav__link-icon flaticon-delete"></i>',
                     className: '',
                     action: function ( e, dt, node, config ) {
                         deleteAllDataTableRecord(dataTable, deleteAllRoute);
@@ -695,7 +695,7 @@ var HostingManager = function($) {
                 'csvHtml5',
                 'pdfHtml5',
                 {
-                    text: '<i class="m-nav__link-icon flaticon-delete-2"></i>',
+                    text: '<i class="m-nav__link-icon flaticon-delete"></i>',
                     className: '',
                     action: function ( e, dt, node, config ) {
                         deleteAllDataTableRecord(dataTable, deleteAllRoute);
@@ -753,7 +753,7 @@ var HostingManager = function($) {
                 'csvHtml5',
                 'pdfHtml5',
                 {
-                    text: '<i class="m-nav__link-icon flaticon-delete-2"></i>',
+                    text: '<i class="m-nav__link-icon flaticon-delete"></i>',
                     className: '',
                     action: function ( e, dt, node, config ) {
                         deleteAllDataTableRecord(dataTable, deleteAllRoute);

@@ -21,7 +21,7 @@ mix.js('resources/assets/js/app.js', 'public/js')
 mix.webpackConfig({
     plugins:
         [
-            new WebpackShellPlugin({onBuildStart:['php artisan lang:js -c --quiet'], onBuildEnd:[]})
+            new WebpackShellPlugin({onBuildStart:['php artisan lang:js --quiet'], onBuildEnd:[]})
         ]
 });
 
@@ -30,11 +30,11 @@ mix.webpackConfig({
 
 mix.scripts(
     [
-        'resources/metronic/vendors/base/vendors.bundle.js',
-        'resources/metronic/demo/default/base/scripts.bundle.js',
-        'resources/metronic/vendors/custom/fullcalendar/fullcalendar.bundle.js',
-        'resources/metronic/vendors/custom/datatables/datatables.bundle.js',
-        'resources/metronic/demo/default/custom/components/base/toastr.js',
+        'metronic_v5.5.5/dist/default/assets/vendors/base/vendors.bundle.js',
+        'metronic_v5.5.5/dist/default/assets/demo/default/base/scripts.bundle.js',
+        'metronic_v5.5.5/dist/default/assets/vendors/custom/fullcalendar/fullcalendar.bundle.js',
+        'metronic_v5.5.5/dist/default/assets/vendors/custom/datatables/datatables.bundle.js',
+        'metronic_v5.5.5/dist/default/assets/demo/default/custom/components/base/toastr.js',
         'node_modules/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.js',
     ], 'public/js/vendors.js')
     .babel(

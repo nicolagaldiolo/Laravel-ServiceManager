@@ -1,0 +1,304 @@
+{
+    "config": {
+        "demo": "default",
+        "debug": false,
+        "compile": {
+            "rtl": {
+                "enabled": false,
+                "skip": [
+                    "select2",
+                    "socicon",
+                    "line-awesome",
+                    "flaticon",
+                    "metronic",
+                    "fontawesome5",
+                    "jstree",
+                    "owl.carousel",
+                    "fullcalendar",
+                    "bootstrap-datepicker",
+                    "bootstrap-datetime-picker",
+                    "bootstrap-switch",
+                    "nouislider"
+                ]
+            },
+            "jsUglify": false,
+            "cssMinify": false,
+            "jsSourcemaps": false,
+            "cssSourcemaps": false
+        },
+        "path": {
+            "src": "./../src",
+            "node_modules": "./node_modules",
+            "demo_api_url": "https://keenthemes.com/metronic/themes/themes/metronic/dist/preview/"
+        },
+        "dist": [
+            "./../dist/**/assets"
+        ]
+    },
+    "build": {
+        "vendors": {
+            "base": {
+                "src": {
+                    "mandatory": {
+                        "jquery": {
+                            "scripts": [
+                                "{$config.path.node_modules}/jquery/dist/jquery.js"
+                            ]
+                        },
+                        "popper.js": {
+                            "scripts": [
+                                "{$config.path.node_modules}/popper.js/dist/umd/popper.js"
+                            ]
+                        },
+                        "bootstrap": {
+                            "scripts": [
+                                "{$config.path.node_modules}/bootstrap/dist/js/bootstrap.min.js"
+                            ]
+                        },
+                        "js-cookie": {
+                            "scripts": [
+                                "{$config.path.node_modules}/js-cookie/src/js.cookie.js"
+                            ]
+                        },
+                        "moment": {
+                            "scripts": [
+                                "{$config.path.node_modules}/moment/min/moment.min.js"
+                            ]
+                        },
+                        "tooltip.js": {
+                            "scripts": [
+                                "{$config.path.node_modules}/tooltip.js/dist/umd/tooltip.min.js"
+                            ]
+                        },
+                        "perfect-scrollbar": {
+                            "styles": [
+                                "{$config.path.node_modules}/perfect-scrollbar/css/perfect-scrollbar.css"
+                            ],
+                            "scripts": [
+                                "{$config.path.node_modules}/perfect-scrollbar/dist/perfect-scrollbar.js"
+                            ]
+                        },
+                        "wnumb": {
+                            "scripts": [
+                                "{$config.path.node_modules}/wnumb/wNumb.js"
+                            ]
+                        }
+                    },
+                    "optional": {
+                        "bootstrap-datepicker": {
+                            "styles": [
+                                "{$config.path.node_modules}/bootstrap-datepicker/dist/css/bootstrap-datepicker3.min.css"
+                            ],
+                            "scripts": [
+                                "{$config.path.node_modules}/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js",
+                                "{$config.path.src}/js/framework/components/plugins/forms/bootstrap-datepicker.init.js"
+                            ]
+                        },
+                        "select2": {
+                            "styles": [
+                                "{$config.path.node_modules}/select2/dist/css/select2.css"
+                            ],
+                            "scripts": [
+                                "{$config.path.node_modules}/select2/dist/js/select2.full.js"
+                            ]
+                        },
+                        "dropzone": {
+                            "styles": [
+                                "{$config.path.node_modules}/dropzone/dist/dropzone.css"
+                            ],
+                            "scripts": [
+                                "{$config.path.node_modules}/dropzone/dist/dropzone.js"
+                            ]
+                        },
+                        "toastr": {
+                            "styles": [
+                                "{$config.path.node_modules}/toastr/build/toastr.css"
+                            ],
+                            "scripts": [
+                                "{$config.path.node_modules}/toastr/build/toastr.min.js"
+                            ]
+                        },
+                        "chart.js": {
+                            "scripts": [
+                                "{$config.path.node_modules}/chart.js/dist/Chart.bundle.js",
+                                "{$config.path.src}/js/framework/components/plugins/charts/chart.init.js"
+                            ]
+                        },
+                        "sweetalert2": {
+                            "styles": [
+                                "{$config.path.node_modules}/sweetalert2/dist/sweetalert2.min.css"
+                            ],
+                            "scripts": [
+                                "{$config.path.node_modules}/es6-promise-polyfill/promise.min.js",
+                                "{$config.path.node_modules}/sweetalert2/dist/sweetalert2.min.js",
+                                "{$config.path.src}/js/framework/components/plugins/base/sweetalert2.init.js"
+                            ]
+                        },
+                        "line-awesome": {
+                            "styles": [
+                                "{$config.path.src}/vendors/line-awesome/css/line-awesome.css"
+                            ],
+                            "fonts": [
+                                "{$config.path.src}/vendors/line-awesome/fonts/**"
+                            ]
+                        },
+                        "flaticon": {
+                            "styles": [
+                                "{$config.path.src}/vendors/flaticon/css/flaticon.css"
+                            ],
+                            "fonts": [
+                                "{$config.path.src}/vendors/flaticon/fonts/**"
+                            ]
+                        }
+                    }
+                },
+                "bundle": {
+                    "styles": "{$config.output}/vendors/base/vendors.bundle.css",
+                    "scripts": "{$config.output}/vendors/base/vendors.bundle.js",
+                    "images": "{$config.output}/vendors/base/images",
+                    "fonts": "{$config.output}/vendors/base/fonts"
+                }
+            },
+            "custom": {
+                "fullcalendar": {
+                    "src": {
+                        "styles": [
+                            "{$config.path.node_modules}/fullcalendar/dist/fullcalendar.css"
+                        ],
+                        "scripts": [
+                            "{$config.path.node_modules}/fullcalendar/dist/fullcalendar.js",
+                            "{$config.path.node_modules}/fullcalendar/dist/gcal.js"
+                        ]
+                    },
+                    "bundle": {
+                        "styles": "{$config.output}/vendors/custom/fullcalendar/fullcalendar.bundle.css",
+                        "scripts": "{$config.output}/vendors/custom/fullcalendar/fullcalendar.bundle.js"
+                    }
+                },
+                "datatables.net": {
+                    "src": {
+                        "styles": [
+                            "{$config.path.node_modules}/datatables.net-bs4/css/dataTables.bootstrap4.css",
+                            "{$config.path.node_modules}/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css",
+                            "{$config.path.node_modules}/datatables.net-autofill-bs4/css/autoFill.bootstrap4.min.css",
+                            "{$config.path.node_modules}/datatables.net-colreorder-bs4/css/colReorder.bootstrap4.min.css",
+                            "{$config.path.node_modules}/datatables.net-fixedcolumns-bs4/css/fixedColumns.bootstrap4.min.css",
+                            "{$config.path.node_modules}/datatables.net-fixedheader-bs4/css/fixedHeader.bootstrap4.min.css",
+                            "{$config.path.node_modules}/datatables.net-keytable-bs4/css/keyTable.bootstrap4.min.css",
+                            "{$config.path.node_modules}/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css",
+                            "{$config.path.node_modules}/datatables.net-rowgroup-bs4/css/rowGroup.bootstrap4.min.css",
+                            "{$config.path.node_modules}/datatables.net-rowreorder-bs4/css/rowReorder.bootstrap4.min.css",
+                            "{$config.path.node_modules}/datatables.net-scroller-bs4/css/scroller.bootstrap4.min.css",
+                            "{$config.path.node_modules}/datatables.net-select-bs4/css/select.bootstrap4.min.css"
+                        ],
+                        "scripts": [
+                            "{$config.path.node_modules}/datatables.net/js/jquery.dataTables.js",
+                            "{$config.path.node_modules}/datatables.net-bs4/js/dataTables.bootstrap4.js",
+                            "{$config.path.src}/js/framework/components/plugins/misc/datatables.init.js",
+                            "{$config.path.node_modules}/datatables.net-autofill/js/dataTables.autoFill.min.js",
+                            "{$config.path.node_modules}/datatables.net-autofill-bs4/js/autoFill.bootstrap4.min.js",
+                            "{$config.path.node_modules}/jszip/dist/jszip.min.js",
+                            "{$config.path.node_modules}/pdfmake/build/pdfmake.min.js",
+                            "{$config.path.node_modules}/pdfmake/build/vfs_fonts.js",
+                            "{$config.path.node_modules}/datatables.net-buttons/js/dataTables.buttons.min.js",
+                            "{$config.path.node_modules}/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js",
+                            "{$config.path.node_modules}/datatables.net-buttons/js/buttons.colVis.js",
+                            "{$config.path.node_modules}/datatables.net-buttons/js/buttons.flash.js",
+                            "{$config.path.node_modules}/datatables.net-buttons/js/buttons.html5.js",
+                            "{$config.path.node_modules}/datatables.net-buttons/js/buttons.print.js",
+                            "{$config.path.node_modules}/datatables.net-colreorder/js/dataTables.colReorder.min.js",
+                            "{$config.path.node_modules}/datatables.net-fixedcolumns/js/dataTables.fixedColumns.min.js",
+                            "{$config.path.node_modules}/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js",
+                            "{$config.path.node_modules}/datatables.net-keytable/js/dataTables.keyTable.min.js",
+                            "{$config.path.node_modules}/datatables.net-responsive/js/dataTables.responsive.min.js",
+                            "{$config.path.node_modules}/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js",
+                            "{$config.path.node_modules}/datatables.net-rowgroup/js/dataTables.rowGroup.min.js",
+                            "{$config.path.node_modules}/datatables.net-rowreorder/js/dataTables.rowReorder.min.js",
+                            "{$config.path.node_modules}/datatables.net-scroller/js/dataTables.scroller.min.js",
+                            "{$config.path.node_modules}/datatables.net-select/js/dataTables.select.min.js"
+                        ]
+                    },
+                    "bundle": {
+                        "styles": "{$config.output}/vendors/custom/datatables/datatables.bundle.css",
+                        "scripts": "{$config.output}/vendors/custom/datatables/datatables.bundle.js"
+                    }
+                }
+            }
+        },
+        "demo": {
+            "default": {
+                "base": {
+                    "src": {
+                        "styles": [
+                            "{$config.path.src}/sass/demo/default/style.scss"
+                        ],
+                        "scripts": [
+                            "{$config.path.src}/js/framework/base/util.js",
+                            "{$config.path.src}/js/framework/base/app.js",
+                            "{$config.path.src}/js/framework/components/general/datatable/datatable.js",
+                            "{$config.path.src}/js/framework/components/plugins/misc/mdatatable.init.js",
+                            "{$config.path.src}/js/framework/components/general/**/*.js",
+                            "{$config.path.src}/js/demo/default/base/**/*.js",
+                            "{$config.path.src}/js/app/base/**/*.js",
+                            "{$config.path.src}/js/snippets/base/**/*.js"
+                        ]
+                    },
+                    "bundle": {
+                        "styles": "{$config.output}/demo/default/base/style.bundle.css",
+                        "scripts": "{$config.output}/demo/default/base/scripts.bundle.js"
+                    }
+                },
+                "custom": {
+                    "src": {
+                        "scripts": [
+                            "{$config.path.src}/js/demo/default/custom/**/*.js"
+                        ],
+                        "media": [
+                            "{$config.path.src}/media/demo/default/**/*.*"
+                        ]
+                    },
+                    "output": {
+                        "scripts": "{$config.output}/demo/default/custom/",
+                        "media": "{$config.output}/demo/default/media/"
+                    }
+                }
+            }
+        },
+        "snippets": {
+            "apps": {
+                "src": {
+                    "scripts": [
+                        "{$config.path.src}/js/snippets/apps/**/*.js"
+                    ]
+                },
+                "output": {
+                    "scripts": "{$config.output}/snippets/apps"
+                }
+            },
+            "custom": {
+                "src": {
+                    "scripts": [
+                        "{$config.path.src}/js/snippets/custom/**/*.js"
+                    ]
+                },
+                "output": {
+                    "scripts": "{$config.output}/snippets/custom"
+                }
+            }
+        },
+        "app": {
+            "src": {
+                "scripts": [
+                    "{$config.path.src}/js/app/custom/**/*.js"
+                ],
+                "media": [
+                    "{$config.path.src}/media/app/**/*.*"
+                ]
+            },
+            "output": {
+                "scripts": "{$config.output}/app/js",
+                "media": "{$config.output}/app/media"
+            }
+        }
+    }
+}
