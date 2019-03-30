@@ -43,6 +43,7 @@ $ export PATH="$HOME/.composer/vendor/bin:$PATH"
 ```
 
 ## Requirements for spatie/browsershot Library
+#### (for get the websites Screenshot)
 https://github.com/spatie/browsershot
 
 ```
