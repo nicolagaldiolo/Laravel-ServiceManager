@@ -58,7 +58,7 @@ class CustomerPolicy
         return $user->id === $customer->user_id;
     }
 
-    public function manageRenewal(User $user, Customer $customer, $token)
+    public function manageRenewal(?User $user, Customer $customer, $token)
     {
         return $customer->token === $token;
     }
