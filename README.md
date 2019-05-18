@@ -1,3 +1,6 @@
+# General Info
+Use node version: 8.12.0
+
 # Installation
 
 Generate .env file and setup db info
