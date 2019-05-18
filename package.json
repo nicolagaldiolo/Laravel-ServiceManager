@@ -21,6 +21,9 @@
         "webpack-shell-plugin": "^0.5.0"
     },
     "dependencies": {
-        "bootstrap-colorpicker": "^3.0.3"
+        "ajv": "^6.10.0",
+        "bootstrap-colorpicker": "^3.0.3",
+        "imagemin": "^6.1.0",
+        "peer": "^0.2.10"
     }
 }
