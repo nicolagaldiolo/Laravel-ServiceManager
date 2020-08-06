@@ -11,7 +11,9 @@
 |
 */
 
-Auth::routes(['verify' => true]);
+Route::middleware(\Spatie\Honeypot\ProtectAgainstSpam::class)->group(function (){
+    Auth::routes(['verify' => true]);
+});
 
 Route::get('login/{provider}',          'Auth\SocialAccountController@redirectToProvider')->name('social.login');
 Route::get('login/{provider}/callback', 'Auth\SocialAccountController@handleProviderCallback')->name('social.login.callback');

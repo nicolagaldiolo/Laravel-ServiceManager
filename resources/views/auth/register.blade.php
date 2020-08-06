@@ -11,6 +11,7 @@
 
         <form class="m-login__form m-form" method="POST" action="{{ route('register') }}" aria-label="{{ __('Register') }}">
             @csrf
+            @honeypot
             <div class="form-group m-form__group">
                 <input class="form-control m-input{{ $errors->has('name') ? ' is-invalid' : '' }}" type="text" value="{{ old('name') }}" placeholder="{{ __('Fullname') }}" name="name" autofocus>
 
