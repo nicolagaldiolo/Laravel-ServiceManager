@@ -247,6 +247,7 @@
                                                                        class="btn m-btn--pill btn-secondary m-btn m-btn--custom m-btn--label-brand m-btn--bolder">{{ __('Logout') }}</a>
                                                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                                                         @csrf
+                                                                        @honeypot
                                                                     </form>
                                                                 </li>
                                                             </ul>

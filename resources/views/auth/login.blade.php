@@ -9,6 +9,7 @@
         </div>
         <form class="m-login__form m-form" method="POST" action="{{ route('login') }}" aria-label="{{ __('Login') }}">
             @csrf
+            @honeypot
             <div class="form-group m-form__group">
                 <input class="form-control m-input email{{ $errors->has('email') ? ' is-invalid' : '' }}" type="email" placeholder="{{ __('E-Mail Address') }}" name="email" value="{{ old('email') }}" autocomplete="off" autofocus>
                 @if ($errors->has('email'))

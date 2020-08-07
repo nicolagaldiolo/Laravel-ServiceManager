@@ -8,8 +8,8 @@
             <div class="m-login__desc">{{ __('Enter your email to reset your password:') }}</div>
         </div>
         <form class="m-login__form m-form" method="POST" action="{{ route('password.email') }}" aria-label="{{ __('Reset Password') }}">
-
             @csrf
+            @honeypot
 
             <div class="form-group m-form__group">
                 <input class="form-control m-input email{{ $errors->has('email') ? ' is-invalid' : '' }}" type="email" placeholder="{{ __('E-Mail Address') }}" name="email" id="email" autocomplete="off" value="{{ old('email') }}">

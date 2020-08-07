@@ -24,6 +24,7 @@
                     <!--begin::Form-->
                     <form class="m-form m-form--fit" action="{{route('update.password', $user)}}" method="post">
                         @csrf
+                        @honeypot
                         <div class="m-portlet__body">
                             <div class="m-form__section m-form__section--first">
                                 <div class="form-group m-form__group">

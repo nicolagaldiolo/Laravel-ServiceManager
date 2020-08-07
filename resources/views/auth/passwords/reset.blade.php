@@ -7,9 +7,9 @@
         <div class="m-login__head">
             <h3 class="m-login__title">{{ __('Reset Password') }}</h3>
         </div>
-        <form class="m-login__form m-form" method="POST" action="{{ route('password.request') }}"
-              aria-label="{{ __('Reset Password') }}">
+        <form class="m-login__form m-form" method="POST" action="{{ route('password.request') }}" aria-label="{{ __('Reset Password') }}">
             @csrf
+            @honeypot
 
             <input type="hidden" name="token" value="{{ $token }}">
 
