@@ -39,6 +39,12 @@ class Service extends Model
         return $this->hasMany(Renewal::class);
     }
 
+    // Ha molti ActiveRenewals
+    public function activeRenewals(){
+        return $this->hasMany(Renewal::class)
+            ->where('status', '<>', RenewalSM::S_suspended);
+    }
+
     // Ha un NextRenewal
     public function nextRenewal(){
         return $this->hasOne(Renewal::class)
