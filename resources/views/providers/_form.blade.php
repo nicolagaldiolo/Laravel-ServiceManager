@@ -42,7 +42,7 @@
                     @if ($errors->has('website'))<strong>{{ $errors->first('website') }}</strong>@endif
                 </span>
 
-            
+
 
 
         </div>

@@ -247,6 +247,8 @@
 <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
     <div class="m-form__actions m-form__actions--solid">
         <button type="submit" class="btn btn-primary">{{__('messages.save')}}</button>
-        <a href="{{route('services.show', $service)}}" class="btn btn-secondary">{{__('messages.cancel')}}</a>
+        @if($service->exists)
+            <a href="{{route('services.show', $service)}}" class="btn btn-secondary">{{__('messages.cancel')}}</a>
+        @endif
     </div>
 </div>

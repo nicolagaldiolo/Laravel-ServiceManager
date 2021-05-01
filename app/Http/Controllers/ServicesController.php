@@ -129,11 +129,11 @@ class ServicesController extends Controller
 
                     $buttons = $renewal->getPossibleTransitions();
                     array_walk($buttons, function(&$k, $v) use($renewal, $service){
-                        $k = '<a data-transition-default="' . RenewalSM::T_renews. '" data-transition="' . $v . '" href="' . route('services.renewals.transition', ['service'=>$service,'renewals'=>$renewal,'transition'=>$v]) . '" class="update-transition btn btn-sm m-btn m-btn--custom btn-' . $k['label'] . '"><i class="'. $k['icon'] . '"></i> ' . RenewalSM::getDescription($v) . '</a>';
+                        $k = '<a data-transition-default="' . RenewalSM::T_renews. '" data-transition="' . $v . '" href="' . route('services.renewals.transition', ['service'=>$service,'renewal'=>$renewal,'transition'=>$v]) . '" class="update-transition btn btn-sm m-btn m-btn--custom btn-' . $k['label'] . '"><i class="'. $k['icon'] . '"></i> ' . RenewalSM::getDescription($v) . '</a>';
                     });
 
-                    $buttons[] = '<a href="' . route('services.renewals.edit', ['service'=>$service,'renewals'=>$renewal]) . '" data-original-title="' . __('messages.edit_renewal') . '" class="edit btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill"><i class="la la-edit"></i></a>';
-                    $buttons[] = '<a href="' . route('services.renewals.destroy', ['service'=>$service,'renewals'=>$renewal]) . '" class="deleteDataTableRecord btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill"><i class="la la-trash"></i></a>';
+                    $buttons[] = '<a href="' . route('services.renewals.edit', ['service'=>$service,'renewal'=>$renewal]) . '" data-original-title="' . __('messages.edit_renewal') . '" class="edit btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill"><i class="la la-edit"></i></a>';
+                    $buttons[] = '<a href="' . route('services.renewals.destroy', ['service'=>$service,'renewal'=>$renewal]) . '" class="deleteDataTableRecord btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill"><i class="la la-trash"></i></a>';
 
                     return implode("", $buttons);
 
