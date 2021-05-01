@@ -50,7 +50,6 @@ class Service extends Model
     public function renewalsUnresolved(){
         return $this->hasMany(Renewal::class)
             ->where('status', '<', RenewalSM::S_payed)
-            //->whereDate('deadline', '<', Carbon::now()->startOfDay());
             ->whereDate('deadline', '<=', Carbon::now()->endOfMonth());
     }
 
