@@ -23,7 +23,7 @@
 
         <div class="renewal-reminder-container">
             <div class="renewal-reminder-content">
-                <form method="POST" action="{{route('manage-renewals.update', ['customer'=>$customer, 'token'=>$token])}}">
+                <form method="POST" action="{{route('manage-renewals.update', ['customer'=>$customer, 'verification_code'=>$token])}}">
                     @csrf
                     @method('PATCH')
                     @foreach($customer->services as $service)

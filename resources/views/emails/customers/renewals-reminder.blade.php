@@ -13,7 +13,7 @@
 @endcomponent
 @endforeach
 
-@component('mail::button', ['url' => route('manage-renewals', ['customer'=>$customer,'token'=>$customer->token])])
+@component('mail::button', ['url' => route('manage-renewals', ['customer'=>$customer,'verification_code'=>$customer->token])])
     {{ __('messages.manage_services') }}
 @endcomponent
 
